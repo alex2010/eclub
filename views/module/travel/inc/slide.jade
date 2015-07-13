@@ -1,0 +1,32 @@
+- _sid || (_sid = 'slide');
+- _prop || (_prop = 'head');
+- _ctx || (_ctx = locals);
+if _slides.length > 1
+    .carousel.slide(id= _sid , data-ride='carousel', data-pause='hover')
+        .carousel-inner
+            each it,i in _slides
+                .item(class= i == 0 ? 'active' : '' )
+                    if it.title
+                        != f.imgItem(it, c, _prop, i)
+                        .carousel-caption
+                            h3!= f.link(it)
+                            p= it.subTitle
+
+                    else if _.isString(it)
+                        != f.imgItem(_ctx, c, _prop, i)
+                        .carousel-caption
+                            - kk = it.split('.')[0]
+                            if _ctx.refFile[kk]
+                                - var xt = {title: _ctx.refFile[kk].title}
+                                - xt._e = _ctx._e
+                                - xt._id= _ctx._id
+                                h3!= f.link(xt)
+                                if _ctx.refFile[kk].description
+                                    p= _ctx.refFile[kk].description
+                            else if _h3
+                                h3= _h3
+                                p= _p
+
+        include ../../../inc/slideBtn
+else
+    .item!= f.imgItem(_ctx, c, _prop)

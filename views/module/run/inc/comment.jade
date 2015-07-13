@@ -1,0 +1,17 @@
+.col-md-5(class= it.offset)
+    .panel-about(class= 'panel-about-#{it.index+1}')
+        .hd-panel-about
+            h3.title-panel-about
+                img(src='#{resPath}images/title-panel_#{it.pt}.png', alt='')
+        .bd-panel-about
+            .content!= it.content
+            span.arrow
+                img(src='#{resPath}images/arrow-panel_#{it.arrow}.png', alt='')
+            span.quotes-top
+                img(src='#{resPath}images/quote-top_14.png', alt='')
+            span.quotes-btm
+                img(src='#{resPath}images/quote-btm_19.png', alt='')
+        .ft-panel-about
+            != f.imgItem(it,c,'portrait',0,'markImg poster-panel-about')
+            h4.name-panel-about= it.username
+            p.text-panel-about= it.title

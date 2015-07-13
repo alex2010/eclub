@@ -1,0 +1,23 @@
+extends inc/main
+
+block content
+    #post.container
+        include ../../inc/crumb
+        .row.article
+            #main.col-md-9
+                ul#postList.boxList
+                    each it in items
+                        include inc/boxItem
+            #side.col-md-3
+                h3 文章分类
+                ul
+                    li
+                        a(href='/postList') 全部
+                    each it in cats
+                        li!= f.link(it)
+
+                h3.pt.all
+                    strong 专栏
+                ul#catList.menus
+                    li
+                        a(onclick='cf.showAllItems()') 全部

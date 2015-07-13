@@ -1,0 +1,136 @@
+extends inc/main
+
+block style
+    style(type='text/css').
+        .hasTop {
+            padding-left: 65px;
+        }
+
+        .topIcon {
+            left: 22px;
+            right: auto;
+        }
+
+        .subHeading{
+            padding-top: 20px;
+            padding-bottom: 0;
+        }
+
+        .subSlide {
+            position: relative;
+            height: 223px;
+            overflow: hidden;
+
+        }
+
+        .subSlide .highlight {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            background-color: #16ca8d;
+            word-break: break-all;
+            font-size: 16px;
+            text-align: center;
+            padding: 15px 4px;
+            color: #fff;
+        }
+
+
+block content
+
+    .topHead
+        .panel
+            .panel-heading(data-title= title)
+                h2= title
+                    small.pull-right.btn(data-toggle="collapse",data-target="#asl") A ~ Z
+                    include inc/share
+
+        #asl.collapse
+            .row.text-center
+                each it in allSights
+                    != f.link(it, null, 'col-md-3')
+
+
+        if refFile
+            -var _slides = refFile.slide || []
+            -var _prop = 'slide'
+            -var _h3 = title
+            -var _p = subTitle
+            include inc/slide
+
+    article.panel
+        .panel-heading
+            h3 Introducing the #{title} #{pinYin ? '(' + pinYin + ')' : ''}
+        .panel-body
+            .article!= content
+
+    .row.extra
+        .col-md-8.r0
+            if sub
+                .panel.sub
+                    .panel-heading
+                        h3.panel-title Featured Spots
+
+                    each s,i in sub
+                        .subSlide
+                            if s.refFile && s.refFile.head
+                                -var _slides = s.refFile.head
+                                -var _sid = 'subs'+i
+                                -var _ctx = s
+                                -var _prop = 'head'
+                                include inc/slide
+                            if s.fee && s.fee > 0
+                                span.highlight HIGHLIGHT
+                        .panel-heading.subHeading
+                            h4.panel-title= s.title
+                        .panel-body.scrollBox(style='height:260px')!= s.content
+                        hr
+            if extra && extra.length
+                .panel
+                    .panel-heading
+                        h3.panel-title Additional Information
+
+                #extra.panel-group
+                    each it,i in extra
+                        .panel
+                            a.panel-heading(data-toggle='collapse', data-parent='#extra', href= '#cl' + i)
+                                h4.panel-title
+                                    = it.title
+                                    .pull-right!= f.icon('menu-down')
+                            .panel-collapse(id= 'cl' + i)
+                                .panel-body
+                                    if it.refFile && it.refFile.head
+                                        .row
+                                            .col-md-4.r0
+                                                != f.imgItem(it, c)
+                                            .col-md-8.scrollBox(style='height:360px')!= it.content
+                                    else
+                                        .scrollBox(style='height:360px')!= it.content
+
+        #info.col-md-4.panel-group
+            include inc/sideInfo
+
+    if recommend
+        .col-md-12
+            .row
+                include inc/recommend
+
+block st
+    :coffee(bare=true)
+        tops = ($(it).attr('href') for it in $('footer .top a')).join(',')
+        heading = $('.topHead .panel-heading')
+
+        if $('footer .top a').text().indexOf(heading.data('title')) > -1
+            heading.addClass('hasTop').prepend '<div class="topIcon"></div>'
+
+        for it in $('#asl a')
+            if tops.indexOf($(it).attr('href')) > -1
+                $(it).addClass 'top'
+
+
+
+
+
+

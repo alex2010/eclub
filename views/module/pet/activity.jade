@@ -1,0 +1,103 @@
+extends inc/main
+
+block content
+    .container
+        include ../../inc/crumb
+
+        .row.article
+            #main.col-md-8
+                h2= title
+                    small= subTitle
+                    if cat
+                        span.cat 【#{cat.title}】
+                hr
+                != f.imgItem(locals, c.code)
+
+                h3 话题介绍
+                != content
+
+            .col-md-4
+
+                h3 主持人介绍
+                if master
+                    .author
+                        each v,k in master
+                            - v._id = k
+                            - _user = v;
+                            - _user._e = 'user'
+                            - _uClass = 'author'
+                            include inc/userInfo
+                if venue
+                    h3 活动信息
+
+                    .venue.clearfix
+                        p
+                            != f.icon('time')
+                            if startedDate
+                                span= startedDate.pattern('yyyy-MM-dd HH:mm')
+                                | (两小时)
+                        p
+                            != f.icon('glass')
+                            span= venue.fee
+                        p
+                            != f.icon('phone-alt')
+                            span= venue.phone
+                        p
+                            != f.icon('home')
+                            span= venue.title
+                        p
+                            != f.icon('road')
+                            span= venue.route
+
+            .col-md-12
+                h3 活动报名
+                if participant
+                    .avatars
+                        each it in participant
+                            -var uid = it.ref.split('x')[1]
+                            a(href= f.href('user',uid),title= it.username)!= f.img(f.resPath(c.code,'portrait-'+uid+'.jpg'))
+                    hr
+                .text-center
+                    a.btn.btn-lg.btn-info 我要报名
+                hr
+            .col-md-8
+                if venue
+                    h3 场地介绍
+                    h4= venue.title
+                    != venue.content
+                    != f.imgItem(venue, c.code)
+
+                h3 活动人群
+                ul
+                    li 具有一点英文基础与词汇量
+                    li 想要提高或保持英语沟通能力的朋友
+                    li 需要拓展人际关系的朋友
+                    li 喜欢通过英文打发时间的朋友
+                    li 愿意分享价值，传递正能量给他人的朋友
+
+                h3 活动内容
+                ul
+                    li 聆听主持人的分享或观看影视作品片段；学习里面的思想，体味其中道理。
+                    li 分组讨论，分享自己的观点，理解与感悟，提高使用英文对复杂事物的表达能力。
+                    li 在愉快的气氛中认识更多志同道合的朋友，提高自己的社交能力。
+                    li 通过表演，模仿，游戏等环节，锻炼如何处理情感、语音、语调、语速、压力及肢体语言等，提高英文沟通能力。
+                    li 当主持人，参与活动的组织与主题策划，提高自己的公众演讲能力与领导力。
+                p
+                hr
+                if cat
+                    blockquote
+                        h4= cat.title
+
+                        p!= cat.content
+
+            #side.col-md-4
+
+                h3 主题活动
+                ul
+                    each it in cats
+                        li!= f.link(it)
+
+                h3 最新活动
+                ul
+                    each it in latest
+                        li!= f.link(it)

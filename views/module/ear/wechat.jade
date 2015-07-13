@@ -1,0 +1,16 @@
+extends ./inc/main
+block script
+    - main = 'wechat'
+
+block content
+    .headerWrapper
+        .navbar.navbar-inverse.navbar-fixed-top
+            #header.container.text-center
+                #logo.navbar-header
+                    a.navbar-brand(href='#')= name
+    #static.container
+    .container
+        #content.row
+    .footerWrapper
+        #footer.container
+            p(onclick= 'user.logout()').text-center!= i18.iim('copyright', c.url, i18.ii('abbr'))

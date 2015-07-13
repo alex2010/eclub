@@ -1,0 +1,51 @@
+extends inc/main
+
+block content
+    .panel
+        .panel-heading
+            h2= title
+
+    if head && head.list
+        - var _slides = head.list
+        - var _prop = 'slide'
+        include inc/slide
+
+    if item
+        .panel
+            .panel-heading
+                h3= item.title
+            .panel-body
+                p!= item.content
+
+    include inc/items
+
+    // Modal
+    #myMap.modal.fade
+        .modal-dialog
+            .modal-content
+                img(width='100%')
+block st
+    :coffee(bare=true)
+        pp = util.parseUrl()
+        ent = pp.entity
+
+        # set active menu item
+        $('.menus').find("a[href*='entity=#{ent}']").parent().addClass 'active'
+
+        # set top icon
+        tops = ($(it).attr('href') for it in $('footer .top a')).join(',')
+        for it in $('.pBox>a')
+            if tops.indexOf($(it).attr('href'))>-1
+                $(it).before '<div class="topIcon"></div>'
+
+        # pop map
+        m = $('#myMap')
+        $(".pBoxList").on 'click', "a[href='#//showImg']", (e)->
+            e.preventDefault()
+            t = util.ct(e)
+            m.find('img').attr 'src', t.find('img').attr('src')
+            m.modal('show')
+
+
+//        url = $('#map .markImg').attr 'src'
+//        $('.mapItem').click (e)->

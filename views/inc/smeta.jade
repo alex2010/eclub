@@ -1,0 +1,26 @@
+meta(charset='UTF-8')
+title= i18.ii('title') || c.title
+meta(content= i18.ii('description'), name='description')
+meta(content= i18.ii('keyword'), name='keywords')
+meta(context='86400', http-equiv='expires')
+meta(property='og:title', content='#{title}')
+meta(property='og:image', content='')
+meta(property='og:site_name', content='#{title}')
+meta(property='og:description', content= i18.ii('description'))
+meta(http-equiv='X-UA-Compatible', content='Chrome=1,IE=edge')
+noscript
+    meta(http-equiv='refresh', content='0;url=/nojs.html')
+link(rel='shortcut icon', href='', type='image/x-icon')
+meta(name='viewport', content='width=device-width, initial-scale=1.0,user-scalable=no')
+meta(name='apple-touch-fullscreen', content='YES')
+meta(name='format-detection', content='telephone=no')
+meta(name='apple-mobile-web-app-capable', content='yes')
+meta(name='apple-mobile-web-app-status-bar-style', content='black')
+link(rel='alternate', type='application/rss+xml', title='#{title} RSS Feed', href='/feeds.xml')
+
+if dev || !mode
+    link(rel='stylesheet', type='text/css', href='#{libPath}lib.css?#{_ts}', media='all')
+    link(rel='stylesheet', type='text/css', href='#{libPath}#{main||"main"}.css?#{_ts}', media='all')
+else
+    link(rel='stylesheet', type='text/css', href='http://127.0.0.1:8088/lib.css', media='all')
+    link(rel='stylesheet', type='text/css', href='http://127.0.0.1:8088/#{main||"main"}.css', media='all')

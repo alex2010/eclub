@@ -1,0 +1,16 @@
+ul(class= mClass || 'nav navbar-nav')
+    if menu
+        each it in menu
+            li(class= it.code || '')
+                a(href='#{it.href}')
+                    if it.cls
+                        != f.icon(it.cls)
+                    = it.label
+                if _showSub && it.children
+                    ul.dropdown-menu
+                        each sub in it.children
+                            li
+                                a(href='#{sub.href}')
+                                    if it.cls
+                                        != f.icon(it.cls)
+                                    = sub.label

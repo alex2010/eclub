@@ -1,0 +1,13 @@
+if geo
+    a(href='https://www.google.com/maps/dir//#{geo.lat},#{geo.lng}/',target='_blank')
+        img(width='100%',src='http://maps.googleapis.com/maps/api/staticmap?center=#{geo.lat},#{geo.lng}&zoom=11&scale=1&size=272x200&maptype=roadmap&format=png&visual_refresh=true&markers=color:red%7Clabel:A%7C#{geo.lat},#{geo.lng}')
+if info
+    each v,k in info
+        if v
+            .panel
+                a.panel-heading(data-toggle='collapse', data-parent='#info', href= '#' + k)
+                    h4.panel-title
+                        = k.toString().capAll()
+                        .pull-right!= f.icon('menu-down')
+                .panel-collapse.collapse(id= k)
+                    .panel-body!= v

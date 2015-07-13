@@ -1,0 +1,20 @@
+.DS_Store
+.ftppass
+.idea
+npm-debug.log
+
+# heroku
+#*.coffee
+#*.less
+
+#github
+
+*.js
+
+# *.css
+
+node_modules
+public
+doc
+back
+memo.txt

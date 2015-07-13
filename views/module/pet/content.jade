@@ -1,0 +1,18 @@
+extends inc/main
+
+block content
+    .container
+        .row
+            #main.col-md-9
+                include ../../inc/crumb
+                .article
+                    h2.event-name= title
+                    hr.thin
+                    .article-content
+                        = content
+            #side.col-md-3
+                .widget.double
+                    h3
+                        strong= i18.c('contents')
+                    div
+                        = i.c('contents')

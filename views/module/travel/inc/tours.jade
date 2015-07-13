@@ -1,0 +1,8 @@
+.col-md-3
+    .panel.pBox.text-center.bold
+        .panel-heading
+            h3 Tours
+        ul.panel-body
+            each it in btm_tour
+                li
+                    a(href= it.href)= it.title

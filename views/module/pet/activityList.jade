@@ -1,0 +1,16 @@
+extends inc/main
+block content
+    #activity.container
+        include ../../inc/crumb
+        .row.article
+            #main.col-md-9
+                ul#activityList.boxList
+                    each it in items
+                        include inc/boxItem
+            #side.col-md-3
+                h3 活动分类
+                ul
+                    li
+                        a(href='/activityList') 全部
+                    each it in cats
+                        li!= f.link(it)

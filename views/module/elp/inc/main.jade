@@ -1,0 +1,24 @@
+doctype html
+
+block script
+    - main = 'main'
+
+html
+    head
+        include ../../../inc/smeta
+        block style
+        block head
+    body(data-wid= wt.appId, data-wcode= wt.code)
+        .headerWrapper
+            .navbar.navbar-inverse.navbar-fixed-top
+                #header.container.text-center
+                    #logo.navbar-header
+                        a.navbar-brand(href='#')= name
+        #static.container
+            block content
+        .container
+            #content.row
+        .footerWrapper
+            #footer.container
+                p(onclick= 'user.logout()').text-center!= i18.iim('copyright', c.url, i18.ii('abbr'))
+    include ../../../inc/ssub

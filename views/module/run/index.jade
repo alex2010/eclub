@@ -1,0 +1,165 @@
+extends ./inc/main
+
+block content
+    .header.navbar-fixed-top
+        .container
+            .row
+                .col-md-3
+                    h1.logo
+                        a(href='#home')
+                            img(src='#{resPath}images/logo_03.png', alt='')
+                .col-md-6
+                    ul#menu.l-nav
+                        li.li-nav.active(data-menuanchor='about')
+                            a(href='#about')
+                                span.bg
+                                    img(src='#{resPath}images/navEn_06.png', alt='')
+                                span.active-bg
+                                    img(src='#{resPath}images/navEn_06-active.png', alt='')
+                                span.text 关于我们
+                        li.li-nav(data-menuanchor='register')
+                            a(href='#register')
+                                span.bg
+                                    img(src='#{resPath}images/navEn_08.png', alt='')
+                                span.active-bg
+                                    img(src='#{resPath}images/navEn_08-active.png', alt='')
+                                span.text 登记
+                        li.li-nav(data-menuanchor='events')
+                            a(href='#events')
+                                span.bg
+                                    img(src='#{resPath}images/navEn_10.png', alt='')
+                                span.active-bg
+                                    img(src='#{resPath}images/navEn_10-active.png', alt='')
+                                span.text 活动花絮
+                        li.li-nav(data-menuanchor='news')
+                            a(href='#news')
+                                span.bg
+                                    img(src='#{resPath}images/navEn_12.png', alt='')
+                                span.active-bg
+                                    img(src='#{resPath}images/navEn_12-active.png', alt='')
+                                span.text 新闻
+                .col-md-3
+                    #timerContent
+                        .countdown
+    .container
+        #scrollBox.row.main
+            .section.main-index
+                .bd-index
+                    h3.title-bd-index
+                        img(src='#{resPath}images/dare_03.png', alt='')
+                    span.arrow-left-index
+                        img(src='#{resPath}images/arrow-index_06.png', alt='')
+                    span.arrow-right-index
+                        img(src='#{resPath}images/arrow-index_03.png', alt='')
+                .ft-index
+                    .row
+                        .col-md-9
+                            span.btn-index
+                                a(href='javascript:void(0);') 敢
+                        .col-md-3
+                            span.btn-index
+                                a.nodare(href='javascript:void(0);') 不敢
+            .section
+                h2
+                    a(href='javascript:void(0);') 泥泞跑
+                    img(src='#{resPath}images/title-page_03.png', alt='')
+
+                .slide
+                    -var it = comments[0]
+                    include ./inc/comment
+
+                    -var it = comments[1]
+                    include ./inc/comment
+
+                    -var it = comments[2]
+                    include ./inc/comment
+                .slide
+                    -var it = comments[3]
+                    include ./inc/comment
+
+                    -var it = comments[4]
+                    include ./inc/comment
+                .slide
+                    -var it = comments[5]
+                    include ./inc/comment
+
+                    -var it = comments[6]
+                    include ./inc/comment
+                .slide
+                    -var it = comments[7]
+                    include ./inc/comment
+
+                    -var it = comments[8]
+                    include ./inc/comment
+
+            .section
+                h2
+                    a(href='javascript:void(0);') 泥泞跑
+                    img(src='#{resPath}images/title-page_06.png', alt='')
+                .row.bg-register
+                    .col-md-12.panel-register
+                        form#regForm
+                            .row
+                                .col-md-5.left-panel-register
+                                    h3
+                                        img(src='#{resPath}images/title-register_03.png', alt='')
+                                    h4 Terms & Condition:
+                                    p
+                                        | 泥泞跑里体现的体育精神，这个是我们自己举办这个赛事的灵魂指标！不管是坚持不懈，还是永不放弃，这些大家都知道的，战胜和挑战自己这个最大的敌人，除了这些，我心目中的泥泞跑，还应该是一种生活态度，并且辐射到每一个人的生活方式中！说点番外篇每个时代都有每个时代的审美观，唐代喜欢杨贵妃，西汉专宠赵飞燕，之前我们喜欢竹签腿，现在都在追求人鱼线！泥泞跑带来的运动风潮就是全民运动健康生活的新概念，我们打造的运动王国里，是标志性的，是老少皆宜的！让不爱运动的，没时间运动的，为减肥找借口的，被亚健康折磨的都来参加泥泞跑，它跟健身的绑定，随时随地让你为它动起来，不来泥泞征服一下，都不敢说自己是健全人。最近网络上各种**体，跟病毒传播一样，引起全民反馈，之前的“辞职体”，世界那么大，我想去看看，最早的“凡客体”，还有最近火的“苍白体”，vivo手机的  再美的文字赞美这部手机都是苍白，引起无数广告文案的亲睐，我们可以造自己的“泥泞体”，来拍摄短小的视频，让任何普通人都可以来说这些话，并深入到自己的生活中，隔壁家王大爷可以说，办公室里的前台小妹可以说，甚至发现楼底下郑阿姨连广场舞都不跳了加入泥泞跑了，她也在说！泥泞跑就是一种健康的生活态度。比如“我不在泥泞跑，就在去泥泞跑的路上”；”真正的快乐，是像我一样有颗摸爬滚打的心” ； “爹娘给的身材是本钱，把身体练好是你的本事”；“健
+                                .col-md-7.right-panel-register
+                                    ul.l-form-register
+                                        li.li-form-register
+                                            label.label-form-register(for='regsName')
+                                                | 姓名 
+                                                span.en NAME:
+                                            input.itxt-form-register(name='username', type='text')
+                                        li.li-form-register
+                                            label.label-form-register(for='regsPhone')
+                                                | 电话号码 
+                                                span.en TELEPHONE NUMBER:
+                                            input.itxt-form-register(name='phone', type='text')
+                                        li.li-form-register
+                                            label.label-form-register(for='regsMail')
+                                                | 电子邮件 
+                                                span.en EMAIL:
+                                            input.itxt-form-register(name='email', type='text')
+                                        li.li-form-register
+                                            label
+                                                input.check-form-register(name='subscribe', type='checkbox')
+                                                | &nbsp
+                                                span.tip-form-register Do you wish receive newsletter?
+                            .submitBlock-form-register
+                                a.save.btn-submitItem-register
+                                span.triangle-submitItem-register
+            .section
+                h2
+                    a(href='javascript:void(0);') 泥泞跑
+                    img(src='#{resPath}images/title-page_09.png', alt='')
+                .row.panel-events
+                    .col-md-4.col-md-offset-4.logo-events
+                        img(src='#{resPath}images/logo-events_03.png', alt='')
+            .section.col-md-12
+                .row
+                    h2
+                        a(href='javascript:void(0);') 泥泞跑
+                        img(src='#{resPath}images/title-page_13.png', alt='')
+                    .row.panel-news
+                        each it in posts
+                            .slide
+                                .col-md-5.col-md-offset-1.banner-mud
+                                    #newPic.carousel
+                                        .carousel-inner
+                                            for p,i in it.refFile.slide
+                                                .item(class= i == 0 ? 'active' : '' )
+                                                    != f.imgItem(it, c, 'slide', i)
+                                        .imgs-banner-mud
+                                            for sp,i in it.refFile.slide
+                                                img(class= i == 0 ? 'active' : '', data-target='#newPic', data-slide-to=i, src= f.resPath(c, 'thumb/' + sp))
+                                .col-md-5.mod-prop-news
+                                    span.arrow-prop-news
+                                    .hd-prop-news
+                                        h4.title-prop-news
+                                            img(src='#{resPath}images/title-prop-news_06.png', alt='')
+                                    .bd-prop-news
+                                        span.time= it.dateCreated
+                                        .contentBox= it.content

@@ -1,0 +1,21 @@
+extends inc/main
+
+block content
+    .topHead
+        .panel
+            .panel-heading(data-title= title)
+                h2= title
+                    include inc/share
+
+    if head && head.list
+        -var _slides = head.list
+        include inc/slide
+    if item
+        .panel
+            .panel-heading
+                h2 Introducing #{item.title}
+            .panel-body
+                .scrollBox(style='height:180px')!= item.content
+
+    - var _items = topList;
+    include inc/items
