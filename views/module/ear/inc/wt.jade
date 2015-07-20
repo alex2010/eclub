@@ -1,0 +1,14 @@
+doctype html
+
+block script
+    - main = 'main'
+
+html
+    head
+        include ../../../inc/smeta
+        block style
+        block head
+
+    body(data-wid= wt.appId, data-wcode= wt.code)
+        block content
+    include ../../../inc/ssub

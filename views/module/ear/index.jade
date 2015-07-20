@@ -1,3 +1,106 @@
 extends ./inc/main
 
-block content
+
+
+block main
+    #carousel-example-generic.carousel.slide.banner(data-ride='carousel')
+        // Indicators
+        ol.carousel-indicators
+            li.active(data-target='#carousel-example-generic', data-slide-to='0')
+            li(data-target='#carousel-example-generic', data-slide-to='1')
+            li(data-target='#carousel-example-generic', data-slide-to='2')
+            li(data-target='#carousel-example-generic', data-slide-to='3')
+        // Wrapper for slides
+        .carousel-inner(role='listbox')
+            .item.active
+                img(src='images/banner_10.jpg', alt='')
+            .item
+                img(src='images/banner_10.jpg', alt='')
+            .item
+                img(src='images/banner_10.jpg', alt='')
+            .item
+                img(src='images/banner_10.jpg', alt='')
+        // Controls
+        a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
+            span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+            span.sr-only Previous
+        a.right.carousel-control(href='#carousel-example-generic', role='button', data-slide='next')
+            span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+            span.sr-only Next
+
+    .main.row
+        .col-md-5.block-main-left
+            section.panel-news
+                .hd-panel-news
+                    a.more-panel-news(href='javascript:void(0);') more
+                    h3.title-panel-news 听力健康
+                .bd-panel-news
+                    ul.l-panel-news
+                        li.li-panel-news
+                            a.link-panel-news(href='javascript:void(0);') 贵州毕节大剧院舞台彩排时垮塌致8人受伤
+                        li.li-panel-news
+                            a.link-panel-news(href='javascript:void(0);') 重庆再添艺术大剧院 施光南大剧院今迎首场演
+                        li.li-panel-news
+                            a.link-panel-news(href='javascript:void(0);') 歌剧女皇”登台大剧院 演绎绝美咏叹
+                        li.li-panel-news
+                            a.link-panel-news(href='javascript:void(0);') 长影新片《司法所长老秦》首映
+                        li.li-panel-news
+                            a.link-panel-news(href='javascript:void(0);') 印象·萨克斯”台湾李承育萨克斯音乐会青宫
+                        li.li-panel-news
+                            a.link-panel-news(href='javascript:void(0);') 组图：范冰冰与妈妈合影 亲密似姐妹花颜值高
+                        li.li-panel-news
+                            a.link-panel-news(href='javascript:void(0);') 贵州毕节大剧院舞台彩排时垮塌致8人受伤
+            section.panel-news
+                .hd-panel-news
+                    a.more-panel-news(href='javascript:void(0);') more
+                    h3.title-panel-news 互动论坛
+                .bd-panel-news
+                    ul.l-panel-news
+                        li.li-panel-news
+                            a.link-panel-news(href='javascript:void(0);') 贵州毕节大剧院舞台彩排时垮塌致8人受伤
+                        li.li-panel-news
+                            a.link-panel-news(href='javascript:void(0);') 重庆再添艺术大剧院 施光南大剧院今迎首场演
+                        li.li-panel-news
+                            a.link-panel-news(href='javascript:void(0);') 歌剧女皇”登台大剧院 演绎绝美咏叹
+                        li.li-panel-news
+                            a.link-panel-news(href='javascript:void(0);') 长影新片《司法所长老秦》首映
+                        li.li-panel-news
+                            a.link-panel-news(href='javascript:void(0);') 印象·萨克斯”台湾李承育萨克斯音乐会青宫
+                        li.li-panel-news
+                            a.link-panel-news(href='javascript:void(0);') 组图：范冰冰与妈妈合影 亲密似姐妹花颜值高
+                        li.li-panel-news
+                            a.link-panel-news(href='javascript:void(0);') 贵州毕节大剧院舞台彩排时垮塌致8人受伤
+        .col-md-7.block-main-right
+            ul.l-important-index
+                li.li-important-index
+                    a.btn-important-index(href='javascript:void(0);') 搜索
+                    h3.title-important-index.instru 找助听器中心
+                    .row.bd-important-index
+                        .col-md-5
+                            span.btn-option-important 地区
+                        .col-md-5
+                            span.btn-option-important 下载
+                li.li-important-index
+                    a.btn-important-index(href='javascript:void(0);') 搜索
+                    h3.title-important-index.master 找助听器验配师
+                    .row.bd-important-index
+                        .col-md-5
+                            span.btn-option-important 地区
+                        .col-md-5
+                            span.btn-option-important 下载
+                li.li-important-index
+                    a.btn-important-index(href='javascript:void(0);') 搜索
+                    h3.title-important-index.brand 找助听器品牌
+                    .row.bd-important-index
+                        .col-md-5
+                            span.btn-option-important 地区
+                        .col-md-5
+                            span.btn-option-important 下载
+                li.li-important-index.last
+                    a.btn-important-index(href='javascript:void(0);') 搜索
+                    h3.title-important-index.about 找相关服务
+                    .row.bd-important-index
+                        .col-md-5
+                            span.btn-option-important 地区
+                        .col-md-5
+                            span.btn-option-important 下载
