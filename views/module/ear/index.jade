@@ -3,6 +3,9 @@ extends ./inc/main
 
 
 block main
+    each it, i in posts
+        h1= it.title
+
     #carousel-example-generic.carousel.slide.banner(data-ride='carousel')
         // Indicators
         ol.carousel-indicators
