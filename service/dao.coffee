@@ -1,10 +1,9 @@
-
 Mongodb = require('mongodb')
 _ = require('underscore')
 
 oid = require('mongodb').ObjectID
 `
-_db={};
+    _db = {};
 `
 Db = Mongodb.Db
 Connection = Mongodb.Connection
@@ -13,7 +12,6 @@ Server = Mongodb.Server
 #log = console.log
 _opt = {w: 1}
 module.exports = ->
-
     @newDb = (name, callback)->
         if app.env
             s =
@@ -83,7 +81,7 @@ module.exports = ->
     @findAndUpdate = (db, entity, filter, opt, callback)->
         filter = @cleanOpt(filter)
         delete opt._id
-        @pick(db, entity).findOneAndUpdate filter, opt, (err, doc)->
+        @pick(db, entity).findAndModify filter, null, opt, {upsert: true,new: true}, (err, doc)->
             log err if err
             callback?(doc)
 

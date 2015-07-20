@@ -1,6 +1,29 @@
 module.exports =
     randomInt: util.randomInt
 
+    viewItem:(entity,k,v)->
+        opt = cf.meta[entity][k] || cf.meta.common[k]
+        if opt.showText
+            opt.showText(v)
+        else if opt.type is 'text' or !opt.type
+            v
+        else if opt.type in ['select','radio']
+            if opt.data and +v
+                _.result(opt,'data')[+v]
+            else
+                v
+        else if opt.type is 'status'
+            cf.st.text(entity+'_status', v)
+#        else if
+        else
+            v
+
+
+    dStr: (str,len=19)->
+        if str
+            str.replace(/-/g, "/").replace(/[TZ]/g, " ").substr(0,len)
+        else
+            ''
     icon: (icon, tag = 'i', str = '', cls = '')->
         "<#{tag} class='glyphicon glyphicon-#{icon} #{cls}'>#{str}</#{tag}>"
 
@@ -28,7 +51,6 @@ module.exports =
 
 
     imgItem: (it, c, name = 'head', index = 0, cls)->
-        log c
         return '' unless it
         if it.refFile and it.refFile[name]
             path = it.refFile[name][index]

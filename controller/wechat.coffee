@@ -89,7 +89,6 @@ module.exports =
                                 path = "#{_path}/public/module/#{code}/tmpl/wechat/#{tmpl}.jade"
                                 log path
                                 content = jade.renderFile path,ctx
-                                log content
                                 if styles
                                     for k,v of styles
                                         content.replaceAll("<#{k}>","<#{k} style='#{v}'>")

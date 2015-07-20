@@ -3,7 +3,7 @@ module.exports =
     iCat: (k)->
         _i['cat.' + k]
 
-    si:(k)->
+    si: (k)->
         _i[k]
 
     ii: (k, m...) ->
@@ -24,7 +24,7 @@ module.exports =
         ii('m.' + k, iin(it) for it in m)
 
     iie: (k, p) ->
-        _i[p] || _i[k+'.'+p] || _i['c.'+p] || p.capAll()
+        _i[k + '_' + p] || _i[p] || p.capAll()
 
     iic: (p) ->
         _i[p] || ii('c.' + p)

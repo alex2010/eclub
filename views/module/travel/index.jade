@@ -69,7 +69,7 @@ block content
                             li
                                 a(href= it.href)= it.title
 block st
-    :coffee(bare=true)
+    :coffee(bare=true,minify=true)
         cf.changeSeason = (e)->
             t = $(e)
             t.parent().addClass('active').siblings().removeClass('active')

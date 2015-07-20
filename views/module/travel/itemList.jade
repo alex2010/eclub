@@ -1,5 +1,11 @@
 extends inc/main
 
+block style
+    :less(minify=true)
+        .carousel-control {
+            display: none !important;
+        };
+
 block content
     .panel
         .panel-heading

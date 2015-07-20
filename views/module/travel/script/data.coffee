@@ -525,8 +525,8 @@ module.exports =
         code: code
         name: 'travel in Beijing'
         resPath: if _env then '/res' else 'http://s.wikibeijing.com'
-        url: if _env then 't.travel.com' else _st.url
-    data:{}
+        url: if _env then 't.travel.com' else 'wikibeijing.com'
+    data:
 #        'role:title': role
 #        'car:title': car
 #        'user:username': user
@@ -542,4 +542,5 @@ module.exports =
 #        'show:title': food
 #        'head:type': head
 #        'top:title': top
+        'i18n:key': require('./zh')
 

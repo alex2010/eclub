@@ -175,7 +175,7 @@ module.exports =
         'role:title': role
 #        'user:username': user
 #        'membership:uid,rid': membership
-        'i18n:key': require('./zh')
+        'i18n:key,lang': require('./zh')
 
 
 

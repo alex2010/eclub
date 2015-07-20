@@ -8,6 +8,8 @@ if info
                 a.panel-heading(data-toggle='collapse', data-parent='#info', href= '#' + k)
                     h4.panel-title
                         = k.toString().capAll()
-                        .pull-right!= f.icon('menu-down')
+                        .pull-right
+                            != f.icon('menu-up')
+                            != f.icon('menu-down')
                 .panel-collapse.collapse(id= k)
                     .panel-body!= v

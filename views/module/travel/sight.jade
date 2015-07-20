@@ -1,7 +1,7 @@
 extends inc/main
 
 block style
-    style(type='text/css').
+    :less(minify=true)
         .hasTop {
             padding-left: 65px;
         }
@@ -11,7 +11,7 @@ block style
             right: auto;
         }
 
-        .subHeading{
+        .subHeading {
             padding-top: 20px;
             padding-bottom: 0;
         }
@@ -20,23 +20,20 @@ block style
             position: relative;
             height: 223px;
             overflow: hidden;
-
+            .highlight {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 20px;
+                height: 100%;
+                background-color: #16ca8d;
+                word-break: break-all;
+                font-size: 16px;
+                text-align: center;
+                padding: 15px 4px;
+                color: #fff;
+            }
         }
-
-        .subSlide .highlight {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 20px;
-            height: 100%;
-            background-color: #16ca8d;
-            word-break: break-all;
-            font-size: 16px;
-            text-align: center;
-            padding: 15px 4px;
-            color: #fff;
-        }
-
 
 block content
 
@@ -98,7 +95,9 @@ block content
                             a.panel-heading(data-toggle='collapse', data-parent='#extra', href= '#cl' + i)
                                 h4.panel-title
                                     = it.title
-                                    .pull-right!= f.icon('menu-down')
+                                    .pull-right
+                                        != f.icon('menu-up')
+                                        != f.icon('menu-down')
                             .panel-collapse(id= 'cl' + i)
                                 .panel-body
                                     if it.refFile && it.refFile.head
@@ -118,7 +117,7 @@ block content
                 include inc/recommend
 
 block st
-    :coffee(bare=true)
+    :coffee(bare=true,minify=true)
         tops = ($(it).attr('href') for it in $('footer .top a')).join(',')
         heading = $('.topHead .panel-heading')
 

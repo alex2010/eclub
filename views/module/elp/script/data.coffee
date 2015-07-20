@@ -9,7 +9,7 @@ alexUserId = new oid()
 pieUserId = new oid()
 
 role = [
-#    _id: adminRoleId
+    _id: adminRoleId
     title: 'admin'
     label: '管理员'
     type: 0
@@ -37,7 +37,7 @@ role = [
         permission:
             page: 'console'
 ,
-#    _id: managerRoleId
+    _id: managerRoleId
     title: 'manager'
     label: 'p班级管理员'
     type: 0
@@ -51,7 +51,7 @@ role = [
             page: 'wechat'
 
 ,
-#    _id: memberRoleId
+    _id: memberRoleId
     title: 'member'
     label: 'p成员'
     type: 0
@@ -195,17 +195,17 @@ pubAccount = [
             'name': '资料'
             'sub_button': [
                 'type': 'view'
-                'url': 'http://elp.newenglishtime.com/wechat#!/profile'
+                'url': 'http://elp.postenglishtime.com/wechat#!/user'
                 'name': '我的信息'
             ,
-                'url': 'http://elp.newenglishtime.com/search'
+                'url': 'http://elp.postenglishtime.com/wechat#!/search'
                 'type': 'view'
                 'name': '查询P成员'
             ]
         ,
             'type': 'view'
             'name': '供需交流'
-            'url': 'http://url.com/wechat.html#!/sd'
+            'url': 'http://elp.postenglishtime.com/wechat#!/sd'
         ]
 ]
 
@@ -213,14 +213,14 @@ module.exports =
     community:
         code: code
         name: 'P家族'
-        resPath: if _env then '/res' else 'http://s.wikibeijing.com'
-        url: if _env then 't.elp.com' else 'elp.newenglishtime.com'
+        resPath: if _env then '/res' else 'http://s.postenglishtime.com'
+        url: if _env then 't.elp.com' else 'elp.postenglishtime.com'
 
     data:
         'role:title': role
-#        'user:username': user
-#        'membership:uid,rid': membership
-#        'roleMap:role': roleMap
-#        'org:title': org
-#        'pubAccount:appId': pubAccount
-#        'i18n:key': require('./zh')
+        'user:username': user
+        'membership:uid,rid': membership
+        'roleMap:role': roleMap
+        'org:title': org
+        'pubAccount:appId': pubAccount
+        'i18n:key': require('./zh')

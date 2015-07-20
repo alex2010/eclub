@@ -55,12 +55,14 @@ dataController =
             rsp.send util.r item
 
     getByKey: (req, rsp) ->
+        log 'zxvxzcv'
         code = req.c.code
         pa = req.params
         filter = {}
         filter[pa.key] = pa.val
 
         dao.get code, pa.entity, filter, (item)->
+            log item
             rsp.send util.r item
 
     edit: (req, rsp) ->
@@ -69,11 +71,13 @@ dataController =
         bo = req.body
 
         after = util.del 'afterSave', req.body
-        _attrs = bo._attrs || ''
-        _attrs = _attrs.split(',')
-        _attrs.push '_id'
+        _attrs = if bo._attrs
+            bo._attrs.split(',')
+        else
+            _.keys(bo)
         cleanItem(bo)
-
+        bo =
+            $set: bo
         dao.findAndUpdate code, entity, _id: req.params.id, bo, (item)->
             gs(it)(req, item.value) for it in after.split(',') if after
             rsp.send util.r _.pick(item.value, _attrs)
@@ -87,7 +91,7 @@ dataController =
         _attrs = bo._attrs || ''
         _attrs = _attrs.split(',')
         _attrs.push '_id'
-        cleanItem(bo,true)
+        cleanItem(bo, true)
 
         dao.save code, entity, bo, (item)->
             gs(it)(req, item) for it in after.split(',') if after
@@ -104,7 +108,6 @@ dataController =
             k:
                 $regex: req.c.url
         dao.delItem _mdb, 'cache', opt, (res)->
-            log res
             log 'clean Cache...'
             rsp.send msg: 'del.ok'
 

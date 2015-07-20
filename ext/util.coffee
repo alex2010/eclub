@@ -24,6 +24,9 @@ module.exports =
             count: extra
         else if it
             entity: it
+        else
+            entity: {}
+            msg: 'm.noFind'
 
     randomInt: (low, high)->
         Math.floor(Math.random() * (high - low + 1) + low)

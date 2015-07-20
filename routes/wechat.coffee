@@ -22,8 +22,6 @@ func =
 
 
 handleOp = (item, req, rsp)->
-    log req.baseUrl
-    log req.hostname
     switch item.type
         when 'text'
             rsp.reply item.content

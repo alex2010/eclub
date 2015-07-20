@@ -1,16 +1,17 @@
 extends inc/main
 
 block style
-    style(type='text/css').
-        .note p{
+    :less(minify=true)
+        .note p {
             font-size: 13px !important;
             line-height: 20px;
         }
 
-        .btn-success{
+        .btn-success {
             margin-top: 10px;
         }
-        .travels i{
+
+        .travels i {
             margin: 0 5px;
             color: green;
         }
@@ -71,5 +72,3 @@ block content
                         .note!= it.note
                     .col-md-12
                         .btn.btn-block.btn-success.btn-small Select & Book
-block st
-    :coffee(bare=true)

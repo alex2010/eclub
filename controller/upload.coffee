@@ -96,7 +96,6 @@ module.exports =
             msg: 'm.upload'
 
     fileList: (req, rsp)->
-        log 'zxvxzvcxvxcxcv'
         qu = req.query
         code = req.c.code
         path = qu.path

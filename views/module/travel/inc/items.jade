@@ -15,6 +15,8 @@ if _items.length
                                     != f.img(it.imgPath,c)
                                 else if it.refFile && it.refFile.list
                                     != f.img(f.resPath(c, it.refFile.list[0]),c)
+                                //.tipText
+                                //    = it.brief
                                 .text
                                     h4(style='font-size: 18px')= it.title
                                     p(style='font-size: 14px')

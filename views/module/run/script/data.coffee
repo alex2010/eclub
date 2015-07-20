@@ -105,15 +105,14 @@ post = [
 module.exports =
     community:
         code: code
-        name: '泥泞跑'
-#        resPath: if _env then '/res' else 'http://t.chinamudrun.com'
-        resPath: if _env then '/res' else 'http://s.wikibeijing.com'
-        url: if _env then 't.run.com' else 'run.newenglishtime.com'
+        name: '泥泞跑 mudrun'
+        resPath: if _env then '/res' else 'http://s.chinamudrun.com'
+        url: if _env then 't.run.com' else 'chinamudrun.com'
 
     data:
-#        'role:title': role
-#        'user:username': user
-#        'membership:uid,rid': membership
+        'role:title': role
+        'user:username': user
+        'membership:uid,rid': membership
         'comment:username': comment
-#        'post:title': post
-#        'i18n:key': require('./zh')
+        'post:title': post
+        'i18n:key': require('./zh')

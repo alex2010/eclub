@@ -98,7 +98,6 @@ module.exports =
             filter =
                 type: 'top'
             dao.get ctx.c.code, 'head', filter, (res)->
-                log res
                 cb(null, res)
 
         head: (cb)->
@@ -140,10 +139,17 @@ module.exports =
 #                cb(null, res)
 
     show: (ctx)->
+        ctx.info = {} unless ctx.info
+        img = ctx.f.resPath(ctx.c, 'images/youtube.png')
+        ctx.info.watchVideo = if ctx.info.watchVideo
+            "<a target='_blank' href='#{ctx.info.watchVideo}'><img width='100%' src='#{img}'></a>"
+        else
+            "<p>Coming soon...</p>"
+
         if ctx.refFile and ctx.refFile.seat
             img = ctx.f.resPath(ctx.c, ctx.refFile.seat[0])
-            ctx.info = {} unless ctx.info
             ctx.info.priceSeats = "<img width='100%' onclick='cf.showPic(this)' data-url='#{img}' src='#{img}'/>"
+        {}
 
     sight: (ctx)->
         ctx.info = {} unless ctx.info

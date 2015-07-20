@@ -35,10 +35,13 @@ authController =
     login: (req, rsp) ->
         code = req.c.code
         opt = checkType req.body.username
+        log opt
         dao.get code, 'user', opt, (user)->
             unless user
                 errAuth rsp
                 return
+            log user.psd
+            log req.body.psd
             if user.psd isnt req.body.psd
                 errAuth rsp
             else

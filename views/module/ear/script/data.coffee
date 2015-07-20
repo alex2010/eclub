@@ -9,7 +9,7 @@ consultantUserId = new oid()
 
 
 role = [
-#    _id: adminRoleId
+    _id: adminRoleId
     title: 'admin'
     label: '管理员'
     type: 0
@@ -38,7 +38,7 @@ role = [
         permission:
             page: 'console'
 ,
-#    _id: ownerRoleId
+    _id: ownerRoleId
     title: 'manager'
     label: '店长'
     type: 0
@@ -48,20 +48,19 @@ role = [
                 icon: 'user'
                 act: 'profile'
                 row: 1
-        permission:
-            page: 'wechat'
-
-,
-#    _id: consultantRoleId
-    title: 'member'
-    label: '眼配师'
-    type: 0
-    res:
-        menu:
             shop:
                 icon: 'gift'
                 act: 'shop'
                 row: 10
+        permission:
+            page: 'wechat'
+
+,
+    _id: consultantRoleId
+    title: 'member'
+    label: '眼配师'
+    type: 0
+    res:
         permission:
             page: 'wechat'
 ]
@@ -113,12 +112,12 @@ module.exports =
     community:
         code: code
         name: '掌上听力专家'
-        resPath: if _env then '/res' else 'http://s.wikibeijing.com'
-        url: if _env then 't.ear.com' else 'ear.eclubnet.com'
+        resPath: if _env then '/res' else 'http://s.postenglishtime.com'
+        url: if _env then 't.ear.com' else 'ear.postenglishtime.com'
 
     data:
         'role:title': role
-#        'user:username': user
-#        'membership:uid,rid': membership
-#        'pubAccount:appId': pubAccount
-#        'i18n:key': require('./zh')
+        'user:username': user
+        'membership:uid,rid': membership
+        'pubAccount:appId': pubAccount
+        'i18n:key': require('./zh')

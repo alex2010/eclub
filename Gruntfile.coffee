@@ -13,19 +13,28 @@ module.exports = (grunt)->
 
 #    dm = 'wikibeijing.com'
 #    ftp = '45.33.59.69'
-#
+
 #    ftp = '139.162.24.228'
 #    upload_path: '/opt/node/public'
+
     _resPath = "http://s.newenglishtime.com/"
+
 #    _resPath = setting.res_path
 #    ftp = setting.ftp
 
     _remote = '/opt/node/'
-    _remoteRes = '/opt/node/public/res/'
+    _remoteRes = "#{_remote}public/res/"
     _local = __dirname
     _module = "#{__dirname}/public/module/"
     #    m = grunt.task.current.args[0]
 
+
+    require("load-grunt-config") grunt
+
+    grunt.registerTask 'default', ->
+        grunt.initConfig {}
+
+    #------------------------------------------backend-------------------------------------------------
     backFiles = (nstr)->
         res = []
         for it in nstr.split(',')
@@ -36,12 +45,6 @@ module.exports = (grunt)->
                 dest: _remote + "#{if it is './' then '' else it}"
         res
 
-    require("load-grunt-config") grunt
-
-    grunt.registerTask 'default', ->
-        grunt.initConfig {}
-
-    #------------------------------------------backend-------------------------------------------------
     grunt.registerTask 'bk', (code,mode) ->
         setting = require "#{__dirname}/views/module/#{code}/script/setting.js"
 
@@ -49,28 +52,37 @@ module.exports = (grunt)->
             "views/module/#{code},views/module/#{code}/script,views/module/#{code}/data"
         else
             "./,views,routes,ext,controller,bin,service"
+        _remote = setting.upload_path
+        _remoteRes = "#{_remote}res/"
 
         grunt.config.init
             ftpscript:
                 server:
                     options:
-                        host: setting.ftp #port: port
+                        host: setting.ftp
+                        port: setting.port || '21'
                         auth:
                             username: 'root'
                             password: 'rock200*'
                     files: backFiles(bStr)
-
         grunt.task.run "ftpscript:server"
 
     #------------------------------------------frontend-------------------------------------------------
     grunt.registerTask 'ft', (code) ->
-        _res = "public/res/"
-        _resSub = "#{_res}upload/#{code}/lib"
-        #        _remoteRes = "/opt/s.#{dm}/res/"
-        _remoteResSub = "#{_remoteRes}upload/#{code}/lib"
-        _admin = "public/lib/admin/"
+#        _remoteRes = "/opt/s.#{dm}/res/"
+
 
         setting = require "#{__dirname}/views/module/#{code}/script/setting.js"
+
+        _local_admin = "public/lib/admin/"
+        _local_resSub = "public/res/upload/#{code}/lib"
+
+
+        _remote = setting.upload_path
+        _remoteRes = "#{_remote}public/res/"
+
+        _remoteResSub = "#{_remoteRes}upload/#{code}/lib"
+
         m = "#{_module + code}/src/"
 
 #        grunt.log.write(require("#{_module}rfg.js").cfg(code, 'main').out)
@@ -99,9 +111,9 @@ module.exports = (grunt)->
 #                        process: cssProcess
                 cleanCss:
                     expand: true
-                    cwd: _resSub
+                    cwd: _local_resSub
                     src: ['*.css']
-                    dest: _resSub
+                    dest: _local_resSub
                     options:
                         process: cssProcess
             cssmin:
@@ -112,13 +124,13 @@ module.exports = (grunt)->
                         expand: true
                         cwd: m + 'style'
                         src: ['*.css']
-                        dest: _resSub
+                        dest: _local_resSub
                         ext: '.css'
                     ,
                         expand: true
-                        cwd: _admin + 'style'
+                        cwd: _local_admin + 'style'
                         src: ['*.css']
-                        dest: _resSub
+                        dest: _local_resSub
                         ext: '.css'
                     ]
 
@@ -143,7 +155,7 @@ module.exports = (grunt)->
 #                        dest: _remoteRes + 'css'
 #                    ,
                         expand: true
-                        cwd: _resSub
+                        cwd: _local_resSub
                         src: ['*.*']
                         dest: _remoteResSub
 #                    ,
