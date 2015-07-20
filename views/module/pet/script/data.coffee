@@ -2,7 +2,7 @@ adminRoleId = new oid()
 adminUserId = new oid()
 
 role = [
-#    _id: adminRoleId
+    _id: adminRoleId
     title: 'admin'
     type: 0
     res:
@@ -167,15 +167,15 @@ membership = [
 module.exports =
     community:
         code: code
-        name: 'P.E.T后英语时代'
-        resPath: if _env then '/res' else 'http://s.wikibeijing.com'
-        url: if _env then 't.postenglishtime.com' else 'postenglishtime.com'
+        name: 'PET后英语时代'
+        resPath: if _env then '/res' else 'http://s.encorner.com'
+        url: if _env then 't.postenglishtime.com' else 'encorner.com'
 
     data:
         'role:title': role
-#        'user:username': user
-#        'membership:uid,rid': membership
-        'i18n:key,lang': require('./zh')
+        'user:username': user
+        'membership:uid,rid': membership
+        'i18n:key': require('./zh')
 
 
 
