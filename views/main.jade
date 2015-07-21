@@ -1,0 +1,16 @@
+doctype html
+
+block script
+    - main = 'main'
+
+html
+    head
+        include ./inc/smeta
+        style(type='text/css')
+            block style
+
+        block head
+    body
+        block content
+
+    include ./inc/ssub
