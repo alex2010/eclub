@@ -1,16 +1,6 @@
 extends ../../../main
 
-block style
-    :less(minify=true)
-        body {
-            table{
-                background: white;
-            }
-        };
-
-        .test {
-        }
-block content
+block ctn
     .container
         header.row
             .col-md-7.logo
@@ -41,7 +31,7 @@ block content
                 li /
                 li.li-reg
                     a(href='javascript:void(0);') 登录
-        block main
+        block content
 
         footer.row
             .col-md-7.intro-ft
@@ -72,10 +62,3 @@ block content
                     li.li-ft-share
                         a(href='javascript:void(0);')
                             img.img-responsive(src='images/icon-share_29.png', alt='')
-
-block st
-    :coffee(bare=true,minify=true)
-        $('.li-nav').hover (->
-            $(this).addClass 'active'
-        ), ->
-            $(this).removeClass 'active'

@@ -1,10 +1,21 @@
 extends ./inc/main
 
+block headRes
+    link(rel='stylesheet', type='text/css', href='/module/ear/style/main.css', media='all')
 
+block style
+    :less(minify=true)
+        body {
+            table {
+                background: white;
+            }
+        }
 
-block main
-    each it, i in posts
-        h1= it.title
+        ;
+        .test {
+        }
+
+block content
 
     #carousel-example-generic.carousel.slide.banner(data-ride='carousel')
         // Indicators
@@ -107,3 +118,9 @@ block main
                             span.btn-option-important 地区
                         .col-md-5
                             span.btn-option-important 下载
+block st
+    :coffee(bare=true,minify=true)
+        $('.li-nav').hover (->
+            $(this).addClass 'active'
+        ), ->
+            $(this).removeClass 'active'

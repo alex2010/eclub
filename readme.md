@@ -2,7 +2,7 @@
 
 ## run
 
-npm install -g coffee-script less grunt-cli pm2 express bower
+npm install -g coffee-script less grunt-cli pm2 express bower webpack webpack-dev-server
 
 npm install
 

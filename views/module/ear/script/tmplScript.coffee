@@ -3,13 +3,12 @@ module.exports =
 
     index: (ctx, req, rsp)->
         posts: (cb)->
-            log 'posts'
-            dao.find ctx.c.code, 'post', {}, (res)->
+            dao.find ctx.c.code, 'post', {},{}, (res)->
+                res || res = []
                 log res
                 cb(null,res)
 
     wechat:(ctx)->
-
         wt:(cb)->
             dao.get ctx.c.code, 'pubAccount', {}, (res)->
                 cb(null,res)
