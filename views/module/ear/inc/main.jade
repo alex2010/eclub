@@ -1,13 +1,15 @@
 extends ../../../main
 
-block ctn
+block headRes
+    link(rel='stylesheet', type='text/css', href='/module/ear/style/main.css', media='all')
 
+block ctn
     .container
         header.row
             .col-md-7.logo
                 h1
-                    a(href='javascript:void(0);')
-                        img.img-responsive(src='images/logo_03.png', alt='')
+                    a(href='/')
+                        img.img-responsive(src='#{resPath}images/logo_03.png', alt='')
                 p 聆听在线--最好用的听力健康平台
             .col-md-5.block-search-hder
                 span.tip-search 站内搜索
@@ -16,7 +18,7 @@ block ctn
         nav.row
             ul.col-md-8.pull-left.l-nav
                 li.li-nav.current
-                    a(href='javascript:void(0);') 首页
+                    a(href='/') 首页
                 li.li-nav
                     a(href='javascript:void(0);') 听力健康
                 li.li-nav
@@ -56,10 +58,15 @@ block ctn
                 ul.l-ft-share
                     li.li-ft-share
                         a(href='javascript:void(0);')
-                            img.img-responsive(src='images/icon-share_25.png', alt='')
+                            img.img-responsive(src='#{resPath}images/icon-share_25.png', alt='')
                     li.li-ft-share
                         a(href='javascript:void(0);')
-                            img.img-responsive(src='images/icon-share_27.png', alt='')
+                            img.img-responsive(src='#{resPath}images/icon-share_27.png', alt='')
                     li.li-ft-share
                         a(href='javascript:void(0);')
-                            img.img-responsive(src='images/icon-share_29.png', alt='')
+                            img.img-responsive(src='#{resPath}images/icon-share_29.png', alt='')
+block js
+    script(src="/res/js/jquery/dist/jquery.js")
+    script(src="/res/js/bootstrap/dist/js/bootstrap.min.js")
+
+
