@@ -1,8 +1,5 @@
 extends ./inc/main
 
-block headRes
-    link(rel='stylesheet', type='text/css', href='/module/ear/style/main.css', media='all')
-
 block style
     :less(minify=true)
         body {
@@ -24,16 +21,22 @@ block content
             li(data-target='#carousel-example-generic', data-slide-to='1')
             li(data-target='#carousel-example-generic', data-slide-to='2')
             li(data-target='#carousel-example-generic', data-slide-to='3')
+            li(data-target='#carousel-example-generic', data-slide-to='4')
+            li(data-target='#carousel-example-generic', data-slide-to='5')
         // Wrapper for slides
         .carousel-inner(role='listbox')
             .item.active
-                img(src='images/banner_10.jpg', alt='')
+                img(src='#{resPath}images/1.jpg', alt='')
             .item
-                img(src='images/banner_10.jpg', alt='')
+                img(src='#{resPath}images/2.jpg', alt='')
             .item
-                img(src='images/banner_10.jpg', alt='')
+                img(src='#{resPath}images/3.jpg', alt='')
             .item
-                img(src='images/banner_10.jpg', alt='')
+                img(src='#{resPath}images/4.jpg', alt='')
+            .item
+                img(src='#{resPath}images/5.jpg', alt='')
+            .item
+                img(src='#{resPath}images/6.jpg', alt='')
         // Controls
         a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
             span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
@@ -50,40 +53,18 @@ block content
                     h3.title-panel-news 听力健康
                 .bd-panel-news
                     ul.l-panel-news
-                        li.li-panel-news
-                            a.link-panel-news(href='javascript:void(0);') 贵州毕节大剧院舞台彩排时垮塌致8人受伤
-                        li.li-panel-news
-                            a.link-panel-news(href='javascript:void(0);') 重庆再添艺术大剧院 施光南大剧院今迎首场演
-                        li.li-panel-news
-                            a.link-panel-news(href='javascript:void(0);') 歌剧女皇”登台大剧院 演绎绝美咏叹
-                        li.li-panel-news
-                            a.link-panel-news(href='javascript:void(0);') 长影新片《司法所长老秦》首映
-                        li.li-panel-news
-                            a.link-panel-news(href='javascript:void(0);') 印象·萨克斯”台湾李承育萨克斯音乐会青宫
-                        li.li-panel-news
-                            a.link-panel-news(href='javascript:void(0);') 组图：范冰冰与妈妈合影 亲密似姐妹花颜值高
-                        li.li-panel-news
-                            a.link-panel-news(href='javascript:void(0);') 贵州毕节大剧院舞台彩排时垮塌致8人受伤
+                        each it in posts
+                            li.li-panel-news
+                                a.link-panel-news(href='/post/'+it._id)= it.title
             section.panel-news
                 .hd-panel-news
                     a.more-panel-news(href='javascript:void(0);') more
                     h3.title-panel-news 互动论坛
                 .bd-panel-news
                     ul.l-panel-news
-                        li.li-panel-news
-                            a.link-panel-news(href='javascript:void(0);') 贵州毕节大剧院舞台彩排时垮塌致8人受伤
-                        li.li-panel-news
-                            a.link-panel-news(href='javascript:void(0);') 重庆再添艺术大剧院 施光南大剧院今迎首场演
-                        li.li-panel-news
-                            a.link-panel-news(href='javascript:void(0);') 歌剧女皇”登台大剧院 演绎绝美咏叹
-                        li.li-panel-news
-                            a.link-panel-news(href='javascript:void(0);') 长影新片《司法所长老秦》首映
-                        li.li-panel-news
-                            a.link-panel-news(href='javascript:void(0);') 印象·萨克斯”台湾李承育萨克斯音乐会青宫
-                        li.li-panel-news
-                            a.link-panel-news(href='javascript:void(0);') 组图：范冰冰与妈妈合影 亲密似姐妹花颜值高
-                        li.li-panel-news
-                            a.link-panel-news(href='javascript:void(0);') 贵州毕节大剧院舞台彩排时垮塌致8人受伤
+                        each it in posts
+                            li.li-panel-news
+                                a.link-panel-news(href='/post/'+it._id)= it.title
         .col-md-7.block-main-right
             ul.l-important-index
                 li.li-important-index
