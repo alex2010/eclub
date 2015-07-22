@@ -27,7 +27,8 @@ _.extend String::,
         (if @length > length then @slice(0, length - truncation.length) + truncation else String(this))
     fileName: ->
         @substr(@lastIndexOf('/') + 1)
-
+    dStr:(len=19)->
+        this.replace(/-/g, "/").replace(/[TZ]/g, " ").substr(0, len)
 
 String.randomChar = (len, x = '0123456789qwertyuioplkjhgfdsazxcvbnm') ->
     ret = x.charAt(Math.ceil(Math.random() * 10000000) % x.length)

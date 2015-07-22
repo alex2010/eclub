@@ -15,19 +15,25 @@ module.exports =
                     res = res.replace(new RegExp("{", "gm"), '').replace(new RegExp("}", "gm"), '')
             return res
         else
-            if k.indexOf('.') > -1
-                k = k.split('.')[1]
+#            if k.indexOf('.') > -1
+#                k = k.split('.')[1]
             if k.indexOf('::') > -1
                 k = k.split('::')[1]
             return k.capAll()
+
     iim: (k, m...) ->
-        ii('m.' + k, iin(it) for it in m)
+        log 'im'
+        log m
+        if m
+            pm = iin(it) for it in m
+        ii(k, pm)
 
     iie: (k, p) ->
         _i[k + '_' + p] || _i[p] || p.capAll()
 
     iic: (p) ->
-        _i[p] || ii('c.' + p)
+        _i[p] || p.capAll()
 
     iin: (p) ->
-        _i[p] || ii('nav.' + p)
+        if p
+            return _i[p] || p.capAll()

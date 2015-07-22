@@ -18,15 +18,17 @@ module.exports =
         delete it[p]
         rs
 
-    r: (it, extra)->
+    r: (it, extra, e)->
         if _.isArray it
             entities: it
             count: extra
         else if it
             entity: it
+            msg: extra
+            _e: e
         else
             entity: {}
-            msg: 'm.noFind'
+            msg: 'm_find_no'
 
     randomInt: (low, high)->
         Math.floor(Math.random() * (high - low + 1) + low)

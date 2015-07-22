@@ -1,27 +1,27 @@
 module.exports =
     randomInt: util.randomInt
 
-    viewItem:(entity,k,v)->
+    viewItem: (entity, k, v)->
         opt = cf.meta[entity][k] || cf.meta.common[k]
         if opt.showText
             opt.showText(v)
         else if opt.type is 'text' or !opt.type
             v
-        else if opt.type in ['select','radio']
+        else if opt.type in ['select', 'radio']
             if opt.data and +v
-                _.result(opt,'data')[+v]
+                _.result(opt, 'data')[+v]
             else
                 v
         else if opt.type is 'status'
-            cf.st.text(entity+'_status', v)
+            cf.st.text(entity + '_status', v)
 #        else if
         else
             v
 
 
-    dStr: (str,len=19)->
+    dStr: (str, len = 19)->
         if str
-            str.replace(/-/g, "/").replace(/[TZ]/g, " ").substr(0,len)
+            str.replace(/-/g, "/").replace(/[TZ]/g, " ").substr(0, len)
         else
             ''
     icon: (icon, tag = 'i', str = '', cls = '')->
@@ -44,10 +44,13 @@ module.exports =
             href: '/'
         ].concat items
 
-    img: (path, c, cls = 'markImg', pop = false)->
-        id = String.randomChar(4)
-        """<div id="#{id}" class="#{cls}" src="#{path}" pop="#{pop}"
-        style="background:url(#{c.resPath}/img/loading-bk.gif) no-repeat 50% 50%;height:100%;text-indent: -1000px;">loading...</div>"""
+#    img: (path, c, cls = 'markImg', pop = false)->
+#        id = String.randomChar(4)
+#        """<div id="#{id}" class="#{cls}" src="#{path}" pop="#{pop}"
+#        style="background:url(#{c.resPath}/img/loading-bk.gif) no-repeat 50% 50%;height:100%;text-indent: -1000px;">loading...</div>"""
+
+    img: (path, c, cls = 'avatar', pop = false, width = 'auto')->
+        "<img id='#{String.randomChar(4)}' class='#{cls}' bb-src='#{path}' pop='#{pop}' width='#{width}'/>"
 
 
     imgItem: (it, c, name = 'head', index = 0, cls)->
@@ -105,5 +108,5 @@ module.exports =
                     k += '/' + it
         k
 
-    tmpl:(name,opt)->
+    tmpl: (name, opt)->
         cf.rtp name, opt
