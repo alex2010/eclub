@@ -99,6 +99,7 @@ router.post '/a/wt/createLimitQRCode', wt.createLimitQRCode
 router.post '/a/wt/showQRCodeURL', wt.showQRCodeURL
 router.post '/a/wt/uploadNews', wt.uploadNews
 router.get '/a/wt/userInfoByCode', wt.userInfoByCode
+router.post '/a/wt/jsSign', wt.jsSign
 
 
 router.get '/r/:entity', data.list

@@ -16,7 +16,6 @@ role = [
     res:
         mgm:
             menu:
-                home: 1
                 site: 2
                 data: 3
                 wechat: 4
@@ -111,7 +110,7 @@ pubAccount = [
 module.exports =
     community:
         code: code
-        name: '掌上听力专家'
+        title: '掌上听力专家'
         resPath: if _env then '/res' else 'http://s.postenglishtime.com'
         url: if _env then 't.ear.com' else 'ear.postenglishtime.com'
 

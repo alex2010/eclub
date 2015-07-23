@@ -1,7 +1,7 @@
 module.exports =
 
     iCat: (k)->
-        _i['cat.' + k]
+        _i['cat_' + k]
 
     si: (k)->
         _i[k]
@@ -22,8 +22,6 @@ module.exports =
             return k.capAll()
 
     iim: (k, m...) ->
-        log 'im'
-        log m
         if m
             pm = iin(it) for it in m
         ii(k, pm)

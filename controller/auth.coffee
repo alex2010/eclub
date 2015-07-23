@@ -25,17 +25,16 @@ afterAuth = (code,user,rsp)->
                 deepExtend user, role.res
             rsp.send
                 user: user
-                msg: 'm.login_s'
+                msg: 'm_login_s'
 
 errAuth = (rsp)->
-    rsp.status(350).send msg: 'm.login_f'
+    rsp.status(350).send msg: 'm_login_f'
 
 authController =
 
     login: (req, rsp) ->
         code = req.c.code
         opt = checkType req.body.username
-        log opt
         dao.get code, 'user', opt, (user)->
             unless user
                 errAuth rsp
@@ -58,12 +57,12 @@ authController =
 #                        _.extend user, role.res for role in rs
 #                        rsp.send
 #                            user: user
-#                            msg: 'm.login_s'
+#                            msg: 'm_login_s'
 
 
     logout: (req, rsp) ->
         #del user session
-        rsp.send msg: 'm.logout_s'
+        rsp.send msg: 'm_logout_s'
 
     loginByWoid: (req,rsp)->
         code = req.c.code
@@ -77,7 +76,7 @@ authController =
 
 
     logoutByWoid: (req,rsp)->
-        rsp.send msg: 'm.logout_s'
+        rsp.send msg: 'm_logout_s'
 
 
 module.exports = authController
@@ -94,4 +93,4 @@ module.exports = authController
 #                        _.extend user, role.res for role in res
 #                        rsp.send
 #                            user: user
-#                            msg: 'm.login_s'
+#                            msg: 'm_login_s'

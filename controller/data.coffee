@@ -55,7 +55,6 @@ dataController =
             rsp.send util.r item
 
     getByKey: (req, rsp) ->
-        log 'zxvxzcv'
         code = req.c.code
         pa = req.params
         filter = {}
@@ -71,11 +70,16 @@ dataController =
         bo = req.body
 
         after = util.del 'afterSave', req.body
+        before = util.del 'beforeSave', req.body
+
         _attrs = if bo._attrs
             bo._attrs.split(',')
         else
             _.keys(bo)
         cleanItem(bo)
+
+        gs(it)(req,bo) for it in before.split(',') if before
+
         bo =
             $set: bo
         dao.findAndUpdate code, entity, _id: req.params.id, bo, (item)->

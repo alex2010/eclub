@@ -93,7 +93,7 @@ module.exports =
         rsp.send
             success: true
             entity: file
-            msg: 'm.upload'
+            msg: 'm_upload_ok'
 
     fileList: (req, rsp)->
         qu = req.query

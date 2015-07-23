@@ -3,20 +3,20 @@ async = require('async')
 tmplUtil = require '../ext/tmpl'
 jade = require('jade')
 
-wtApi = require('wechat-api')
 OAuth = require('wechat-oauth')
 
-getApi = (code, pubCode,func)->
-    if wtCtn[pubCode]
-        func(wtCtn[pubCode])
-    else
-        dao.get code, 'pubAccount', code: pubCode, (res)->
-            if res
-                api = new wtApi(res.appId, res.secret)
-                wtCtn[pubCode] = api
-                func(api)
+getApi = require '../service/wechat'
 
 module.exports =
+    jsSign:(req,rsp)->
+        bo = req.body
+        getApi req.c.code, bo.pubCode, (api)->
+            api.getJsConfig
+                jsApiList: bo.res.split(',')
+                url: bo.url
+            , (err, res) ->
+                rsp.send res
+
     apiCall:(name, opt)->
         getApi
 
@@ -124,24 +124,16 @@ module.exports =
     massSend:(req,rsp)->
         getApi req.body.code, (api)->
             api.massSend req.body.qrNum,(err, res) ->
-                log 'create qrcode'
-                log res
                 api.showQRCodeURL res.ticket, (res)->
                     log 'qrcode'
-                    log res
                     rsp.send res
 
     userInfoByCode:(req,rsp)->
         log 'userInfoByCode'
         qy = req.query
         [wCode,page,func] = qy.state.split('::')
-        log req.c
         code = req.c.code
-        log wCode
-        log page
-        log func
         if ctCtn[wCode]
-            log 'in this ctctn'
             ctCtn[wCode].getAccessToken qy.code, (err,result)->
                 accessToken = result.data.access_token
                 openid = result.data.openid
@@ -180,7 +172,6 @@ module.exports =
         else
             dao.get code, 'pubAccount', code: wCode, (res)->
                 ctCtn[wCode] = new OAuth(res.appId,res.secret)
-                log 'zzz'
                 log "http://#{req.c.url}/#{page}"
                 rsp.redirect "http://#{req.c.url}/#{page}"
         return

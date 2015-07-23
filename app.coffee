@@ -23,6 +23,7 @@ tu = require('./ext/tmpl');
 gs = function(fn){
     return require(_path + '/service/'+fn)
 };
+
 wtCtn = {};
 ctCtn = {};
 _wtcCtn={};

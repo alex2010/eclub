@@ -16,7 +16,6 @@ role = [
     res:
         mgm:
             menu:
-                home: 1
                 site: 2
                 data: 3
                 wechat: 4
