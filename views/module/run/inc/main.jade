@@ -1,12 +1,5 @@
-doctype html
-block script
-html
-    head
-        include ../../../inc/smeta
-        block style
-        block head
-    body(et= c.startedDate)
-        - main = 'main'
-        block content
+extends ../../../main
 
-    include ../../../inc/ssub
+block ctn
+    body(et= c.startedDate)
+        block content

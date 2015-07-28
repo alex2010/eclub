@@ -2,7 +2,10 @@ extends inc/main
 
 block script
     - main = 'wechat'
-block head
-//script(src='http://45.33.59.69:9000/target/target-script-min.js#anonymous')
 
-block content
+
+block prepend js
+    if !mode
+        script(src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js')
+
+//script(src='http://45.33.59.69:9000/target/target-script-min.js#anonymous')

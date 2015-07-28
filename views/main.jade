@@ -6,11 +6,14 @@ block script
 html
     head
         include ./inc/smeta
+
+        block head
+
         style(type='text/css')
             block style
 
-        block head
-    body
-        block ctn
+
+    block ctn
+        body
 
     include ./inc/ssub

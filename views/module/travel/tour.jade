@@ -228,7 +228,11 @@ block content
                                             each lt in it.itinerary
                                                 li
                                                     if lt._e
-                                                        strong!= f.link(lt)
+                                                        a.hoverLink(title= lt.title,data-content= lt.brief)= lt.title
+                                                        a.popover(href= "/sight/#{lt._id}")
+                                                            .arrow
+                                                            h4.popover-title
+                                                            .popover-content
                                                     else
                                                         strong= lt.title
                                                     p!= lt.brief
@@ -313,3 +317,7 @@ block st
     :coffee(bare=true)
         $('.tbHead input').click ->
             $(@).closest('table').find('.total').text $(@).data('price') * $(@).data('count')
+
+
+        for it in $('.hoverLink')
+            util.addHover $(it)

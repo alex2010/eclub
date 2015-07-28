@@ -7,9 +7,9 @@ module.exports =
 
     local_path: "http://t.run.com:3000/res/"
 
-    upload_path: '/var/www/ftp/mud/'
+    upload_path: '/var/www/mud'
 
-    log_path: '/var/www/ftp/mud/log/'
+    log_path: '/var/www/mud/log/'
 
     db_host: '127.0.0.1'
     db_port: 27017

@@ -17,8 +17,8 @@ module.exports =
             , (err, res) ->
                 rsp.send res
 
-    apiCall:(name, opt)->
-        getApi
+#    apiCall:(name, opt)->
+#        getApi
 
     createMenu: (req, rsp)->
         getApi req.body.code, req.body.pubCode, (api)->

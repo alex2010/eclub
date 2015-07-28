@@ -26,7 +26,14 @@ block slide
                         h3
                             a(href= it.href)= it.title
                         p= it.subTitle
-                        a.btn.btn-primary(href= it.href) See Details
+                        a.btn.btn-primary.hoverLink(title= it.title, data-content= it.brief) See Details
+                        a(href= it.href).popover
+                            .arrow
+                            h4.popover-title test
+                            .content
+                                != f.imgItem(it,c,'slide')
+                                = it.brief
+
         include ../../inc/slideBtn
 
 
@@ -84,5 +91,12 @@ block st
 
         $('#indexSlide').on 'slid.bs.carousel', ->
             initSeasonPic()
+
+
+        for it in $('.hoverLink')
+            util.addHover $(it)
+
+
+
 
 

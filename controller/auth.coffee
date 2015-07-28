@@ -23,9 +23,16 @@ afterAuth = (code,user,rsp)->
                 label: r.label
             for role in rs
                 deepExtend user, role.res
-            rsp.send
-                user: user
-                msg: 'm_login_s'
+                op =
+                    uid: user._id
+
+            dao.find code, 'orgRelation', op, {}, (os)->
+                user.orgs = for r in os
+                    _id: r.oid
+                    title: r.org
+                rsp.send
+                    user: user
+                    msg: 'm_login_s'
 
 errAuth = (rsp)->
     rsp.status(350).send msg: 'm_login_f'

@@ -102,6 +102,7 @@ router.get '/a/wt/userInfoByCode', wt.userInfoByCode
 router.post '/a/wt/jsSign', wt.jsSign
 
 
+router.get '/r/comp', data.comp
 router.get '/r/:entity', data.list
 router.get '/r/:entity/:id', data.get
 router.get '/r/:entity/:key/:val', data.getByKey

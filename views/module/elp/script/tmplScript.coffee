@@ -1,26 +1,40 @@
 module.exports =
+    _init: (ctx)->
+
     wechat:(ctx)->
         wt:(cb)->
             dao.get ctx.c.code, 'pubAccount', {}, (res)->
                 cb(null,res)
 
-    search:(ctx)->
-        elps:(cb)->
+        head:(cb)->
+            dao.get ctx.c.code, 'head', type: 'wechat', (res)->
+                cb(null,res)
+
+        posts:(cb)->
             opt =
                 skip: 0
                 limit: 20
                 sort:
                     lastUpdated: -1
-            dao.find ctx.c.code, 'org', {}, opt, (res)->
-                for it in res
-                    it.href = "/org/#{it._id}"
-                    it.imgPath = 'next'
-                cb(null, res)
-    org:(ctx)->
-        member:(cb)->
-            dao.find ctx.c.code, 'user', pClass: ctx.title, {}, (res)->
-                cb null, res
-    _init: (ctx)->
+            dao.find ctx.c.code, 'post', {}, opt, (res)->
+                cb(null,res)
+
+#    search:(ctx)->
+#        elps:(cb)->
+#            opt =
+#                skip: 0
+#                limit: 20
+#                sort:
+#                    lastUpdated: -1
+#            dao.find ctx.c.code, 'org', {}, opt, (res)->
+#                for it in res
+#                    it.href = "/org/#{it._id}"
+#                    it.imgPath = 'next'
+#                cb(null, res)
+#    org:(ctx)->
+#        member:(cb)->
+#            dao.find ctx.c.code, 'user', pClass: ctx.title, {}, (res)->
+#                cb null, res
 
 #        ctx.css = ctx.cssPath('css')
 #        menu: (cb)->

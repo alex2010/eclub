@@ -50,13 +50,14 @@ module.exports =
 #        style="background:url(#{c.resPath}/img/loading-bk.gif) no-repeat 50% 50%;height:100%;text-indent: -1000px;">loading...</div>"""
 
     img: (path, c, cls = 'avatar', pop = false, width = 'auto')->
-        "<img id='#{String.randomChar(4)}' class='#{cls}' bb-src='#{path}' pop='#{pop}' width='#{width}'/>"
+        "<img id='#{String.randomChar(4)}' class='#{cls} _imgBox' bb-src='#{path}' pop='#{pop}' width='#{width}'/>"
 
 
     imgItem: (it, c, name = 'head', index = 0, cls)->
         return '' unless it
         if it.refFile and it.refFile[name]
             path = it.refFile[name][index]
+
         else
             path = ''
         @img @resPath(c, path), c, cls

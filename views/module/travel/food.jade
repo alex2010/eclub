@@ -32,7 +32,9 @@ block content
                     a.panel-heading(data-toggle='collapse', data-parent='#restaurant', href= '#cl' + i)
                         h4.panel-title
                             = it.title
-                            .pull-right!= f.icon('menu-down')
+                            .pull-right
+                                != f.icon('menu-up')
+                                != f.icon('menu-down')
                     .panel-collapse.collapse(id= 'cl' + i, class= i == 0 ? 'in' : '')
                         .panel-body
                             if it.refFile && it.refFile.ref
