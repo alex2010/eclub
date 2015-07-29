@@ -7,7 +7,7 @@ module.exports =
 
     local_path: "http://t.run.com:3000/res/"
 
-    upload_path: '/var/www/mud'
+    upload_path: '/var/www/mud/'
 
     log_path: '/var/www/mud/log/'
 

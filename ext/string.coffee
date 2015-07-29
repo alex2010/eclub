@@ -159,10 +159,10 @@ _.extend Array::,
 #                return @[i]
 #            i++
 #        null
-    remove: (val) ->
+    remove: (val,fz) ->
         i = 0
         while i < @length
-            if @[i] == val
+            if @[i] == val or (fz && @[i].indexOf(val)>-1)
                 @splice i, 1
                 return val
             i++
