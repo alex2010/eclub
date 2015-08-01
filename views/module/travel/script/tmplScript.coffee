@@ -151,6 +151,11 @@ module.exports =
             ctx.info.priceSeats = "<img width='100%' onclick='cf.showPic(this)' data-url='#{img}' src='#{img}'/>"
         {}
 
+    culture: (ctx)->
+        allCultures: (cb)->
+            dao.find ctx.c.code, 'culture', {}, {}, (res)->
+                cb(null, res.sortBy('title',false))
+
     sight: (ctx)->
         ctx.info = {} unless ctx.info
         img = ctx.f.resPath(ctx.c, 'images/youtube.png')

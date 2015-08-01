@@ -39,12 +39,18 @@ block content
                             for tt in it.airport
                                 p.row
                                     span.col-md-3.text-right
-                                        input(type='radio',name= 'airport')
+                                        input.tt(data-price=tt.price data-from=tt.from data-to=tt.to data-rice=tt.price type='radio' name='airport')
                                     span.col-md-2 $#{tt.price}
                                     span.col-md-7
                                         = tt.from
                                         != f.icon('arrow-right')
                                         = tt.to
+                        h4.text-center Tour guide
+                        p.row
+                            span.col-md-3.text-right
+                                input(data-price=it.guideFee type='radio',name= 'guide')
+                            span.col-md-2 $#{it.guideFee}
+                            span.col-md-7 Transfer only
 
                         hr
                         h4.text-center Great Wall Transfer
@@ -52,23 +58,25 @@ block content
                             for bb in it.spot
                                 p.row
                                     span.col-md-3.text-right
-                                        input(type='checkbox',name= 'spot')
+                                        input.gw(data-price=bb.price data-from=bb.from data-to=bb.to type='checkbox',name= 'spot')
                                     span.col-md-2 $#{bb.price}
                                     span.col-md-7.r0
                                         = bb.from
                                         != f.icon('resize-horizontal')
                                         = bb.to
 
-                        hr
-                        h4.text-center Tour guide
-                        p.row
-                            span.col-md-3.text-right
-                                input(type='radio',name= 'guide')
-                            span.col-md-2 $#{it.guideFee}
-                            span.col-md-7 Transfer only
-
                     .col-md-4
                         h4 NOTE
                         .note!= it.note
                     .col-md-12
-                        .btn.btn-block.btn-success.btn-small Select & Book
+                        .btn.btn-block.btn-success.btn-small(onclick='cf.addToCart(this)' data-title=it.title) Select & Book
+
+block st
+    :coffee(bare=true,minify=true)
+        tr = $('.travels')
+
+        tr.on 'change', '.gw', (e)->
+            log 'gw'
+//
+//        tr.on 'change', '.tt',(e)->
+//            log 'tt'

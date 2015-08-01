@@ -1,81 +1,67 @@
-doctype html
+extends ../../../main
 
-block script
+block ctn
+    .headerWrapper
+        header#header.container
+            h1.col-md-9
+                a(href= '/')
+                    img(src= f.resPath(c, 'images/logo_03.jpg'))
+            .col-md-3.p0
+                .has-feedback(style= 'margin-top:45px')
+                    input#q.form-control.input-sm(name='q', type='text', placeholder='Search...')
+                    != f.icon('search', 'span', null, 'form-control-feedback')
 
-html
-    head
-        include ../../../inc/smeta
+    block slide
 
-        style(type='text/css')
-            block style
+    .topLine
+        .container
+            .row
+                h2.col-md-3
+                    | China /&nbsp;
+                    a(href='/')
+                        strong= city.title
+                .col-md-9
+                    block headLine
+                        if headTitle
+                            h3.pull-left= headTitle
 
-        block head
+                        if headMenu == 'sns'
+                            //include share
+                        else if _.isArray(headMenu)
+                            ul.headMenu.list-inline.pull-right.bold
+                                each it in headMenu
+                                    li(class= it.cur ? 'active' : '')
+                                        a(href= it.href)= it.title
 
-    body
-        - main = 'main'
-        .headerWrapper
-            header#header.container
-                h1.col-md-9
+    #content.container
+
+    #static.container
+        div(id= index).row
+            nav.col-md-2
+                - var mClass = 'menus row';
+                include ../../../inc/b3Menu
+            .col-md-10.clearfix
+                block content
+    .footerWrapper
+        footer.container
+            .row
+                each it in siteMap.sortBy('row')
+                    ul.col-md-2(class= it.top ? 'top' : '')
+                        p
+                            strong= it.title
+                        if it.items && it.items.length
+                            each ts in it.items
+                                if ts
+                                    li!= f.link(ts)
+    .bottomWrapper
+        .container
+            .row
+                .col-md-2.logo
                     a(href= '/')
-                        img(src= f.resPath(c, 'images/logo_03.jpg'))
-                .col-md-3
-                    .has-feedback(style= 'margin-top:30px')
-                        input#q.form-control.input-sm(name='q', type='text', placeholder='Search...')
-                        != f.icon('search', 'span', null, 'form-control-feedback')
-
-        block slide
-
-        .topLine
-            .container
-                .row
-                    h2.col-md-3
-                        | China /&nbsp;
-                        a(href='/')
-                            strong= city.title
-                    .col-md-9
-                        block headLine
-                            if headTitle
-                                h3.pull-left= headTitle
-
-                            if headMenu == 'sns'
-                                //include share
-                            else if _.isArray(headMenu)
-                                ul.headMenu.list-inline.pull-right.bold
-                                    each it in headMenu
-                                        li(class= it.cur?'active':'')
-                                            a(href= it.href)= it.title
-
-        #content.container
-
-            div(id= index).row
-                nav.col-md-2
-                    - var mClass = 'menus row';
-                    include ../../../inc/b3Menu
-                .col-md-10.clearfix
-                    block content
-
-        .footerWrapper
-            footer.container
-                .row
-                    each it in siteMap.sortBy('row')
-                        ul.col-md-2(class= it.top?'top':'')
-                            p
-                                strong= it.title
-                            if it.items && it.items.length
-                                each ts in it.items
-                                    if ts
-                                        li!= f.link(ts)
-        .bottomWrapper
-            .container
-                .row
-                    .col-md-2.logo
-                        a(href= '/')
-                            img(src= f.resPath(c, 'images/logo_27.jpg'))
-                    ul.col-md-6.list-inline
-                        each it in foot
-                            li
-                                a(href= it.href)= it.label
-                    .col-md-4.text-bottom
-                        p.row © 2014 China Viator. All rights reserved. No part of this site may be reproduced without our written permission.
-
-    include ../../../inc/ssub
+                        img(src= f.resPath(c, 'images/logo_27.jpg'))
+                ul.col-md-6.list-inline
+                    each it in foot
+                        li
+                            a(href= it.href)= it.label
+                .col-md-4.text-bottom
+                    p.row © 2014 China Viator. All rights reserved. No part of this site may be reproduced without our written permission.

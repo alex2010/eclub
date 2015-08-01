@@ -219,8 +219,6 @@ _.extend Array::,
             @push val
         return
 
-
-
     sortBy: (attr, isAsc) ->
         @sort (a, b) ->
             if isAsc

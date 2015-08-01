@@ -5,7 +5,12 @@ block content
         .panel
             .panel-heading
                 h2= title
+                    small.pull-right.btn(data-toggle="collapse",data-target="#asl") A ~ Z
                     include inc/share
+        #asl.collapse
+            .row.text-center
+                each it in allCultures
+                    != f.link(it, null, 'col-md-3')
 
         if refFile
             -var _slides = refFile.slide || []

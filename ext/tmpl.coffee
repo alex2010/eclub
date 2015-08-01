@@ -49,7 +49,7 @@ module.exports =
 #        """<div id="#{id}" class="#{cls}" src="#{path}" pop="#{pop}"
 #        style="background:url(#{c.resPath}/img/loading-bk.gif) no-repeat 50% 50%;height:100%;text-indent: -1000px;">loading...</div>"""
 
-    img: (path, c, cls = 'avatar', pop = false, width = 'auto')->
+    img: (path, cls = 'avatar', pop = false, width = 'auto')->
         "<img id='#{String.randomChar(4)}' class='#{cls} _imgBox' bb-src='#{path}' pop='#{pop}' width='#{width}'/>"
 
 
@@ -60,7 +60,7 @@ module.exports =
 
         else
             path = ''
-        @img @resPath(c, path), c, cls
+        @img @resPath(c, path), cls
 
     resPath: (c, path)->
         c.resPath + '/upload/' + c.code + '/' + path

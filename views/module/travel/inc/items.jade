@@ -6,15 +6,15 @@ if _items.length
                     .pBox
                         if it._e == 'map'
                             a(onclick='cf.showPic(this)', data-url='#{it.url}', data-list='#{it.list}')
-                                != f.img(it.imgPath,c)
+                                != f.img(it.imgPath)
                                 .text
                                     h4(style='font-size: 18px')= it.title
                         else
                             a(href= it.href)
                                 if it.imgPath
-                                    != f.img(it.imgPath,c)
+                                    != f.img(it.imgPath)
                                 else if it.refFile && it.refFile.list
-                                    != f.img(f.resPath(c, it.refFile.list[0]),c)
+                                    != f.img(f.resPath(c, it.refFile.list[0]))
                                 //.tipText
                                 //    = it.brief
                                 .text
