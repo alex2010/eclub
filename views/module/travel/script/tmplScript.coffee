@@ -157,7 +157,7 @@ module.exports =
                 cb(null, res.sortBy('title',false))
 
     sight: (ctx)->
-        ctx.info = {} unless ctx.info
+        ctx.info ?= {}
         img = ctx.f.resPath(ctx.c, 'images/youtube.png')
         ctx.info.watchVideo = if ctx.info.watchVideo
                 "<a target='_blank' href='#{ctx.info.watchVideo}'><img width='100%' src='#{img}'></a>"
@@ -179,12 +179,15 @@ module.exports =
             filter =
                 ref: ctx._id.toString()
             dao.get ctx.c.code, 'map', filter, (res)->
+                log 'zxvcxcvzv'
+                log res
                 if res
                     if res.refFile and res.refFile.slide
-                        ctx.info = {} unless ctx.info
-    #                    ctx.info.map = ctx.f.imgItem(res, ctx.c.code, 'slide')
+                        ctx.info ?= {}
                         img = ctx.f.resPath(ctx.c, res.refFile.slide[0])
-                        ctx.info.map = "<img width='100%' onclick='cf.showPic(this)' data-url='#{img}' src='#{img}'>"
+                        ctx.info.englishMap = "<img width='100%' onclick='cf.showPic(this)' data-url='#{img}' src='#{img}'>"
+                    else
+                        ctx.info.englishMap = "<p>Coming soon...</p>"
                 cb(null, res)
 
 

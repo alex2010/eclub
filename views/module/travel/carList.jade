@@ -11,10 +11,23 @@ block style
             margin-top: 10px;
         }
 
+        .panel-heading{
+            h3{
+                margin-bottom: 0;
+            }
+        }
+
+        .col-md-4{
+            h4{
+                margin-top:0;
+            }
+        }
+
         .travels i {
             margin: 0 5px;
             color: green;
         }
+
 block content
 
     .panel
@@ -24,6 +37,8 @@ block content
         each it in _items
             .panel-heading
                 h3= it.title
+                    if it.star == 1
+                        span.text-danger *
             .panel-body.travels
                 .row
                     .col-md-4.r0

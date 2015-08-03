@@ -91,6 +91,20 @@ dataController =
         dao.get code, pa.entity, filter, (item)->
             rsp.send util.r item
 
+    subOp:(req,rsp)->
+        code = req.c.code
+        entity = req.params.entity
+        pEntity = req.params.pEntity
+        bo = req.body
+
+        filter = {}
+
+        opt =
+            $push: entity: obj
+
+        dao.findAndUpdate code, pEntity,filter, opt, (item)->
+
+
     edit: (req, rsp) ->
         code = req.c.code
         entity = req.params.entity
