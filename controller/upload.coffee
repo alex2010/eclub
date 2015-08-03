@@ -100,9 +100,3 @@ module.exports =
         code = req.c.code
         path = qu.path
         rsp.send walk sPath(code, path), qu.max, qu.offset
-
-
-
-
-
-

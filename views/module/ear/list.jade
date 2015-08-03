@@ -1,0 +1,18 @@
+//
+   Created by aibo on 15/8/2.
+extends ./inc/main
+block content
+    .row.main
+        .col-md-6
+        +panel
+            +media(place)
+    .row
+        +panel
+            +media(place,10)
+        +panel
+            +media(master,10)
+        +panel
+            +media(brand,10)
+block st
+    :coffee(bare=true,minify=true)
+

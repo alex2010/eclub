@@ -13,7 +13,6 @@ block style
         }
 
 block content
-
     #carousel-example-generic.carousel.slide.banner(data-ride='carousel')
         // Indicators
         ol.carousel-indicators
@@ -46,62 +45,95 @@ block content
             span.sr-only Next
 
     .main.row
-        .col-md-5.block-main-left
-            section.panel-news
-                .hd-panel-news
-                    a.more-panel-news(href='javascript:void(0);') more
-                    h3.title-panel-news 听力健康
-                .bd-panel-news
-                    ul.l-panel-news
-                        each it in posts
-                            li.li-panel-news
-                                a.link-panel-news(href='/post/'+it._id)= it.title
-            section.panel-news
-                .hd-panel-news
-                    a.more-panel-news(href='javascript:void(0);') more
-                    h3.title-panel-news 互动论坛
-                .bd-panel-news
-                    ul.l-panel-news
-                        each it in posts
-                            li.li-panel-news
-                                a.link-panel-news(href='/post/'+it._id)= it.title
-        .col-md-7.block-main-right
-            ul.l-important-index
-                li.li-important-index
-                    a.btn-important-index(href='javascript:void(0);') 搜索
-                    h3.title-important-index.instru 找助听器中心
-                    .row.bd-important-index
-                        .col-md-5
-                            span.btn-option-important 地区
-                        .col-md-5
-                            span.btn-option-important 下载
-                li.li-important-index
-                    a.btn-important-index(href='javascript:void(0);') 搜索
-                    h3.title-important-index.master 找助听器验配师
-                    .row.bd-important-index
-                        .col-md-5
-                            span.btn-option-important 地区
-                        .col-md-5
-                            span.btn-option-important 下载
-                li.li-important-index
-                    a.btn-important-index(href='javascript:void(0);') 搜索
-                    h3.title-important-index.brand 找助听器品牌
-                    .row.bd-important-index
-                        .col-md-5
-                            span.btn-option-important 地区
-                        .col-md-5
-                            span.btn-option-important 下载
-                li.li-important-index.last
-                    a.btn-important-index(href='javascript:void(0);') 搜索
-                    h3.title-important-index.about 找相关服务
-                    .row.bd-important-index
-                        .col-md-5
-                            span.btn-option-important 地区
-                        .col-md-5
-                            span.btn-option-important 下载
+        .col-md-4
+            +media(place)
+        .col-md-4
+            +media(master)
+        .col-md-4
+            +media(brand)
 block st
     :coffee(bare=true,minify=true)
+        #nav hover
         $('.li-nav').hover (->
             $(this).addClass 'active'
+            $(this).find('.l-subnav').show();
         ), ->
             $(this).removeClass 'active'
+            $(this).find('.l-subnav').hide();
+
+        #search hover
+        $('.li-search').mouseenter (->
+            ndx = $(this).index()-1
+            $(this).addClass('active').siblings('.li-search').removeClass('active');
+            $('.panel-search').hide();
+            $('.panel-search:eq('+ndx+')').show();
+            $('.block-panel-search').show();
+        )
+
+        #close search
+        $('.close-panel-search').click(->
+            $('.li-search').removeClass 'active'
+            $('.block-panel-search').hide()
+        )
+
+        #checkTip trigger
+        $('.tip-li-spanel ').click ->
+            cJudge = $(this).siblings('.check-li-spanel').prop('checked')
+            if !cJudge
+                $(this).siblings('.check-li-spanel').prop 'checked', true
+            else
+                $(this).siblings('.check-li-spanel').prop 'checked', false
+            return
+
+        #mutiple toogle
+        $('.multiple-hd-spanel').find('.tip-mul-spanel').click ->
+            sJudge = $(this).parents('.li-panel-ser').find('.block-bd-spanel').is(':visible')
+            if !sJudge
+                $(this).parents('.multiple-hd-spanel').addClass 'active'
+                $(this).parents('.li-panel-ser').find('.block-bd-spanel').show()
+                $(this).siblings('.arrow-multiple-spanel').removeClass('up').addClass('down')
+            else
+                $(this).parents('.multiple-hd-spanel').removeClass 'active'
+                $(this).parents('.li-panel-ser').find('.block-bd-spanel').hide()
+                $(this).siblings('.arrow-multiple-spanel').removeClass('down').addClass('up');
+            return
+
+        $('.arrow-multiple-spanel').click ->
+            $('.multiple-hd-spanel').find('.tip-mul-spanel').trigger 'click'
+            return
+
+        #mutiple check
+        $('.multiple-hd-spanel').find('.check-li-spanel').click ->
+            cJudge = $(this).prop('checked')
+            if !cJudge
+                $(this).parents('.li-panel-ser').find('.block-bd-spanel').find('.check-child-spanel').prop('checked',false)
+            else
+                $(this).parents('.li-panel-ser').find('.block-bd-spanel').find('.check-child-spanel').prop('checked',true)
+            return
+
+        #mutiple check:children
+        $('.tip-child-spanel').click ->
+            $(this).siblings('.check-child-spanel').trigger 'click'
+
+        $('.check-child-spanel').click ->
+            $scope = $(this).parents('.block-bd-spanel')
+            allCheck = allJudge($scope).allCheck
+            if allCheck
+                $('.multiple-hd-spanel .check-li-spanel:visible').prop 'checked', true
+            else
+                $('.multiple-hd-spanel .check-li-spanel:visible').prop 'checked', false
+            return
+
+        allJudge = ($scope) ->
+            alJudge = {}
+            allCheck = true
+            allUn = true
+            $scope.find('.check-child-spanel').each ->
+                if $(this).prop('checked')
+                    allUn = false
+                else
+                    allCheck = false
+                return
+            alJudge.allCheck = allCheck
+            alJudge.allUn = allUn
+            alJudge
