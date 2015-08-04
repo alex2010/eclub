@@ -1,0 +1,24 @@
+extends ./inc/main
+block content
+    .main.row
+        .col-md-12
+            .row.pt20
+                each it,i in match.imgs
+                    .col-md-3
+                        a.thumbnail(href='javascript:void(0);')
+                            != f.imgItem(match,c,'slide',i,'media-object')
+            .row
+                .col-md-12
+                    div.mod-caption
+                        p.intro= match.description
+                        .sub-mod-caption
+                            h6.pull-right
+                                span.label.label-info 星级：
+                                span.label.label-default= match.star
+                                span.label.label-info 好评：
+                                span.label.label-default= match.goodMes
+                                span.label.label-success 留言：
+                                span.label.label-default= match.msg
+
+block st
+    :coffee(bare=true,minify=true)

@@ -1,18 +1,24 @@
-//
-   Created by aibo on 15/8/2.
 extends ./inc/main
 block content
     .row.main
-        .col-md-6
-        +panel
-            +media(place)
-    .row
-        +panel
-            +media(place,10)
-        +panel
-            +media(master,10)
-        +panel
-            +media(brand,10)
+        .col-md-12
+            .row.pt20
+                .col-md-7
+                    img.img-responsive(src='#{resPath}images/1.jpg', alt='')
+                +panel('听力健康阅读榜')(class='col-md-5')
+                    +media(shop)
+            .row.pt20
+                +panel('助听器')
+                    +media(product,10)
+                each it in _cat
+                    if it.type=='health'
+                        case it.code
+                            when 'hearing'
+                                +panel(it.title)
+                                    +media(hearing,10)
+                            when 'rehabilitate'
+                                +panel(it.title)
+                                    +media(rehabilitate,10)
 block st
     :coffee(bare=true,minify=true)
 

@@ -1,0 +1,30 @@
+extends ./inc/main
+block content
+    mixin serPlace
+        .col-md-6
+            .media.result-place
+                .media-left
+                    div
+                        img(src='#{resPath}images/1.jpg',alt='')
+                        img(src='#{resPath}images/2.jpg',alt='')
+                    div
+                        img(src='#{resPath}images/3.jpg',alt='')
+                        img(src='#{resPath}images/4.jpg',alt='')
+                .media-body
+                    h4.media-heading titletitletitletitlet itletitletitletitletitletitlet itletitle
+                    .mod-intro-media
+                        p text text text text text text text text text text text text text √ text √ text
+                        h4 星级：
+                        .content-intro-media
+                        h4 好评：
+                        .content-intro-media
+                        h4 留言：
+                        .content-intro-media
+
+    .row.main
+        .col-md-12
+            .row
+                +serPlace
+                +serPlace
+block st
+    :coffee(bare=true,minify=true)
