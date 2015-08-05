@@ -43,14 +43,18 @@ block content
         a.right.carousel-control(href='#carousel-example-generic', role='button', data-slide='next')
             span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
             span.sr-only Next
-
     .main.row
-        .col-md-4
-            +media(place)
-        .col-md-4
-            +media(master)
-        .col-md-4
-            +media(brand)
+        each it in _cat
+            case it.title
+                when '验配中心'
+                    +panel(it.title)(pClass='panel-info')
+                       +media(shop)
+                when '验配师'
+                    +panel(it.title)(pClass='panel-info')
+                        +media(master)
+                when '助听器'
+                    +panel(it.title)(pClass='panel-info')
+                        +media(product)
 block st
     :coffee(bare=true,minify=true)
         #nav hover

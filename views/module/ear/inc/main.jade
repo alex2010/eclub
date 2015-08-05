@@ -1,11 +1,15 @@
 extends ../../../main
 
 block ctn
-    mixin panel()
-        .col-md-4
-            .panel.panel-default
+    mixin panel(title)
+        if !attributes.class
+            -attributes.class='col-md-4'
+        if !attributes.pClass
+            -attributes.pClass='panel-default'
+        div(class=attributes.class)
+            div(class='panel '+attributes.pClass+'')
                 .panel-heading
-                    h3.panel-title 听力知识
+                    h3.panel-title= title
                 .panel-body
                     if block
                         block
@@ -24,8 +28,8 @@ block ctn
                 .media-body
                     h4.media-heading!= f.dStr(it.title , ttLimits)
                     //h4.media-heading= it.title
-                    p!= f.dStr(it.content, ctLimit)+'...'
-                    a(href='') 详情
+                    p!= f.dStr(it.description, ctLimit)+'...'
+                    a(href='/#{it._e}?id=#{it._id}',target='_blank') 详情
     body
         .container
             header.row
@@ -50,37 +54,14 @@ block ctn
                             input.btn-search(type='button')
             nav.row
                 ul.col-md-8.pull-left.l-nav
-                    li.li-nav.current
-                        a(href='/') 首页
-                    li.li-nav
-                        a(href='javascript:void(0);') 听力健康
-                        ul.l-subnav
-                            li.li-subnav
-                                a(href='javascript:void(0);') 听力知识
-                            li.li-subnav
-                                a(href='javascript:void(0);') 康复知识
-                            li.li-subnav
-                                a(href='javascript:void(0);') 助听器
-                    li.li-nav
-                        a(href='javascript:void(0);') 互动论坛
-                        ul.l-subnav
-                            li.li-subnav
-                                a(href='javascript:void(0);') 验配师论坛
-                            li.li-subnav
-                                a(href='javascript:void(0);') 消费者论坛
-                            li.li-subnav
-                                a(href='javascript:void(0);') 二手助听器论坛
-                    li.li-nav
-                        a(href='javascript:void(0);') 助听众筹
-                    li.li-nav
-                        a(href='javascript:void(0);') 助听返券
-                    li.li-nav
-                        a(href='javascript:void(0);') 听障问诊台
-                        ul.l-subnav
-                            li.li-subnav
-                                a(href='javascript:void(0);') 我要咨询
-                            li.li-subnav
-                                a(href='javascript:void(0);') 我要预约
+                    each it in _guest[0].res.menu
+                        li.li-nav
+                            a(href='#{it.href}')= it.label
+                            if it.subnav
+                                ul.l-subnav
+                                    each item in it.subnav
+                                        li.li-subnav
+                                            a(href='#{item.href}')= item.label
                     li.mask-active-nav
                 ul.col-md-4.pull-right.l-search
                     .block-panel-search
