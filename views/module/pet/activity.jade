@@ -9,9 +9,10 @@ block content
                 h2= title
                     small= subTitle
                     if cat
-                        span.cat 【#{cat.title}】
+                        span.cat 【#{_cat[cat]}】
                 hr
-                != f.imgItem(locals, c.code)
+                .text-center
+                    != f.imgItem(locals, c)
 
                 h3 话题介绍
                 != content
@@ -25,7 +26,7 @@ block content
                             - v._id = k
                             - _user = v;
                             - _user._e = 'user'
-                            - _uClass = 'author'
+                            - _uClass = 'host'
                             include inc/userInfo
                 if venue
                     h3 活动信息
@@ -65,7 +66,8 @@ block content
                     h3 场地介绍
                     h4= venue.title
                     != venue.content
-                    != f.imgItem(venue, c.code)
+                    .text-center
+                        != f.imgItem(venue, c)
 
                 h3 活动人群
                 ul

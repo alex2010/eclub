@@ -6,6 +6,12 @@ module.exports =
             dao.get ctx.c.code, 'role', title: 'guest', (res)->
                 log res
                 cb(null, res.nav)
+        _cat: (cb)->
+            dao.find ctx.c.code, 'cat', {},{}, (res)->
+                opt = {}
+                for it in res
+                    opt[it.code] = it.title
+                cb(null, opt)
 
     index: (ctx)->
         slides: (cb)->
@@ -97,9 +103,9 @@ module.exports =
             label: ctx.title
         ]
 
-#        venue: (cb)->
-#            dao.get ctx.c.code, 'venue', {title: ctx.venue.title}, (res)->
-#                cb(null, res)
+        venue: (cb)->
+            dao.get ctx.c.code, 'venue', {_id: ctx.venue._id}, (res)->
+                cb(null, res)
 
         cats: (cb)->
             dao.find ctx.c.code, 'cat', {type: 'activity'}, {}, (res)->

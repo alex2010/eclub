@@ -74,6 +74,7 @@ _.delay ->
                         if ob.label
                             ob.title = ob.label
                             delete ob.label
+                            delete ob.ref_class
                 list.push ob
 
 
@@ -94,25 +95,27 @@ _.delay ->
                             act.master = {}
                             dao.find code, 'user', filter, {}, (ru)->
                                 for u in ru
-                                    act.master[u._id] = _.pick(u, 'id', 'username', 'title', 'industry', 'introduction')
+                                    act.master[u._id] = _.pick(u,'_id', 'username', 'title', 'industry', 'introduction')
                                 dao.save code, estr, act, ->
                                     if act.cat
-                                        dao.get code, 'cat', {code: act.cat}, (res)->
-                                            if res
-                                                act.cat =
-                                                    title: res.title
-                                                    code: res.code
-                                                dao.save code, estr, act, ->
-                                                    if act.vid
-                                                        dao.get code, 'venue', {id:act.vid}, (res)->
-                                                            if res
-                                                                act.venue =
-                                                                    title: res.title
-                                                                    fee: res.fee
-                                                                    phone: res.phone
-                                                                    lng: res.lng
-                                                                    lat: res.lat
-                                                                dao.save code, estr, act
+#                                        dao.get code, 'cat', {code: act.cat}, (res)->
+#                                            if res
+#                                                act.cat =
+#                                                    title: res.title
+#                                                    code: res.code
+                                        dao.save code, estr, act, ->
+                                            if act.vid
+                                                dao.get code, 'venue', {id:act.vid}, (res)->
+                                                    if res
+                                                        act.venue =
+                                                            title: res.title
+                                                            fee: res.fee
+                                                            phone: res.phone
+                                                            lng: res.lng
+                                                            lat: res.lat
+                                                            _id: res._id
+                                                        dao.save code, estr, act
+
                     else if entity is 'post'
                         act = res.ops[0]
                         estr = entity + ':_id'
@@ -121,17 +124,16 @@ _.delay ->
                         dao.get code, 'user', {id: act.uid}, (doc)->
                             log doc
                             if doc
-                                act.author =
-                                    username: doc.username
-                                    id: doc._id
+                                act.author = _.pick(doc,'_id', 'username', 'title', 'industry', 'introduction')
                             dao.save code, estr, act, ->
-                                if act.cat
-                                    dao.get code, 'cat', {code: act.cat}, (res)->
-                                        if res
-                                            act.cat =
-                                                title: res.title
-                                                code: res.code
-                                            dao.save code, estr, act
+#                                if act.cat
+#                                    dao.get code, 'cat', {code: act.cat}, (res)->
+#                                        if res
+#                                            act.cat =
+#                                                title: res.title
+#                                                code: res.code
+                                dao.save code, estr, act
+
     else
         data = require("./views/module/#{code}/script/data")
         dao.save _mdb, 'community:code', data.community

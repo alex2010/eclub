@@ -88,10 +88,13 @@ block content
 
 block st
     :coffee(bare=true,minify=true)
-        tr = $('.travels')
+        loadJS "#{cf.modPath}car.js"
+        util.lcss "#{cf.modPath}car.css"
 
-        tr.on 'change', '.gw', (e)->
-            log 'gw'
+//        tr = $('.travels')
+//
+//        tr.on 'change', '.gw', (e)->
+//            log 'gw'
 //
 //        tr.on 'change', '.tt',(e)->
 //            log 'tt'

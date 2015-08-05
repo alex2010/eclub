@@ -1,3 +1,37 @@
+//user
+//_id,username,phone,wid,email,info:''
+//activity
+//  _id:''
+//  title:''
+//		startedDate:'
+//
+//
+//---feedback:
+//feedback:
+//	uid:...
+//	uid2:...
+//
+//_activity._id + ｆｄ．ｕｓｅｒ．ｉｄ
+//
+//		_id:
+//		username:....
+//		activityFeedback:【
+//				_id+timestamp+title:[f1,f2,f3]
+//				a2: [f,sddsdfdsf]
+//				】
+//		eventList:[]
+//		activityList:[]
+//		activity_123213:sdfdsdf
+//		activity_zxcvxcv:sdfdsdf
+//		acttivit_sdfsdfdf:sdfsdfsdf
+//		activity:
+//		 master[0].feedback......
+
+		//user.eventList
+		//user.workList
+
+
+
 [{
   "id": 2,
   "cid": 5,

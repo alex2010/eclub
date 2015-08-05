@@ -294,7 +294,8 @@ block content
                                         span 100% REAL
                                         br
                                         | REVIEWS
-                                    p
+                                    p In order to guarantee the 100% Authenticity of the reviews on wikibeijing, only the feedbacks from customers who have booked a tour from wikibeijing would be shown here. There is no need to put fake ratings on our site. The reviews in a way are valuable suggestions from the customers. We could learn something from them to perfect the itinerary and to choose the right guide, thus to provide better service in the future. Also, we only put the paper feedbacks from the clients in the section of Private Guides, to guarantee the authenticity of them. They are also ranked by the positive reviews from the customers and according alteration would be made according to their performances.
+
 
                                 .col-md-8
                                     h4 Customer Reviews
@@ -321,7 +322,8 @@ block st
     :coffee(bare=true)
         $('.tbHead input').click ->
             $(@).closest('table').find('.total').text $(@).data('price') * $(@).data('count')
-
-
         for it in $('.hoverLink')
             util.addHover $(it)
+
+        loadJS "#{cf.modPath}tour.js"
+        util.lcss "#{cf.modPath}tour.css"

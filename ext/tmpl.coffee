@@ -14,10 +14,8 @@ module.exports =
                 v
         else if opt.type is 'status'
             cf.st.text(entity + '_status', v)
-#        else if
         else
             v
-
 
     dStr: (str, len = 19)->
         if str
@@ -43,11 +41,6 @@ module.exports =
             label: '首页'
             href: '/'
         ].concat items
-
-#    img: (path, c, cls = 'markImg', pop = false)->
-#        id = String.randomChar(4)
-#        """<div id="#{id}" class="#{cls}" src="#{path}" pop="#{pop}"
-#        style="background:url(#{c.resPath}/img/loading-bk.gif) no-repeat 50% 50%;height:100%;text-indent: -1000px;">loading...</div>"""
 
     img: (path, cls = 'avatar', pop = false, width = 'auto')->
         "<img id='#{String.randomChar(4)}' class='#{cls} _imgBox' bb-src='#{path}' pop='#{pop}' width='#{width}'/>"

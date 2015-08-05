@@ -480,5 +480,26 @@
     "lang": "zh",
     "uid": null,
     "route": "大望路地铁站西南口出，SOHO现代城西边的楼"
+  },
+  {
+    "id": 49,
+    "version": 1,
+    "address": "朝阳区工体北路8号三里屯Soho 5号商场B1-529",
+    "content": "<p>PAPP'S TEA is a small business based in Beijing, China, dedicated to providing the highest quality Chinese loose leaf teas in the world. With our Headquarters uniquely positioned in China's capital, we have direct access to China's best single-origin teas as well as a designated research center devoted to designing 100% natural functional blends with no added flavoring.</p><p>PAPP'S TEA 专注于为中国人提供最好的，100%天然的世界茶叶，丰富中国人的品茶文化。<br></p>",
+    "lat": "39.92",
+    "lng": "116.46",
+    "title": "PAPP'S TEA LAB",
+    "phone": "85900951",
+    "status": 2,
+    "date_created": "2015-07-21 08:02:42",
+    "last_updated": "2015-07-21 08:04:17",
+    "cid": 5,
+    "brief": null,
+    "fee": "40元",
+    "owner_id": null,
+    "ref_file": "",
+    "lang": "zh",
+    "uid": null,
+    "route": "三里屯Soho下沉广场，东侧"
   }
 ]

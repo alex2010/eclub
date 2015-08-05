@@ -28,6 +28,7 @@
             h3 主持人
             if it.master
                 .author
+                    - log(it.master)
                     each v,k in it.master
                         - v._id = k
                         - _user = v

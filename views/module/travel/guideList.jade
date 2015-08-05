@@ -11,7 +11,7 @@ block content
                         if it.refFile.licence
                             a.btn.btn-success.btn-xs.rh(onclick='cf.showPic(this)', data-url= f.resPath(c,it.refFile.licence[0])) Licence
                         if it.refFile.feedback && it.refFile.feedback.length
-                            a.btn.btn-success.btn-xs(onclick='cf.showPic(this)', data-url= f.resPath(c,it.refFile.feedback[0])) Feedback
+                            a.btn.btn-success.btn-xs(onclick='cf.showPic(this)', data-url=f.resPath(c,it.refFile.feedback[0]), data-list=it.refFile.feedback.join(',')) Feedback
             .panel-body
                 .row
                     .col-md-3

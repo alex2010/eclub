@@ -167,8 +167,8 @@ module.exports =
     community:
         code: code
         name: 'PET后英语时代'
-        resPath: if _env then '/res' else 'http://s.encorner.com'
-        url: if _env then 't.postenglishtime.com' else 'encorner.com'
+        resPath: if _env then '/res' else 'http://s.postenglishtime.com'
+        url: if _env then 't.postenglishtime.com' else 'post.postenglishtime.com'
 
     data:
         'role:title': role

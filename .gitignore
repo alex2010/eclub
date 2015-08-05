@@ -1,5 +1,6 @@
 .DS_Store
 .ftppass
+.devOpt
 .idea
 npm-debug.log
 
@@ -18,3 +19,4 @@ public
 doc
 back
 memo.txt
+public/module/travel/app/main.coffee

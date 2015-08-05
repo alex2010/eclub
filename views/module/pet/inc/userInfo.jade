@@ -1,10 +1,11 @@
-div(id='u-#{_user.id}', class= _uClass)
-    != f.img(f.resPath(c, 'portrait-' + _user.id + '.jpg'),c)
+div(id='u-#{_user._id}', class= _uClass)
+
+    != f.img(f.resPath(c, 'portrait/' + _user._id + '.jpg'))
     .hostInfo
         .title
             strong!= f.link(_user, 'username')
-            if _user.industry
-                //span= i18.cat('industry')[_user.industry]
             span= _user.title
-                | -
+                if _user.industry
+                    | &nbsp;-&nbsp;
+                    span= i18.iCat('industry')[_user.industry]
         p= _user.introduction
