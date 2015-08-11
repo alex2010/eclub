@@ -5,9 +5,17 @@ block content
             .row.pt20
                 .col-md-7
                     img.img-responsive(src='#{resPath}images/1.jpg', alt='')
-                +panel('听力健康阅读榜')(class='col-md-5')
-                    +media(shop)
+                //+panel('听力健康阅读榜')(class='col-md-5')
+                    //+media(shop)
             .row.pt20
+                +panel(_item.titleA)
+                    +media(_item.objA,10)
+                +panel(_item.titleB)
+                    +media(_item.objB,10)
+                +panel(_item.titleC)
+                    +media(_item.objC,10)
+            //
+                +panle
                 +panel('助听器')
                     +media(product,10)
                 each it in _cat
@@ -19,6 +27,6 @@ block content
                             when 'rehabilitate'
                                 +panel(it.title)
                                     +media(rehabilitate,10)
+
 block st
     :coffee(bare=true,minify=true)
-

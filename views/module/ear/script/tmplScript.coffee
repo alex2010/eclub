@@ -53,72 +53,43 @@ module.exports =
                         it.imgSrc = ctx.f.resPath ctx.c, it.refFile.head
                 cb null, res
 
-    list: (ctx, req, res) ->
-        product:(cb) ->
-            opt=
-                limits:5
-                sort:
-                    row:-1
-            dao.find ctx.c.code, 'product', {}, opt, (res)->
-                cb(null,res)
+    itemList: (ctx,req,res) ->
+        et = req.query.entity.toString()
+        catFilter=
+            type:"post"
+            code:
+                $regex:"#{et}_.*"
+        matchArr=[]
+        opt=
+            limits:5
+            sort:
+                row:-1
+        data={}
 
-        hearing:(cb) ->
-            filter=
-                cat:'hearing'
-            opt=
-                limits:5
-                sort:
-                    row:-1
-            dao.find ctx.c.code, 'health', filter, opt, (res)->
-                cb(null,res)
-
-        rehabilitate:(cb) ->
-            filter=
-                cat:'rehabilitate'
-            opt=
-                limits:5
-                sort:
-                    row:-1
-            dao.find ctx.c.code, 'health', filter, opt, (res)->
-                cb(null,res)
-
-
-        shop: (cb)->
-            filter =
-                cat: 'shop'
-            opt =
-                limits: 5
-                sort:
-                    row: -1
-            dao.find ctx.c.code, 'post', filter, opt, (res)->
+        _item:(cb) ->
+            dao.find ctx.c.code, 'cat' , catFilter, {}, (res)->
                 for it in res
-                    if it.refFile && it.refFile.head
-                        it.imgSrc = ctx.f.resPath ctx.c, it.refFile.head
-                cb(null, res)
-        master: (cb)->
-            filter =
-                cat: 'master'
-            opt =
-                limits: 5
-                sort:
-                    row: -1
-            dao.find ctx.c.code, 'post', filter, opt, (res)->
-                for it in res
-                    if it.refFile && it.refFile.head
-                        it.imgSrc = ctx.f.resPath ctx.c, it.refFile.head
-                cb(null, res)
-        brand: (cb)->
-            filter =
-                cat: 'brand'
-            opt =
-                limits: 5
-                sort:
-                    row: -1
-            dao.find ctx.c.code, 'post', filter, opt, (res)->
-                for it in res
-                    if it.refFile && it.refFile.head
-                        it.imgSrc = ctx.f.resPath ctx.c, it.refFile.head
-                cb null, res
+                    matchArr.push it
+
+                matchArr.sort (a,b)->
+                    if a.row>b.row
+                        return -1
+                    else if a.row<b.row
+                        return 1
+                    else
+                        return 0
+
+                dao.find ctx.c.code, 'post', {cat:matchArr[0].code}, opt, (res) ->
+                    data.objA=res
+                    dao.find ctx.c.code, 'post', {cat:matchArr[1].code}, opt, (res) ->
+                        data.objB=res
+                        dao.find ctx.c.code, 'post', {cat:matchArr[2].code}, opt, (res) ->
+                            data.objC=res
+
+                            data.titleA=matchArr[0].title
+                            data.titleB=matchArr[1].title
+                            data.titleC=matchArr[2].title
+                            cb(null,data)
 
     shop:(ctx, req, res) ->
         _id=req.query.id.toString()
@@ -141,10 +112,10 @@ module.exports =
                         imgs.push imgItem
                         x++
                 obj.imgs=imgs
-
-                #log 'aaaaaaaa'+imgs
                 cb(null,obj)
     wechat: (ctx)->
         wt: (cb)->
             dao.get ctx.c.code, 'pubAccount', {}, (res)->
                 cb(null, res)
+
+
