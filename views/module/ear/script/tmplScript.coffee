@@ -55,7 +55,7 @@ module.exports =
 
     itemList: (ctx,req,res) ->
         et = req.query.entity.toString()
-        catFilter=
+        filter=
             type:"post"
             code:
                 $regex:"#{et}_.*"
@@ -67,7 +67,7 @@ module.exports =
         data={}
 
         _item:(cb) ->
-            dao.find ctx.c.code, 'cat' , catFilter, {}, (res)->
+            dao.find ctx.c.code, 'cat' , filter, {}, (res)->
                 for it in res
                     matchArr.push it
 

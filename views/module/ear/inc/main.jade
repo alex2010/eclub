@@ -65,7 +65,8 @@ block ctn
                     li.mask-active-nav
                 ul.col-md-4.pull-right.l-search
                     .block-panel-search
-                        a.close-panel-search(href='javascript:void(0);')
+                        //a.close-panel-search(href='javascript:void(0);')
+                        span.glyphicon.glyphicon-remove.js-close-search(aria-hidden='true')
                         .panel-search 333
                             .submit-panel-search
                                 input.btn.btn-primary.btn-sunmit-spanel(value='搜索',type='submit')
@@ -249,3 +250,95 @@ block ctn
                         li.li-ft-share
                             a(href='javascript:void(0);')
                                 img.img-responsive(src='#{resPath}images/icon-share_29.png', alt='')
+
+block st
+    :coffee(bare=true,minify=true)
+        #nav hover
+        $('.li-nav').hover (->
+            $(this).addClass 'active'
+            $(this).find('.l-subnav').show();
+        ), ->
+            $(this).removeClass 'active'
+            $(this).find('.l-subnav').hide();
+
+        #search hover
+        $('.li-search').mouseenter (->
+            ndx = $(this).index()-1
+            $(this).addClass('active').siblings('.li-search').removeClass('active');
+            $('.panel-search').hide();
+            $('.panel-search:eq('+ndx+')').show();
+            $('.block-panel-search').show();
+        )
+
+        #close search
+        $('.js-close-search').click(->
+            $('.li-search').removeClass 'active'
+            $('.block-panel-search').hide()
+        )
+        $('.js-close-search').hover(->
+            $(this).addClass 'hover-close-search'
+        ,->
+            $(this).removeClass 'hover-close-search'
+        )
+
+        #checkTip trigger
+        $('.tip-li-spanel ').click ->
+            cJudge = $(this).siblings('.check-li-spanel').prop('checked')
+            if !cJudge
+                $(this).siblings('.check-li-spanel').prop 'checked', true
+            else
+                $(this).siblings('.check-li-spanel').prop 'checked', false
+            return
+
+        #mutiple toogle
+        $('.multiple-hd-spanel').find('.tip-mul-spanel').click ->
+            sJudge = $(this).parents('.li-panel-ser').find('.block-bd-spanel').is(':visible')
+            if !sJudge
+                $(this).parents('.multiple-hd-spanel').addClass 'active'
+                $(this).parents('.li-panel-ser').find('.block-bd-spanel').show()
+                $(this).siblings('.arrow-multiple-spanel').removeClass('up').addClass('down')
+            else
+                $(this).parents('.multiple-hd-spanel').removeClass 'active'
+                $(this).parents('.li-panel-ser').find('.block-bd-spanel').hide()
+                $(this).siblings('.arrow-multiple-spanel').removeClass('down').addClass('up');
+            return
+
+        $('.arrow-multiple-spanel').click ->
+            $('.multiple-hd-spanel').find('.tip-mul-spanel').trigger 'click'
+            return
+
+        #mutiple check
+        $('.multiple-hd-spanel').find('.check-li-spanel').click ->
+            cJudge = $(this).prop('checked')
+            if !cJudge
+                $(this).parents('.li-panel-ser').find('.block-bd-spanel').find('.check-child-spanel').prop('checked',false)
+            else
+                $(this).parents('.li-panel-ser').find('.block-bd-spanel').find('.check-child-spanel').prop('checked',true)
+            return
+
+        #mutiple check:children
+        $('.tip-child-spanel').click ->
+            $(this).siblings('.check-child-spanel').trigger 'click'
+
+        $('.check-child-spanel').click ->
+            $scope = $(this).parents('.block-bd-spanel')
+            allCheck = allJudge($scope).allCheck
+            if allCheck
+                $('.multiple-hd-spanel .check-li-spanel:visible').prop 'checked', true
+            else
+                $('.multiple-hd-spanel .check-li-spanel:visible').prop 'checked', false
+            return
+
+        allJudge = ($scope) ->
+            alJudge = {}
+            allCheck = true
+            allUn = true
+            $scope.find('.check-child-spanel').each ->
+                if $(this).prop('checked')
+                    allUn = false
+                else
+                    allCheck = false
+                return
+            alJudge.allCheck = allCheck
+            alJudge.allUn = allUn
+            alJudge
