@@ -303,7 +303,7 @@ module.exports =
 
                     cb(null, res)
 
-    tour:(ctx,req)->
+    tourList:(ctx,req)->
         ctx.cat = req.query.cat
         filter = {}
         if ctx.cat

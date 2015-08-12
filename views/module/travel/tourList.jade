@@ -1,0 +1,329 @@
+extends inc/main
+block style
+    :less(minify=true)
+        .panel-heading {
+            h3 {
+                margin: 8px 0;
+            }
+        }
+
+        .panel-collapse {
+            border-top: 1px solid #ddd;
+            .showImg {
+                height: 332px;
+                overflow: hidden;
+            }
+        }
+        #tourList{
+            .nav-tabs {
+                a:hover {
+                    background: transparent;
+                }
+                li.active {
+                    background: transparent;
+                    a {
+                        border-bottom: 2px solid red !important;
+                    }
+                }
+                li {
+                    a {
+                        border: 0 !important;
+                    }
+                }
+            }
+            .panel {
+                ul {
+                    margin: 0;
+                }
+                .nav-tabs {
+                    padding: 0;
+                    border-bottom: 1px solid #ddd;
+                }
+            }
+        }
+
+        .price {
+            ul {
+                padding: 0;
+            }
+        }
+
+        .tab-content {
+            h4 {
+                text-align: center;
+                margin: 20px;
+            }
+        }
+
+        .dl-horizontal {
+            dt {
+                width: 100px;
+                line-height: 28px;
+            }
+            dd {
+                margin-left: 120px;
+            }
+        }
+
+
+
+        #tourList {
+            .panel-body {
+                padding-top: 0;
+                padding-bottom: 0;
+                height: 400px;
+                overflow: scroll;
+            }
+        }
+
+        a {
+            h3 {
+                color: #111;
+                span {
+                    color: #0a4f9a;
+                }
+            }
+        }
+
+        .markImg {
+            img {
+                width: 100%;
+            }
+        }
+
+        .itinerary {
+            a {
+                text-decoration: underline;
+            }
+        }
+
+        .highlight {
+            li {
+                list-style-type: disc;
+            }
+        }
+
+        .glyphicon {
+            margin-right: 10px;
+        }
+
+        .glyphicon-ok {
+            color: green;
+        }
+
+        .glyphicon-remove {
+            color: red;
+        }
+
+        .glyphicon-menu-down, .glyphicon-menu-up {
+            font-size: 10px;
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+
+        .glyphicon-share-alt {
+            color: green;
+            margin: 0 20px;
+        }
+
+        .prices {
+            width: 100%;
+        }
+
+        .prices th, .prices td {
+            text-align: center;
+            height: 60px;
+            border-right: 1px solid white;
+        }
+
+        .tbHead {
+            background: #b4cfec;
+        }
+
+        .tbBody {
+            background: #d6e6f5;
+        }
+
+        .btns {
+            .btn {
+                width: 200px;
+            }
+        }
+
+        .col-md-4 {
+            border-right: 1px solid #ddd;
+        }
+
+block content
+    .topHead
+        .panel
+            .panel-heading(data-title= title)
+                h2 Private #{catMap[cat]} Tours In Beijing
+
+    #tourList.panel-group
+        each it,i in items
+            - it.priceRange = it.prices ? '$'+it.prices[1] + ' ~ $' + it.prices[9]: '$10 ~ $100'
+            .panel
+                a.panel-heading(data-toggle='collapse', data-parent='#tourList', href= '#col' + i)
+                    h3
+                        span #{catMap[it.cat]} Tour
+                        != f.icon('share-alt')
+                        = it.title
+                        .pull-right
+                            != f.icon('menu-down')
+                            != f.icon('menu-up')
+                        .btn.btn-xs.btn-success.pull-right BOOK
+                .panel-collapse(id= 'col' + i)
+                    if it.refFile.head && it.refFile.head.length
+                        .showImg
+                            != f.img(f.resPath(c, it.refFile.head[0]))
+
+                    ul.nav.nav-tabs.text-center
+                        li.col-md-3.active
+                            a(data-toggle='tab', href='#fact#{i}') Facts/Overview
+                        li.col-md-2
+                            a(data-toggle='tab', href='#itineray#{i}') Itinerary
+                        li.col-md-2
+                            a(data-toggle='tab', href='#price#{i}') Prices/Includes
+                        li.col-md-2
+                            a(data-toggle='tab', href='#photo#{i}') Photos
+                        li.col-md-3
+                            a(data-toggle='tab', href='#review#{i}') Customer Reviews
+                    .panel-body
+                        .tab-content.row
+                            div(id='fact#{i}').tab-pane.active
+                                .col-md-4
+                                    h4 Facts
+                                    dl.dl-horizontal
+                                        dt Tour Code
+                                        dd= it.code
+                                        dt Tour Type
+                                        dd= it.type
+                                        dt Duration
+                                        dd= it.duration
+                                        dt Difficulty
+                                        dd= it.difficulty
+                                        dt Group Size
+                                        dd= it.groupSize
+                                        dt Price Range
+                                        dd= it.priceRange
+                                        dt Departs From
+                                        dd= it.departFrom
+                                        dt Returns To
+                                        dd= it.returnTo
+                                        dt Starts At
+                                        dd= it.startAt
+                                        dt Availability
+                                        dd= it.availability
+                                .col-md-8
+                                    h4 Overview
+                                    p!= it.description
+                            div(id='itineray#{i}').tab-pane
+                                .col-md-4
+                                    h4 Highlights
+                                    if it.highlight
+                                        ul.highlight
+                                            each hl in it.highlight
+                                                li= hl
+                                .col-md-8
+                                    h4 Itinerary
+                                    if it.itinerary
+                                        ul.itinerary
+                                            each lt in it.itinerary
+                                                li
+                                                    if lt._e
+                                                        a.hoverLink(title= lt.title,data-content= lt.brief)= lt.title
+                                                        a.popover(href= "/sight/#{lt._id}")
+                                                            .arrow
+                                                            h4.popover-title
+                                                            .popover-content
+                                                    else
+                                                        strong= lt.title
+                                                    p!= lt.brief
+
+                            div(id='price#{i}').tab-pane.price
+                                .col-md-4.text-left
+                                    h4 Inclusions
+                                    if it.inclusion
+                                        ul
+                                            each inc in it.inclusion
+                                                li
+                                                    != f.icon('ok')
+                                                    = inc
+                                    h4 Exclusions
+                                    if it.exclusion
+                                        ul
+                                            each ex in it.exclusion
+                                                li
+                                                    != f.icon('remove')
+                                                    = ex
+                                .col-md-8
+                                    h4 Prices (USD)
+                                    if it.prices
+                                        table.prices
+                                            tr.tbHead
+                                                th(width='160px') Number of people
+                                                each p,i in it.prices
+                                                    td
+                                                        input(data-price=p,data-count=i name='calc',type='radio')
+                                                        br
+                                                        = i
+                                                th(rowspan='2')
+                                                    p Total
+                                                    span $
+                                                    span.total #{it.prices[0]}
+                                            tr.tbBody
+                                                th Price per Person ($)
+                                                each p in it.prices
+                                                    td
+                                                        span= p
+                                    p * Please select one option
+                                    p NOTE:
+
+                            div(id='photo#{i}').tab-pane
+                                if it.refFile && it.refFile.slide
+                                    - var _slides = it.refFile.slide
+                                    - var _prop = 'slide'
+                                    -var _ctx = it
+                                    -var _sid = 'ss'+i
+                                    include inc/slide
+
+                            div(id='review#{i}').tab-pane
+                                .col-md-4
+                                    h4
+                                        span 100% REAL
+                                        br
+                                        | REVIEWS
+                                    p In order to guarantee the 100% Authenticity of the reviews on wikibeijing, only the feedbacks from customers who have booked a tour from wikibeijing would be shown here. There is no need to put fake ratings on our site. The reviews in a way are valuable suggestions from the customers. We could learn something from them to perfect the itinerary and to choose the right guide, thus to provide better service in the future. Also, we only put the paper feedbacks from the clients in the section of Private Guides, to guarantee the authenticity of them. They are also ranked by the positive reviews from the customers and according alteration would be made according to their performances.
+
+
+                                .col-md-8
+                                    h4 Customer Reviews
+                                    p Rated by
+                                    .row
+                                        .col-xs-6
+                                            h5 Tour Guide
+
+                                        .col-xs-6
+                                            h5 Car & Meal
+
+                                        .col-xs-12.text-center
+                                            | Value For Money
+
+                                    p.text-center
+                                        a(style='margin-right: 50px').btn.btn.btn-success Add Review
+                                        a.btn.btn.btn-info View More
+
+                    p.text-center.btns
+                        a(style='margin-right: 50px',onclick='cf.showEnquire(this)').btn.btn-xs.btn-warning Enquire
+                        a.btn.btn-xs.btn-success(onclick='cf.addTour(this)' data-title=title) Book
+
+block st
+    :coffee(bare=true)
+        $('.tbHead input').click ->
+            $(@).closest('table').find('.total').text $(@).data('price') * $(@).data('count')
+        for it in $('.hoverLink')
+            util.addHover $(it)
+
+        loadJS "#{cf.modPath}tour.js"
+        util.lcss "#{cf.modPath}tour.css"
