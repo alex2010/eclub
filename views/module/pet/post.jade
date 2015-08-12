@@ -6,48 +6,9 @@ block content
 
         .row.article
             #main.col-md-8
-                .article
-                    h2.event-name= title
-                        if subTitle
-                            small= subTitle
-                    hr
-                    - _user = user
-                    - _user._e = 'user'
-                    - _uClass = 'author'
-                    include inc/userInfo
-                    hr
-                    .brief
-                        strong [核心提示]
-                        = brief
-                    .article-content!= content
 
-                    dl.meta
-                        dt(title='类别')
-                            i.glyphicon.glyphicon-th-list
-                        dd
-                            a(href='/postList.html?cat=topic')= category
-                        dt(title='喜欢')
-                            i.glyphicon.glyphicon-heart
-                        dd
-                            a(onclick='app.support()') 0人喜欢
-                        dt(title='访问')
-                            i.glyphicon.glyphicon-eye-open
-                        dd 访问0次
 
-                    if pubTime
-                        p.text-right 发表于
-                            = pubTime.pattern('yyyy-MM-dd HH:mm')
-                    .share
-                        #func
-                            a(onclick="app.likeIt(this,'#postLike')")
-                                i.icon-heart
-                                | 喜欢
-                            span 已经有
-                                strong#postLike= support
-                                | 人喜欢
-                        include ../../inc/bdShare.html
-                    != f.copyRight(c, 'post', _id)
-                    #_comments
+
             #side.col-md-4
                     h3 相关文章
                     ul

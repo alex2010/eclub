@@ -1,10 +1,15 @@
 module.exports =
     _init: (ctx)->
-
-    wechat:(ctx)->
         wt:(cb)->
             dao.get ctx.c.code, 'pubAccount', {}, (res)->
                 cb(null,res)
+
+#    activity:(ctx)->
+#        wt:(cb)->
+#            dao.get ctx.c.code, 'pubAccount', {}, (res)->
+#                cb(null,res)
+
+    wechat:(ctx)->
 
         head:(cb)->
             dao.get ctx.c.code, 'head', type: 'wechat', (res)->

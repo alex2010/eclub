@@ -103,9 +103,9 @@ module.exports =
             label: ctx.title
         ]
 
-        venue: (cb)->
-            dao.get ctx.c.code, 'venue', {_id: ctx.venue._id}, (res)->
-                cb(null, res)
+#        venue: (cb)->
+#            dao.get ctx.c.code, 'venue', {_id: ctx.venue._id}, (res)->
+#                cb(null, res)
 
         cats: (cb)->
             dao.find ctx.c.code, 'cat', {type: 'activity'}, {}, (res)->
@@ -122,16 +122,13 @@ module.exports =
             dao.find ctx.c.code, 'activity', {}, opt, (res)->
                 cb(null, res)
 
-        participant: (cb)->
-            filter =
-                ref:
-                    $regex: "^#{ctx.id}x"
-            opt = {}
-            dao.find ctx.c.code, 'participant', filter, opt, (res)->
-                cb(null, res)
-
-
-
+#        participant: (cb)->
+#            filter =
+#                ref:
+#                    $regex: "^#{ctx.id}x"
+#            opt = {}
+#            dao.find ctx.c.code, 'participant', filter, opt, (res)->
+#                cb(null, res)
 
     content: (ctx)->
         ctx.crumb = u.crumbItem [

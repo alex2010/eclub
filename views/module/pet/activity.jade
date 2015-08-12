@@ -5,62 +5,8 @@ block content
         include ../../inc/crumb
 
         .row.article
-            #main.col-md-8
-                h2= title
-                    small= subTitle
-                    if cat
-                        span.cat 【#{_cat[cat]}】
-                hr
-                .text-center
-                    != f.imgItem(locals, c)
+            include ../_mod/activity
 
-                h3 话题介绍
-                != content
-
-            .col-md-4
-
-                h3 主持人介绍
-                if master
-                    .author
-                        each v,k in master
-                            - v._id = k
-                            - _user = v;
-                            - _user._e = 'user'
-                            - _uClass = 'host'
-                            include inc/userInfo
-                if venue
-                    h3 活动信息
-
-                    .venue.clearfix
-                        p
-                            != f.icon('time')
-                            if startedDate
-                                span= startedDate.pattern('yyyy-MM-dd HH:mm')
-                                | (两小时)
-                        p
-                            != f.icon('glass')
-                            span= venue.fee
-                        p
-                            != f.icon('phone-alt')
-                            span= venue.phone
-                        p
-                            != f.icon('home')
-                            span= venue.title
-                        p
-                            != f.icon('road')
-                            span= venue.route
-
-            .col-md-12
-                h3 活动报名
-                if participant
-                    .avatars
-                        each it in participant
-                            -var uid = it.ref.split('x')[1]
-                            a(href= f.href('user',uid),title= it.username)!= f.img(f.resPath(c.code,'portrait-'+uid+'.jpg'))
-                    hr
-                .text-center
-                    a.btn.btn-lg.btn-info 我要报名
-                hr
             .col-md-8
                 if venue
                     h3 场地介绍
@@ -92,7 +38,7 @@ block content
 
                         p!= cat.content
 
-            #side.col-md-4
+            .col-md-4
 
                 h3 主题活动
                 ul

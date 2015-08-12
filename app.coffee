@@ -48,7 +48,6 @@ app.use express.static(path.join(__dirname, 'public'))
 #app.use express.static(path.join(__dirname, 'public'))
 #app.use express.static(path.join(__dirname, 'public/res'))
 
-
 if app.env
     app.use '/res/*',(req, res,next)->
         res.header 'Access-Control-Allow-Origin', '*'

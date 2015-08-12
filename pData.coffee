@@ -133,6 +133,54 @@ _.delay ->
 #                                                title: res.title
 #                                                code: res.code
                                 dao.save code, estr, act
+                if entity is 'participant'
+                    it.ref = it.ref.replace ':', 'x'
+                    it.ref = it.ref.replace 'x-', 'x'
+                    log it.ref
+                    [aid,uid] = it.ref.split('x')
+                    log 'aid: '+aid
+                    log 'uid: '+uid
+                    do(aid,uid,it)->
+                        if uid isnt 'undefined'
+                            dao.get code, 'user', id: +uid, (u)->
+                                return unless u
+                                log 'user: ' + u.username
+                                dao.findAndUpdate code, 'activity', id: +aid,
+                                    $push:
+                                        _participant:
+                                            _id:u._id
+                                            username: it.username
+                                            phone: it.phone
+                                            woid: it.woid
+                                            info: it.info
+
+                            dao.get code, 'acitivty', id: +aid,(act)->
+                                dao.findAdnUpdate code, 'user', id: +uid,
+                                    $push:
+                                        _track:
+                                            type: 'participate_activity'
+                                            _id: act._id
+                                            _e: 'activity'
+                                            title: it.title
+                                            createdDate: it.started_date
+                            if it.feedback
+                                log 'feedback'
+                                dao.get code, 'activity', id: +aid, (act)->
+                                    return unless act
+                                    log　'act: ' + it.title
+                                    log　'act: ' + act.title
+                                    opt =
+                                        $set:{}
+                                    dao.get code, 'user', id: +uid, (uu)->
+                                        return unless uu
+                                        log 'fuck it'
+                                        for kk,vv of it.feedback
+                                            opt.$set["_feedback.#{act._id}.#{uu._id}"] = vv
+                                            opt.$set["_feedback.#{act._id}._info"] =
+                                                title: act.title || it.title
+                                                startedDate: act.startedDate || it.started_date
+                                            log opt
+                                            dao.findAndUpdate code, 'user', id: +kk, opt
 
     else
         data = require("./views/module/#{code}/script/data")

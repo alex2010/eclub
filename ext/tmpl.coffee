@@ -29,12 +29,13 @@ module.exports =
         path = "http://#{c.url}/#{name}/#{id}"
         """
         <div class="copyright"><strong>C</strong><div>
-            <p>除非特别声明，本站文章均为#{c.title}原创文章，转载请注明原文链接</p>
-            <p>原文地址：<a href="#{path}">#{path}</a></p>
+            <p>除非特别声明，本站文章均为原创文章，转载请注明原文链接：</p>
+            <p><a href="#{path}">#{path}</a></p>
         </div></div>
         """
     navPage: (page, it)->
         "/#{page}/#{it._id}"
+
 
     crumbItem: (items)->
         [
@@ -45,8 +46,7 @@ module.exports =
     img: (path, cls = 'avatar', pop = false, width = 'auto')->
         "<img id='#{String.randomChar(4)}' class='#{cls} _imgBox' bb-src='#{path}' pop='#{pop}' width='#{width}'/>"
 
-
-    imgItem: (it, c, name = 'head', index = 0, cls)->
+    imgItem: (it, c, name = 'head', cls, index = 0)->
         return '' unless it
         if it.refFile and it.refFile[name]
             path = it.refFile[name][index]
