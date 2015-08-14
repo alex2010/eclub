@@ -121,32 +121,4 @@ module.exports = ->
     @close = ->
         log 'closed'
         @db.close()
-
     @
-
-
-#    @pick = (name, cName)->
-#        if @name isnt name
-#            @name = name
-#            @db = @db.db(name)
-#
-#        if @cName isnt cName or !@collection
-#            @collection = @db.collection cName
-#            @cName = cName
-#
-#        @collection
-
-#
-#    @open = ->
-#        unless @db.openCalled
-#            @db.open (err)->
-#                log err if err
-
-#    if app and app._hk
-#        opt = s[app._hk]
-#        that = @
-#        Mongodb.MongoClient.connect "mongodb://#{opt.user}:#{opt.psd}@#{opt.host}:#{opt.port}/#{opt.db}", (err, db)->
-#            log 'connect to hk'
-#            that.db = db
-#            callback?()
-#    else

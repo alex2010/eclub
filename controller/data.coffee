@@ -9,9 +9,12 @@ attrs = (attr)->
         op[it] = 1
     op
 
+isOid = (k)->
+    k.indexOf('_id') > -1 or k in ['rid', 'uid', 'oid']
+
 buildQuery = (q)->
     for k, v of q
-        if k in ['rid', 'uid', '_id', 'oid']
+        if isOid(k)
             q[k] = new oid(v)
     q
 
@@ -22,11 +25,16 @@ cleanItem = (q, isNew)->
     q.lastUpdated = new Date()
 
     for k,v of q
-        if k in ['rid', 'uid', 'oid']
-            q[k] = new oid(v)
+        if _.isObject(v)
+            for kk,vv of v
+                if isOid(kk)
+                    v[kk] = new oid(vv)
+        else
+            if isOid(k)
+                q[k] = new oid(v)
 
-        if k.toString().charAt(0) is '_'
-            delete q[k]
+            if k.toString().charAt(0) is '_'
+                delete q[k]
     q
 
 dataController =
@@ -136,11 +144,12 @@ dataController =
         _attrs = bo._attrs || ''
         _attrs = _attrs.split(',')
         _attrs.push '_id'
+
         cleanItem(bo, true)
 
         dao.save code, entity, bo, (item)->
             gs(it)(req, item) for it in after.split(',') if after
-            rsp.send util.r(_.pick(item.value, _attrs), 'm_create_ok', entity)
+            rsp.send util.r(_.pick(item.ops[0], _attrs), 'm_create_ok', entity)
 
     del: (req, rsp) ->
         code = req.c.code

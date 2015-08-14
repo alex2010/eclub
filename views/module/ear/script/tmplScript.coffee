@@ -14,7 +14,7 @@ module.exports =
     index: (ctx, req, rsp)->
         posts: (cb)->
             opt =
-                limits: 5
+                limit: 5
                 sort:
                     row: -1
             dao.find ctx.c.code, 'post', {}, opt, (res)->
@@ -24,7 +24,7 @@ module.exports =
             #filter =
             #   cat: 'shop'
             opt =
-                limits: 5
+                limit: 5
                 sort:
                     row: -1
             dao.find ctx.c.code, 'shop', {}, opt, (res)->
@@ -32,19 +32,21 @@ module.exports =
                     if it.refFile && it.refFile.head
                         it.imgSrc = ctx.f.resPath ctx.c, it.refFile.head
                 cb(null, res)
-        master: (cb)->
+        consultant: (cb)->
+            log 'zxvxzcvzxvzxvxcvzxvz'
             opt =
-                limits: 5
+                limit: 5
                 sort:
                     row: -1
-            dao.find ctx.c.code, 'master', {}, opt, (res)->
+            dao.find ctx.c.code, 'consultant', {}, opt, (res)->
+                log res
                 for it in res
                     if it.refFile && it.refFile.head
                         it.imgSrc = ctx.f.resPath ctx.c, it.refFile.head
                 cb(null, res)
         product: (cb)->
             opt =
-                limits: 5
+                limit: 5
                 sort:
                     row: -1
             dao.find ctx.c.code, 'product', {}, opt, (res)->
@@ -61,7 +63,7 @@ module.exports =
                 $regex:"#{et}_.*"
         matchArr=[]
         opt=
-            limits:5
+            limit:5
             sort:
                 row:-1
         data={}
