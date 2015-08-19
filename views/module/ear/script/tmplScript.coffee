@@ -33,13 +33,11 @@ module.exports =
                         it.imgSrc = ctx.f.resPath ctx.c, it.refFile.head
                 cb(null, res)
         consultant: (cb)->
-            log 'zxvxzcvzxvzxvxcvzxvz'
             opt =
                 limit: 5
                 sort:
                     row: -1
             dao.find ctx.c.code, 'consultant', {}, opt, (res)->
-                log res
                 for it in res
                     if it.refFile && it.refFile.head
                         it.imgSrc = ctx.f.resPath ctx.c, it.refFile.head
@@ -50,10 +48,17 @@ module.exports =
                 sort:
                     row: -1
             dao.find ctx.c.code, 'product', {}, opt, (res)->
-                for it in res
-                    if it.refFile && it.refFile.head
-                        it.imgSrc = ctx.f.resPath ctx.c, it.refFile.head
                 cb null, res
+
+    post: (ctx,req,res) ->
+        postList: (cb)->
+            opt =
+                skip: 0
+                limit: 10
+                sort:
+                    lastUpdated: -1
+            dao.find ctx.c.code, 'post', {}, opt, (res)->
+                cb(null, res)
 
     itemList: (ctx,req,res) ->
         et = req.query.entity.toString()

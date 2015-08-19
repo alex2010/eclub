@@ -1,5 +1,7 @@
+
 module.exports =
     randomInt: util.randomInt
+    randomChar: util.randomChar
 
     viewItem: (entity, k, v)->
         opt = cf.meta[entity][k] || cf.meta.common[k]
@@ -44,16 +46,19 @@ module.exports =
         ].concat items
 
     img: (path, cls = 'avatar', pop = false, width = 'auto')->
-        "<img id='#{String.randomChar(4)}' class='#{cls} _imgBox' bb-src='#{path}' pop='#{pop}' width='#{width}'/>"
 
-    imgItem: (it, c, name = 'head', cls, index = 0)->
+        p = if pop then "onclick='cf.showPic(this)'" else ''
+
+        "<img id='#{String.randomChar(4)}' class='#{cls} _imgBox' bb-src='#{path}' #{p} width='#{width}'/>"
+
+    imgItem: (it, c, name = 'head', cls, index = 0, pop)->
         return '' unless it
         if it.refFile and it.refFile[name]
             path = it.refFile[name][index]
 
         else
             path = ''
-        @img @resPath(c, path), cls
+        @img @resPath(c, path), cls, pop
 
     resPath: (c, path)->
         c.resPath + '/upload/' + c.code + '/' + path

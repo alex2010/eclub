@@ -1,16 +1,7 @@
 #loading= i18.ii('loading')
 
 script.
-    var cf = {
-        lang: '#{lang}',
-        code: '#{c.code}',
-        console: true,
-        app: '#{app}',
-        mode: #{mode},
-        community: !{cstr},
-        dm: '#{c.resPath}',
-        index: '#{index}'
-    };
+    var cf = { lang: '#{lang}', code: '#{c.code}', console: true, app: '#{app}', mode: #{mode}, community: !{cstr}, dm: '#{c.resPath}', index: '#{index}'};
 block js
     if dev || !mode
         script(src='#{libPath}lib.js?#{_ts}')

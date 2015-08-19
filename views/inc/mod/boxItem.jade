@@ -1,0 +1,33 @@
+!= f.imgItem(it, c)
+.header
+    if it.cat
+        .pre-cat!= f.link('cat', it.cat)
+    h4!= f.link(it)
+    if it.subTitle
+        small= it.subTitle
+    .meta
+        if _entity == 'activity'
+            if it.master
+                each u in it.master
+                    != f.link('user', u, 'username')
+            strong!= it.startedDate.pattern('yyyy-MM-dd HH:mm')
+        else if _entity == 'post'
+            if it.author
+                != f.link('user', it.author, 'username')
+            if it.putTime
+                strong!= it.putTime.pattern('yyyy-MM-dd HH:mm')
+            else
+                strong!= it.lastUpdated.pattern('yyyy-MM-dd HH:mm')
+
+    .content!= it.brief
+.footer
+    if it.comments
+        span(title='浏览')
+            f.icon('time')
+            != it.visit
+        span(title='喜欢')
+            f.icon('hearot')
+            != it.support
+        span(title='评论')
+            f.icon('comment')
+            != it.commnetCount

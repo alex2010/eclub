@@ -79,7 +79,7 @@ module.exports =
         btm_tour: (cb)->
             dao.find ctx.c.code, 'cat', {type: 'tour'}, btm_opt, (res)->
                 for it in res
-                    it.href = "/tour?cat=#{it.code}"
+                    it.href = "/tourList?cat=#{it.code}"
                 ctx.siteMap.push
                     title: 'Tours'
                     items: res
@@ -309,6 +309,11 @@ module.exports =
         if ctx.cat
             filter = code: ctx.cat
 
+        shows:(cb)->
+            dao.find ctx.c.code, 'show', {}, {}, (res)->
+                rs = (_.pick it, '_id', 'title','refFile','info','seatPrice' for it in res)
+                cb(null, rs)
+
         items:(cb)->
             et = 'tour'
             dao.find ctx.c.code, et, filter,{},(res)->
@@ -319,7 +324,7 @@ module.exports =
             dao.find ctx.c.code, 'cat', {type: 'tour'}, {}, (res)->
                 ctx.catMap = {}
                 for it in res
-                    it.href = "/tour?cat=#{it.code}"
+                    it.href = "/tourList?cat=#{it.code}"
                     ctx.catMap[it.code] = it.title
                 cb(null, res.sortBy('row', true))
 

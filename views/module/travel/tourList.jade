@@ -1,6 +1,12 @@
 extends inc/main
+
 block style
     :less(minify=true)
+        hr {
+            width: 90%;
+            margin: 10px auto;
+        }
+
         .panel-heading {
             h3 {
                 margin: 8px 0;
@@ -14,7 +20,8 @@ block style
                 overflow: hidden;
             }
         }
-        #tourList{
+
+        #tourList {
             .nav-tabs {
                 a:hover {
                     background: transparent;
@@ -64,8 +71,6 @@ block style
                 margin-left: 120px;
             }
         }
-
-
 
         #tourList {
             .panel-body {
@@ -149,10 +154,9 @@ block style
                 width: 200px;
             }
         }
-
-        .col-md-4 {
-            border-right: 1px solid #ddd;
-        }
+        /*.col-md-4 {*/
+        /*border-right: 1px solid #ddd;*/
+        /*}*/
 
 block content
     .topHead
@@ -260,6 +264,8 @@ block content
                                 .col-md-8
                                     h4 Prices (USD)
                                     if it.prices
+                                        script.
+                                            p_#{it._id} = !{JSON.stringify({title:it.title,code:it.code,prices:it.prices})};
                                         table.prices
                                             tr.tbHead
                                                 th(width='160px') Number of people
@@ -316,14 +322,152 @@ block content
 
                     p.text-center.btns
                         a(style='margin-right: 50px',onclick='cf.showEnquire(this)').btn.btn-xs.btn-warning Enquire
-                        a.btn.btn-xs.btn-success(onclick='cf.addTour(this)' data-title=title) Book
+                        a.btn.btn-xs.btn-success(href='#!/bookTour/#{it._id}') Book
 
+    script.
+        _shows = !{JSON.stringify(shows)};
 block st
-    :coffee(bare=true)
+    :coffee(bare=true minify=true)
         $('.tbHead input').click ->
             $(@).closest('table').find('.total').text $(@).data('price') * $(@).data('count')
         for it in $('.hoverLink')
             util.addHover $(it)
 
-        loadJS "#{cf.modPath}tour.js"
-        util.lcss "#{cf.modPath}tour.css"
+        pcvt = (v)->
+            "#{v} Pax"
+
+        dateCvt = (v)->
+            new Date(+v).toString().substr(4, 17)
+
+        dcvt = (v)->
+            "#{v || 0}$"
+
+        loadJS "#{cf.modPath}tour.js", ->
+            $.extend cf.meta.deal._,
+                totalNum:
+                    showCvt: pcvt
+                freeChild:
+                    showCvt: pcvt
+                tourCost:
+                    showCvt: dcvt
+                htfa:
+                    showCvt: dcvt
+                total:
+                    showCvt: dcvt
+                osc:
+                    showCvt: dcvt
+                stt:
+                    showCvt: dateCvt
+                slt:
+                    showCvt: dateCvt
+
+            app.enhance
+                routes:
+                    '!/bookTour/:id': 'bookTour'
+
+                bookTour: (id)->
+                    steps = [
+                        'Select Services'
+                        'Input details'
+                        'Pay Deposit'
+                        'Booking Confirmation'
+                    ]
+
+                    obj = window["p_#{id}"]
+
+                    new cf.view.sForm
+                        parent: @ctn.empty()
+                        saveByStep: false
+                        className: 'pay'
+                        entity: 'deal'
+                        tmpl: 'pay'
+                        syncBox: '.review'
+                        data:
+                            tour:
+                                title: obj.title
+                                code: obj.code
+                                _id: id
+                        events: ->
+                            $.extend cf.view.sForm::events,
+                                'change .sti': (e)->
+                                    t = util.ct(e)
+                                    td = t.closest('td')
+                                    rt = $(".#{td.data('sid')}").empty()
+                                    total = 0
+                                    for it in td.find('select')
+                                        st = $(it)
+                                        v = +st.val()
+                                        if v > 0
+                                            p = st.data 'price'
+                                            total += v * p
+                                            rt.append "<div class='form-control-static'>#{p}$ x #{v}</div>"
+
+                                    td.next().find('.total').text total
+
+                                    oscTotal = 0
+                                    for it in $('.totalBk .total')
+                                        sp = $(it)
+                                        oscTotal += +sp.text()
+
+                                    osc = @$("[name='osc']")
+                                    osc.val oscTotal
+                                    osc.trigger 'change'
+
+                                'change .dInput select': (e)->
+                                    t = util.ct(e)
+                                    ip = @$("[name='#{t.parent().data('name')}']")
+                                    date = new Date(+ip.val())
+                                    date["set#{t.data('name').capitalize()}"](+t.val())
+                                    ip.val date.getTime()
+                                    ip.trigger 'change'
+
+                                "change input[name='osc'],input[name='tourCost'],input[name='htfa']": (e)->
+                                    tc = +@$("[name='tourCost']").val()
+                                    os = +@$("[name='osc']").val()
+                                    htfa = +@$("[name='htfa']:checked").val()
+
+                                    @setVal "input[name='total']", tc + os + (htfa || 0)
+
+                        totalNum_change: (v, e) ->
+                            t = v * util.ct(e).data('price')
+                            @$('.totalPt').text t
+                            @setVal "[name='tourCost']", t
+
+                        context: ->
+                            steps: steps
+                            title: 'Build Your Idea Trip In Beijing'
+                        items: [
+                            tmpl: 'service'
+                            context: ->
+
+                                tabTitle: steps[0]
+                                prices:obj.prices
+                                title: obj.title
+                                code: obj.code
+                                num: 1
+                                shows: _shows
+                            callback:->
+                                util.initPC('#showList')
+                                util.loadPic('#showList')
+                        ,
+                            tmpl: 'detail'
+                            context: ->
+                                tabTitle: 'Input Your Information'
+                                title: obj.title
+                                num: 2
+                        ,
+                            tmpl: 'deposit'
+                            num: 3
+                            context: ->
+                                tabTitle: steps[2]
+                                num: 3
+                                title: obj.title
+                                data: {}  # @model.attributes
+                        ,
+                            tmpl: 'confirmation'
+                            num: 4
+                            context: ->
+                                tabTitle: steps[3]
+                                title: obj.title
+                                num:4
+                        ]

@@ -46,12 +46,15 @@ block content
     .main.row
         each it in _cat
             case it.title
+
                 when '验配中心'
-                    +panel(it.title)(pClass='panel-info')
+                    +panel(it.title)(pClass='panel-info' class='col-md-4 pr0')
                        +media(shop)
+
                 when '验配师'
-                    +panel(it.title)(pClass='panel-info')
+                    +panel(it.title)(pClass='panel-info' class='col-md-4 pr0')
                         +media(consultant)
-                when '助听器啊'
+
+                when '助听器'
                     +panel(it.title)(pClass='panel-info')
                         +media(product)

@@ -10,7 +10,7 @@ block ctn
             div(class='panel '+attributes.pClass+'')
                 .panel-heading
                     h3.panel-title= title
-                .panel-body
+                .panel-body.itemPanel
                     if block
                         block
 
@@ -21,15 +21,11 @@ block ctn
             -ctLimit = 24
         each it in posts
             .media
-                .media-left
-                    a(href='')
-                        //img.media-object(src='#{it.imgSrc}',alt='')
-                        != f.imgItem(it,c,'head',0,'media-object')
+                //.media-left
+                != f.imgItem(it,c,'slide','media-object')
                 .media-body
-                    h4.media-heading!= f.dStr(it.title , ttLimits)
-                    //h4.media-heading= it.title
+                    a(href='/#{it._e}?id=#{it._id}',target='_blank'): h4.media-heading!= f.dStr(it.title , ttLimits)
                     p!= f.dStr(it.description, ctLimit)+'...'
-                    a(href='/#{it._e}?id=#{it._id}',target='_blank') 详情
     body
         .container
             header.row

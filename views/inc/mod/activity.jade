@@ -1,0 +1,58 @@
+!= f.imgItem(locals, c, 'head', 'postPic')
+.article.row
+    .col-md-8
+        h2= title
+        small= subTitle
+        if cat
+            span.cat 【#{_cat[cat]}】
+        hr
+        //.text-center
+        //    != f.imgItem(locals, c)
+        h3 话题介绍
+        != content
+
+    .col-md-4
+        h3 主持人介绍
+        if master
+            .author
+                each v in master
+                    - _user = v;
+                    - _user._e = 'user'
+                    - _uClass = 'host'
+                    include userInfo
+
+        if venue
+            h3 活动信息
+            - v = venue[0]
+            .venue.clearfix
+                p
+                    != f.icon('time')
+                    if startedDate
+                        span= startedDate
+                        | (两小时)
+                p
+                    != f.icon('glass')
+                    span= v.fee
+                p
+                    != f.icon('phone-alt')
+                    span= v.phone
+                p
+                    != f.icon('home')
+                    span= v.title
+                p
+                    != f.icon('road')
+                    span= v.address
+
+        //h3 地图
+
+    .col-md-12
+        h3 活动报名
+        if participant
+            .avatars
+                each it in participant
+                    a(href= '/user/' + it._id,title= it.username)
+                        != f.img(f.resPath(c, 'portrait/' + it._id + '.jpg'))
+            hr
+        .regBtn.text-center
+            a.btn.btn-lg.btn-info.btn-block&attributes(reg) 我要报名
+        hr
