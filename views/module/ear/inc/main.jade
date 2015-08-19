@@ -10,7 +10,7 @@ block ctn
             div(class='panel '+attributes.pClass+'')
                 .panel-heading
                     h3.panel-title= title
-                .panel-body.itemPanel
+                .panel-body
                     if block
                         block
 
@@ -26,6 +26,36 @@ block ctn
                 .media-body
                     a(href='/#{it._e}?id=#{it._id}',target='_blank'): h4.media-heading!= f.dStr(it.title , ttLimits)
                     p!= f.dStr(it.description, ctLimit)+'...'
+    mixin searchPanel(action,method,name)
+        .panel-search
+            if !action
+                -action=''
+            if !method
+                method=''
+            if !name
+                name=''
+            form(action=action,method=method,name=name)
+                if block
+                    block
+                .submit-panel-search
+                    input.btn.btn-primary.btn-sunmit-spanel(value='搜索',type='submit')
+    mixin serItem(opt)
+        each it in opt.titles
+            .item-li-spanel
+                if !opt.radio
+                    input.check-li-spanel(type='checkbox',name='#{opt.name}')
+                else
+                    input.check-li-spanel(type='radio',name='#{opt.name}')
+                span.tip-li-spanel= it
+
+    mixin serSubItem(opt)
+        each it in opt.titles
+            .item-child-spanel
+                if !opt.radio
+                    input.check-child-spanel(type='checkbox',name='')
+                else
+                    input.check-child-spanel(type='radio',name='')
+                span.tip-child-spanel= it
     body
         .container
             header.row
@@ -63,153 +93,59 @@ block ctn
                     .block-panel-search
                         //a.close-panel-search(href='javascript:void(0);')
                         span.glyphicon.glyphicon-remove.js-close-search(aria-hidden='true')
-                        .panel-search 333
-                            .submit-panel-search
-                                input.btn.btn-primary.btn-sunmit-spanel(value='搜索',type='submit')
-                        .panel-search
-                            form(action='',method='',name='')
-                                ul.l-panel-ser
-                                    li.li-panel-ser
-                                        h4.title-li-spanel 评定星级：
+                        +searchPanel()
+                        +searchPanel()
+                            ul.l-panel-ser
+                                li.li-panel-ser
+                                    h4.title-li-spanel 评定星级：
+                                    .content-li-spanel
+                                li.li-panel-ser
+                                    h4.title-li-spanel 从业时间：
+                                    .content-li-spanel
+                                        +serItem(_serConsultant_time)
+                                li.li-panel-ser
+                                    h4.title-li-spanel 工作职称：
+                                    .content-li-spanel
+                                        +serItem(_serConsultant_position)
+                                li.li-panel-ser
+                                    h4.title-li-spanel 专业特长：
+                                    .block-hd-spanel
                                         .content-li-spanel
-                                    li.li-panel-ser
-                                        h4.title-li-spanel 从业时间：
+                                            .multiple-hd-spanel
+                                                input.check-li-spanel(type='checkbox',name='')
+                                                span.tip-mul-spanel 多特长
+                                                span.arrow-multiple-spanel.up
+                                    .block-bd-spanel
+                                        +serSubItem(_serConsultant_goodAt)
+                                li.li-panel-ser
+                                    h4.title-li-spanel 所学专业：
+                                    .content-li-spanel
+                        +searchPanel()
+                            ul.l-panel-ser
+                                li.li-panel-ser
+                                    h4.title-li-spanel 评定星级：
+                                    .content-li-spanel
+                                li.li-panel-ser
+                                    h4.title-li-spanel 经营时间：
+                                    .content-li-spanel
+                                        +serItem(_serShop_time)
+                                li.li-panel-ser
+                                    h4.title-li-spanel 营业面积：
+                                    .content-li-spanel
+                                        +serItem(_serShop_area)
+                                li.li-panel-ser
+                                    .content-li-spanel.notitle-li-spanel
+                                        +serItem(_serShop_server)
+                                li.li-panel-ser
+                                    .block-hd-spanel
+                                        h4.title-li-spanel 经营品牌：
                                         .content-li-spanel
-                                            .item-li-spanel
+                                            .multiple-hd-spanel
                                                 input.check-li-spanel(type='checkbox',name='')
-                                                span.tip-li-spanel 10年以上
-                                            .item-li-spanel
-                                                input.check-li-spanel(type='checkbox',name='')
-                                                span.tip-li-spanel 5-10年
-                                            .item-li-spanel
-                                                input.check-li-spanel(type='checkbox',name='')
-                                                span.tip-li-spanel 1-5年
-                                    li.li-panel-ser
-                                        h4.title-li-spanel 工作职称：
-                                        .content-li-spanel
-                                            .item-li-spanel
-                                                input.check-li-spanel(type='checkbox',name='')
-                                                span.tip-li-spanel 二级验配师（最高）
-                                            .item-li-spanel
-                                                input.check-li-spanel(type='checkbox',name='')
-                                                span.tip-li-spanel 三级验配师
-                                            .item-li-spanel
-                                                input.check-li-spanel(type='checkbox',name='')
-                                                span.tip-li-spanel 四级验配师
-                                    li.li-panel-ser
-                                        h4.title-li-spanel 专业特长：
-                                        .block-hd-spanel
-                                            .content-li-spanel
-                                                .multiple-hd-spanel
-                                                    input.check-li-spanel(type='checkbox',name='')
-                                                    span.tip-mul-spanel 多特长
-                                                    span.arrow-multiple-spanel.up
-                                        .block-bd-spanel
-                                            .item-child-spanel
-                                                input.check-child-spanel(type='checkbox',name='')
-                                                span.tip-child-spanel 成人助听器验配
-                                            .item-child-spanel
-                                                input.check-child-spanel(type='checkbox',name='')
-                                                span.tip-child-spanel 儿童助听器验配
-                                            .item-child-spanel
-                                                input.check-child-spanel(type='checkbox',name='')
-                                                span.tip-child-spanel 听力咨询
-                                            .item-child-spanel
-                                                input.check-child-spanel(type='checkbox',name='')
-                                                span.tip-child-spanel 康复指导
-                                            .item-child-spanel
-                                                input.check-child-spanel(type='checkbox',name='')
-                                                span.tip-child-spanel 声场评估
-                                            .item-child-spanel
-                                                input.check-child-spanel(type='checkbox',name='')
-                                                span.tip-child-spanel 真耳分析
-                                    li.li-panel-ser
-                                        h4.title-li-spanel 所学专业：
-                                        .content-li-spanel
-                                .submit-panel-search
-                                    input.btn.btn-primary.btn-sunmit-spanel(value='搜索',type='submit')
-                        .panel-search
-                            form(action='',method='',name='')
-                                ul.l-panel-ser
-                                    li.li-panel-ser
-                                        h4.title-li-spanel 评定星级：
-                                        .content-li-spanel
-                                    li.li-panel-ser
-                                        h4.title-li-spanel 经营时间：
-                                        .content-li-spanel
-                                            .item-li-spanel
-                                                input.check-li-spanel(type='checkbox',name='')
-                                                span.tip-li-spanel 10年以上
-                                            .item-li-spanel
-                                                input.check-li-spanel(type='checkbox',name='')
-                                                span.tip-li-spanel 5-10年
-                                            .item-li-spanel
-                                                input.check-li-spanel(type='checkbox',name='')
-                                                span.tip-li-spanel 1-5年
-                                    li.li-panel-ser
-                                        h4.title-li-spanel 营业面积：
-                                        .content-li-spanel
-                                            .item-li-spanel
-                                                input.check-li-spanel(type='checkbox',name='')
-                                                span.tip-li-spanel 200㎡以上
-                                            .item-li-spanel
-                                                input.check-li-spanel(type='checkbox',name='')
-                                                span.tip-li-spanel 100-200㎡
-                                            .item-li-spanel
-                                                input.check-li-spanel(type='checkbox',name='')
-                                                span.tip-li-spanel 60-100㎡
-                                            .item-li-spanel
-                                                input.check-li-spanel(type='checkbox',name='')
-                                                span.tip-li-spanel 60㎡以下
-                                    li.li-panel-ser
-                                        .content-li-spanel.notitle-li-spanel
-                                            .item-li-spanel
-                                                input.check-li-spanel(type='checkbox',name='')
-                                                span.tip-li-spanel 可停车
-                                            .item-li-spanel
-                                                input.check-li-spanel(type='checkbox',name='')
-                                                span.tip-li-spanel 可上门服务
-                                    li.li-panel-ser
-                                        .block-hd-spanel
-                                            h4.title-li-spanel 经营品牌：
-                                            .content-li-spanel
-                                                .multiple-hd-spanel
-                                                    input.check-li-spanel(type='checkbox',name='')
-                                                    span.tip-mul-spanel 多品牌
-                                                    span.arrow-multiple-spanel.up
-                                        .block-bd-spanel
-                                            .item-child-spanel
-                                                input.check-child-spanel(type='checkbox',name='')
-                                                span.tip-child-spanel 丹麦奥迪康
-                                            .item-child-spanel
-                                                input.check-child-spanel(type='checkbox',name='')
-                                                span.tip-child-spanel 丹麦瑞芬达
-                                            .item-child-spanel
-                                                input.check-child-spanel(type='checkbox',name='')
-                                                span.tip-child-spanel 丹麦唯听
-                                            .item-child-spanel
-                                                input.check-child-spanel(type='checkbox',name='')
-                                                span.tip-child-spanel 瑞士峰力
-                                            .item-child-spanel
-                                                input.check-child-spanel(type='checkbox',name='')
-                                                span.tip-child-spanel 瑞士博瑞峰
-                                            .item-child-spanel
-                                                input.check-child-spanel(type='checkbox',name='')
-                                                span.tip-child-spanel 加拿大优利康
-                                            .item-child-spanel
-                                                input.check-child-spanel(type='checkbox',name='')
-                                                span.tip-child-spanel 德国西门子
-                                            .item-child-spanel
-                                                input.check-child-spanel(type='checkbox',name='')
-                                                span.tip-child-spanel 新加坡欧仕达
-                                            .item-child-spanel
-                                                input.check-child-spanel(type='checkbox',name='')
-                                                span.tip-child-spanel 美国斯达克
-                                            .item-child-spanel
-                                                input.check-child-spanel(type='checkbox',name='')
-                                                span.tip-child-spanel 美国斯丽声
-                                .submit-panel-search
-                                    input.btn.btn-primary.btn-sunmit-spanel(value='搜索',type='submit')
+                                                span.tip-mul-spanel 多品牌
+                                                span.arrow-multiple-spanel.up
+                                    .block-bd-spanel
+                                        +serSubItem(_serShop_brand)
                     li.li-search
                         a(href='javascript:void(0);') 找品牌/型号
                     li.li-search

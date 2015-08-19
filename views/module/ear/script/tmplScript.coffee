@@ -11,6 +11,51 @@ module.exports =
                 title: 'guest'
             dao.find ctx.c.code, 'role', filter, {}, (res)->
                 cb(null, res)
+        _serShop_time: (cb) ->
+            res =
+                titles:['10年以上','5-10年','1-5年']
+                radio:false,
+                name:''
+            cb(null,res)
+        _serShop_area: (cb) ->
+            res =
+                titles:['200㎡以上','100-200㎡','60-100㎡','60㎡以下']
+                radio:false,
+                name:''
+            cb(null,res)
+        _serShop_server: (cb) ->
+            res =
+                titles:['可停车','可上门服务']
+                radio:false,
+                name:''
+            cb(null,res)
+        _serShop_brand: (cb) ->
+            res =
+                titles:['丹麦奥迪康','丹麦瑞芬达','丹麦唯听','瑞士峰力','瑞士博瑞峰','加拿大优利康','德国西门子','新加坡欧仕达','美国斯达克','美国斯丽声']
+                radio:false,
+                name:''
+            cb(null,res)
+
+        _serConsultant_time: (cb) ->
+            res =
+                titles:['10年以上','5-10年','1-5年']
+                radio:false,
+                name:''
+            cb(null,res)
+        _serConsultant_position: (cb) ->
+            res =
+                titles:['二级验配师（最高）','三级验配师','四级验配师']
+                radio:false,
+                name:''
+            cb(null,res)
+        _serConsultant_goodAt: (cb) ->
+            res =
+                titles:['成人助听器验配','儿童助听器验配','听力咨询','康复指导','声场评估','真耳分析']
+                radio:false,
+                name:''
+            cb(null,res)
+
+
     index: (ctx, req, rsp)->
         posts: (cb)->
             opt =
@@ -21,8 +66,6 @@ module.exports =
                 res || res = []
                 cb(null, res)
         shop: (cb)->
-            #filter =
-            #   cat: 'shop'
             opt =
                 limit: 5
                 sort:
@@ -113,8 +156,6 @@ module.exports =
                     j=Math.min obj.refFile.slide.length, 4
                     x = 0
                     while x < j
-                        #imgs.push ctx.f.resPath ctx.c, it.refFile.head
-                        #imgItem=ctx.f.resPath ctx.c, obj.refFile.slide[x]
                         imgItem=obj.refFile.slide[x]
                         imgs.push imgItem
                         x++
