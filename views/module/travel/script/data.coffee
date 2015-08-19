@@ -7,29 +7,28 @@ role = [
 #    _id: adminRoleId
     title: 'admin'
     res:
-        mgm:
-            menu:
-                site: 2
-                data: 3
-                userRole: 4
-                file: 6
-            entity:
-                sight: 1
-                show: 2
-                food: 3
-                handicraft: 4
-                culture: 5
-                map: 6
-                car: 7
-                guide: 8
-                top: 9
-                city: 10
-                tour: 11
-                content: 15
-                post: 16
-                head: 17
-                cat: 18
-                link: 19
+        menu:
+            site: 2
+            data: 3
+            userRole: 4
+            file: 6
+        entity:
+            sight: 1
+            show: 2
+            food: 3
+            handicraft: 4
+            culture: 5
+            map: 6
+            car: 7
+            guide: 8
+            top: 9
+            city: 10
+            tour: 11
+            content: 15
+            post: 16
+            head: 17
+            cat: 18
+            link: 19
         permission:
             page: 'console'
 ,

@@ -14,6 +14,7 @@ role = [
                 tmpl: 5
                 file: 6
                 userRole: 7
+
             entity:
                 activity: 1
                 topic: 2
