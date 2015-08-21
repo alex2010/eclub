@@ -1,25 +1,78 @@
 extends ./inc/main
 
 block content
-    .container
-        if crumb
-            include ../../inc/crumb
-
-        .row.article
-            .col-md-8
+    mixin label(title,content)
+        if !content || content==''
+            -content='-'
+        if !attributes.class || attributes.class==''
+            -attributes.class='label-default'
+        h4.mb16= title+'：'
+            span(class='label '+'#{attributes.class}')= content
+    .main.row
+        .col-md-12
+            if crumb
                 .row
-                    .col-md-6
-                        slide
-                    .col-md-6
-                        h3= title
-                        hr
-                .article-context
-                    .tab
-                    != description
+                    include ../../inc/crumb
+            .row.article.pt20
+                .col-md-8.article-main
+                    .thumbnail
+                        != f.imgItem(detail,c)
+                        .caption
+                            h2.title= detail.title
+                            .box-label
+                                +label('价格',detail.price)(class='label-danger')
+                                +label('品牌',detail.brand)
+                                +label('上市时间',detail.pubTime)
+                                +label('外型',detail.outline)
+                                +label('通道',detail.channel)
+                                +label('保修时间',detail.warranty)
+                                +label('水平',detail.level)
+                    .mod-tab
+                        ul.nav.nav-tabs(role='tablist')
+                            li.active(role='presentation')
+                                a(href='#desc',aria-controls='desc',role='tab',data-toggle='tab') 助听器介绍
+                            li(role='presentation')
+                                a(href='#perfms',aria-controls='perfms',role='tab',data-toggle='tab') 规格参数
+                        .tab-content
+                            .tab-pane.active.fade.in(role='tabpanel',id='desc')
+                                p= detail.description
+                            .tab-pane.fade(role='tabpanel',id='perfms')
+                                each it in detail.perfms
+                                    p.item-perfms= it
+                                        span.glyphicon.glyphicon-ok
+                .col-md-4.article-aside
+                    .row
+                        .list-group.col-md-12
+                            h4.list-group-item.active 相关文章
+                            a.list-group-item(href='')
+                                p 文章标题文章标题文章标题
+                            a.list-group-item(href='')
+                                p 文章标题文章标题文章标题
+                            a.list-group-item(href='')
+                                p 文章标题文章标题文章标题
+                            a.list-group-item(href='')
+                                p 文章标题文章标题文章标题
+                            a.list-group-item(href='')
+                                p 文章标题文章标题文章标题
+
+block st
+    :coffee(bare=true,minify=true)
+        $('.item-perfms:last').css 'border-bottom','none'
+
+//
+    .row
+        .col-md-8
+            .row
+                .col-md-6
+                    slide
+                .col-md-6
+                    h3= title
+                    hr
+            .article-context
+                .tab
+                != description
 
 
-            .col-md-4
-                h3 相关文章
-                ul
-                    each it in postList
-                        li!= f.link(it)
+        .col-md-4
+            h3 相关文章
+            ul

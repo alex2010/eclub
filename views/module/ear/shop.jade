@@ -1,24 +1,67 @@
 extends ./inc/main
 block content
+    mixin item(tip,data)
+        if !attributes.class
+            -attributes.class=''
+        li.item-data
+            span.tip= tip+'： '
+            span(class='data #{attributes.class}')= data
     .main.row
         .col-md-12
-            .row.pt20
-                each it,i in match.imgs
-                    .col-md-3
-                        a.thumbnail(href='javascript:void(0);')
-                            != f.imgItem(match,c,'slide',i,'media-object')
-            .row
-                .col-md-12
-                    div.mod-caption
-                        p.intro= match.description
-                        .sub-mod-caption
-                            h6.pull-right
-                                span.label.label-info 星级：
-                                span.label.label-default= match.star
-                                span.label.label-info 好评：
-                                span.label.label-default= match.goodMes
-                                span.label.label-success 留言：
-                                span.label.label-default= match.msg
-
+            if crumb
+                .row
+                    include ../../inc/crumb
+            .row.article.pt20
+                .col-md-8.artitle-main
+                    .thumbnail
+                        != f.imgItem(detail,c)
+                        .caption
+                            h2.title.text-center.pl0= detail.title
+                            p.desc= detail.description
+                    if detail.consultant && detail.consultant.length != 0
+                        .row
+                            +panel('验配师')(class='col-md-12')
+                                each it in detail.consultant
+                                        .media
+                                            .media-left
+                                                a(href='/consultant?id=#{it._id}')
+                                                    != f.imgItem(it, c)
+                                            .media-body
+                                                h4
+                                                    a(href='/consultant?id=#{it._id}')= it.username
+                                                p= it.description
+                .col-md-4.article-aside
+                    .row
+                        +panel('标题')(class='col-md-12')
+                            .row
+                                if detail.park == '是'
+                                    .col-md-12
+                                        ul.list-inline
+                                            li
+                                                span.glyphicon.glyphicon-compressed
+                                            li
+                                                span.tip 可停车
+                                if detail.dropIn == '是'
+                                    .col-md-12.pt20
+                                        ul.list-inline
+                                            li
+                                                span.glyphicon.glyphicon-log-in
+                                            li
+                                                span.tip 提供上门服务
+                                .col-md-12.pt20
+                                    ul.list-inline
+                                        li
+                                            span.glyphicon.glyphicon-phone
+                                        +item('联系电话',detail.phone)
+                                .col-md-12.pt20
+                                    ul.list-inline
+                                        li
+                                            span.glyphicon.glyphicon-road
+                                        +item('地址',detail.address)(class='w180')
+                                .col-md-12.pt20
+                                    ul.list-inline
+                                        li
+                                            span.glyphicon.glyphicon-calendar
+                                        +item('营业面积',detail.space)
 block st
     :coffee(bare=true,minify=true)

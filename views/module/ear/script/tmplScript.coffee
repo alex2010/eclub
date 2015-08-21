@@ -143,10 +143,10 @@ module.exports =
 
     shop:(ctx, req, res) ->
         _id=req.query.id.toString()
-        obj = {}
-        imgs = []
 
         match: (cb) ->
+            obj = {}
+            imgs = []
             dao.find ctx.c.code, 'shop', {}, {}, (res)->
                 for it in res
                     if it._id.toString() == _id
@@ -161,6 +161,27 @@ module.exports =
                         x++
                 obj.imgs=imgs
                 cb(null,obj)
+
+        detail: (cb) ->
+            obj = {}
+            dao.find ctx.c.code, 'shop', {}, {}, (res)->
+                for it in res
+                    if it._id.toString() == _id
+                        obj=it
+                cb(null,obj)
+
+    product:(ctx, req, res) ->
+        _id=req.query.id.toString()
+        detail: (cb) ->
+            obj = {}
+            dao.find ctx.c.code, 'product', {}, {}, (res)->
+                for it in res
+                    if it._id.toString() == _id
+                        obj=it
+                obj.perfms=obj.performance.split(',')
+                cb(null,obj)
+
+
     wechat: (ctx)->
         wt: (cb)->
             dao.get ctx.c.code, 'pubAccount', {}, (res)->
