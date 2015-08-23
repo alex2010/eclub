@@ -181,6 +181,15 @@ module.exports =
                 obj.perfms=obj.performance.split(',')
                 cb(null,obj)
 
+    consultant:(ctx, req, res) ->
+        _id=req.query.id.toString()
+        detail: (cb) ->
+            obj = {}
+            dao.find ctx.c.code, 'consultant', {}, {}, (res) ->
+                for it in res
+                    if it._id.toString() == _id
+                        obj=it
+                cb(null,obj)
 
     wechat: (ctx)->
         wt: (cb)->

@@ -14,18 +14,23 @@ block ctn
                     if block
                         block
 
-    mixin media(posts,ttLimits,ctLimit)
-        if !ttLimits
-            -ttLimits = 12
-        if !ctLimit
-            -ctLimit = 24
+    mixin media(posts,opt)
+        if !opt.ttLimits
+            -opt.ttLimits= 12
+        if !opt.ctLimit
+            -opt.ctLimit= 24
+        if !opt.singleR
+            -opt.singleR= false
         each it in posts
             .media
-                //.media-left
-                != f.imgItem(it,c,'slide','media-object')
+                if !opt.singleR
+                    .media-left
+                        != f.imgItem(it,c,'slide','media-object')
+                else
+                    != f.imgItem(it,c,'slide','media-object')
                 .media-body
-                    a(href='/#{it._e}?id=#{it._id}',target='_blank'): h4.media-heading!= f.dStr(it.title , ttLimits)
-                    p!= f.dStr(it.description, ctLimit)+'...'
+                    a(href='/#{it._e}?id=#{it._id}',target='_blank'): h4.media-heading!= f.dStr(it.title , opt.ttLimits)
+                    p!= f.dStr(it.description, opt.ctLimit)+'...'
     mixin searchPanel(action,method,name)
         .panel-search
             if !action
@@ -182,95 +187,3 @@ block ctn
                         li.li-ft-share
                             a(href='javascript:void(0);')
                                 img.img-responsive(src='#{resPath}images/icon-share_29.png', alt='')
-
-block st
-    :coffee(bare=true,minify=true)
-        #nav hover
-        $('.li-nav').hover (->
-            $(this).addClass 'active'
-            $(this).find('.l-subnav').show();
-        ), ->
-            $(this).removeClass 'active'
-            $(this).find('.l-subnav').hide();
-
-        #search hover
-        $('.li-search').mouseenter (->
-            ndx = $(this).index()-1
-            $(this).addClass('active').siblings('.li-search').removeClass('active');
-            $('.panel-search').hide();
-            $('.panel-search:eq('+ndx+')').show();
-            $('.block-panel-search').show();
-        )
-
-        #close search
-        $('.js-close-search').click(->
-            $('.li-search').removeClass 'active'
-            $('.block-panel-search').hide()
-        )
-        $('.js-close-search').hover(->
-            $(this).addClass 'hover-close-search'
-        ,->
-            $(this).removeClass 'hover-close-search'
-        )
-
-        #checkTip trigger
-        $('.tip-li-spanel ').click ->
-            cJudge = $(this).siblings('.check-li-spanel').prop('checked')
-            if !cJudge
-                $(this).siblings('.check-li-spanel').prop 'checked', true
-            else
-                $(this).siblings('.check-li-spanel').prop 'checked', false
-            return
-
-        #mutiple toogle
-        $('.multiple-hd-spanel').find('.tip-mul-spanel').click ->
-            sJudge = $(this).parents('.li-panel-ser').find('.block-bd-spanel').is(':visible')
-            if !sJudge
-                $(this).parents('.multiple-hd-spanel').addClass 'active'
-                $(this).parents('.li-panel-ser').find('.block-bd-spanel').show()
-                $(this).siblings('.arrow-multiple-spanel').removeClass('up').addClass('down')
-            else
-                $(this).parents('.multiple-hd-spanel').removeClass 'active'
-                $(this).parents('.li-panel-ser').find('.block-bd-spanel').hide()
-                $(this).siblings('.arrow-multiple-spanel').removeClass('down').addClass('up');
-            return
-
-        $('.arrow-multiple-spanel').click ->
-            $('.multiple-hd-spanel').find('.tip-mul-spanel').trigger 'click'
-            return
-
-        #mutiple check
-        $('.multiple-hd-spanel').find('.check-li-spanel').click ->
-            cJudge = $(this).prop('checked')
-            if !cJudge
-                $(this).parents('.li-panel-ser').find('.block-bd-spanel').find('.check-child-spanel').prop('checked',false)
-            else
-                $(this).parents('.li-panel-ser').find('.block-bd-spanel').find('.check-child-spanel').prop('checked',true)
-            return
-
-        #mutiple check:children
-        $('.tip-child-spanel').click ->
-            $(this).siblings('.check-child-spanel').trigger 'click'
-
-        $('.check-child-spanel').click ->
-            $scope = $(this).parents('.block-bd-spanel')
-            allCheck = allJudge($scope).allCheck
-            if allCheck
-                $('.multiple-hd-spanel .check-li-spanel:visible').prop 'checked', true
-            else
-                $('.multiple-hd-spanel .check-li-spanel:visible').prop 'checked', false
-            return
-
-        allJudge = ($scope) ->
-            alJudge = {}
-            allCheck = true
-            allUn = true
-            $scope.find('.check-child-spanel').each ->
-                if $(this).prop('checked')
-                    allUn = false
-                else
-                    allCheck = false
-                return
-            alJudge.allCheck = allCheck
-            alJudge.allUn = allUn
-            alJudge

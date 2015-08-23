@@ -1,6 +1,133 @@
 extends ./inc/main
-
-
+block style
+    :less(minify=true)
+        .panel {
+            margin-bottom:20px;
+        }
+        .media {
+            border-top:1px solid #ddd !important;
+            img {
+                width:200px;
+            }
+            .media-body {
+                h2 {
+                    color:#31708f;
+                }
+            }
+        }
+        .dl-horizontal {
+            margin-top:15px;
+            font-size:12px;
+            dt {
+                width:80px;
+                text-align:left;
+                line-height:26px;
+            }
+            dd {
+                margin-left:80px;
+                line-height:26px;
+            }
+        }
+        .thumbnail {
+            position:relative;
+            .caption {
+                padding:0;
+                position:absolute;
+                z-index:2;
+                bottom:0;
+                left:0;
+                width:100%;
+                background:rgba(51,51,51,.6);
+                border-bottom-left-radius:4px;
+                border-bottom-right-radius:4px;
+                h4 {
+                    margin:0;
+                    color:#fff;
+                    text-align:center;
+                    line-height:30px;
+                }
+            }
+        }
+        .list-group-item {
+            &.active{
+                background:#f5f5f5;
+                border-color:#ddd;
+                color:#333;
+                &:hover {
+                    background:#f5f5f5;
+                    border-color:#ddd;
+                    color:#333;
+                }
+            }
+        }
+        .tightening {
+            text-indent:2em;
+        }
+        .mb20 {
+            margin-bottom:20px;
+        }
+        .clear:after {
+            content:'.';
+            display:block;
+            height:0;
+            overflow:hidden;
+            clear:both;
+        }
 block content
-    h2= title
-    h4 aaaa
+    .row.main
+        .col-md-12
+            if crumb
+                .row
+                    include ../../inc/crumb
+            .row.article.pt20
+                .col-md-8.article-main
+                    .media.mb20.thumbnail
+                        .media-left
+                            a(href=''): != f.imgItem(detail,c,'portrait')
+                        .media-body
+                            h2.media-heading= detail.username
+                            dl.dl-horizontal
+                                +ddItem('入行时间',detail.exp)
+                                +ddItem('电话号码',detail.phone)
+                                +ddItem('QQ号码',detail.qq)
+                                +ddItem('工作职称',detail.workTitle)
+                                +ddItem('所学专业',detail.major)
+                    -var brandArr=detail.goodAtBrand
+                    if brandArr && brandArr!=[]
+                        .row
+                            +panel('擅长品牌')(class='col-md-12')
+                                .row
+                                    each it,i in brandArr
+                                        if i%2==1
+                                            +thumbnail(it)(clearfix=true)
+                                        else
+                                            +thumbnail(it)
+                    if detail.description
+                        .row
+                            +panel('验配师介绍')(class='col-md-12')
+                                p.tightening= detail.description
+                .col-md-4.article-aside
+                    .row
+                        .col-md-12.list-group
+                            h4.list-group-item.active 相关文章
+                            a.list-group-item(href=''): p 文章标题文章标题文章标题
+                            a.list-group-item(href=''): p 文章标题文章标题文章标题
+                            a.list-group-item(href=''): p 文章标题文章标题文章标题
+                            a.list-group-item(href=''): p 文章标题文章标题文章标题
+                            a.list-group-item(href=''): p 文章标题文章标题文章标题
+mixin ddItem(title,content)
+    if !content
+        -content='--'
+    dt= title+'：'
+    dd= content
+mixin thumbnail(opt,name)
+    if !name
+        -name='logo'
+    div(class='col-md-6')
+        .thumbnail: != f.imgItem(opt, c, name)
+            .caption
+                h4=opt.title
+        if block
+            block
+    if attributes.clearfix
+        .clear

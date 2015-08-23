@@ -2,14 +2,8 @@ extends ./inc/main
 
 block style
     :less(minify=true)
-        body {
-            table {
-                background: white;
-            }
-        }
-
-        ;
-        .test {
+        .media {
+            padding-top:10px;
         }
 
 block content
@@ -48,10 +42,10 @@ block content
             case it.title
                 when '验配中心'
                     +panel(it.title)(pClass='panel-info' class='col-md-4 pr0')
-                       +media(shop)
+                       +media(shop,{singleR:true})
                 when '验配师'
                     +panel(it.title)(pClass='panel-info' class='col-md-4 pr0')
-                        +media(consultant)
+                        +media(consultant,{singleR:true})
                 when '助听器'
                     +panel(it.title)(pClass='panel-info')
-                        +media(product)
+                        +media(product,{singleR:true})

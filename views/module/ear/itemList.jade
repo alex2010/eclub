@@ -9,21 +9,8 @@ block content
                     //+media(shop)
             .row.pt20
                 +panel(_item.titleA)
-                    +media(_item.objA,10)
+                    +media(_item.objA,{ttLimits:10,singleR:true})
                 +panel(_item.titleB)
-                    +media(_item.objB,10)
+                    +media(_item.objB,{ttLimits:10,singleR:true})
                 +panel(_item.titleC)
-                    +media(_item.objC,10)
-            //
-                +panle
-                +panel('助听器')
-                    +media(product,10)
-                each it in _cat
-                    if it.type=='health'
-                        case it.code
-                            when 'hearing'
-                                +panel(it.title)
-                                    +media(hearing,10)
-                            when 'rehabilitate'
-                                +panel(it.title)
-                                    +media(rehabilitate,10)
+                    +media(_item.objC,{ttLimits:10,singleR:true})
