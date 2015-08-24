@@ -114,7 +114,7 @@ router.put '/r/:entity/:id', data.edit
 router.post '/r/:entity', data.save
 router.delete '/r/:entity/:id', data.del
 
-router.put '/r/:type/:entity/:q/:qv/:prop', data.saveSub
+router.post '/r/:type/:entity/:q/:qv/:prop', data.saveSub
 
 router.delete '/r/:type/:entity/:q/:qv/:key', data.delSub
 

@@ -206,15 +206,20 @@ dataController =
     delSub:(req,rsp)->
 
     saveSub:(req,rsp)->
+        code = req.c.code
         entity = req.params.entity
         qs = {}
         qs[req.params.q] = req.params.qv
+        if qs._id
+            qs._id = new oid(qs._id)
+
 
         bo = req.body
         bo = cleanItem bo
 
         op = {}
-        op["$#{req.params.type}"][prop] = bo
+        op["$#{req.params.type}"] = {}
+        op["$#{req.params.type}"][req.params.prop] = bo
 
         dao.findAndUpdate code, entity, qs, op, ->
             rsp.send util.r(bo, 'm_create_ok')

@@ -317,7 +317,7 @@ block content
                                             | Value For Money
 
                                     p.text-center
-                                        a(style='margin-right: 50px' onclick='cf.rate(this)').btn.btn.btn-success Add Review
+                                        a(style='margin-right: 50px' onclick='cf.rate(this)' tid=it._id).btn.btn.btn-success Add Review
                                         a.btn.btn.btn-info View More
 
                     p.text-center.btns
@@ -354,16 +354,15 @@ block st
 
 
             cf.rate = (t)->
-                id = $(t).data('id')
+                id = $(t).attr('tid')
                 new cf.view.form
                     title: 'Review'
                     toFetch: false
-                    url: util.restUrl('push','tour','_id',id,'rate')
+                    urlRoot: util.restUrl('push','tour','_id',id,'rate')
                     cols: 'col-md-3:col-md-9'
                     entity: 'rating'
                     mode: 'modal'
                     _saveSuccess: (model)->
-                        cf.deal.clear()
                         model.view.closeDlg()
 
             cf.showEnquire = ->
