@@ -177,7 +177,7 @@ block content
                             != f.icon('menu-down')
                             != f.icon('menu-up')
                         .btn.btn-xs.btn-success.pull-right BOOK
-                .panel-collapse(id= 'col' + i)
+                .panel-collapse.collapse(id= 'col' + i)
                     if it.refFile.head && it.refFile.head.length
                         .showImg
                             != f.img(f.resPath(c, it.refFile.head[0]))
@@ -317,7 +317,7 @@ block content
                                             | Value For Money
 
                                     p.text-center
-                                        a(style='margin-right: 50px').btn.btn.btn-success Add Review
+                                        a(style='margin-right: 50px' onclick='cf.rate(this)').btn.btn.btn-success Add Review
                                         a.btn.btn.btn-info View More
 
                     p.text-center.btns
@@ -336,13 +336,94 @@ block st
         pcvt = (v)->
             "#{v} Pax"
 
-        dateCvt = (v)->
-            new Date(+v).toString().substr(4, 17)
-
         dcvt = (v)->
             "#{v || 0}$"
 
-        loadJS "#{cf.modPath}tour.js", ->
+        loadJS "#{cf.rPath}js/bootstrap-formhelpers-countries.en_US.js"
+        loadJS "#{cf.modPath}router.js", ->
+
+            cf.meta.rating =
+                _:
+                    item:[
+                        'firstName'
+                        'lastName'
+                        'email'
+                        'guide'
+                        'rate'
+                    ]
+
+
+            cf.rate = (t)->
+                id = $(t).data('id')
+                new cf.view.form
+                    title: 'Review'
+                    toFetch: false
+                    url: util.restUrl('push','tour','_id',id,'rate')
+                    cols: 'col-md-3:col-md-9'
+                    entity: 'rating'
+                    mode: 'modal'
+                    _saveSuccess: (model)->
+                        cf.deal.clear()
+                        model.view.closeDlg()
+
+            cf.showEnquire = ->
+                new cf.view.form
+                    entity: 'enquire'
+                    mode: 'modal'
+                    cols: 'col-md-3:col-md-9'
+                    toFetch: false
+                    title: "Your are requiring this tour"
+
+            $.extend true, cf.meta,
+                enquire:
+                    title:
+                        type: 'select'
+                        data: ['Mr', 'Miss']
+                    nationality:
+                        type: 'select'
+                        data: CountriesList
+                    firstName: {}
+                    lastName: {}
+                    confirmEmail:
+                        type: 'email'
+                    yourQuestion:
+                        type: 'textarea'
+                    _:
+                        item: [
+                            'title'
+                            'nationality'
+                            'firstName'
+                            'lastName'
+                            'email'
+                            'confirmEmail'
+                            'yourQuestion'
+                            'captcha'
+                        ]
+                user:
+                    title:
+                        type:'radio'
+                        data:['Mr.','Mrs']
+                    firstName:
+                        type: 'text'
+
+                    lastName:
+                        type: 'text'
+                    _:
+                        item:[
+                            'title'
+                            'firstName'
+                            'lastName'
+
+                        ]
+                        tbItem:
+                            firstName:{}
+                            lastName:{}
+                            _opt:
+                                type: 'btns'
+                                w: 120
+                        action:->
+                            ['popEdit','formDel']
+
             $.extend cf.meta.deal._,
                 totalNum:
                     showCvt: pcvt
@@ -350,15 +431,17 @@ block st
                     showCvt: pcvt
                 tourCost:
                     showCvt: dcvt
-                htfa:
+                airportTransferCost:
                     showCvt: dcvt
                 total:
                     showCvt: dcvt
-                osc:
+                optionalServiceCost:
                     showCvt: dcvt
-                stt:
+                scheduledTakeoffTime:
                     showCvt: dateCvt
-                slt:
+                scheduledLandingTime:
+                    showCvt: dateCvt
+                tourDate:
                     showCvt: dateCvt
 
             app.enhance
@@ -380,19 +463,28 @@ block st
                         saveByStep: false
                         className: 'pay'
                         entity: 'deal'
+                        toFetch: false
                         tmpl: 'pay'
                         syncBox: '.review'
+                        num:0
                         data:
+                            title:'Mr.'
+                            cat: 'tour'
+                            status: 'init'
+                            optionalService :{}
                             tour:
                                 title: obj.title
                                 code: obj.code
                                 _id: id
+                        _saveSuccess:(model)->
+                            model.view.renderNextTab()
                         events: ->
                             $.extend cf.view.sForm::events,
                                 'change .sti': (e)->
                                     t = util.ct(e)
                                     td = t.closest('td')
-                                    rt = $(".#{td.data('sid')}").empty()
+                                    sid = td.data('sid')
+                                    rt = $(".#{sid}").empty()
                                     total = 0
                                     for it in td.find('select')
                                         st = $(it)
@@ -404,27 +496,28 @@ block st
 
                                     td.next().find('.total').text total
 
+
+                                    osm = @model.get 'optionalService'
+
+                                    osm[sid] ?=
+                                        title: t.closest('.panel').find('.panel-heading').text()
+                                    osm[sid][t.data('price')] = t.val()
+
                                     oscTotal = 0
                                     for it in $('.totalBk .total')
                                         sp = $(it)
                                         oscTotal += +sp.text()
 
-                                    osc = @$("[name='osc']")
+                                    osc = @$("[name='optionalServiceCost']")
                                     osc.val oscTotal
                                     osc.trigger 'change'
 
-                                'change .dInput select': (e)->
-                                    t = util.ct(e)
-                                    ip = @$("[name='#{t.parent().data('name')}']")
-                                    date = new Date(+ip.val())
-                                    date["set#{t.data('name').capitalize()}"](+t.val())
-                                    ip.val date.getTime()
-                                    ip.trigger 'change'
+                                'change .dInput select': dInputEvent
 
-                                "change input[name='osc'],input[name='tourCost'],input[name='htfa']": (e)->
+                                "change input[name='optionalServiceCost'],input[name='tourCost'],input[name='airportTransferCost']": (e)->
                                     tc = +@$("[name='tourCost']").val()
-                                    os = +@$("[name='osc']").val()
-                                    htfa = +@$("[name='htfa']:checked").val()
+                                    os = +@$("[name='optionalServiceCost']").val()
+                                    htfa = +@$("[name='airportTransferCost']:checked").val()
 
                                     @setVal "input[name='total']", tc + os + (htfa || 0)
 
@@ -439,7 +532,6 @@ block st
                         items: [
                             tmpl: 'service'
                             context: ->
-
                                 tabTitle: steps[0]
                                 prices:obj.prices
                                 title: obj.title
@@ -455,6 +547,32 @@ block st
                                 tabTitle: 'Input Your Information'
                                 title: obj.title
                                 num: 2
+                            callback:->
+                                cs = $('#cList')
+                                for k,v of CountriesList
+                                    cs.append "<option value='#{k}'>#{v}</option>"
+                                $('.total').text @model.get 'total'
+
+                                new cf.view.jsonTable
+                                    title: 'Add Other Travelers'
+                                    entity: 'user'
+                                    _prop: 'otherTraveler'
+                                    form: @
+                                    parent: '.personBox'
+                                    data:[]
+                                    formAddOpt:
+                                        cols: 'col-md-4:col-md-8'
+                                    formEditOpt:
+                                        cols: 'col-md-4:col-md-8'
+                                    afterRemove:->
+                                        @renderSideBox()
+                                    afterSave: ()->
+                                        @renderSideBox()
+                                    renderSideBox:->
+                                        c = $(".travelers", @form.syncBox).empty()
+                                        for it in @form.model.get 'otherTraveler'
+                                            c.append "<div class='form-control-static'>#{it.title} #{it.firstName} #{it.lastName}</div>"
+
                         ,
                             tmpl: 'deposit'
                             num: 3
