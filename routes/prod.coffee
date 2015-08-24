@@ -5,6 +5,7 @@ auth = require '../controller/auth'
 data = require '../controller/data'
 page = require '../controller/page'
 up = require '../controller/upload'
+captcha = require '../controller/captcha'
 
 
 checkPagePattern = (req, rsp, next, page)->
@@ -86,6 +87,8 @@ router.post '/a/upload/remove', up.remove
 
 router.post '/a/cleanCache', data.cleanCache
 
+router.get '/a/captcha', captcha.cap
+
 router.post '/a/auth/login', auth.login
 router.post '/a/auth/loginByWoid', auth.loginByWoid
 router.post '/a/auth/logout', auth.logout
@@ -111,6 +114,9 @@ router.put '/r/:entity/:id', data.edit
 router.post '/r/:entity', data.save
 router.delete '/r/:entity/:id', data.del
 
+router.put '/r/:type/:entity/:q/:qv/:prop', data.saveSub
+
+router.delete '/r/:type/:entity/:q/:qv/:key', data.delSub
 
 
 #wechat request

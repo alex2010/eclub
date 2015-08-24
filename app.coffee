@@ -4,7 +4,7 @@ favicon = require('serve-favicon')
 logger = require('morgan')
 cookieParser = require('cookie-parser')
 bodyParser = require('body-parser')
-
+cache = require("node-smple-cache/Cache")
 
 `_ = require('underscore');
 async = require('async');
@@ -23,7 +23,7 @@ tu = require('./ext/tmpl');
 gs = function(fn){
     return require(_path + '/service/'+fn)
 };
-
+_cache = cache.createCache('LRU',100*100)
 wtCtn = {};
 ctCtn = {};
 _wtcCtn={};

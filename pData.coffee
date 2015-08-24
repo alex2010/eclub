@@ -154,7 +154,7 @@ _.delay ->
                                             woid: it.woid
                                             info: it.info
 
-                            dao.get code, 'acitivty', id: +aid,(act)->
+                            dao.get code, 'activity', id: +aid,(act)->
                                 dao.findAdnUpdate code, 'user', id: +uid,
                                     $push:
                                         _track:

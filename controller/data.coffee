@@ -121,13 +121,23 @@ dataController =
         after = util.del 'afterSave', req.body
         before = util.del 'beforeSave', req.body
 
+        if before
+            rt = []
+            for it in before.split(',')
+                res = gs(it)(req, bo)
+                if res.error
+                    rt.push res.msg
+            if rt.size()
+                rsp.status 405
+                rsp.send errors: rt
+                return
+
         _attrs = if bo._attrs
             bo._attrs.split(',')
         else
             _.keys(bo)
         cleanItem(bo)
 
-        gs(it)(req, bo) for it in before.split(',') if before
 
         bo =
             $set: bo
@@ -140,12 +150,38 @@ dataController =
         entity = req.params.entity
         bo = req.body
 
-        after = util.del 'afterSave', req.body
-        _attrs = bo._attrs || ''
-        _attrs = _attrs.split(',')
-        _attrs.push '_id'
 
-        cleanItem(bo, true)
+        after = util.del 'afterSave', req.body
+        before = util.del 'beforeSave', req.body
+
+
+#        _attrs = bo._attrs || ''
+#        _attrs = _attrs.split(',')
+#        _attrs.push '_id'
+#
+#        cleanItem(bo, true)
+
+        if before
+            rt = []
+            for it in before.split(',')
+                log 'before'
+                log it
+                res = gs(it)(req, bo)
+                log res
+                if res.error
+                    rt.push res.msg
+
+            if rt.length
+                rsp.status 405
+                rsp.send errors: rt
+                return
+
+        _attrs = if bo._attrs
+            bo._attrs.split(',')
+        else
+            _.keys(bo)
+
+        cleanItem(bo,true)
 
         dao.save code, entity, bo, (item)->
             gs(it)(req, item) for it in after.split(',') if after
@@ -164,6 +200,24 @@ dataController =
         dao.delItem _mdb, 'cache', opt, (res)->
             log 'clean Cache...'
             rsp.send msg: 'del.ok'
+
+    editSub:(req,rsp)->
+
+    delSub:(req,rsp)->
+
+    saveSub:(req,rsp)->
+        entity = req.params.entity
+        qs = {}
+        qs[req.params.q] = req.params.qv
+
+        bo = req.body
+        bo = cleanItem bo
+
+        op = {}
+        op["$#{req.params.type}"][prop] = bo
+
+        dao.findAndUpdate code, entity, qs, op, ->
+            rsp.send util.r(bo, 'm_create_ok')
 
 
 module.exports = dataController
