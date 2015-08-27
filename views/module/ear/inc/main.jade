@@ -1,186 +1,186 @@
 extends ../../../main
 block ctn
-mixin panel(title)
-    if !attributes.class
-        -attributes.class='col-md-4'
-    if !attributes.pClass
-        -attributes.pClass='panel-default'
-    div(class=attributes.class)
-        div(class='panel ' + attributes.pClass + '')
-            .panel-heading
-                h3.panel-title= title
-            .panel-body
+    mixin panel(title)
+        if !attributes.class
+            -attributes.class='col-md-4'
+        if !attributes.pClass
+            -attributes.pClass='panel-default'
+        div(class=attributes.class)
+            div(class='panel ' + attributes.pClass + '')
+                .panel-heading
+                    h3.panel-title= title
+                .panel-body
+                    if block
+                        block
+    mixin media(posts,opt)
+        if !opt.ttLimits
+            -opt.ttLimits= 12
+        if !opt.ctLimit
+            -opt.ctLimit= 24
+        if !opt.singleR
+            -opt.singleR= false
+        each it in posts
+            .media
+                if !opt.singleR
+                    .media-left
+                        != f.imgItem(it, c, 'slide', 'media-object')
+                else
+                    != f.imgItem(it, c, 'slide', 'media-object')
+                .media-body
+                    a(href='/#{it._e}?id=#{it._id}',target='_blank'): h4.media-heading!= f.dStr(it.title, opt.ttLimits)
+                    p!= f.dStr(it.description, opt.ctLimit) + '...'
+    mixin searchPanel(action,method,name)
+        .panel-search
+            if !action
+                -action=''
+            if !method
+                method=''
+            if !name
+                name=''
+            form(action=action,method=method,name=name)
                 if block
                     block
-                        mixin media(posts,opt)
-    if !opt.ttLimits
-        -opt.ttLimits= 12
-    if !opt.ctLimit
-        -opt.ctLimit= 24
-    if !opt.singleR
-        -opt.singleR= false
-    each it in posts
-        .media
-            if !opt.singleR
-                .media-left
-                    != f.imgItem(it, c, 'slide', 'media-object')
-            else
-                != f.imgItem(it, c, 'slide', 'media-object')
-            .media-body
-                a(href='/#{it._e}?id=#{it._id}',target='_blank'): h4.media-heading!= f.dStr(it.title, opt.ttLimits)
-                p!= f.dStr(it.description, opt.ctLimit) + '...'
-mixin searchPanel(action,method,name)
-    .panel-search
-        if !action
-            -action=''
-        if !method
-            method=''
-        if !name
-            name=''
-        form(action=action,method=method,name=name)
-            if block
-                block
-            .submit-panel-search
-                input.btn.btn-primary.btn-sunmit-spanel(value='搜索',type='submit')
-mixin serItem(opt)
-    each it in opt.titles
-        .item-li-spanel
-            if !opt.radio
-                input.check-li-spanel(type='checkbox',name='#{opt.name}')
-            else
-                input.check-li-spanel(type='radio',name='#{opt.name}')
-            span.tip-li-spanel= it
-            mixin serSubItem(opt)
-    each it in opt.titles
-        .item-child-spanel
-            if !opt.radio
-                input.check-child-spanel(type='checkbox',name='')
-            else
-                input.check-child-spanel(type='radio',name='')
-            span.tip-child-spanel= it
-body
-    .container
-        header.row
-            .col-md-12
-                .row
-                    .col-md-4.pull-right
-                        ul.list-inline.pull-right.l-login
-                            li
-                                a(href='') 登录
-                            span /
-                            li
-                                a(href='') 注册
-                .row
-                    .col-md-7.logo
-                        h1
-                            a(href='/')
-                                img.img-responsive(src='#{resPath}images/logo_03.png', alt='')
-                        p 聆听在线--最好用的听力健康平台
-                    .col-md-5.block-search-hder
-                        span.tip-search 站内搜索
-                        input.itxt-search(name='', type='text', placeholder='', value='')
-                        input.btn-search(type='button')
-        nav.row
-            ul.col-md-8.pull-left.l-nav
-                each it in c.nav
-                    li.li-nav
-                        a(href='#{it.href}')= it.label
-                        if it.subnav
-                            ul.l-subnav
-                                each item in it.subnav
-                                    li.li-subnav
-                                        a(href='#{item.href}')= item.label
-                li.mask-active-nav
-            ul.col-md-4.pull-right.l-search
-                .block-panel-search
-                    //a.close-panel-search(href='javascript:void(0);')
-                    span.glyphicon.glyphicon-remove.js-close-search(aria-hidden='true')
-                    +searchPanel()
-                    +searchPanel()
-                        ul.l-panel-ser
-                            li.li-panel-ser
-                                h4.title-li-spanel 评定星级：
-                                .content-li-spanel
-                            li.li-panel-ser
-                                h4.title-li-spanel 从业时间：
-                                .content-li-spanel
-                                    +serItem(_serConsultant_time)
-                            li.li-panel-ser
-                                h4.title-li-spanel 工作职称：
-                                .content-li-spanel
-                                    +serItem(_serConsultant_position)
-                            li.li-panel-ser
-                                h4.title-li-spanel 专业特长：
-                                .block-hd-spanel
+                .submit-panel-search
+                    input.btn.btn-primary.btn-sunmit-spanel(value='搜索',type='submit')
+    mixin serItem(opt)
+        each it in opt.titles
+            .item-li-spanel
+                if !opt.radio
+                    input.check-li-spanel(type='checkbox',name='#{opt.name}')
+                else
+                    input.check-li-spanel(type='radio',name='#{opt.name}')
+                span.tip-li-spanel= it
+    mixin serSubItem(opt)
+        each it in opt.titles
+            .item-child-spanel
+                if !opt.radio
+                    input.check-child-spanel(type='checkbox',name='')
+                else
+                    input.check-child-spanel(type='radio',name='')
+                span.tip-child-spanel= it
+    body
+        .container
+            header.row
+                .col-md-12
+                    .row
+                        .col-md-4.pull-right
+                            ul.list-inline.pull-right.l-login
+                                li
+                                    a(href='') 登录
+                                span /
+                                li
+                                    a(href='') 注册
+                    .row
+                        .col-md-7.logo
+                            h1
+                                a(href='/')
+                                    img.img-responsive(src='#{resPath}images/logo_03.png', alt='')
+                            p 聆听在线--最好用的听力健康平台
+                        .col-md-5.block-search-hder
+                            span.tip-search 站内搜索
+                            input.itxt-search(name='', type='text', placeholder='', value='')
+                            input.btn-search(type='button')
+            nav.row
+                ul.col-md-8.pull-left.l-nav
+                    each it in c.nav
+                        li.li-nav
+                            a(href='#{it.href}')= it.label
+                            if it.subnav
+                                ul.l-subnav
+                                    each item in it.subnav
+                                        li.li-subnav
+                                            a(href='#{item.href}')= item.label
+                    li.mask-active-nav
+                ul.col-md-4.pull-right.l-search
+                    .block-panel-search
+                        //a.close-panel-search(href='javascript:void(0);')
+                        span.glyphicon.glyphicon-remove.js-close-search(aria-hidden='true')
+                        +searchPanel()
+                        +searchPanel()
+                            ul.l-panel-ser
+                                li.li-panel-ser
+                                    h4.title-li-spanel 评定星级：
                                     .content-li-spanel
-                                        .multiple-hd-spanel
-                                            input.check-li-spanel(type='checkbox',name='')
-                                            span.tip-mul-spanel 多特长
-                                            span.arrow-multiple-spanel.up
-                                .block-bd-spanel
-                                    +serSubItem(_serConsultant_goodAt)
-                            li.li-panel-ser
-                                h4.title-li-spanel 所学专业：
-                                .content-li-spanel
-                    +searchPanel()
-                        ul.l-panel-ser
-                            li.li-panel-ser
-                                h4.title-li-spanel 评定星级：
-                                .content-li-spanel
-                            li.li-panel-ser
-                                h4.title-li-spanel 经营时间：
-                                .content-li-spanel
-                                    +serItem(_serShop_time)
-                            li.li-panel-ser
-                                h4.title-li-spanel 营业面积：
-                                .content-li-spanel
-                                    +serItem(_serShop_area)
-                            li.li-panel-ser
-                                .content-li-spanel.notitle-li-spanel
-                                    +serItem(_serShop_server)
-                            li.li-panel-ser
-                                .block-hd-spanel
-                                    h4.title-li-spanel 经营品牌：
+                                li.li-panel-ser
+                                    h4.title-li-spanel 从业时间：
                                     .content-li-spanel
-                                        .multiple-hd-spanel
-                                            input.check-li-spanel(type='checkbox',name='')
-                                            span.tip-mul-spanel 多品牌
-                                            span.arrow-multiple-spanel.up
-                                .block-bd-spanel
-                                    +serSubItem(_serShop_brand)
-                li.li-search
-                    a(href='javascript:void(0);') 找品牌/型号
-                li.li-search
-                    a(href='javascript:void(0);') 找HA验配师
-                li.li-search
-                    a(href='javascript:void(0);') 找HA中心
-        block content
-        footer.row
-            .col-md-7.intro-ft
-                p
-                    | 全国助听器验配师网
-                    br
-                    | 400-0688-153
-                    br
-                    a(target='_blank', href='http://www.earmedicalmap.com') http://www.earmedicalmap.com
-            .col-md-2.attention-ft
-                h5.title-ft-attention 关注我们
-                ul.l-ft-attention
-                    li.li-ft-attention
-                        a(href='javascript:void(0);') 广告服务
-                    li.li-ft-attention
-                        a(href='javascript:void(0);') 联系我们
-                    li.li-ft-attention
-                        a(href='javascript:void(0);') 免责声明
-            .col-md-3.share-ft
-                h5.title-ft-attention 关注我们
-                ul.l-ft-share
-                    li.li-ft-share
-                        a(href='javascript:void(0);')
-                            img.img-responsive(src='#{resPath}images/icon-share_25.png', alt='')
-                    li.li-ft-share
-                        a(href='javascript:void(0);')
-                            img.img-responsive(src='#{resPath}images/icon-share_27.png', alt='')
-                    li.li-ft-share
-                        a(href='javascript:void(0);')
-                            img.img-responsive(src='#{resPath}images/icon-share_29.png', alt='')
+                                        +serItem(_serConsultant_time)
+                                li.li-panel-ser
+                                    h4.title-li-spanel 工作职称：
+                                    .content-li-spanel
+                                        +serItem(_serConsultant_position)
+                                li.li-panel-ser
+                                    h4.title-li-spanel 专业特长：
+                                    .block-hd-spanel
+                                        .content-li-spanel
+                                            .multiple-hd-spanel
+                                                input.check-li-spanel(type='checkbox',name='')
+                                                span.tip-mul-spanel 多特长
+                                                span.arrow-multiple-spanel.up
+                                    .block-bd-spanel
+                                        +serSubItem(_serConsultant_goodAt)
+                                li.li-panel-ser
+                                    h4.title-li-spanel 所学专业：
+                                    .content-li-spanel
+                        +searchPanel()
+                            ul.l-panel-ser
+                                li.li-panel-ser
+                                    h4.title-li-spanel 评定星级：
+                                    .content-li-spanel
+                                li.li-panel-ser
+                                    h4.title-li-spanel 经营时间：
+                                    .content-li-spanel
+                                        +serItem(_serShop_time)
+                                li.li-panel-ser
+                                    h4.title-li-spanel 营业面积：
+                                    .content-li-spanel
+                                        +serItem(_serShop_area)
+                                li.li-panel-ser
+                                    .content-li-spanel.notitle-li-spanel
+                                        +serItem(_serShop_server)
+                                li.li-panel-ser
+                                    .block-hd-spanel
+                                        h4.title-li-spanel 经营品牌：
+                                        .content-li-spanel
+                                            .multiple-hd-spanel
+                                                input.check-li-spanel(type='checkbox',name='')
+                                                span.tip-mul-spanel 多品牌
+                                                span.arrow-multiple-spanel.up
+                                    .block-bd-spanel
+                                        +serSubItem(_serShop_brand)
+                    li.li-search
+                        a(href='javascript:void(0);') 找品牌/型号
+                    li.li-search
+                        a(href='javascript:void(0);') 找HA验配师
+                    li.li-search
+                        a(href='javascript:void(0);') 找HA中心
+            block content
+            footer.row
+                .col-md-7.intro-ft
+                    p
+                        | 全国助听器验配师网
+                        br
+                        | 400-0688-153
+                        br
+                        a(target='_blank', href='http://www.earmedicalmap.com') http://www.earmedicalmap.com
+                .col-md-2.attention-ft
+                    h5.title-ft-attention 关注我们
+                    ul.l-ft-attention
+                        li.li-ft-attention
+                            a(href='javascript:void(0);') 广告服务
+                        li.li-ft-attention
+                            a(href='javascript:void(0);') 联系我们
+                        li.li-ft-attention
+                            a(href='javascript:void(0);') 免责声明
+                .col-md-3.share-ft
+                    h5.title-ft-attention 关注我们
+                    ul.l-ft-share
+                        li.li-ft-share
+                            a(href='javascript:void(0);')
+                                img.img-responsive(src='#{resPath}images/icon-share_25.png', alt='')
+                        li.li-ft-share
+                            a(href='javascript:void(0);')
+                                img.img-responsive(src='#{resPath}images/icon-share_27.png', alt='')
+                        li.li-ft-share
+                            a(href='javascript:void(0);')
+                                img.img-responsive(src='#{resPath}images/icon-share_29.png', alt='')
