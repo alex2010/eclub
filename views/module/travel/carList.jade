@@ -127,8 +127,10 @@ block st
             else
                 cl.delBy(t.data('id'))
 
+        loadJS "#{cf.rPath}js/bootstrap-formhelpers-countries.en_US.js"
 
         loadJS "#{cf.modPath}router.js", ->
+            log cf.meta
             $.extend cf.meta.deal._,
                 pickupTime:
                     showCvt: dateCvt
@@ -155,7 +157,7 @@ block st
                     total = 0
                     for it in cars
                         total += it.price
-
+                    log cars
                     new cf.view.sForm
                         parent: @ctn.empty()
                         saveByStep: false

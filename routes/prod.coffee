@@ -95,7 +95,6 @@ router.post '/a/auth/logout', auth.logout
 router.post '/a/auth/logoutByWoid', auth.logoutByWoid
 #wechat call
 
-
 wt = require '../controller/wechat'
 router.post '/a/wt/createMenu', wt.createMenu
 router.post '/a/wt/createLimitQRCode', wt.createLimitQRCode
@@ -104,11 +103,15 @@ router.post '/a/wt/uploadNews', wt.uploadNews
 router.get '/a/wt/userInfoByCode', wt.userInfoByCode
 router.post '/a/wt/jsSign', wt.jsSign
 
+router.get '/r/c/mg/file/list', up.fileList
 
 router.get '/r/comp', data.comp
 router.get '/r/:entity', data.list
 router.get '/r/:entity/:id', data.get
+router.get '/r/:entity/:q/:qv/:prop', data.getSub
 router.get '/r/:entity/:key/:val', data.getByKey
+
+
 
 router.put '/r/:entity/:id', data.edit
 router.post '/r/:entity', data.save
@@ -141,7 +144,6 @@ router.get '/:page', page.page
 router.get '/:entity/:id', page.entity
 router.get '/:entity/:attr/:id', page.entity
 
-router.get '/r/c/mg/file/list', up.fileList
 
 
 module.exports = router

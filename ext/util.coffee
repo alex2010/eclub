@@ -21,7 +21,7 @@ module.exports =
     r: (it, extra, e)->
         if _.isArray it
             entities: it
-            count: extra
+            count: extra || it.length
         else if it
             entity: it
             msg: extra

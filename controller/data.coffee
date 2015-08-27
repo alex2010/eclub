@@ -86,6 +86,8 @@ dataController =
     get: (req, rsp) ->
         code = req.c.code
         entity = req.params.entity
+        prop = req.params.prop
+
 
         dao.get code, entity, _id: req.params.id, (item)->
             rsp.send util.r item
@@ -150,7 +152,6 @@ dataController =
         entity = req.params.entity
         bo = req.body
 
-
         after = util.del 'afterSave', req.body
         before = util.del 'beforeSave', req.body
 
@@ -164,10 +165,7 @@ dataController =
         if before
             rt = []
             for it in before.split(',')
-                log 'before'
-                log it
                 res = gs(it)(req, bo)
-                log res
                 if res.error
                     rt.push res.msg
 
@@ -202,6 +200,18 @@ dataController =
             rsp.send msg: 'del.ok'
 
     editSub:(req,rsp)->
+
+    getSub:(req,rsp)->
+        code = req.c.code
+        entity = req.params.entity
+        prop = req.params.prop
+
+        qo = {}
+        qo[req.params.q] = req.params.qv
+
+        dao.get code, entity, qo, (item)->
+            po = util.r item[prop]
+            rsp.send po
 
     delSub:(req,rsp)->
 

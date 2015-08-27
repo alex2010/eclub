@@ -1,0 +1,83 @@
+extends ./inc/main
+
+block content
+    .main.row
+        .col-md-6.text-center
+            .well
+                a(href='#!/inquiry').btn.btn-lg.btn-primary.btn-block
+                    != f.icon('user')
+                    | 我要咨询
+        .col-md-6.text-center
+            .well
+                a(href='#!/order').btn.btn-lg.btn-success.btn-block
+                    != f.icon('phone')
+                    | 我要预约
+
+
+block st
+    :coffee(bare=true,minify=true)
+        util.lcss "#{cf.modPath}router.css"
+        loadJS "#{cf.modPath}router.js", ->
+
+            $.extend true, cf.meta,
+                shop:
+                    _:{}
+                consultant:
+                    _:{}
+                inquiry:
+                    _:
+                        item:[
+                            'phone'
+                            'content'
+                            'applyPic'
+                            'captcha'
+                        ]
+                        rMsg:'您的问题已经成功提交！2个工作日内您将收到答复，或者请咨询：400-0688-153'
+
+                order:
+                    _:
+                        item:[
+                            'username'
+                            'gender'
+                            'age'
+                            'phone'
+                            'symptom'
+                            'areaCode'
+                            'shop'
+                            'consultant'
+                            'appointmentTime'
+                            'memo'
+                            'captcha'
+                        ]
+                        rMsg:'您的预约已经提交，2个工作日内工作人员将于您联系，或者请致电：400-0688-153'
+
+            app.enhance
+                routes:
+                    '!/inquiry': 'inquiry'
+                    '!/order': 'order'
+
+                inquiry: (id)->
+                    new cf.view.form
+                        tip: '您输入的电话号码，将会最为咨询结果的查询密码'
+                        title: '我的咨询'
+                        style: 'panel panel-primary'
+                        parent: @ctn
+                        btns:['back','save']
+                        className: 'apply col-md-push-2 col-md-8 break'
+                        entity: 'inquiry'
+                        toFetch:false
+                        _saveSuccess:->
+                            app.navigate '#',{trigger:true}
+
+                order: (id)->
+                    new cf.view.form
+                        tip: '请输入常用电话号码，方便我们与您的沟通'
+                        title: '我的预约'
+                        style: 'panel panel-success'
+                        parent: @ctn
+                        btns:['back','save']
+                        className: 'apply col-md-push-2 col-md-8 break'
+                        entity: 'order'
+                        toFetch:false
+                        _saveSuccess: ->
+                            app.navigate '#', {trigger:true}
