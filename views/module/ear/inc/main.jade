@@ -28,6 +28,7 @@ mixin media(posts,opt)
             .media-body
                 a(href='/#{it._e}?id=#{it._id}',target='_blank'): h4.media-heading!= f.dStr(it.title, opt.ttLimits)
                 p!= f.dStr(it.description, opt.ctLimit) + '...'
+
 mixin searchPanel(action,method,name)
     .panel-search
         if !action
