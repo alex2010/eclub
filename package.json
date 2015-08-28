@@ -31,7 +31,8 @@
     "underscore": "~1",
     "wechat": "~2",
     "wechat-api": "~1",
-    "wechat-oauth": "~1"
+    "wechat-oauth": "~1",
+    "wxpay": "0.0.2"
   },
   "devDependencies": {
     "load-grunt-config": "~0",

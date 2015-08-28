@@ -49,3 +49,8 @@ block content
                 when '助听器'
                     +panel(it.title)(pClass='panel-info')
                         +media(product,{singleR:true})
+block st
+    :coffee(bare=true,minify=true)
+        util.lcss "#{cf.modPath}router.css"
+        loadJS "#{cf.modPath}router.js", ->
+            log 'roter dd'
