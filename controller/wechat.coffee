@@ -176,6 +176,13 @@ module.exports =
                 rsp.redirect "http://#{req.c.url}/#{page}"
         return
 
+
+    wxPay:(req,rsp)->
+        wxPay = new WxPay(appInfo)
+
+        wxPay.pushTrade().then (data)->
+            rsp.send 200
+
 #    previewNews:(req,rsp)->
 #        getApi req.body.code, (api)->
 #            api.previewNews req.body.opended, mid, ->

@@ -145,6 +145,7 @@ dataController =
             $set: bo
         dao.findAndUpdate code, entity, _id: req.params.id, bo, (item)->
             gs(it)(req, item.value) for it in after.split(',') if after
+            _attrs.push('_id')
             rsp.send util.r(_.pick(item.value, _attrs), 'm_update_ok', entity)
 
     save: (req, rsp) ->
@@ -183,6 +184,7 @@ dataController =
 
         dao.save code, entity, bo, (item)->
             gs(it)(req, item) for it in after.split(',') if after
+            _attrs.push('_id')
             rsp.send util.r(_.pick(item.ops[0], _attrs), 'm_create_ok', entity)
 
     del: (req, rsp) ->

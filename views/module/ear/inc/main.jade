@@ -81,7 +81,7 @@ block ctn
                             input.itxt-search(name='', type='text', placeholder='', value='')
                             input.btn-search(type='button')
             nav.row
-                ul.col-md-8.pull-left.l-nav
+                ul.col-md-7.l-nav.list-inline
                     each it in c.nav
                         li.li-nav
                             a(href='#{it.href}')= it.label
@@ -90,70 +90,20 @@ block ctn
                                     each item in it.children
                                         li.li-subnav
                                             a(href='#{item.href}')= item.label
-                    li.mask-active-nav
-                ul.col-md-4.pull-right.l-search
+                ul.col-md-4.l-search.list-inline.p0.text-left
                     .block-panel-search
-                        //a.close-panel-search(href='javascript:void(0);')
-                        span.glyphicon.glyphicon-remove.js-close-search(aria-hidden='true')
-                        +searchPanel()
-                        +searchPanel()
-                            ul.l-panel-ser
-                                li.li-panel-ser
-                                    h4.title-li-spanel 评定星级：
-                                    .content-li-spanel
-                                li.li-panel-ser
-                                    h4.title-li-spanel 从业时间：
-                                    .content-li-spanel
-                                        +serItem(_serConsultant_time)
-                                li.li-panel-ser
-                                    h4.title-li-spanel 工作职称：
-                                    .content-li-spanel
-                                        +serItem(_serConsultant_position)
-                                li.li-panel-ser
-                                    h4.title-li-spanel 专业特长：
-                                    .block-hd-spanel
-                                        .content-li-spanel
-                                            .multiple-hd-spanel
-                                                input.check-li-spanel(type='checkbox',name='')
-                                                span.tip-mul-spanel 多特长
-                                                span.arrow-multiple-spanel.up
-                                    .block-bd-spanel
-                                        +serSubItem(_serConsultant_goodAt)
-                                li.li-panel-ser
-                                    h4.title-li-spanel 所学专业：
-                                    .content-li-spanel
-                        +searchPanel()
-                            ul.l-panel-ser
-                                li.li-panel-ser
-                                    h4.title-li-spanel 评定星级：
-                                    .content-li-spanel
-                                li.li-panel-ser
-                                    h4.title-li-spanel 经营时间：
-                                    .content-li-spanel
-                                        +serItem(_serShop_time)
-                                li.li-panel-ser
-                                    h4.title-li-spanel 营业面积：
-                                    .content-li-spanel
-                                        +serItem(_serShop_area)
-                                li.li-panel-ser
-                                    .content-li-spanel.notitle-li-spanel
-                                        +serItem(_serShop_server)
-                                li.li-panel-ser
-                                    .block-hd-spanel
-                                        h4.title-li-spanel 经营品牌：
-                                        .content-li-spanel
-                                            .multiple-hd-spanel
-                                                input.check-li-spanel(type='checkbox',name='')
-                                                span.tip-mul-spanel 多品牌
-                                                span.arrow-multiple-spanel.up
-                                    .block-bd-spanel
-                                        +serSubItem(_serShop_brand)
-                    li.li-search
-                        a(href='javascript:void(0);') 找品牌/型号
-                    li.li-search
-                        a(href='javascript:void(0);') 找HA验配师
-                    li.li-search
-                        a(href='javascript:void(0);') 找HA中心
+                        #sConsultant
+                        #sShop
+                        #sProduct
+                    li
+                        a.btn.btn-success(stag="#sProduct" ) 找助听器
+                    li
+                        a.btn.btn-danger(stag="#sConsultant" ) 找验配师
+                    li
+                        a.btn.btn-warning(stag="#sShop" ) 找中心
+                a.btn.btn-primary.pull-right(style='margin:-42px 10px 0 0') 找到&nbsp;
+                    strong.text-danger#resCount 0
+                    | &nbsp;个结果
             #content.row
             #static
                 block content
@@ -168,20 +118,20 @@ block ctn
                     h5.title-ft-attention 关注我们
                     ul.l-ft-attention
                         li.li-ft-attention
-                            a(href='javascript:void(0);') 广告服务
+                            a 广告服务
                         li.li-ft-attention
-                            a(href='javascript:void(0);') 联系我们
+                            a 联系我们
                         li.li-ft-attention
-                            a(href='javascript:void(0);') 免责声明
+                            a 免责声明
                 .col-md-3.share-ft
                     h5.title-ft-attention 关注我们
                     ul.l-ft-share
                         li.li-ft-share
-                            a(href='javascript:void(0);')
+                            a
                                 img.img-responsive(src='#{resPath}images/icon-share_25.png', alt='')
                         li.li-ft-share
-                            a(href='javascript:void(0);')
+                            a
                                 img.img-responsive(src='#{resPath}images/icon-share_27.png', alt='')
                         li.li-ft-share
-                            a(href='javascript:void(0);')
+                            a
                                 img.img-responsive(src='#{resPath}images/icon-share_29.png', alt='')

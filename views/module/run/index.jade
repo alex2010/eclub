@@ -149,12 +149,11 @@ block content
                                 .col-md-5.col-md-offset-1.banner-mud
                                     #newPic.carousel
                                         .carousel-inner
-                                            for p,i in it.refFile.slide
-                                                .item(class= i == 0 ? 'active' : '' )
-                                                    != f.imgItem(it, c, 'slide', i)
+                                            //if it.refFile && it.refFile.slide
+                                            //    for p,i in it.refFile.slide
+                                            //        .item(class= i == 0 ? 'active' : '' )
+                                            //            != f.imgItem(it, c, 'slide', i)
                                         .imgs-banner-mud
-                                            for sp,i in it.refFile.slide
-                                                img(class= i == 0 ? 'active' : '', data-target='#newPic', data-slide-to=i, src= f.resPath(c, 'thumb/' + sp))
                                 .col-md-5.mod-prop-news
                                     span.arrow-prop-news
                                     .hd-prop-news
