@@ -304,10 +304,10 @@ module.exports =
                     cb(null, res)
 
     tourList:(ctx,req)->
-        ctx.cat = req.query.cat
-        filter = {}
-        if ctx.cat
-            filter = code: ctx.cat
+#        ctx.cat = req.query.cat
+#        filter = {}
+#        if ctx.cat
+#            filter = code: ctx.cat
 
         shows:(cb)->
             dao.find ctx.c.code, 'show', {}, {}, (res)->
@@ -316,7 +316,15 @@ module.exports =
 
         items:(cb)->
             et = 'tour'
+            filter = {}
+            if req.query.cat
+                filter.cat =
+                    $regex: ".*#{req.query.cat}.*"
+
             dao.find ctx.c.code, et, filter,{},(res)->
+                for it in res
+                    if it.rate
+                        it.rateOne = it.rate.pop()
                 dao.count ctx.c.code, et, filter, (count)->
                     cb null, res
 

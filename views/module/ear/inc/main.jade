@@ -85,9 +85,9 @@ block ctn
                     each it in c.nav
                         li.li-nav
                             a(href='#{it.href}')= it.label
-                            if it.subnav
+                            if it.children
                                 ul.l-subnav
-                                    each item in it.subnav
+                                    each item in it.children
                                         li.li-subnav
                                             a(href='#{item.href}')= item.label
                     li.mask-active-nav
@@ -154,7 +154,9 @@ block ctn
                         a(href='javascript:void(0);') 找HA验配师
                     li.li-search
                         a(href='javascript:void(0);') 找HA中心
-            block content
+            #content.row
+            #static
+                block content
             footer.row
                 .col-md-7.intro-ft
                     p

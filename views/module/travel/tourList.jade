@@ -1,5 +1,10 @@
 extends inc/main
 
+mixin rateAttr(it,name)
+    .row
+        .col-xs-6.p0=name.capAll()
+        .col-xs-6.p0.starVal(class=name)=it[name]
+
 block style
     :less(minify=true)
         hr {
@@ -72,14 +77,14 @@ block style
             }
         }
 
-        #tourList {
-            .panel-body {
-                padding-top: 0;
-                padding-bottom: 0;
-                height: 400px;
-                overflow: scroll;
-            }
-        }
+        /*#tourList {*/
+            /*.panel-body {*/
+                /*padding-top: 0;*/
+                /*padding-bottom: 0;*/
+                /*height: 400px;*/
+                /*overflow: scroll;*/
+            /*}*/
+        /*}*/
 
         a {
             h3 {
@@ -148,7 +153,15 @@ block style
         .tbBody {
             background: #d6e6f5;
         }
-
+        .col-xs-6.p0{
+            width: 120px;
+            font-size: 14px;
+            line-height: 35px;
+            font-weight: bold;
+        }
+        .avg{
+            display: inline-block;
+        }
         .btns {
             .btn {
                 width: 200px;
@@ -193,136 +206,150 @@ block content
                             a(data-toggle='tab', href='#photo#{i}') Photos
                         li.col-md-3
                             a(data-toggle='tab', href='#review#{i}') Customer Reviews
-                    .panel-body
-                        .tab-content.row
-                            div(id='fact#{i}').tab-pane.active
-                                .col-md-4
-                                    h4 Facts
-                                    dl.dl-horizontal
-                                        dt Tour Code
-                                        dd= it.code
-                                        dt Tour Type
-                                        dd= it.type
-                                        dt Duration
-                                        dd= it.duration
-                                        dt Difficulty
-                                        dd= it.difficulty
-                                        dt Group Size
-                                        dd= it.groupSize
-                                        dt Price Range
-                                        dd= it.priceRange
-                                        dt Departs From
-                                        dd= it.departFrom
-                                        dt Returns To
-                                        dd= it.returnTo
-                                        dt Starts At
-                                        dd= it.startAt
-                                        dt Availability
-                                        dd= it.availability
-                                .col-md-8
-                                    h4 Overview
-                                    p!= it.description
-                            div(id='itineray#{i}').tab-pane
-                                .col-md-4
-                                    h4 Highlights
-                                    if it.highlight
-                                        ul.highlight
-                                            each hl in it.highlight
-                                                li= hl
-                                .col-md-8
-                                    h4 Itinerary
-                                    if it.itinerary
-                                        ul.itinerary
-                                            each lt in it.itinerary
-                                                li
-                                                    if lt._e
-                                                        a.hoverLink(title= lt.title,data-content= lt.brief)= lt.title
-                                                        a.popover(href= "/sight/#{lt._id}")
-                                                            .arrow
-                                                            h4.popover-title
-                                                            .popover-content
-                                                    else
-                                                        strong= lt.title
-                                                    p!= lt.brief
+                    .tab-content.clearfix(style='height:400px;overflow-y:scroll')
+                        div(id='fact#{i}').tab-pane.active
+                            .col-md-4
+                                h4 Facts
+                                dl.dl-horizontal
+                                    dt Tour Code
+                                    dd= it.code
+                                    dt Tour Type
+                                    dd= it.type
+                                    dt Duration
+                                    dd= it.duration
+                                    dt Difficulty
+                                    dd= it.difficulty
+                                    dt Group Size
+                                    dd= it.groupSize
+                                    dt Price Range
+                                    dd= it.priceRange
+                                    dt Departs From
+                                    dd= it.departFrom
+                                    dt Returns To
+                                    dd= it.returnTo
+                                    dt Starts At
+                                    dd= it.startAt
+                                    dt Availability
+                                    dd= it.availability
+                            .col-md-8
+                                h4 Overview
+                                p!= it.description
+                        div(id='itineray#{i}').tab-pane
+                            .col-md-4
+                                h4 Highlights
+                                if it.highlight
+                                    ul.highlight
+                                        each hl in it.highlight
+                                            li= hl
+                            .col-md-8
+                                h4 Itinerary
+                                if it.itinerary
+                                    ul.itinerary
+                                        each lt in it.itinerary
+                                            li
+                                                if lt._e
+                                                    a.hoverLink(title= lt.title,data-content= lt.brief)= lt.title
+                                                    a.popover(href= "/sight/#{lt._id}")
+                                                        .arrow
+                                                        h4.popover-title
+                                                        .popover-content
+                                                else
+                                                    strong= lt.title
+                                                p!= lt.brief
 
-                            div(id='price#{i}').tab-pane.price
-                                .col-md-4.text-left
-                                    h4 Inclusions
-                                    if it.inclusion
-                                        ul
-                                            each inc in it.inclusion
-                                                li
-                                                    != f.icon('ok')
-                                                    = inc
-                                    h4 Exclusions
-                                    if it.exclusion
-                                        ul
-                                            each ex in it.exclusion
-                                                li
-                                                    != f.icon('remove')
-                                                    = ex
-                                .col-md-8
-                                    h4 Prices (USD)
-                                    if it.prices
-                                        script.
-                                            p_#{it._id} = !{JSON.stringify({title:it.title,code:it.code,prices:it.prices})};
-                                        table.prices
-                                            tr.tbHead
-                                                th(width='160px') Number of people
-                                                each p,i in it.prices
-                                                    td
-                                                        input(data-price=p,data-count=i name='calc',type='radio')
-                                                        br
-                                                        = i
-                                                th(rowspan='2')
-                                                    p Total
-                                                    span $
-                                                    span.total #{it.prices[0]}
-                                            tr.tbBody
-                                                th Price per Person ($)
-                                                each p in it.prices
-                                                    td
-                                                        span= p
-                                    p * Please select one option
-                                    p NOTE:
+                        div(id='price#{i}').tab-pane.price
+                            .col-md-4.text-left
+                                h4 Inclusions
+                                if it.inclusion
+                                    ul
+                                        each inc in it.inclusion
+                                            li
+                                                != f.icon('ok')
+                                                = inc
+                                h4 Exclusions
+                                if it.exclusion
+                                    ul
+                                        each ex in it.exclusion
+                                            li
+                                                != f.icon('remove')
+                                                = ex
+                            .col-md-8
+                                h4 Prices (USD)
+                                if it.prices
+                                    script.
+                                        p_#{it._id} = !{JSON.stringify({title:it.title,code:it.code,prices:it.prices})};
+                                    table.prices
+                                        tr.tbHead
+                                            th(width='160px') Number of people
+                                            each p,i in it.prices
+                                                td
+                                                    input(data-price=p,data-count=i name='calc',type='radio')
+                                                    br
+                                                    = i
+                                            th(rowspan='2')
+                                                p Total
+                                                span $
+                                                span.total #{it.prices[0]}
+                                        tr.tbBody
+                                            th Price per Person ($)
+                                            each p in it.prices
+                                                td
+                                                    span= p
+                                p * Please select one option
+                                p NOTE:
 
-                            div(id='photo#{i}').tab-pane
-                                if it.refFile && it.refFile.slide
-                                    - var _slides = it.refFile.slide
-                                    - var _prop = 'slide'
-                                    -var _ctx = it
-                                    -var _sid = 'ss'+i
-                                    include inc/slide
+                        div(id='photo#{i}').tab-pane
+                            if it.refFile && it.refFile.slide
+                                - var _slides = it.refFile.slide
+                                - var _prop = 'slide'
+                                -var _ctx = it
+                                -var _sid = 'ss'+i
+                                include inc/slide
 
-                            div(id='review#{i}').tab-pane
-                                .col-md-4
-                                    h4
-                                        span 100% REAL
-                                        br
-                                        | REVIEWS
-                                    p In order to guarantee the 100% Authenticity of the reviews on wikibeijing, only the feedbacks from customers who have booked a tour from wikibeijing would be shown here. There is no need to put fake ratings on our site. The reviews in a way are valuable suggestions from the customers. We could learn something from them to perfect the itinerary and to choose the right guide, thus to provide better service in the future. Also, we only put the paper feedbacks from the clients in the section of Private Guides, to guarantee the authenticity of them. They are also ranked by the positive reviews from the customers and according alteration would be made according to their performances.
+                        div(id='review#{i}').tab-pane
+                            .col-md-4
+                                h4
+                                    span 100% REAL REVIEWS
+                                p.well.well-sm(style='font-size: 14px;line-height: 24px;') In order to guarantee the 100% Authenticity of the reviews on wikibeijing, only the feedbacks from customers who have booked a tour from wikibeijing would be shown here. There is no need to put fake ratings on our site. The reviews in a way are valuable suggestions from the customers. We could learn something from them to perfect the itinerary and to choose the right guide, thus to provide better service in the future. Also, we only put the paper feedbacks from the clients in the section of Private Guides, to guarantee the authenticity of them. They are also ranked by the positive reviews from the customers and according alteration would be made according to their performances.
 
 
-                                .col-md-8
-                                    h4 Customer Reviews
-                                    p Rated by
-                                    .row
-                                        .col-xs-6
-                                            h5 Tour Guide
+                            .col-md-8.pl0
+                                h4 Customer Reviews
+                                if it.rateOne
+                                    .ratingView
+                                        .well.well-sm.clearfix.mb
+                                            div Rated by &nbsp;
+                                                strong
+                                                    span.firstName=it.rateOne.firstName
+                                                    span.lastName=it.rateOne.lastName
+                                                .pull-right.lastUpdated #{it.rateOne.lastUpdated.toString().substr(0,24)}
+                                            hr
+                                            .content= it.rateOne.content
+                                            hr
+                                            .col-xs-6.text-right(style='padding-top: 4px;font-size: 18px;') Value For Money
+                                            .col-xs-6.text-left.pl0
+                                                .avg
+                                            hr
+                                            .starReview.mb2.clearfix
+                                                .col-xs-6
+                                                    +rateAttr(it.rateOne,'tourArrangement')
+                                                    +rateAttr(it.rateOne,'guideAttitude')
+                                                    +rateAttr(it.rateOne,'guideService')
+                                                    +rateAttr(it.rateOne,'guideCompetence')
+                                                .col-xs-6
+                                                    +rateAttr(it.rateOne,'vehicleCondition')
+                                                    +rateAttr(it.rateOne,'drivingSkill')
+                                                    +rateAttr(it.rateOne,'foodQuality')
+                                                    +rateAttr(it.rateOne,'overallEvaluation')
 
-                                        .col-xs-6
-                                            h5 Car & Meal
 
-                                        .col-xs-12.text-center
-                                            | Value For Money
+                                p.text-center
+                                    a(style='margin-right: 50px' onclick='cf.rate(this)' tid=it._id).btn.btn.btn-success Add Review
+                                    a.btn.btn.btn-info(onclick='cf.showRatingMore(this)' tid=it._id) View More
 
-                                    p.text-center
-                                        a(style='margin-right: 50px' onclick='cf.rate(this)').btn.btn.btn-success Add Review
-                                        a.btn.btn.btn-info View More
-
-                    p.text-center.btns
-                        a(style='margin-right: 50px',onclick='cf.showEnquire(this)').btn.btn-xs.btn-warning Enquire
-                        a.btn.btn-xs.btn-success(href='#!/bookTour/#{it._id}') Book
+                    p.text-center.btns(style='padding-top:10px')
+                        a(style='margin-right: 50px',onclick='cf.showEnquire(this)').btn.btn-warning Enquire
+                        a.btn.btn-success(href='#!/bookTour/#{it._id}') Book
 
     script.
         _shows = !{JSON.stringify(shows)};
@@ -339,32 +366,43 @@ block st
         dcvt = (v)->
             "#{v || 0}$"
 
+
+
         loadJS "#{cf.rPath}js/bootstrap-formhelpers-countries.en_US.js"
         loadJS "#{cf.modPath}router.js", ->
+            ct = $('.ratingView')
 
-            cf.meta.rating =
-                _:
-                    item:[
-                        'firstName'
-                        'lastName'
-                        'email'
-                        'guide'
-                        'rate'
-                    ]
+            initRating = (ctn)->
+                avg = 0
+                lt = $('.starVal',ctn)
+                if lt.length
+                    for it in lt
+                        v = +$(it).text()
+                        avg += v
+                        $(it).html util.starRating 5, v * 0.5
+                $('.avg',ctn).html util.starRating 5, avg* 0.5/lt.length
 
+            initRating(ct)
 
-            cf.rate = (t)->
-                id = $(t).data('id')
-                new cf.view.form
-                    title: 'Review'
-                    toFetch: false
-                    url: util.restUrl('push','tour','_id',id,'rate')
-                    cols: 'col-md-3:col-md-9'
-                    entity: 'rating'
+            cf.showRatingMore =(e)->
+                id = $(e).attr('tid')
+                new cf.view.tag
                     mode: 'modal'
-                    _saveSuccess: (model)->
-                        cf.deal.clear()
-                        model.view.closeDlg()
+                    title: 'Recently Reviews'
+                    init:->
+                        @render()
+                    preRender:->
+                        @ctn.css 'padding','30px'
+                        $.get "/r/tour/_id/#{id}/rate",(res)=>
+                            log res
+                            for it in res.entities
+                                nct = ct.clone()
+                                for k,v of it
+                                    if k is 'lastUpdated'
+                                        v = v.dStr()
+                                    nct.find(".#{k}").text v
+                                @ctn.append nct
+                                initRating(nct)
 
             cf.showEnquire = ->
                 new cf.view.form
@@ -373,32 +411,9 @@ block st
                     cols: 'col-md-3:col-md-9'
                     toFetch: false
                     title: "Your are requiring this tour"
+                    className: 'break'
 
             $.extend true, cf.meta,
-                enquire:
-                    title:
-                        type: 'select'
-                        data: ['Mr', 'Miss']
-                    nationality:
-                        type: 'select'
-                        data: CountriesList
-                    firstName: {}
-                    lastName: {}
-                    confirmEmail:
-                        type: 'email'
-                    yourQuestion:
-                        type: 'textarea'
-                    _:
-                        item: [
-                            'title'
-                            'nationality'
-                            'firstName'
-                            'lastName'
-                            'email'
-                            'confirmEmail'
-                            'yourQuestion'
-                            'captcha'
-                        ]
                 user:
                     title:
                         type:'radio'

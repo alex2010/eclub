@@ -6,7 +6,7 @@ _.extend String::,
     capAll:  ->
         res = for it in [1..@length]
             c = @charAt(it)
-            if 'A' < c < 'Z'
+            if 'A' <= c <= 'Z'
                 ' ' + c
             else
                 c

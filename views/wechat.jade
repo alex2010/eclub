@@ -1,22 +1,16 @@
-doctype html
-html
-    head
-        meta(charset='UTF-8')
-        - main = 'wechat'
-        //script(src='http://45.33.59.69:9000/target/target-script-min.js#anonymous')
-        include ./inc/smeta
+extends ./main
+
+block ctn
     body(data-wid= wt.appId, data-wcode= wt.code)
-        .navbar.navbar-inverse.navbar-fixed-top
-            #header.container
-                #logo.navbar-header.text-center
-                    a.navbar-brand(href='#')= name
-
-        #static.container
-            block content
-
-        #content.container
-
-        #footer.container
-            p.text-center!= i18.iim('copyright', c.url, i18.ii('abbr'))
-
-    include ./inc/ssub
+        .headerWrapper
+            .navbar.navbar-inverse.navbar-fixed-top
+                #header.container.text-center
+                    #logo.navbar-header
+                        a.navbar-brand(href='#')= name
+        .container
+            #static.row
+                block content
+            #content.row
+        .footerWrapper
+            #footer.container
+                p(onclick= 'user.logout()').text-center!= i18.iim('copyright', c.url, i18.ii('abbr'))
