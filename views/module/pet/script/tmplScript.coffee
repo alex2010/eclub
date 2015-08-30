@@ -102,7 +102,10 @@ module.exports =
         ,
             label: ctx.title
         ]
-
+        log ctx.startedDate
+        ctx.reg =
+#            href: '/enroll/' + ctx._id
+            href: tu.navUrl('enroll',ctx._id)
 #        venue: (cb)->
 #            dao.get ctx.c.code, 'venue', {_id: ctx.venue._id}, (res)->
 #                cb(null, res)

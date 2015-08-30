@@ -7,6 +7,7 @@ page = require '../controller/page'
 up = require '../controller/upload'
 captcha = require '../controller/captcha'
 
+wxpay = require('weixin-pay')
 
 checkPagePattern = (req, rsp, next, page)->
     if /^\w+$/.test(page)
@@ -49,7 +50,8 @@ pre = (req, rsp, next)->
         if res and !app.env
             rsp.end res.str
         else
-            req.c = app._community[req.hostname]
+            rStr = req.hostname.replace('www.','')
+            req.c = app._community[rStr]
             req.k = k
             next()
 
@@ -102,6 +104,7 @@ router.post '/a/wt/showQRCodeURL', wt.showQRCodeURL
 router.post '/a/wt/uploadNews', wt.uploadNews
 router.get '/a/wt/userInfoByCode', wt.userInfoByCode
 router.post '/a/wt/jsSign', wt.jsSign
+router.post '/a/wt/wxPay', wt.wxPay
 
 router.get '/r/c/mg/file/list', up.fileList
 
@@ -144,6 +147,10 @@ router.get '/:page', page.page
 router.get '/:entity/:id', page.entity
 router.get '/:entity/:attr/:id', page.entity
 
-
+router.use '/a/wt/notify/:code', wxpay::useWXCallback (msg,req,res)->
+    log req.c.code
+    log msg
+    # do biz here
+    res.success()
 
 module.exports = router

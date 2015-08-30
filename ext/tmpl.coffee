@@ -109,3 +109,6 @@ module.exports =
 
     tmpl: (name, opt)->
         cf.rtp name, opt
+
+    actDate:(start,end)->
+        "#{start.substr(0,16)}-#{end.substr(11,5)}"

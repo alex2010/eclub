@@ -394,7 +394,6 @@ block st
                     preRender:->
                         @ctn.css 'padding','30px'
                         $.get "/r/tour/_id/#{id}/rate",(res)=>
-                            log res
                             for it in res.entities
                                 nct = ct.clone()
                                 for k,v of it
