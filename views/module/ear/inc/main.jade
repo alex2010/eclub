@@ -63,50 +63,66 @@ block ctn
             header.row
                 .col-md-12
                     .row
-                        .col-md-4.pull-right
+                        .col-md-4.col-xs-12.pull-right
                             ul.list-inline.pull-right.l-login
                                 li
                                     a(href='') 登录
                                 span /
                                 li
                                     a(href='') 注册
+                            .clearfix
                     .row
-                        .col-md-7.logo
+                        .col-md-7.col-xs-12.logo
                             h1
                                 a(href='/')
                                     img.img-responsive(src='#{resPath}images/logo_03.png', alt='')
                             p 聆听在线--最好用的听力健康平台
-                        .col-md-5.block-search-hder
+                        .col-md-5.col-xs-12.block-search-hder
                             span.tip-search 站内搜索
                             input.itxt-search(name='', type='text', placeholder='', value='')
                             input.btn-search(type='button')
-            nav.row
-                ul.col-md-7.l-nav.list-inline
-                    each it in c.nav
-                        li.li-nav
-                            a(href='#{it.href}')= it.label
-                            if it.children
-                                ul.l-subnav
-                                    each item in it.children
-                                        li.li-subnav
-                                            a(href='#{item.href}')= item.label
-                ul.col-md-4.l-search.list-inline.p0.text-left
-                    .block-panel-search
-                        #sConsultant
-                        #sShop
-                        #sProduct
-                    li
-                        a.btn.btn-success(stag="#sProduct" ) 找助听器
-                    li
-                        a.btn.btn-danger(stag="#sConsultant" ) 找验配师
-                    li
-                        a.btn.btn-warning(stag="#sShop" ) 找中心
-                a.btn.btn-primary.pull-right(style='margin:-42px 10px 0 0') 找到&nbsp;
-                    strong.text-danger#resCount 0
-                    | &nbsp;个结果
+            nav.navbar.navbar-default
+                .container-fluid
+                    .navbar-header
+                        button.navbar-toggle(type='button',data-toggle='collapse',data-target='#bs-example-navbar-collapse-1',aria-expanded='false')
+                            span.sr-only Toggle navigation
+                            span.icon-bar
+                            span.icon-bar
+                            span.icon-bar
+                        a.navbar-brand(href='/') 听力搜索专家
+                    .collapse.navbar-collapse(id='bs-example-navbar-collapse-1')
+                        ul.nav.navbar-nav
+                            each it in c.nav
+                                if it.children && it.children!=[]
+                                    li.dropdown
+                                        a.dropdown-toggle(data-toggle='dropdown',role='button',aria-haspopup='true',aria-expanded='false')= it.label
+                                            span.caret
+                                        ul.dropdown-menu
+                                            each item in it.children
+                                                li
+                                                    a(href='#{item.href}')= item.label
+                                else
+                                    li
+                                        a(href='#{it.href}')= it.label
+                //
+                    ul.col-md-4.l-search.list-inline.p0.text-left
+                        .block-panel-search
+                            #sConsultant
+                            #sShop
+                            #sProduct
+                        li
+                            a.btn.btn-success(stag="#sProduct" ) 找助听器
+                        li
+                            a.btn.btn-danger(stag="#sConsultant" ) 找验配师
+                        li
+                            a.btn.btn-warning(stag="#sShop" ) 找听力中心
+                    a.btn.btn-primary.pull-right(style='margin:-42px 10px 0 0') 找到&nbsp;
+                        strong.text-danger#resCount 0
+                        | &nbsp;个结果
             #content.row
             #static
                 block content
+            footer
                 .col-md-7.intro-ft
                     p
                         | 全国助听器验配师网
@@ -115,7 +131,7 @@ block ctn
                         br
                         a(target='_blank', href='http://www.earmedicalmap.com') http://www.earmedicalmap.com
                 .col-md-2.attention-ft
-                    h5.title-ft-attention 关注我们
+                    h5.title-ft-attention 关于我们
                     ul.l-ft-attention
                         li.li-ft-attention
                             a 广告服务

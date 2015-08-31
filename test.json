@@ -1,0 +1,130 @@
+{
+  "code" : "ear",
+  "name" : "掌上听力专家",
+  "resPath" : "/res",
+  "url" : "t.ear.com",
+  "nav" : [
+    {
+      "label" : "首页",
+      "href" : "/",
+      "children" : [
+        {
+          "refClass" : "consultant",
+          "ref" : "55cc5e0d9947860857abdad3",
+          "href" : "/consultant/55cc5e0d9947860857abdad3",
+          "label" : "周先生",
+          "tip" : "",
+          "cls" : "",
+          "icon" : "",
+          "id" : "19seo"
+        }
+      ]
+    },
+    {
+      "label" : "听力健康",
+      "href" : "/itemList?entity=health",
+      "children" : [
+        {
+          "label" : "听力知识",
+          "href" : "/itemList?entity=health"
+        },
+        {
+          "label" : "康复知识",
+          "href" : "/itemList?entity=health"
+        },
+        {
+          "label" : "助听器",
+          "href" : "/itemList?entity=health"
+        }
+      ]
+    },
+    {
+      "label" : "互动论坛",
+      "href" : "/itemList?entity=forum",
+      "children" : [
+        {
+          "label" : "验配师论坛",
+          "href" : "/itemList?entity=forum"
+        },
+        {
+          "label" : "消费者论坛",
+          "href" : "/itemList?entity=forum"
+        },
+        {
+          "label" : "二手助听器论坛",
+          "href" : "/itemList?entity=forum"
+        }
+      ]
+    },
+    {
+      "label" : "助听众筹",
+      "href" : "/itemList?entity=pubchips",
+      "children" : [
+        {
+          "label" : "testA",
+          "href" : "/itemList?entity=pubchips"
+        },
+        {
+          "label" : "testB",
+          "href" : "/itemList?entity=pubchips"
+        }
+      ],
+      "refClass" : "sight",
+      "row" : "3",
+      "tip" : "",
+      "cls" : "",
+      "icon" : ""
+    },
+    {
+      "label" : "助听返券",
+      "href" : "/itemList?entity=feedback",
+      "children" : []
+    },
+    {
+      "label" : "听力问询",
+      "href" : "/inquiry",
+      "children" : [
+        {
+          "label" : "我要咨询",
+          "href" : "/"
+        },
+        {
+          "label" : "我要预约",
+          "href" : "/"
+        },
+        {
+          "refClass" : "post",
+          "label" : "CROS 双耳对传式助听器",
+          "href" : "/post/55ad28490bca75817bfbf726",
+          "tip" : "",
+          "cls" : "",
+          "icon" : "",
+          "row" : "1",
+          "id" : "mfd53",
+          "ref" : "55ad28490bca75817bfbf726"
+        }
+      ],
+      "refClass" : "sight",
+      "tip" : "",
+      "cls" : "",
+      "icon" : "",
+      "row" : "2",
+      "ref" : "55ac54cd45ea10595257da3f"
+    }
+  ],
+  "foot" : [
+    {
+      "label" : "免责声明",
+      "href" : "/content/pp"
+    },
+    {
+      "label" : "广告服务",
+      "href" : "/content/about"
+    },
+    {
+      "label" : "联系我们",
+      "href" : "/content/contact"
+    }
+  ],
+  "lastUpdated" : ISODate("2015-08-22T01:22:35.377Z")
+}
