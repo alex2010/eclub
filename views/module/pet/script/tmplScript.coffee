@@ -112,8 +112,9 @@ module.exports =
 
         cats: (cb)->
             dao.find ctx.c.code, 'cat', {type: 'activity'}, {}, (res)->
-                cat = _.where(res, {code: ctx.cat.code})
-                ctx.cat = cat[0] if cat.length
+                if ctx.cat
+                    cat = _.where(res, {code: ctx.cat.code})
+                    ctx.cat = cat[0] if cat.length
                 cb(null, res)
 
         latest: (cb)->

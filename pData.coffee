@@ -87,6 +87,10 @@ _.delay ->
                 dao.save code, entity, it, (res)->
                     if entity is 'activity'
                         act = res.ops[0]
+                        if _.isString act.startedDate
+                            act.startedDate = Date.parseLocal(act.startedDate)
+                        if _.isString act.endDate
+                            act.endDate = Date.parseLocal(act.endDate)
                         estr = entity + ':_id'
                         if act.master and !act.master.isEmpty()
                             filter =
@@ -95,7 +99,7 @@ _.delay ->
                             act.master = {}
                             dao.find code, 'user', filter, {}, (ru)->
                                 for u in ru
-                                    act.master[u._id] = _.pick(u,'_id', 'username', 'title', 'industry', 'introduction')
+                                    act.master[u._id] = _.pick(u,'username', 'title', 'industry', 'introduction')
                                 dao.save code, estr, act, ->
                                     if act.cat
 #                                        dao.get code, 'cat', {code: act.cat}, (res)->

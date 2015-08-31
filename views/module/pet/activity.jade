@@ -48,5 +48,5 @@ block content
         _pa = !{JSON.stringify(participant || '[]')};
 
 block st
-    :coffee(bare=true)
+    :coffee(bare=true minify=true)
         loadJS "#{cf.modPath}enroll.js"

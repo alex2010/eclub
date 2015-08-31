@@ -10,13 +10,13 @@ block content
                             img(src='#{resPath}images/logo_03.png', alt='')
                 .col-md-6
                     ul#menu.l-nav
-                        li.li-nav.active(data-menuanchor='about')
-                            a(href='#about')
+                        li.li-nav(data-menuanchor='news')
+                            a(href='#news')
                                 span.bg
-                                    img(src='#{resPath}images/navEn_06.png', alt='')
+                                    img(src='#{resPath}images/navEn_12.png', alt='')
                                 span.active-bg
-                                    img(src='#{resPath}images/navEn_06-active.png', alt='')
-                                span.text 关于我们
+                                    img(src='#{resPath}images/navEn_12-active.png', alt='')
+                                span.text 新闻
                         li.li-nav(data-menuanchor='register')
                             a(href='#register')
                                 span.bg
@@ -31,18 +31,20 @@ block content
                                 span.active-bg
                                     img(src='#{resPath}images/navEn_10-active.png', alt='')
                                 span.text 活动花絮
-                        li.li-nav(data-menuanchor='news')
-                            a(href='#news')
+
+                        li.li-nav.active(data-menuanchor='about')
+                            a(href='#about')
                                 span.bg
-                                    img(src='#{resPath}images/navEn_12.png', alt='')
+                                    img(src='#{resPath}images/navEn_06.png', alt='')
                                 span.active-bg
-                                    img(src='#{resPath}images/navEn_12-active.png', alt='')
-                                span.text 新闻
+                                    img(src='#{resPath}images/navEn_06-active.png', alt='')
+                                span.text 关于我们
                 .col-md-3
                     #timerContent
                         .countdown
     .container
         #scrollBox.row.main
+
             .section.main-index
                 .bd-index
                     h3.title-bd-index
@@ -55,42 +57,36 @@ block content
                     .row
                         .col-md-9
                             span.btn-index
-                                a(href='javascript:void(0);') 敢
+                                a(href='#register') 敢
                         .col-md-3
                             span.btn-index
-                                a.nodare(href='javascript:void(0);') 不敢
-            .section
-                h2
-                    a(href='javascript:void(0);') 泥泞跑
-                    img(src='#{resPath}images/title-page_03.png', alt='')
-
-                .slide
-                    -var it = comments[0]
-                    include ./inc/comment
-
-                    -var it = comments[1]
-                    include ./inc/comment
-
-                    -var it = comments[2]
-                    include ./inc/comment
-                .slide
-                    -var it = comments[3]
-                    include ./inc/comment
-
-                    -var it = comments[4]
-                    include ./inc/comment
-                .slide
-                    -var it = comments[5]
-                    include ./inc/comment
-
-                    -var it = comments[6]
-                    include ./inc/comment
-                .slide
-                    -var it = comments[7]
-                    include ./inc/comment
-
-                    -var it = comments[8]
-                    include ./inc/comment
+                                a.nodare(href='#about') 不敢
+            .section.col-md-12
+                .row
+                    h2
+                        a(href='javascript:void(0);') 泥泞跑
+                        img(src='#{resPath}images/title-page_13.png', alt='')
+                    .row.panel-news
+                        each it in posts
+                            .slide
+                                .col-md-5.col-md-offset-1.banner-mud
+                                    #newPic.carousel(data-ride="carousel")
+                                        .carousel-inner
+                                            if it.refFile && it.refFile.slide
+                                                for p,i in it.refFile.slide
+                                                    .item(class= i == 0 ? 'active' : '' )
+                                                        != f.imgItem(it, c, 'slide', null, i)
+                                        .imgs-banner-mud
+                                            for sp,i in it.refFile.slide
+                                                img(class= i == 0 ? 'active' : '', data-target='#newPic', data-slide-to=i, src= f.resPath(c, sp))
+                                .col-md-5.mod-prop-news
+                                    span.arrow-prop-news
+                                    .hd-prop-news
+                                        h4.title-prop-news
+                                            img(src='#{resPath}images/title-prop-news_06.png', alt='')
+                                    .bd-prop-news
+                                        span.time= it.dateCreated
+                                        .contentBox!= it.content
 
             .section
                 h2
@@ -138,27 +134,35 @@ block content
                 .row.panel-events
                     .col-md-4.col-md-offset-4.logo-events
                         img(src='#{resPath}images/logo-events_03.png', alt='')
-            .section.col-md-12
-                .row
-                    h2
-                        a(href='javascript:void(0);') 泥泞跑
-                        img(src='#{resPath}images/title-page_13.png', alt='')
-                    .row.panel-news
-                        each it in posts
-                            .slide
-                                .col-md-5.col-md-offset-1.banner-mud
-                                    #newPic.carousel
-                                        .carousel-inner
-                                            //if it.refFile && it.refFile.slide
-                                            //    for p,i in it.refFile.slide
-                                            //        .item(class= i == 0 ? 'active' : '' )
-                                            //            != f.imgItem(it, c, 'slide', i)
-                                        .imgs-banner-mud
-                                .col-md-5.mod-prop-news
-                                    span.arrow-prop-news
-                                    .hd-prop-news
-                                        h4.title-prop-news
-                                            img(src='#{resPath}images/title-prop-news_06.png', alt='')
-                                    .bd-prop-news
-                                        span.time= it.dateCreated
-                                        .contentBox= it.content
+            .section
+                h2
+                    a(href='javascript:void(0);') 泥泞跑
+                    img(src='#{resPath}images/title-page_03.png', alt='')
+
+                .slide
+                    -var it = comments[0]
+                    include ./inc/comment
+
+                    -var it = comments[1]
+                    include ./inc/comment
+
+                    -var it = comments[2]
+                    include ./inc/comment
+                .slide
+                    -var it = comments[3]
+                    include ./inc/comment
+
+                    -var it = comments[4]
+                    include ./inc/comment
+                .slide
+                    -var it = comments[5]
+                    include ./inc/comment
+
+                    -var it = comments[6]
+                    include ./inc/comment
+                .slide
+                    -var it = comments[7]
+                    include ./inc/comment
+
+                    -var it = comments[8]
+                    include ./inc/comment

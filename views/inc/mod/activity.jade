@@ -18,12 +18,11 @@ if master
             - _uClass = 'host'
             include userInfo
 
-.well.well-sm.fee=fee
-.reg
-
+if fee.toString().length >5 && feeTable
+    .well.well-sm.fee=fee
+    .reg
 
 //h3 地图
-
 //
 //.regBtn
 //    a.btn.btn-lg.btn-info.btn-block&attributes(reg) 我要报名

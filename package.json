@@ -32,8 +32,7 @@
     "wechat": "~2",
     "wechat-api": "~1",
     "wechat-oauth": "~1",
-    "weixin-pay": "^1.1.6",
-    "wxpay": "0.0.2"
+    "weixin-pay": "^1.1.6"
   },
   "devDependencies": {
     "load-grunt-config": "~0",
