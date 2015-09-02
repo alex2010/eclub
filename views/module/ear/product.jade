@@ -16,17 +16,17 @@ block content
             .row.article.pt20
                 .col-md-8.article-main
                     .thumbnail
-                        != f.imgItem(detail,c)
+                        != f.imgItem(locals,c)
                         .caption
-                            h2.title= detail.title
+                            h2.title= title
                             .box-label
-                                +label('价格',detail.price)(class='label-danger')
-                                +label('品牌',detail.brand)
-                                +label('上市时间',detail.pubTime)
-                                +label('外型',detail.outline)
-                                +label('通道',detail.channel)
-                                +label('保修时间',detail.warranty)
-                                +label('水平',detail.level)
+                                +label('价格',price)(class='label-danger')
+                                +label('品牌',brand)
+                                +label('上市时间',pubTime)
+                                +label('外型',outline)
+                                +label('通道',channel)
+                                +label('保修时间',warranty)
+                                +label('水平',level)
                     .mod-tab
                         ul.nav.nav-tabs(role='tablist')
                             li.active(role='presentation')
@@ -35,9 +35,9 @@ block content
                                 a(href='#perfms',aria-controls='perfms',role='tab',data-toggle='tab') 规格参数
                         .tab-content
                             .tab-pane.active.fade.in(role='tabpanel',id='desc')
-                                p= detail.description
+                                p= description
                             .tab-pane.fade(role='tabpanel',id='perfms')
-                                each it in detail.perfms
+                                each it in performance.split(',')
                                     p.item-perfms= it
                                         span.glyphicon.glyphicon-ok
                 .col-md-4.article-aside

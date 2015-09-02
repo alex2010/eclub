@@ -67,10 +67,10 @@ block content
                         a(href='javascript:void(0);') 泥泞跑
                         img(src='#{resPath}images/title-page_13.png', alt='')
                     .row.panel-news
-                        each it in posts
+                        each it,ii in posts
                             .slide
                                 .col-md-5.col-md-offset-1.banner-mud
-                                    #newPic.carousel(data-ride="carousel")
+                                    .carousel(id="newPic#{ii}" data-ride="carousel")
                                         .carousel-inner
                                             if it.refFile && it.refFile.slide
                                                 for p,i in it.refFile.slide
@@ -78,14 +78,18 @@ block content
                                                         != f.imgItem(it, c, 'slide', null, i)
                                         .imgs-banner-mud
                                             for sp,i in it.refFile.slide
-                                                img(class= i == 0 ? 'active' : '', data-target='#newPic', data-slide-to=i, src= f.resPath(c, sp))
+                                                img(class= i == 0 ? 'active' : '', data-target='#newPic#{ii}', data-slide-to=i, src= f.resPath(c, sp))
                                 .col-md-5.mod-prop-news
                                     span.arrow-prop-news
                                     .hd-prop-news
                                         h4.title-prop-news
                                             img(src='#{resPath}images/title-prop-news_06.png', alt='')
                                     .bd-prop-news
-                                        span.time= it.dateCreated
+                                        if it.dateCreated
+                                            if it.dateCreated.pattern
+                                                span.time= it.dateCreated.pattern('yyyy/MM/dd mm:hh:ss')
+                                            else
+                                                span.time= f.dStr(it.dateCreated,18)
                                         .contentBox!= it.content
 
             .section

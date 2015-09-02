@@ -1,18 +1,20 @@
 module.exports =
     _init: (ctx)->
+        opt =
+                limit: 10
+                sort:
+                    row: -1
         wt:(cb)->
             dao.get ctx.c.code, 'pubAccount', {}, (res)->
                 cb(null,res)
+        postList:(cb)->
+            dao.find ctx.c.code, 'post', {}, opt, (res)->
+                cb(null, res)
 
-#    activity:(ctx)->
-#        wt:(cb)->
-#            dao.get ctx.c.code, 'pubAccount', {}, (res)->
-#                cb(null,res)
-
-    wechat:(ctx)->
-
+    index: (ctx)->
         head:(cb)->
-            dao.get ctx.c.code, 'head', type: 'wechat', (res)->
+            dao.get ctx.c.code, 'head', {type: 'wechat'}, (res)->
+                log res
                 cb(null,res)
 
         posts:(cb)->
@@ -23,6 +25,10 @@ module.exports =
                     lastUpdated: -1
             dao.find ctx.c.code, 'post', {}, opt, (res)->
                 cb(null,res)
+#    activity:(ctx)->
+#        wt:(cb)->
+#            dao.get ctx.c.code, 'pubAccount', {}, (res)->
+#                cb(null,res)
 
 #    search:(ctx)->
 #        elps:(cb)->

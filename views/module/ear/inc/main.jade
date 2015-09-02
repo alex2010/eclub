@@ -9,7 +9,7 @@ block ctn
         .panel-body
             if block
                 block
-        mixin media(posts,opt)
+                    mixin media(posts,opt)
     if !opt.ttLimits
         -opt.ttLimits= 12
     if !opt.ctLimit
@@ -26,7 +26,7 @@ block ctn
             .media-body
                 h4.media-heading!=it.title || it.username
                 != f.dStr(it.description || it.address, 20)
-        mixin searchPanel(action,method,name)
+                mixin searchPanel(action,method,name)
     .panel-search
         if !action
             -action=''

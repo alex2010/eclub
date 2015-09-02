@@ -5,15 +5,18 @@ jade = require('jade')
 
 String::splitCap = (i, t)->
     (it.capitalize() for it in @split(i)).join(t)
-pageOpt = (c)->
+pageOpt = (req)->
+    c = req.c
+
     libPath = "#{c.resPath}/upload/#{c.code}/lib/"
     resPath = "#{c.resPath}/upload/#{c.code}/"
 
     code = c.code
 
     tRender: jade.renderFile
+    mob: req.query.mob
+    lang: req.query.lang || 'zh'
     title: c.title
-    lang: 'zh'
     mode: app.env
     _ts: new Date().getTime()
     c: c
@@ -35,7 +38,7 @@ pageOpt = (c)->
 
 
 pre = (req)->
-    ctx = pageOpt(req.c)
+    ctx = pageOpt(req)
     if req.query.dev
         ctx.dev = true
     ps = req.params
@@ -50,7 +53,7 @@ pickScript = (ctx, req)->
 
     sc = require("../views/module/#{ctx.c.code}/script/tmplScript")
 
-    initOpt = sc._init(ctx) || {}
+    initOpt = sc._init(ctx,req) || {}
 
     opt = if sc[ctx.index]
         sc[ctx.index](ctx, req) || {}

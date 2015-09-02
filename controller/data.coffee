@@ -25,6 +25,8 @@ cleanItem = (q, isNew)->
     q.lastUpdated = new Date()
 
     for k,v of q
+        if k is 'status'
+            q[k] = +v
         if _.isObject(v)
             for kk,vv of v
                 if isOid(kk)
@@ -45,7 +47,9 @@ dataController =
         for k,v of req.query
             if k.indexOf('_')
                 [entity,limit] = k.split('_')
-                opt[entity] = do(entity,v)->
+                log k
+                opt[entity] = do(entity,limit,v)->
+                    log limit
                     (cb)->
                         op =
                             skip: 0

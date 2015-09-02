@@ -1,3 +1,7 @@
+opt =
+    limit: 5
+    sort:
+        row: -1
 module.exports =
     _init: (ctx)->
         _cat: (cb) ->
@@ -58,10 +62,7 @@ module.exports =
 
     index: (ctx, req, rsp)->
         posts: (cb)->
-            opt =
-                limit: 5
-                sort:
-                    row: -1
+
             dao.find ctx.c.code, 'post', {}, opt, (res)->
                 res || res = []
                 cb(null, res)
@@ -142,44 +143,34 @@ module.exports =
                             cb(null,data)
 
     shop:(ctx, req, res) ->
-        _id=req.query.id.toString()
+#        match: (cb) ->
+#            obj = {}
+#            imgs = []
+#            dao.find ctx.c.code, 'shop', {}, {}, (res)->
+#                for it in res
+#                    if it._id.toString() == _id
+#                        obj=it
+#
+#                if obj.refFile && obj.refFile.slide
+#                    j=Math.min obj.refFile.slide.length, 4
+#                    x = 0
+#                    while x < j
+#                        imgItem=obj.refFile.slide[x]
+#                        imgs.push imgItem
+#                        x++
+#                obj.imgs=imgs
+#                cb(null,obj)
 
-        match: (cb) ->
-            obj = {}
-            imgs = []
-            dao.find ctx.c.code, 'shop', {}, {}, (res)->
-                for it in res
-                    if it._id.toString() == _id
-                        obj=it
-
-                if obj.refFile && obj.refFile.slide
-                    j=Math.min obj.refFile.slide.length, 4
-                    x = 0
-                    while x < j
-                        imgItem=obj.refFile.slide[x]
-                        imgs.push imgItem
-                        x++
-                obj.imgs=imgs
-                cb(null,obj)
-
-        detail: (cb) ->
-            obj = {}
-            dao.find ctx.c.code, 'shop', {}, {}, (res)->
-                for it in res
-                    if it._id.toString() == _id
-                        obj=it
-                cb(null,obj)
-
-    product:(ctx, req, res) ->
-        _id=req.query.id.toString()
-        detail: (cb) ->
-            obj = {}
-            dao.find ctx.c.code, 'product', {}, {}, (res)->
-                for it in res
-                    if it._id.toString() == _id
-                        obj=it
-                obj.perfms=obj.performance.split(',')
-                cb(null,obj)
+#        detail: (cb) ->
+#            obj = {}
+#            dao.find ctx.c.code, 'shop', {}, {}, (res)->
+#                for it in res
+#                    if it._id.toString() == _id
+#                        obj=it
+#                cb(null,obj)
+        shopList:(cb)->
+            dao.find ctx.c.code, 'shop', {}, opt, (res)->
+                cb(null, res)
 
     consultant:(ctx, req, res) ->
         _id=req.query.id.toString()

@@ -1,8 +1,9 @@
-#crumb
-    ul.breadcrumb
-        each it in crumb
-            if it.href
-                li
-                    a(href='#{it.href}') #{it.label}
-            else
-                li #{it.label}
+if crumb
+    #crumb
+        ul.breadcrumb
+            each it in crumb
+                if it.href
+                    li
+                        a(href='#{it.href}') #{it.label}
+                else
+                    li #{it.label}
