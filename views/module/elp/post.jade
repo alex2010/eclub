@@ -1,0 +1,13 @@
+extends inc/main
+
+block content
+    include ../../inc/crumb
+    .row
+        .col-md-8
+            include ../../inc/mod/post
+        .col-md-4
+            +panel('相关文章')(pClass='panel-info')
+                +media(postList,{})
+
+    :coffee(bare=true minify=true)
+        loadJS "#{cf.modPath}main.js"

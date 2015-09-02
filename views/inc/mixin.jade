@@ -1,0 +1,27 @@
+mixin panel(title)
+    if !attributes.class
+        -attributes.class='panel panel-default'
+    div&attributes(attributes)
+        .panel-heading
+            h3.panel-title= title
+        .panel-body
+            if block
+                block
+
+mixin media(posts,opt)
+    if !opt.ttLimits
+        -opt.ttLimits= 12
+    if !opt.ctLimit
+        -opt.ctLimit= 24
+    if !opt.headKey
+        -opt.headKey= 'slide'
+    each it in posts
+        a.media.media_left.clearfix(href='/#{it._e}/#{it._id}',target='_blank')
+            if opt.oneCol
+                != f.imgItem(it, c, opt.headKey, 'media-object')
+            else
+                .media-left
+                    != f.imgItem(it, c, opt.headKey, 'media-object')
+            .media-body
+                h4.media-heading!=it.title || it.username
+                != f.dStr(it.brief || it.description || it.address, 20)

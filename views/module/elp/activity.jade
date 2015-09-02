@@ -1,0 +1,19 @@
+extends inc/main
+
+block content
+    include ../../inc/crumb
+    .row
+        .col-md-8
+            include ../../inc/mod/activity
+        .col-md-4
+            +panel('以往活动')(pClass='panel-info')
+                +media(activityList,{})
+
+    script.
+        _ft = !{JSON.stringify(feeTable || '[]')};
+        _pa = !{JSON.stringify(participant || '[]')};
+        block st
+
+    :coffee(bare=true minify=true)
+        loadJS "#{cf.modPath}main.js"
+            loadJS "#{cf.modPath}enroll.js"

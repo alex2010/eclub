@@ -1,0 +1,35 @@
+extends ./inc/main
+
+block content
+    .pic
+        .bg.carousel.slide(id= 'home' , data-ride='carousel', data-pause='hover')
+            .carousel-inner
+                each it,i in head.list
+                    .item(class= i == 0 ? 'active' : '' )
+                        != f.imgItem(it, c, 'head', i)
+                        .carousel-caption.p0
+                            h3: a(href = it.href)= it.title
+                            = it.subTitle
+            ol.carousel-indicators
+                each it,i in head.list
+                    li(data-target='#home', data-slide-to= i, class= i == 0 ? 'active' : '')
+
+        .mainFunc.text-center.clearfix
+            a(href= f.navUrl('list/activity')).col-xs-3
+                != f.icon('blackboard')
+                p 活动
+            a(href= f.navUrl('list/project')).col-xs-3
+                != f.icon('tree-deciduous')
+                p 项目
+            a(href= f.navUrl('list/ds')).col-xs-3
+                != f.icon('gift')
+                p 供需
+            a(href= f.navUrl('search')).col-xs-3
+                != f.icon('search')
+                p 家人
+    .tab
+        +panel('P家族信息')(pClass='panel-info')
+            +media(posts,{})
+
+
+

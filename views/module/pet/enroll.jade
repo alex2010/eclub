@@ -1,0 +1,26 @@
+extends inc/main
+
+block prepend js
+    if !mode
+        script(src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js')
+
+block content
+    .row
+        != f.imgItem(locals, c, 'head', 'postPic')
+        h2= title
+            if subTitle
+                small= subTitle
+
+
+        p= startedDate
+        p= fee
+
+        h3 报名信息
+
+        .regBtn.text-center
+            a.btn.btn-lg.btn-info.btn-block 现在支付
+
+block st
+    :coffee(bare=true)
+        loadJS "#{cf.modPath}enroll.js",->
+            app.navigate util.navUrl('enroll'), trigger: true

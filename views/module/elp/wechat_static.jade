@@ -1,0 +1,66 @@
+extends inc/main
+
+block script
+    - main = 'wechat'
+
+block style
+    :less(minify=true)
+        .carousel{
+            height: 170px;
+            overflow:hidden;
+            img{
+                height: 170px !important;
+            }
+        }
+
+        .media{
+            img{
+                height: 100px;
+                width: 150px !important;
+            }
+            .media-text{
+                height: 60px;
+            }
+        }
+
+
+block content
+    .pic
+        .bg.carousel.slide(id='home' , data-ride='carousel', data-pause='hover')
+            .carousel-inner
+                each it,i in head.list
+                    .item(class= i == 0 ? 'active' : '' )
+                        != f.imgItem(it, c, 'slide', i)
+                        .carousel-caption
+                            h3!= f.link(it)
+                            p= it.subTitle
+
+    .mainFunc.text-center
+        a.col-xs-3(href= f.navUrl('activity'))
+            != f.icon('blackboard')
+            p 活动
+        a.col-xs-3(href= f.navUrl('project'))
+            != f.icon('tree-deciduous')
+            p 项目
+        a.col-xs-3(href= f.navUrl('ds'))
+            != f.icon('gift')
+            p 供需
+        a.col-xs-3(href= f.navUrl('search'))
+            != f.icon('search')
+            p 家人
+
+    .tab
+        h3 新闻
+        .news
+            each it in posts
+                .media
+                    .media-left!= f.imgItem(it, c, func || 'head', 0, 'media-object')
+                    .media-body
+                        h4.media-heading= it.title
+                        .media-text!= it.brief
+
+block prepend js
+    if !mode
+        script(src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js')
+
+//script(src='http://45.33.59.69:9000/target/target-script-min.js#anonymous')
