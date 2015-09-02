@@ -1,47 +1,44 @@
 extends ../../../main
 block ctn
     mixin panel(title)
-
         if !attributes.class
-            -attributes.class='panel panel-default'
-        div&attributes(attributes)
-            .panel-heading
-                h3.panel-title= title
-            .panel-body
-                if block
-                    block
-
-    mixin media(posts,opt)
-        if !opt.ttLimits
-            -opt.ttLimits= 12
-        if !opt.ctLimit
-            -opt.ctLimit= 24
-        if !opt.singleR
-            -opt.singleR= false
-        each it in posts
-            a.media.media_left.clearfix(href='/#{it._e}?id=#{it._id}',target='_blank')
-                if !opt.singleR
-                    .media-left
-                        != f.imgItem(it, c, 'slide', 'media-object')
-                else
+    -attributes.class='panel panel-default'
+    div&attributes(attributes)
+        .panel-heading
+            h3.panel-title= title
+        .panel-body
+            if block
+                block
+                    mixin media(posts,opt)
+    if !opt.ttLimits
+        -opt.ttLimits= 12
+    if !opt.ctLimit
+        -opt.ctLimit= 24
+    if !opt.singleR
+        -opt.singleR= false
+    each it in posts
+        a.media.media_left.clearfix(href='/#{it._e}?id=#{it._id}',target='_blank')
+            if !opt.singleR
+                .media-left
                     != f.imgItem(it, c, 'slide', 'media-object')
-                .media-body
-                    h4.media-heading!=it.title || it.username
-                    != f.dStr(it.description||it.address, 20)
-
-    mixin searchPanel(action,method,name)
-        .panel-search
-            if !action
-                -action=''
-            if !method
-                method=''
-            if !name
-                name=''
-            form(action=action,method=method,name=name)
-                if block
-                    block
-                .submit-panel-search
-                    input.btn.btn-primary.btn-sunmit-spanel(value='搜索',type='submit')
+            else
+                != f.imgItem(it, c, 'slide', 'media-object')
+            .media-body
+                h4.media-heading!=it.title || it.username
+                != f.dStr(it.description || it.address, 20)
+                mixin searchPanel(action,method,name)
+    .panel-search
+        if !action
+            -action=''
+        if !method
+            method=''
+        if !name
+            name=''
+        form(action=action,method=method,name=name)
+            if block
+                block
+            .submit-panel-search
+                input.btn.btn-primary.btn-sunmit-spanel(value='搜索',type='submit')
     mixin serItem(opt)
         each it in opt.titles
             .item-li-spanel
@@ -91,26 +88,26 @@ block ctn
                             .navbar-brand
                                 a.btn.btn-danger
                                     != f.icon('search')
-                                    |听力搜索专家
+                                    | 听力搜索专家
                             #searchPanel.list-group.l-search
                                 h3.list-group-item 您找到了&nbsp;
                                     strong.text-danger#resCount 0
                                     | &nbsp;个结果
                                 a.list-group-item(stag="#sProduct" )
                                     != f.icon('home')
-                                    |找助听器中心
+                                    | 找助听器中心
                                     != f.icon('chevron-right')
                                 a.list-group-item(stag="#sProduct" )
                                     != f.icon('education')
-                                    |找康复学校
+                                    | 找康复学校
                                     != f.icon('chevron-right')
                                 a.list-group-item(stag="#sConsultant" )
                                     != f.icon('user')
-                                    |找验配师
+                                    | 找验配师
                                     != f.icon('chevron-right')
                                 a.list-group-item(stag="#sShop" )
                                     != f.icon('th')
-                                    |找听力中心
+                                    | 找听力中心
                                     != f.icon('chevron-right')
                                 .block-panel-search
                                     #sConsultant
@@ -119,10 +116,10 @@ block ctn
                     .collapse.navbar-collapse(id='bs-example-navbar-collapse-1')
                         ul#nav.nav.navbar-nav
                             each it in c.nav
-                                if it.children && it.children!=[]
+                                if it.children && it.children != []
                                     li.dropdown
                                         a.dropdown-toggle(data-toggle='dropdown',role='button',aria-haspopup='true',aria-expanded='false')= it.label
-                                            span.caret
+                                        span.caret
                                         ul.dropdown-menu
                                             each item in it.children
                                                 li
