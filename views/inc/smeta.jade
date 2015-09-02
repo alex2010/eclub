@@ -19,9 +19,10 @@ meta(name='apple-mobile-web-app-status-bar-style', content='black')
 link(rel='alternate', type='application/rss+xml', title='#{title} RSS Feed', href='/feeds.xml')
 
 block headRes
-    if dev || !mode
-        link(rel='stylesheet', type='text/css', href='#{libPath}lib.css?#{_ts}', media='all')
-        link(rel='stylesheet', type='text/css', href='#{libPath}#{main||"main"}.css?#{_ts}', media='all')
-    else
-        link(rel='stylesheet', type='text/css', href='http://127.0.0.1:8088/lib.css', media='all')
-        link(rel='stylesheet', type='text/css', href='http://127.0.0.1:8088/#{main||"main"}.css', media='all')
+    if mode
+        -libPath = 'http://127.0.0.1:8088/'
+    if mob
+        -main = 'mob'
+
+    link(rel='stylesheet', type='text/css', href='#{libPath}lib.css?#{_ts}', media='all')
+    link(rel='stylesheet', type='text/css', href='#{libPath}#{main||"main"}.css?#{_ts}', media='all')

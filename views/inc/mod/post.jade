@@ -1,16 +1,17 @@
-!= f.imgItem(locals, c, 'head', 'postPic')
+.row
+    != f.imgItem(locals, c, 'head', 'postPic')
 .article
     h2.event-name= title
-    if subTitle
-        small= subTitle
+        if subTitle
+            small= subTitle
     if author
         hr
         - _user = author
         - _user._e = 'user'
         - _uClass = 'author'
         include userInfo
-        hr
-    .brief
+        p
+    .well.well-sm
         strong [核心提示]
         = brief
 
@@ -18,17 +19,15 @@
 
 
     dl.meta
-        dt(title='类别')
-            i.glyphicon.glyphicon-th-list
-        dd
-            a(href='/postList.html?cat=topic')= category
-        dt(title='喜欢')
-            i.glyphicon.glyphicon-heart
+        if cat
+            dt(title='类别')!= f.icon('th-list')
+            dd
+                a(href='/postList.html?cat=topic')= cat
+        dt(title='喜欢')!= f.icon('heart')
         dd
             a(onclick='app.support()') 0人喜欢
-        dt(title='访问')
-            i.glyphicon.glyphicon-eye-open
-        dd 访问0次
+        dt(title='访问')!= f.icon('eye-open')
+        dd 访问#{'100'}次
 
     if pubTime
         p.text-right 发表于
@@ -37,7 +36,7 @@
     .share
         #func
             a(onclick="app.likeIt(this,'#postLike')")
-                i.icon-heart
+                != f.icon('heart')
                 | 喜欢
             span 已经有
                 strong#postLike= support

@@ -24,7 +24,7 @@ module.exports =
         posts: (cb)->
             filter = {}
             opt =
-                limit: 4
+                limit: 20
                 sort:
                     lastUpdated: -1
             dao.find ctx.c.code, 'post', filter, opt, (res)->

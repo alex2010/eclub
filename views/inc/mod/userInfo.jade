@@ -1,11 +1,10 @@
-div(class= _uClass || 'host')
-    != f.img(f.resPath(c, 'portrait/' + _user._id + '.jpg'))
-    .hostInfo
-        .title
-            strong!= f.link(_user, 'username')
-            span= _user.title
-            if _user.industry
-                span &nbsp;-&nbsp;
-                - log(i18.iCat('industry'))
-                span= i18.iCat('industry')[_user.industry]
-        p= _user.introduction
+.hostInfo.media
+    .media.body
+        .media-left.pull-left(style='width:35%')!= f.img(f.resPath(c, 'portrait/' + _user._id + '.jpg'))
+        h4.media-heading!= f.link(_user, 'username')
+            small=_user.title
+                if _user.industry
+                    span &nbsp;-&nbsp;
+                    if i18.iCat('industry')
+                        span= i18.iCat('industry')[_user.industry]
+        != _user.introduction

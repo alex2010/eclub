@@ -2,17 +2,19 @@ https = require('https')
 querystring = require('querystring')
 
 
-send = (phone, msg)->
+send = (phone, msg, key)->
     postData =
         mobile: phone
         message: msg
 
+
     content = querystring.stringify(postData)
+
     options =
         host: 'sms-api.luosimao.com'
         path: '/v1/send.json'
         method: 'POST'
-        auth: 'api:key-12312389d10fe16c98896ced5a09945188'
+        auth: "api:key-#{key}"
         agent: false
         rejectUnauthorized: false
         headers:
@@ -34,4 +36,16 @@ send = (phone, msg)->
 
 
 module.exports = (req)->
-    dao.get code, 'codeMap'
+    k = "#{req.c.code}_lsm"
+    run = (key)->
+        send req.body.msg, req.body.phone, key
+
+    loader = (run, ctx)->
+        dao.get code, 'codeMap', code: 'luosimao', (item)->
+            log item
+            ctx[k] = item.value.key
+            run(key)
+
+    cc.pick k, run, loader
+
+
