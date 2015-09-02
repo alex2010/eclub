@@ -2,46 +2,43 @@ extends ../../../main
 block ctn
     mixin panel(title)
         if !attributes.class
-            -attributes.class='col-md-4'
-        if !attributes.pClass
-            -attributes.pClass='panel-default'
-        div(class=attributes.class)
-            div(class='panel ' + attributes.pClass + '')
-                .panel-heading
-                    h3.panel-title= title
-                .panel-body
-                    if block
-                        block
-    mixin media(posts,opt)
-        if !opt.ttLimits
-            -opt.ttLimits= 12
-        if !opt.ctLimit
-            -opt.ctLimit= 24
-        if !opt.singleR
-            -opt.singleR= false
-        each it in posts
-            .media
-                if !opt.singleR
-                    .media-left
-                        != f.imgItem(it, c, 'slide', 'media-object')
-                else
+    -attributes.class='panel panel-default'
+    div&attributes(attributes)
+        .panel-heading
+            h3.panel-title= title
+        .panel-body
+            if block
+                block
+        mixin media(posts,opt)
+    if !opt.ttLimits
+        -opt.ttLimits= 12
+    if !opt.ctLimit
+        -opt.ctLimit= 24
+    if !opt.singleR
+        -opt.singleR= false
+    each it in posts
+        a.media.media_left.clearfix(href='/#{it._e}?id=#{it._id}',target='_blank')
+            if !opt.singleR
+                .media-left
                     != f.imgItem(it, c, 'slide', 'media-object')
-                .media-body
-                    a(href='/#{it._e}?id=#{it._id}',target='_blank'): h4.media-heading!= f.dStr(it.title, opt.ttLimits)
-                    p!= f.dStr(it.description, opt.ctLimit) + '...'
-    mixin searchPanel(action,method,name)
-        .panel-search
-            if !action
-                -action=''
-            if !method
-                method=''
-            if !name
-                name=''
-            form(action=action,method=method,name=name)
-                if block
-                    block
-                .submit-panel-search
-                    input.btn.btn-primary.btn-sunmit-spanel(value='搜索',type='submit')
+            else
+                != f.imgItem(it, c, 'slide', 'media-object')
+            .media-body
+                h4.media-heading!=it.title || it.username
+                != f.dStr(it.description || it.address, 20)
+        mixin searchPanel(action,method,name)
+    .panel-search
+        if !action
+            -action=''
+        if !method
+            method=''
+        if !name
+            name=''
+        form(action=action,method=method,name=name)
+            if block
+                block
+            .submit-panel-search
+                input.btn.btn-primary.btn-sunmit-spanel(value='搜索',type='submit')
     mixin serItem(opt)
         each it in opt.titles
             .item-li-spanel
@@ -60,10 +57,10 @@ block ctn
                 span.tip-child-spanel= it
     body
         .container
-            header.row
+            header.row.hidden-xs
                 .col-md-12
                     .row
-                        .col-md-4.col-xs-12.pull-right
+                        .col-md-4.pull-right
                             ul.list-inline.pull-right.l-login
                                 li
                                     a(href='') 登录
@@ -72,14 +69,12 @@ block ctn
                                     a(href='') 注册
                             .clearfix
                     .row
-                        .col-md-7.col-xs-12.logo
+                        .col-md-7.logo
                             h1
-                                a(href='/')
-                                    img.img-responsive(src='#{resPath}images/logo_03.png', alt='')
+                                a(href='/'): img.img-responsive(src='#{resPath}images/logo_03.png', alt='')
                             p 聆听在线--最好用的听力健康平台
-                        .col-md-5.col-xs-12.block-search-hder
-                            span.tip-search 站内搜索
-                            input.itxt-search(name='', type='text', placeholder='', value='')
+                        .col-md-5.block-search-hder
+                            input.itxt-search(name='', type='text', placeholder='站内搜索')
                             input.btn-search(type='button')
             nav.navbar.navbar-default
                 .container-fluid
@@ -89,14 +84,42 @@ block ctn
                             span.icon-bar
                             span.icon-bar
                             span.icon-bar
-                        a.navbar-brand(href='/') 听力搜索专家
+                        .searchBox
+                            .navbar-brand
+                                a.btn.btn-danger
+                                    != f.icon('search')
+                                    | 听力搜索专家
+                            #searchPanel.list-group.l-search
+                                h3.list-group-item 您找到了&nbsp;
+                                    strong.text-danger#resCount 0
+                                    | &nbsp;个结果
+                                a.list-group-item(stag="#sProduct" )
+                                    != f.icon('home')
+                                    | 找助听器中心
+                                    != f.icon('chevron-right')
+                                a.list-group-item(stag="#sProduct" )
+                                    != f.icon('education')
+                                    | 找康复学校
+                                    != f.icon('chevron-right')
+                                a.list-group-item(stag="#sConsultant" )
+                                    != f.icon('user')
+                                    | 找验配师
+                                    != f.icon('chevron-right')
+                                a.list-group-item(stag="#sShop" )
+                                    != f.icon('th')
+                                    | 找听力中心
+                                    != f.icon('chevron-right')
+                                .block-panel-search
+                                    #sConsultant
+                                    #sShop
+                                    #sProduct
                     .collapse.navbar-collapse(id='bs-example-navbar-collapse-1')
-                        ul.nav.navbar-nav
+                        ul#nav.nav.navbar-nav
                             each it in c.nav
-                                if it.children && it.children!=[]
+                                if it.children && it.children != []
                                     li.dropdown
                                         a.dropdown-toggle(data-toggle='dropdown',role='button',aria-haspopup='true',aria-expanded='false')= it.label
-                                            span.caret
+                                        span.caret
                                         ul.dropdown-menu
                                             each item in it.children
                                                 li
@@ -104,21 +127,6 @@ block ctn
                                 else
                                     li
                                         a(href='#{it.href}')= it.label
-                //
-                    ul.col-md-4.l-search.list-inline.p0.text-left
-                        .block-panel-search
-                            #sConsultant
-                            #sShop
-                            #sProduct
-                        li
-                            a.btn.btn-success(stag="#sProduct" ) 找助听器
-                        li
-                            a.btn.btn-danger(stag="#sConsultant" ) 找验配师
-                        li
-                            a.btn.btn-warning(stag="#sShop" ) 找听力中心
-                    a.btn.btn-primary.pull-right(style='margin:-42px 10px 0 0') 找到&nbsp;
-                        strong.text-danger#resCount 0
-                        | &nbsp;个结果
             #content.row
             #static
                 block content
