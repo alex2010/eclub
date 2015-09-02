@@ -2,43 +2,44 @@ extends ../../../main
 block ctn
     mixin panel(title)
         if !attributes.class
-    -attributes.class='panel panel-default'
-    div&attributes(attributes)
-        .panel-heading
-            h3.panel-title= title
-        .panel-body
-            if block
-                block
-                    mixin media(posts,opt)
-    if !opt.ttLimits
-        -opt.ttLimits= 12
-    if !opt.ctLimit
-        -opt.ctLimit= 24
-    if !opt.singleR
-        -opt.singleR= false
-    each it in posts
-        a.media.media_left.clearfix(href='/#{it._e}?id=#{it._id}',target='_blank')
-            if !opt.singleR
-                .media-left
+            -attributes.class='panel panel-default'
+        div&attributes(attributes)
+            .panel-heading
+                h3.panel-title= title
+            .panel-body
+                if block
+                    block
+
+    mixin media(posts,opt)
+        if !opt.ttLimits
+            -opt.ttLimits= 12
+        if !opt.ctLimit
+            -opt.ctLimit= 24
+        if !opt.singleR
+            -opt.singleR= false
+        each it in posts
+            a.media.media_left.clearfix(href='/#{it._e}?id=#{it._id}',target='_blank')
+                if !opt.singleR
+                    .media-left
+                        != f.imgItem(it, c, 'slide', 'media-object')
+                else
                     != f.imgItem(it, c, 'slide', 'media-object')
-            else
-                != f.imgItem(it, c, 'slide', 'media-object')
-            .media-body
-                h4.media-heading!=it.title || it.username
-                != f.dStr(it.description || it.address, 20)
-                mixin searchPanel(action,method,name)
-    .panel-search
-        if !action
-            -action=''
-        if !method
-            method=''
-        if !name
-            name=''
-        form(action=action,method=method,name=name)
-            if block
-                block
-            .submit-panel-search
-                input.btn.btn-primary.btn-sunmit-spanel(value='搜索',type='submit')
+                .media-body
+                    h4.media-heading!=it.title || it.username
+                    != f.dStr(it.description || it.address, 20)
+    mixin searchPanel(action,method,name)
+        .panel-search
+            if !action
+                -action=''
+            if !method
+                method=''
+            if !name
+                name=''
+            form(action=action,method=method,name=name)
+                if block
+                    block
+                .submit-panel-search
+                    input.btn.btn-primary.btn-sunmit-spanel(value='搜索',type='submit')
     mixin serItem(opt)
         each it in opt.titles
             .item-li-spanel
@@ -119,7 +120,7 @@ block ctn
                                 if it.children && it.children != []
                                     li.dropdown
                                         a.dropdown-toggle(data-toggle='dropdown',role='button',aria-haspopup='true',aria-expanded='false')= it.label
-                                        span.caret
+                                            span.caret
                                         ul.dropdown-menu
                                             each item in it.children
                                                 li
