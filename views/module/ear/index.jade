@@ -40,17 +40,19 @@ block content
         each it in _cat
             case it.title
                 when '验配中心'
-                    .col-md-4
-                        +panel(it.title)(class='panel panel-primary',data-cid='123')
+                    .col-md-4.mt17-mob
+                        +panel(it.title)(data-cid='123')
                            +media(shop,{singleR:false})
                 when '验配师'
-                    .col-md-4
-                        +panel(it.title)(pClass='panel-info')
+                    .col-md-4.mt17-mob
+                        +panel(it.title)
                             +media(consultant,{singleR:false})
                 when '助听器'
-                    .col-md-4
-                        +panel(it.title)(pClass='panel-info')
+                    .col-md-4.mt17-mob
+                        +panel(it.title)
                             +media(product,{singleR:false})
+                            //(pClass='panel-info')
+
 block st
     :coffee(bare=true,minify=true)
         util.lcss "#{cf.modPath}router.css"
