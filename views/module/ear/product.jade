@@ -1,4 +1,28 @@
 extends ./inc/main
+block style
+    :less(minify=true)
+        .mod-tab {
+            margin-top: 25px;
+            .tab-pane {
+                background: #fff;
+                border: 1px solid #ddd;
+                border-top: none;
+                padding: 30px 20px 10px;
+                border-bottom-left-radius: 4px;
+                border-bottom-right-radius: 4px;
+                p {
+                    line-height: 1.8em;
+                    text-indent: 2em;
+                }
+                .item-perfms {
+                    border-bottom: 1px dotted #ddd;
+                    padding-bottom: 5px;
+                    .glyphicon {
+                        color: #5bc0de
+                    }
+                }
+            }
+        }
 
 block content
     mixin label(title,content)
@@ -41,33 +65,8 @@ block content
                                     p.item-perfms= it
                                         span.glyphicon.glyphicon-ok
                 .col-md-4.article-aside
-                    .row
-                        .list-group.col-md-12
-                            h4.list-group-item.active 相关文章
-                            a.list-group-item(href=''): p 文章标题文章标题文章标题
-                            a.list-group-item(href=''): p 文章标题文章标题文章标题
-                            a.list-group-item(href=''): p 文章标题文章标题文章标题
-                            a.list-group-item(href=''): p 文章标题文章标题文章标题
-                            a.list-group-item(href=''): p 文章标题文章标题文章标题
-
+                    +panel('相关助听器')
+                        +media(productList,{singleR:false})
 block st
     :coffee(bare=true,minify=true)
         $('.item-perfms:last').css 'border-bottom','none'
-
-//
-    .row
-        .col-md-8
-            .row
-                .col-md-6
-                    slide
-                .col-md-6
-                    h3= title
-                    hr
-            .article-context
-                .tab
-                != description
-
-
-        .col-md-4
-            h3 相关文章
-            ul

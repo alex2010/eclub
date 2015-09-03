@@ -8,9 +8,12 @@ block content
                 //+panel('听力健康阅读榜')(class='col-md-5')
                     //+media(shop)
             .row.pt20
-                +panel(_item.titleA)
-                    +media(_item.objA,{ttLimits:10,singleR:true})
-                +panel(_item.titleB)
-                    +media(_item.objB,{ttLimits:10,singleR:true})
-                +panel(_item.titleC)
-                    +media(_item.objC,{ttLimits:10,singleR:true})
+                .col-md-4
+                    +panel(_item.titleA)
+                        +media(_item.objA,{ttLimits:10,singleR:true})
+                .col-md-4
+                    +panel(_item.titleB)
+                        +media(_item.objB,{ttLimits:10,singleR:true})
+                .col-md-4
+                    +panel(_item.titleC)
+                        +media(_item.objC,{ttLimits:10,singleR:true})

@@ -17,7 +17,7 @@ block ctn
         if !opt.singleR
             -opt.singleR= false
         each it in posts
-            a.media.media_left.clearfix(href='/#{it._e}?id=#{it._id}',target='_blank')
+            a.media.media_left.clearfix(href='/#{it._e}/#{it._id}',target='_blank')
                 if !opt.singleR
                     .media-left
                         != f.imgItem(it, c, 'slide', 'media-object')
@@ -26,35 +26,6 @@ block ctn
                 .media-body
                     h4.media-heading!=it.title || it.username
                     != f.dStr(it.description || it.address, 20)
-    mixin searchPanel(action,method,name)
-        .panel-search
-            if !action
-                -action=''
-            if !method
-                method=''
-            if !name
-                name=''
-            form(action=action,method=method,name=name)
-                if block
-                    block
-                .submit-panel-search
-                    input.btn.btn-primary.btn-sunmit-spanel(value='搜索',type='submit')
-    mixin serItem(opt)
-        each it in opt.titles
-            .item-li-spanel
-                if !opt.radio
-                    input.check-li-spanel(type='checkbox',name='#{opt.name}')
-                else
-                    input.check-li-spanel(type='radio',name='#{opt.name}')
-                span.tip-li-spanel= it
-    mixin serSubItem(opt)
-        each it in opt.titles
-            .item-child-spanel
-                if !opt.radio
-                    input.check-child-spanel(type='checkbox',name='')
-                else
-                    input.check-child-spanel(type='radio',name='')
-                span.tip-child-spanel= it
     body
         .container
             header.row.hidden-xs
@@ -73,7 +44,7 @@ block ctn
                             h1
                                 a(href='/'): img.img-responsive(src='#{resPath}images/logo_03.png', alt='')
                             p 聆听在线--最好用的听力健康平台
-                        .col-md-5.block-search-hder
+                        .col-md-5.block-search-hder.pl170.mt10
                             input.itxt-search(name='', type='text', placeholder='站内搜索')
                             input.btn-search(type='button')
             nav.navbar.navbar-default
@@ -131,31 +102,31 @@ block ctn
             #static
                 block content
             footer
-                .col-md-7.intro-ft
+                .col-md-7.intro
                     p
                         | 全国助听器验配师网
                         br
                         | 400-0688-153
                         br
                         a(target='_blank', href='http://www.earmedicalmap.com') http://www.earmedicalmap.com
-                .col-md-2.attention-ft
-                    h5.title-ft-attention 关于我们
-                    ul.l-ft-attention
-                        li.li-ft-attention
+                .col-md-2.attention
+                    h5 关于我们
+                    ul.l-attention
+                        li
                             a 广告服务
-                        li.li-ft-attention
+                        li
                             a 联系我们
-                        li.li-ft-attention
+                        li
                             a 免责声明
-                .col-md-3.share-ft
-                    h5.title-ft-attention 关注我们
-                    ul.l-ft-share
-                        li.li-ft-share
+                .col-md-3.share
+                    h5 关注我们
+                    ul.l-share
+                        li
                             a
                                 img.img-responsive(src='#{resPath}images/icon-share_25.png', alt='')
-                        li.li-ft-share
+                        li
                             a
                                 img.img-responsive(src='#{resPath}images/icon-share_27.png', alt='')
-                        li.li-ft-share
+                        li
                             a
                                 img.img-responsive(src='#{resPath}images/icon-share_29.png', alt='')

@@ -42,15 +42,15 @@ block content
                 when '验配中心'
                     .col-md-4.mt17-mob
                         +panel(it.title)(data-cid='123')
-                           +media(shop,{singleR:false})
+                           +media(shopList,{singleR:false})
                 when '验配师'
                     .col-md-4.mt17-mob
                         +panel(it.title)
-                            +media(consultant,{singleR:false})
+                            +media(consultantList,{singleR:false})
                 when '助听器'
                     .col-md-4.mt17-mob
                         +panel(it.title)
-                            +media(product,{singleR:false})
+                            +media(productList,{singleR:false})
                             //(pClass='panel-info')
 
 block st

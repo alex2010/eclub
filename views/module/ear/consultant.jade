@@ -5,14 +5,16 @@ block style
             margin-bottom:20px;
         }
         .media {
-            padding-top:10px;
-            border-top:1px solid #ddd !important;
-            img {
-                width:200px;
-            }
-            .media-body {
-                h2 {
-                    color:#31708f;
+            &.summary {
+                padding-top:10px;
+                border-top:1px solid #ddd !important;
+                img {
+                    width:200px;
+                }
+                .media-body {
+                    h2 {
+                        color:#31708f;
+                    }
                 }
             }
         }
@@ -82,40 +84,32 @@ block content
                     include ../../inc/crumb
             .row.article.pt20
                 .col-md-8.article-main
-                    .media.mb20.thumbnail
+                    .media.mb20.thumbnail.summary
                         .media-left
-                            a(href=''): != f.imgItem(detail,c,'portrait')
+                            a(href=''): != f.imgItem(local,c,'portrait')
                         .media-body
-                            h2.media-heading= detail.username
+                            h2.media-heading= username
                             dl.dl-horizontal
-                                +ddItem('入行时间',detail.exp)
-                                +ddItem('电话号码',detail.phone)
-                                +ddItem('QQ号码',detail.qq)
-                                +ddItem('工作职称',detail.workTitle)
-                                +ddItem('所学专业',detail.major)
-                    -var brandArr=detail.goodAtBrand
+                                +ddItem('入行时间',exp)
+                                +ddItem('电话号码',phone)
+                                +ddItem('QQ号码',qq)
+                                +ddItem('工作职称',workTitle)
+                                +ddItem('所学专业',major)
+                    -var brandArr=goodAtBrand
                     if brandArr && brandArr!=[]
-                        .row
-                            +panel('擅长品牌')(class='col-md-12')
-                                .row
-                                    each it,i in brandArr
-                                        if i%2==1
-                                            +thumbnail(it)(clearfix=true)
-                                        else
-                                            +thumbnail(it)
-                    if detail.description
-                        .row
-                            +panel('验配师介绍')(class='col-md-12')
-                                p.tightening= detail.description
+                        +panel('擅长品牌')
+                            .row
+                                each it,i in brandArr
+                                    if i%2==1
+                                        +thumbnail(it)(clearfix=true)
+                                    else
+                                        +thumbnail(it)
+                    if description
+                        +panel('验配师介绍')
+                            p.tightening= description
                 .col-md-4.article-aside
-                    .row
-                        .col-md-12.list-group
-                            h4.list-group-item.active 相关文章
-                            a.list-group-item(href=''): p 文章标题文章标题文章标题
-                            a.list-group-item(href=''): p 文章标题文章标题文章标题
-                            a.list-group-item(href=''): p 文章标题文章标题文章标题
-                            a.list-group-item(href=''): p 文章标题文章标题文章标题
-                            a.list-group-item(href=''): p 文章标题文章标题文章标题
+                    +panel('相关验配师')
+                        +media(consultantList,{singleR:false})
 mixin ddItem(title,content)
     if !content
         -content='--'
