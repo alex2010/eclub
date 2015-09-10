@@ -21,7 +21,6 @@ for it in fs.readdirSync(_path)
                         u.refFile[fn] = [newName]
                         fs.rename sf, dp, (err)->
                             log err if err
-                            fs.unlink(sf)
                         dao.findAndUpdate code,'user', {_id:u._id} , u, ->
                     else
                         log 'trash'
@@ -29,19 +28,15 @@ for it in fs.readdirSync(_path)
                         dp = "#{_path}trash/#{it}"
                         fs.rename sf, dp, (err)->
                             log err if err
+
+
     else if it.startsWith('venue')
         [fn,vd] = it.split('-')
         vd = +vd.split('.')[0]
         do (it,fn,vd)->
             dao.get code, 'venue', {id:vd},(v)->
                 if v
-                    newName = v._id + '.jpg'
-                    sf = "#{_path}#{it}"
-                    dp = "#{_path}#{newName}"
-
                     v.refFile ?= {}
-                    v.refFile.head = [newName]
-
-                    fs.renameSync sf, dp
+                    v.refFile.head = [it]
                     dao.findAndUpdate code, 'venue', {_id:v._id}, v, ->
 

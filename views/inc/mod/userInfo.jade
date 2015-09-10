@@ -1,6 +1,6 @@
 .hostInfo.media
-    .media.body
-        .media-left.pull-left(style='width:35%')!= f.img(f.resPath(c, 'portrait/' + _user._id + '.jpg'))
+    .media-body
+        .media-left.pull-left!= f.img(f.resPath(c, 'portrait/' + _user._id + '.jpg'))
         h4.media-heading!= f.link(_user, 'username')
             small=_user.title
                 if _user.industry

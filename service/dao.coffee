@@ -37,7 +37,6 @@ module.exports = ->
         if @cName isnt cName or !@collection
             @cName = cName
             @collection = @db.collection cName
-
         @collection
 
     @index = (db, entity, index, opt)->
@@ -76,7 +75,6 @@ module.exports = ->
         @pick(db, entity).count opt, (err, count)->
             log err if err
             callback(count)
-
 
     @findAndUpdate = (db, entity, filter, opt, callback)->
         filter = @cleanOpt(filter)

@@ -1,0 +1,45 @@
+extends inc/main
+block content
+    include ../../inc/crumb
+    .row.article
+        .col-md-8
+            h2.event-name= title
+                small: a(href='/postList.html?cat=topic')= cat
+            p
+            .row
+                != f.imgItem(locals, c, 'head')
+
+            p.text-right= createdDate
+
+            if author
+                - _user = user
+                - _user._e = 'user'
+                - _uClass = 'author'
+                include ../../inc/mod/userInfo
+
+            .well.well-sm #{startedDate} - #{endDate}
+
+            .article-content!= description
+
+            .clearfix
+                .col-xs-6
+                    a.btn.btn-lg.btn-block.btn-danger(onclick="cf.care('#{_id}','project')") 关注
+                .col-xs-6
+                    a.btn.btn-lg.btn-block.btn-primary(onclick="cf.offerHelp('#{_id}','project')") 提供支持
+
+            if care
+                +panel('关注的家人')
+                    +avatars(care)(class='col-xs-2')
+
+            if help
+                +panel('提供支持的家人')
+                    +avatars(help)(class='col-xs-2 p0')
+
+
+            +comments(_id,comment)
+
+        .col-md-4
+            +panel('最新项目信息')(pClass='panel-info')
+                +media(projectList,{})
+block st
+    :coffee(bare=true minify=true)

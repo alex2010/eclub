@@ -17,6 +17,7 @@ module.exports =
         ]
         btm_opt =
             limit: 20
+            fields: '_e,title'.split(',')
             sort:
                 row: -1
 
@@ -24,15 +25,23 @@ module.exports =
             dao.get ctx.c.code, 'city', title: 'Beijing', (res)->
                 cb(null, res)
 
-        menu: (cb)->
-            dao.get ctx.c.code, 'role', title: 'guest', (res)->
-                menu = res.nav
-                ctx.foot = res.foot
-                for it in menu
-                    it.cls = 'chevron-right'
-                cb(null, menu)
+#        menu: (cb)->
+#            dao.get ctx.c.code, 'role', title: 'guest', (res)->
+#                menu = res.nav
+#                ctx.foot = res.foot
+#                for it in menu
+#                    it.cls = 'chevron-right'
+#                cb(null, menu)
+
+        _attraction: (cb)->
+            n = _.clone btm_opt
+            n.limit = 100
+            dao.find ctx.c.code, 'sight', {}, btm_opt, (res)->
+                cb(null, res)
 
         btm_top: (cb)->
+            n = _.clone btm_opt
+            n.fields = '_e,title,refClass,ref'
             dao.find ctx.c.code, 'top', {}, btm_opt, (res)->
                 for it in res
                     it._e = it.refClass
@@ -138,18 +147,18 @@ module.exports =
 #            dao.find ctx.c.code, 'sight', filter, {}, (res)->
 #                cb(null, res)
 
-    show: (ctx)->
-        ctx.info = {} unless ctx.info
-        img = ctx.f.resPath(ctx.c, 'images/youtube.png')
-        ctx.info.watchVideo = if ctx.info.watchVideo
-            "<a target='_blank' href='#{ctx.info.watchVideo}'><img width='100%' src='#{img}'></a>"
-        else
-            "<p>Coming soon...</p>"
-
-        if ctx.refFile and ctx.refFile.seat
-            img = ctx.f.resPath(ctx.c, ctx.refFile.seat[0])
-            ctx.info.priceSeats = "<img width='100%' onclick='cf.showPic(this)' data-url='#{img}' src='#{img}'/>"
-        {}
+#    show: (ctx)->
+#        ctx.itemTable ?= []
+#        img = ctx.f.resPath(ctx.c, 'images/youtube.png')
+#        ctx.info.watchVideo = if ctx.info.watchVideo
+#            "<a target='_blank' href='#{ctx.info.watchVideo}'><img width='100%' src='#{img}'></a>"
+#        else
+#            "<p>Coming soon...</p>"
+#
+#        if ctx.refFile and ctx.refFile.seat
+#            img = ctx.f.resPath(ctx.c, ctx.refFile.seat[0])
+#            ctx.info.priceSeats = "<img width='100%' onclick='cf.showPic(this)' data-url='#{img}' src='#{img}'/>"
+#        {}
 
     culture: (ctx)->
         allCultures: (cb)->
@@ -157,18 +166,18 @@ module.exports =
                 cb(null, res.sortBy('title',false))
 
     sight: (ctx)->
-        ctx.info ?= {}
-        img = ctx.f.resPath(ctx.c, 'images/youtube.png')
-        ctx.info.watchVideo = if ctx.info.watchVideo
-                "<a target='_blank' href='#{ctx.info.watchVideo}'><img width='100%' src='#{img}'></a>"
-            else
-                "<p>Coming soon...</p>"
+#        ctx.info ?= {}
+#        img = ctx.f.resPath(ctx.c, 'images/youtube.png')
+#        ctx.info.watchVideo = if ctx.info.watchVideo
+#                "<a target='_blank' href='#{ctx.info.watchVideo}'><img width='100%' src='#{img}'></a>"
+#            else
+#                "<p>Coming soon...</p>"
 
         headMenu: (cb)->
             dao.find ctx.c.code, 'cat', {type: 'sight'}, {}, (res)->
                 for it in res
                     it.href = "/itemList?entity=#{it.type}&cat=#{it.code}"
-                cb(null, res.sortBy('row', true))
+                cb(null, res.sortBy('row', false))
 
         allSights: (cb)->
             dao.find ctx.c.code, 'sight', {}, {}, (res)->
@@ -179,15 +188,13 @@ module.exports =
             filter =
                 ref: ctx._id.toString()
             dao.get ctx.c.code, 'map', filter, (res)->
-                log 'zxvcxcvzv'
-                log res
-                if res
-                    if res.refFile and res.refFile.slide
-                        ctx.info ?= {}
-                        img = ctx.f.resPath(ctx.c, res.refFile.slide[0])
-                        ctx.info.englishMap = "<img width='100%' onclick='cf.showPic(this)' data-url='#{img}' src='#{img}'>"
-                    else
-                        ctx.info.englishMap = "<p>Coming soon...</p>"
+#                if res
+#                    if res.refFile and res.refFile.slide
+#                        ctx.info ?= {}
+#                        img = ctx.f.resPath(ctx.c, res.refFile.slide[0])
+#                        ctx.info.englishMap = "<img width='100%' onclick='cf.showPic(this)' data-url='#{img}' src='#{img}'>"
+#                    else
+#                        ctx.info.englishMap = "<p>Coming soon...</p>"
                 cb(null, res)
 
 
@@ -259,7 +266,8 @@ module.exports =
             dao.find ctx.c.code, 'cat', {type: et}, {}, (res)->
                 for it in res
                     it.href = "/itemList?entity=#{it.type}&cat=#{it.code}"
-                cb(null, res.sortBy('row', true))
+                res.sortBy('row', false)
+                cb(null, res)
 
         item: (cb)->
             if req.query.cat
@@ -304,14 +312,9 @@ module.exports =
                     cb(null, res)
 
     tourList:(ctx,req)->
-#        ctx.cat = req.query.cat
-#        filter = {}
-#        if ctx.cat
-#            filter = code: ctx.cat
-
         shows:(cb)->
             dao.find ctx.c.code, 'show', {}, {}, (res)->
-                rs = (_.pick it, '_id', 'title','refFile','info','seatPrice' for it in res)
+                rs = (_.pick it, '_id', 'title','refFile','seatPrice' for it in res)
                 cb(null, rs)
 
         items:(cb)->
@@ -334,7 +337,7 @@ module.exports =
                 for it in res
                     it.href = "/tourList?cat=#{it.code}"
                     ctx.catMap[it.code] = it.title
-                cb(null, res.sortBy('row', true))
+                cb(null, res.sortBy('row', false))
 
 
     content: (ctx, req)->

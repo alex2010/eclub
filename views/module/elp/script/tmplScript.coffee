@@ -1,30 +1,44 @@
 module.exports =
     _init: (ctx)->
         opt =
-                limit: 10
-                sort:
-                    row: -1
-        wt:(cb)->
+            limit: 10
+            sort:
+                row: -1
+        wt: (cb)->
             dao.get ctx.c.code, 'pubAccount', {}, (res)->
-                cb(null,res)
-        postList:(cb)->
+                cb(null, res)
+        postList: (cb)->
             dao.find ctx.c.code, 'post', {}, opt, (res)->
+                cb(null, res)
+        dsList: (cb)->
+            dao.find ctx.c.code, 'ds', {}, opt, (res)->
+                cb(null, res)
+        projectList: (cb)->
+            dao.find ctx.c.code, 'project', {}, opt, (res)->
+                cb(null, res)
+        activityList: (cb)->
+            dao.find ctx.c.code, 'activity', {}, opt, (res)->
                 cb(null, res)
 
     index: (ctx)->
-        head:(cb)->
+        head: (cb)->
             dao.get ctx.c.code, 'head', {type: 'wechat'}, (res)->
                 log res
-                cb(null,res)
+                cb(null, res)
 
-        posts:(cb)->
+        posts: (cb)->
             opt =
                 skip: 0
                 limit: 20
                 sort:
                     lastUpdated: -1
             dao.find ctx.c.code, 'post', {}, opt, (res)->
-                cb(null,res)
+                cb(null, res)
+
+    search: (ctx)->
+        elps: (cb)->
+            dao.find ctx.c.code, 'org', {}, {}, (res)->
+                cb null, res
 #    activity:(ctx)->
 #        wt:(cb)->
 #            dao.get ctx.c.code, 'pubAccount', {}, (res)->

@@ -26,7 +26,7 @@ block style
             }
         }
 
-        #tourList {
+        #tourListCtn {
             .nav-tabs {
                 a:hover {
                     background: transparent;
@@ -77,14 +77,7 @@ block style
             }
         }
 
-        /*#tourList {*/
-            /*.panel-body {*/
-                /*padding-top: 0;*/
-                /*padding-bottom: 0;*/
-                /*height: 400px;*/
-                /*overflow: scroll;*/
-            /*}*/
-        /*}*/
+
 
         a {
             h3 {
@@ -153,23 +146,23 @@ block style
         .tbBody {
             background: #d6e6f5;
         }
-        .col-xs-6.p0{
+
+        .col-xs-6.p0 {
             width: 120px;
             font-size: 14px;
             line-height: 35px;
             font-weight: bold;
         }
-        .avg{
+
+        .avg {
             display: inline-block;
         }
+
         .btns {
             .btn {
                 width: 200px;
             }
         }
-        /*.col-md-4 {*/
-        /*border-right: 1px solid #ddd;*/
-        /*}*/
 
 block content
     .topHead
@@ -177,11 +170,11 @@ block content
             .panel-heading(data-title= title)
                 h2 Private #{catMap[cat]} Tours In Beijing
 
-    #tourList.panel-group
+    #tourListCtn.panel-group
         each it,i in items
             - it.priceRange = it.prices ? '$'+it.prices[1] + ' ~ $' + it.prices[9]: '$10 ~ $100'
             .panel
-                a.panel-heading(data-toggle='collapse', data-parent='#tourList', href= '#col' + i)
+                a.panel-heading(data-toggle='collapse', data-parent='#tourListCtn', href= '#col' + i)
                     h3
                         span #{catMap[it.cat]} Tour
                         != f.icon('share-alt')
@@ -189,7 +182,7 @@ block content
                         .pull-right
                             != f.icon('menu-down')
                             != f.icon('menu-up')
-                        .btn.btn-xs.btn-success.pull-right BOOK
+                        .btn.btn-xs.btn-success.pull-right(onclick="location.href='#!/bookTour/#{it._id}'") BOOK
                 .panel-collapse.collapse(id= 'col' + i)
                     if it.refFile.head && it.refFile.head.length
                         .showImg
@@ -206,7 +199,7 @@ block content
                             a(data-toggle='tab', href='#photo#{i}') Photos
                         li.col-md-3
                             a(data-toggle='tab', href='#review#{i}') Customer Reviews
-                    .tab-content.clearfix(style='height:400px;overflow-y:scroll')
+                    .tab-content.clearfix
                         div(id='fact#{i}').tab-pane.active
                             .col-md-4
                                 h4 Facts
@@ -322,7 +315,7 @@ block content
                                                 strong
                                                     span.firstName=it.rateOne.firstName
                                                     span.lastName=it.rateOne.lastName
-                                                .pull-right.lastUpdated #{it.rateOne.lastUpdated.toString().substr(0,24)}
+                                                .pull-right.lastUpdated #{it.rateOne.lastUpdated.toString().substr(0, 24)}
                                             hr
                                             .content= it.rateOne.content
                                             hr
@@ -353,253 +346,10 @@ block content
 
     script.
         _shows = !{JSON.stringify(shows)};
+
 block st
     :coffee(bare=true minify=true)
-        $('.tbHead input').click ->
-            $(@).closest('table').find('.total').text $(@).data('price') * $(@).data('count')
-        for it in $('.hoverLink')
-            util.addHover $(it)
-
-        pcvt = (v)->
-            "#{v} Pax"
-
-        dcvt = (v)->
-            "#{v || 0}$"
-
-
-
-        loadJS "#{cf.rPath}js/bootstrap-formhelpers-countries.en_US.js"
-        loadJS "#{cf.modPath}router.js", ->
-            ct = $('.ratingView')
-
-            initRating = (ctn)->
-                avg = 0
-                lt = $('.starVal',ctn)
-                if lt.length
-                    for it in lt
-                        v = +$(it).text()
-                        avg += v
-                        $(it).html util.starRating 5, v * 0.5
-                $('.avg',ctn).html util.starRating 5, avg* 0.5/lt.length
-
-            initRating(ct)
-
-            cf.showRatingMore =(e)->
-                id = $(e).attr('tid')
-                new cf.view.tag
-                    mode: 'modal'
-                    title: 'Recently Reviews'
-                    init:->
-                        @render()
-                    preRender:->
-                        @ctn.css 'padding','30px'
-                        $.get "/r/tour/_id/#{id}/rate",(res)=>
-                            for it in res.entities
-                                nct = ct.clone()
-                                for k,v of it
-                                    if k is 'lastUpdated'
-                                        v = v.dStr()
-                                    nct.find(".#{k}").text v
-                                @ctn.append nct
-                                initRating(nct)
-
-            cf.showEnquire = ->
-                new cf.view.form
-                    entity: 'enquire'
-                    mode: 'modal'
-                    cols: 'col-md-3:col-md-9'
-                    toFetch: false
-                    title: "Your are requiring this tour"
-                    className: 'break'
-
-            $.extend true, cf.meta,
-                user:
-                    title:
-                        type:'radio'
-                        data:['Mr.','Mrs']
-                    firstName:
-                        type: 'text'
-
-                    lastName:
-                        type: 'text'
-                    _:
-                        item:[
-                            'title'
-                            'firstName'
-                            'lastName'
-
-                        ]
-                        tbItem:
-                            firstName:{}
-                            lastName:{}
-                            _opt:
-                                type: 'btns'
-                                w: 120
-                        action:->
-                            ['popEdit','formDel']
-
-            $.extend cf.meta.deal._,
-                totalNum:
-                    showCvt: pcvt
-                freeChild:
-                    showCvt: pcvt
-                tourCost:
-                    showCvt: dcvt
-                airportTransferCost:
-                    showCvt: dcvt
-                total:
-                    showCvt: dcvt
-                optionalServiceCost:
-                    showCvt: dcvt
-                scheduledTakeoffTime:
-                    showCvt: dateCvt
-                scheduledLandingTime:
-                    showCvt: dateCvt
-                tourDate:
-                    showCvt: dateCvt
-
-            app.enhance
-                routes:
-                    '!/bookTour/:id': 'bookTour'
-
-                bookTour: (id)->
-                    steps = [
-                        'Select Services'
-                        'Input details'
-                        'Pay Deposit'
-                        'Booking Confirmation'
-                    ]
-
-                    obj = window["p_#{id}"]
-
-                    new cf.view.sForm
-                        parent: @ctn.empty()
-                        saveByStep: false
-                        className: 'pay'
-                        entity: 'deal'
-                        toFetch: false
-                        tmpl: 'pay'
-                        syncBox: '.review'
-                        num:0
-                        data:
-                            title:'Mr.'
-                            cat: 'tour'
-                            status: 'init'
-                            optionalService :{}
-                            tour:
-                                title: obj.title
-                                code: obj.code
-                                _id: id
-                        _saveSuccess:(model)->
-                            model.view.renderNextTab()
-                        events: ->
-                            $.extend cf.view.sForm::events,
-                                'change .sti': (e)->
-                                    t = util.ct(e)
-                                    td = t.closest('td')
-                                    sid = td.data('sid')
-                                    rt = $(".#{sid}").empty()
-                                    total = 0
-                                    for it in td.find('select')
-                                        st = $(it)
-                                        v = +st.val()
-                                        if v > 0
-                                            p = st.data 'price'
-                                            total += v * p
-                                            rt.append "<div class='form-control-static'>#{p}$ x #{v}</div>"
-
-                                    td.next().find('.total').text total
-
-
-                                    osm = @model.get 'optionalService'
-
-                                    osm[sid] ?=
-                                        title: t.closest('.panel').find('.panel-heading').text()
-                                    osm[sid][t.data('price')] = t.val()
-
-                                    oscTotal = 0
-                                    for it in $('.totalBk .total')
-                                        sp = $(it)
-                                        oscTotal += +sp.text()
-
-                                    osc = @$("[name='optionalServiceCost']")
-                                    osc.val oscTotal
-                                    osc.trigger 'change'
-
-                                'change .dInput select': dInputEvent
-
-                                "change input[name='optionalServiceCost'],input[name='tourCost'],input[name='airportTransferCost']": (e)->
-                                    tc = +@$("[name='tourCost']").val()
-                                    os = +@$("[name='optionalServiceCost']").val()
-                                    htfa = +@$("[name='airportTransferCost']:checked").val()
-
-                                    @setVal "input[name='total']", tc + os + (htfa || 0)
-
-                        totalNum_change: (v, e) ->
-                            t = v * util.ct(e).data('price')
-                            @$('.totalPt').text t
-                            @setVal "[name='tourCost']", t
-
-                        context: ->
-                            steps: steps
-                            title: 'Build Your Idea Trip In Beijing'
-                        items: [
-                            tmpl: 'service'
-                            context: ->
-                                tabTitle: steps[0]
-                                prices:obj.prices
-                                title: obj.title
-                                code: obj.code
-                                num: 1
-                                shows: _shows
-                            callback:->
-                                util.initPC('#showList')
-                                util.loadPic('#showList')
-                        ,
-                            tmpl: 'detail'
-                            context: ->
-                                tabTitle: 'Input Your Information'
-                                title: obj.title
-                                num: 2
-                            callback:->
-                                cs = $('#cList')
-                                for k,v of CountriesList
-                                    cs.append "<option value='#{k}'>#{v}</option>"
-                                $('.total').text @model.get 'total'
-
-                                new cf.view.jsonTable
-                                    title: 'Add Other Travelers'
-                                    entity: 'user'
-                                    _prop: 'otherTraveler'
-                                    form: @
-                                    parent: '.personBox'
-                                    data:[]
-                                    formAddOpt:
-                                        cols: 'col-md-4:col-md-8'
-                                    formEditOpt:
-                                        cols: 'col-md-4:col-md-8'
-                                    afterRemove:->
-                                        @renderSideBox()
-                                    afterSave: ()->
-                                        @renderSideBox()
-                                    renderSideBox:->
-                                        c = $(".travelers", @form.syncBox).empty()
-                                        for it in @form.model.get 'otherTraveler'
-                                            c.append "<div class='form-control-static'>#{it.title} #{it.firstName} #{it.lastName}</div>"
-
-                        ,
-                            tmpl: 'deposit'
-                            num: 3
-                            context: ->
-                                tabTitle: steps[2]
-                                num: 3
-                                title: obj.title
-                                data: {}  # @model.attributes
-                        ,
-                            tmpl: 'confirmation'
-                            num: 4
-                            context: ->
-                                tabTitle: steps[3]
-                                title: obj.title
-                                num:4
-                        ]
+        cf.loadJS "#{cf.modPath}router.js", ->
+            util.lcss "#{cf.modPath}tour.css?c=1"
+            cf.loadJS "#{cf.modPath}tour.js"
+//            $('#tourListCtn .panel-heading:first').trigger 'click'

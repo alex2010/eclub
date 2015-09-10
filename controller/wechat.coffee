@@ -74,42 +74,52 @@ module.exports =
                     log util.sPath(code + '/' + n.thumb_media_id)
                     unless n.thumb_media_id.startsWith 'http'
                         n.thumb_media_id = util.sPath(code + '/' + n.thumb_media_id)
-                    log 'start to upload pic'
+                    log 'start to upload pic' + n.thumb_media_id
                     api.uploadMaterial n.thumb_media_id, 'image', (err, res)->
+                        return unless res
                         n.thumb_media_id = res.media_id
+                        log n.thumb_media_id
                         entity = util.del 'entity', n
                         _id = util.del '_id', n # entity's _id
                         tmpl = util.del 'tmpl', n # tmpl to render
                         if entity and _id
                             dao.get code, entity, _id: _id, (et)->
-                                ctx =
-                                    code: code
-                                    f: tmplUtil
-                                    c: req.c
-                                ctx[entity] = et
-                                path = "#{_path}/public/module/#{code}/tmpl/wechat/#{tmpl}.jade"
-                                log path
-                                content = jade.renderFile path, ctx
-                                if styles
-                                    for k,v of styles
-                                        content.replaceAll("<#{k}>", "<#{k} style='#{v}'>")
-                                if entity is 'post'
-                                    content.replaceAll "<div id=", "<img id="
-                                    content.replaceAll 'Loading...</div>', ''
-                                n.content = content
-                                n.digest = et.brief
-                                n.author = _.pluck(et.author, 'username').join(',')
-                                cb()
+                                dao.get code, 'cat', {code:et.code},(ct)->
+                                    dao.find code, "i18n", {lang:req.body.lang || 'zh'}, {},(res)->
+                                        langs = {}
+                                        for it in res
+                                            langs[it.key] = it.val
+                                        ctx =
+                                            code: code
+                                            f: tmplUtil
+                                            c: req.c
+                                            i18: require('../service/lang')(langs)
+                                            catObj:ct
+                                        _.extend ctx, et
+                                        path = "#{_path}/public/module/#{code}/tmpl/wechat/#{tmpl}.jade"
+                                        ccc = jade.renderFile path, ctx
+#                                        ccc = content.toString()
+                                        if styles
+                                            for k,v of styles
+                                                ccc = ccc.replaceAll("<#{k}>", "<#{k} style='#{v}'>")
+                                        ccc = ccc.replaceAll "bb-src", 'src'
+                                        log ccc
+                                        n.content = ccc
+                                        n.digest = et.brief
+                                        n.author = _.pluck(et.author, 'username').join(',')
+                                        cb()
                         else
                             n.content || n.content = 'no content'
                             n.digest || n.brief = 'no digest'
                             cb()
                 , ->
+                    log 'upload news ...'
                     api.uploadNews articles: opt, (err, res) ->
                         if isPre
+                            k = "w_#{wCode}"
                             for it in req.body.testUser
-                                if it.wt and it.wt.oid
-                                    api.previewNews it.wt.oid, res.media_id, (err, res) ->
+                                if it[k]
+                                    api.previewNews it[k], res.media_id, (err, res) ->
                                         log err
                                         log res
                                         rsp.send
@@ -158,6 +168,7 @@ module.exports =
                                     wunid: res.unionid
                                     info:
                                         address: "#{res.province} #{res.city}"
+                                user["w_#{wCode}"] = res.openid
                             if res.headimgurl and (!user.refFile or !user.refFile.portrait)
                                 fn = user._id.toString() + '.jpg'
                                 #                                log res.headimgurl

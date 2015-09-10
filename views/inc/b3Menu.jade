@@ -1,6 +1,6 @@
 ul(class= mClass || 'nav navbar-nav')
-    if menu
-        each it in menu
+    if c.nav
+        each it in c.nav
             li(class= it.code || '')
                 a(href='#{it.href}')
                     if it.cls

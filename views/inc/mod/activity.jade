@@ -1,12 +1,11 @@
 h2=title
     small= subTitle
-    if cat
-        span.cat 【#{_cat[cat]}】
-hr
-.text-center
-    != f.imgItem(locals, c, 'head', 'postPic')
+        if cat
+            span.cat 【#{_cat[cat]}】
 
-h3 话题介绍
+!= f.imgItem(locals, c, 'head', 'postPic')
+
+h3 主题介绍
 != content
 
 h3 主持人介绍
@@ -28,28 +27,35 @@ if fee.toString().length >5 && feeTable
 //    a.btn.btn-lg.btn-info.btn-block&attributes(reg) 我要报名
 //hr
 
-//h3 活动报名
-//
-//if participant
-//    .avatars
-//        each it in participant
-//            a(href= '/user/' + it._id,title= it.username)
-//                != f.img(f.resPath(c, 'portrait/' + it._id + '.jpg'))
-//    hr
+
+
+if participant
+    h3 活动报名
+    .row
+        each it in participant
+            a.col-xs-2(href= '/user/' + it._id,title= it.username)
+                != f.img(f.resPath(c, 'portrait/' + it._id + '.jpg'))
+
+each it in itemTable
+    if it.title
+        h3= it.title
+    if it.content
+        != it.content
+
 
 if venue
-    - v = venue
+    - v = venue[0]
     h3 场地介绍
+    .row
+        != f.imgItem(v, c)
     h4= v.title
     != v.content
-    .text-center
-        != f.imgItem(v, c)
     .venue.clearfix
         p
             != f.icon('time')
             if startedDate
                 span= startedDate
-                | (两小时)
+                    | (两小时)
         p
             != f.icon('glass')
             span.feeStr= v.fee

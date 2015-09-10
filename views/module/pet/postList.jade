@@ -3,12 +3,12 @@ extends inc/main
 block content
     #post.container
         include ../../inc/crumb
-        .row.article
-            #main.col-md-9
-                ul#postList.boxList
+        .row
+            #main.col-md-8
+                #postList.boxList
                     each it in items
                         include inc/boxItem
-            #side.col-md-3
+            #side.col-md-4
                 h3 文章分类
                 ul
                     li

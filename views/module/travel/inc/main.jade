@@ -1,5 +1,23 @@
 extends ../../../main
 
+block style
+    :less(minify=true)
+        #bit {
+            overflow: visible;
+            .carousel-inner{
+                overflow: visible;
+            }
+            .carousel-control{
+                width: 10%;
+                height: 150px;
+            }
+            .left{
+                margin-left: -100px;
+            }
+            .right{
+                margin-right: -75px;
+            }
+        }
 block ctn
     .headerWrapper
         header#header.container
@@ -7,9 +25,21 @@ block ctn
                 a(href= '/')
                     img(src= f.resPath(c, 'images/logo_03.jpg'))
             .col-md-3.p0
-                .has-feedback(style= 'margin-top:45px')
-                    input#q.form-control.input-sm(name='q', type='text', placeholder='Search...')
-                    != f.icon('search', 'span', null, 'form-control-feedback')
+                    .input-group(style= 'margin-top:45px')
+                        .input-group-btn.sbar
+                            button.btn.btn-default Sight &nbsp;
+                                span.caret
+                            ul.dropdown-menu(style='margin:-3px 0 0 -1px;')
+                                li: a Sight
+                                li: a Show
+                                li: a Food
+                                li: a Handicraft
+                                li: a Culture
+                                li: a Car
+                                li: a Guide
+                                li: a Tour
+                        input#q.form-control(name='q', type='text', placeholder='Search...')
+                        != f.icon('search', 'span', null, 'form-control-feedback')
     block slide
 
     .topLine
@@ -42,15 +72,26 @@ block ctn
                 block content
     .footerWrapper
         footer.container
-            .row
-                each it in siteMap.sortBy('row')
-                    ul.col-md-2(class= it.top ? 'top' : '')
-                        p
-                            strong= it.title
-                        if it.items && it.items.length
-                            each ts in it.items
-                                if ts
-                                    li!= f.link(ts)
+            #bit.carousel(data-ride='carousel')
+                .carousel-inner
+                    .item.row.active
+                        each it in siteMap.sortBy('row')
+                            ul.nu.col-md-2(class= it.top ? 'top' : '')
+                                p
+                                    strong= it.title
+                                if it.items && it.items.length
+                                    each ts in it.items
+                                        if ts
+                                            li!= f.link(ts)
+                    .item.row
+                        ul.nu.snd
+                            p: strong Attraction
+                            each it in _attraction
+                                li!= f.link(it)
+                a.left.carousel-control(href='#bit', role='button', data-slide='prev')
+                    span.glyphicon.glyphicon-chevron-left
+                a.right.carousel-control(href='#bit', role='button', data-slide='next')
+                    span.glyphicon.glyphicon-chevron-right
     .bottomWrapper
         .container
             .row
@@ -58,7 +99,7 @@ block ctn
                     a(href= '/')
                         img(src= f.resPath(c, 'images/logo_27.jpg'))
                 ul.col-md-6.list-inline
-                    each it in foot
+                    each it in c.foot
                         li
                             a(href= it.href)= it.label
                 .col-md-4.text-bottom

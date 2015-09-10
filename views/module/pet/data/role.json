@@ -58,15 +58,5 @@
     "res": "",
     "title": "owner",
     "type": 1
-  },
-  {
-    "id": 9,
-    "cid": 5,
-    "description": "The Anonymous users",
-    "label": "访问者",
-    "lang": "zh",
-    "res": "{\"channel\":[{\"label\":\"首页\",\"href\":\"/index.html\"},{\"label\":\"活动\",\"href\":\"/eventList.html\"},{\"label\":\"阅读\",\"href\":\"/postList.html\"}]}",
-    "title": "guest",
-    "type": 0
   }
 ]

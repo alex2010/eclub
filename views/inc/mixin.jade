@@ -1,6 +1,6 @@
 mixin panel(title)
     if !attributes.class
-        -attributes.class='panel panel-default'
+        -attributes.class='panel panel-default ' + cls
     div&attributes(attributes)
         .panel-heading
             h3.panel-title= title
@@ -9,19 +9,77 @@ mixin panel(title)
                 block
 
 mixin media(posts,opt)
+
     if !opt.ttLimits
         -opt.ttLimits= 12
     if !opt.ctLimit
         -opt.ctLimit= 24
     if !opt.headKey
         -opt.headKey= 'slide'
+
+    if !attributes.class
+        -attributes.class = 'media_left clearfix'
+
+    if !attributes.target
+        -attributes.target = '_blank'
+
     each it in posts
-        a.media.media_left.clearfix(href='/#{it._e}/#{it._id}',target='_blank')
+        -attributes.href = '/'+it._e+'/'+it._id
+        a.media&attributes(attributes)
             if opt.oneCol
                 != f.imgItem(it, c, opt.headKey, 'media-object')
             else
                 .media-left
                     != f.imgItem(it, c, opt.headKey, 'media-object')
             .media-body
-                h4.media-heading!=it.title || it.username
-                != f.dStr(it.brief || it.description || it.address, 20)
+                if block
+                    block
+                else
+                    h4.media-heading!=it.title || it.username
+                    != f.dStr(it.brief || it.description || it.address, 20)
+
+mixin avatars(users)
+    .avatars
+        each it in users
+            a(href= '/user/' + it._id,title= it.username)&attributes(attributes)
+                +userPic(it)
+
+mixin userPic(u)
+    != f.img(f.resPath(c, 'portrait/' + u._id + '.jpg'))
+
+mixin userInfo(it)
+    .hostInfo.media
+        .media-body
+            .media-left.pull-left
+                != +userPic(it)
+            h4.media-heading!= f.link(it, 'username')
+            small=it.title
+            if it.industry
+                span &nbsp;-&nbsp;
+                if i18.iCat('industry')
+                    span= i18.iCat('industry')[it.industry]
+            != it.introduction
+
+mixin comments(id,entity,cs,cls)
+    if !cls
+        -cls = 'panel panel-default comments'
+    +panel('家人的评论')(class=cls)
+        .newOne
+            a.btn.btn-sm.btn-primary(onclick="cf.comment('#{id}','#{entity}')")
+                != f.icon('pencil')
+                | 写评论
+        if cs
+            each it in  cs
+                .media
+                    if it.user
+                        div(class='col-xs-2')
+                            +userPic(it.user)
+                    div(class='col-xs-10')
+                        if block
+                            block
+                        else
+                            h4.media-heading!= it.user.username
+                                small.pull-right!= f.icon('thumbs-up', 'a', it.up || 0)
+                            p!= it.content
+                            p!= it.createdDate
+

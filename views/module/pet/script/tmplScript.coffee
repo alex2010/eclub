@@ -2,15 +2,11 @@ module.exports =
 
     _init: (ctx)->
         ctx.css = ctx.cssPath('css')
-        menu: (cb)->
-            dao.get ctx.c.code, 'role', title: 'guest', (res)->
-                log res
-                cb(null, res.nav)
         _cat: (cb)->
             dao.find ctx.c.code, 'cat', {},{}, (res)->
                 opt = {}
                 for it in res
-                    opt[it.code] = it.title
+                    opt[it.code] = it
                 cb(null, opt)
 
     index: (ctx)->

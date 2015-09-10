@@ -28,13 +28,12 @@
             h3 主持人
             if it.master
                 .author
-                    - log(it.master)
                     each v,k in it.master
                         - v._id = k
                         - _user = v
                         - _user._e = 'user'
                         - _uClass = 'host'
-                        include userInfo
+                        include ../../../inc/mod/userInfo
 
             h3 话题介绍
             .intro!= it.content

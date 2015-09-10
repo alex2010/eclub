@@ -18,11 +18,12 @@ afterAuth = (code,user,rsp)->
             _id:
                 $in: (it.rid for it in ms)
         dao.find code, 'role', opt, {}, (rs)->
+            user.res = {}
             user.roles = for r in rs
                 title: r.title
                 label: r.label
             for role in rs
-                deepExtend user, role.res
+                deepExtend user.res, role.res
                 op =
                     uid: user._id
 

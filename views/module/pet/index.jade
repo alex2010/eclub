@@ -6,9 +6,9 @@ block content
         - var _slideInfo = 'actInfo.jade'
         if slides.length
             #slide.carousel.slide(data-ride='carousel')
-                .carousel-inner.article
+                .carousel-inner
                     each it,i in slides
-                        .item(class= i == 0 ? 'active' : '' )
+                        .item.article(class= i == 0 ? 'active' : '' )
                             include inc/actInfo
                 - var _slides = slides
                 - var _sid = 'slide'
@@ -81,3 +81,7 @@ block content
             h4 与一群充满正能量，有爱，付出的小伙伴们一起，把P.E.T活动做的更好
             a.btn.btn-lg.btn-warning(href=f.navUrl('volunteer')) 我要成为志愿者
             p 成为志愿者，感受一份拥有感，锻炼自己的执行能力，沟通能力与领导能力
+
+block st
+    :coffee(bare=true,minify=true)
+        cf.loadJS "#{cf.modPath}router.js"

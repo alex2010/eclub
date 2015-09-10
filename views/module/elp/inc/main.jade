@@ -1,9 +1,11 @@
 extends ../../../main
 include ../../../inc/mixin
 
-block prepend js
+block append js
     if !mode
         script(src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js')
+    - p = mode?'http://127.0.0.1:8088/':libPath
+    script(src='#{p}router.js')
 block ctn
 
     body(data-wid= wt.appId, data-wcode= wt.code)
@@ -12,47 +14,10 @@ block ctn
                 header.container
                     .navbar-header
                         a(href='#').navbar-brand= c.name
-
-                    if c.nav
-                        .collapse.navbar-collapse
-                            ul#nav.nav.navbar-nav
-                                each it in c.nav
-                                    if it.children && it.children != []
-                                        li.dropdown
-                                            a.dropdown-toggle(data-toggle='dropdown',role='button',aria-haspopup='true',aria-expanded='false')= it.label
-                                            span.caret
-                                            ul.dropdown-menu
-                                                each item in it.children
-                                                    li
-                                                        a(href='#{item.href}')= item.label
-                                    else
-                                        li
-                                            a(href='#{it.href}')= it.label
-        #content.row
+                        #topBar
+        #content
         #static.container
             block content
-        footer
-            .col-md-7
-                p P家族
-                    a(target='_blank', href= c.url) P家族
-            .col-md-2
-                h5.title-ft-attention 关于我们
-                ul.l-ft-attention
-                    li.li-ft-attention
-                        a 广告服务
-                    li.li-ft-attention
-                        a 联系我们
-                    li.li-ft-attention
-                        a 免责声明
-            .col-md-3.share-ft
-                h5.title-ft-attention 关注我们
-                ul.l-ft-share
-                    li.li-ft-share
-                        a
-                            img.img-responsive(src='#{resPath}images/icon-share_25.png', alt='')
-                    li.li-ft-share
-                        a
-                            img.img-responsive(src='#{resPath}images/icon-share_27.png', alt='')
-                    li.li-ft-share
-                        a
-                            img.img-responsive(src='#{resPath}images/icon-share_29.png', alt='')
+        footer.navbar-inverse
+            .text-center(style='padding: 10px')
+                a(href= c.url) P家族 2015

@@ -1,95 +1,86 @@
-adminRoleId = new oid()
-adminUserId = new oid()
-
-adminUserId = new oid()
-managerRoleId = new oid()
-
-memberRoleId = new oid()
-alexUserId = new oid()
-pieUserId = new oid()
-
 role = [
-    _id: adminRoleId
     title: 'admin'
     label: '管理员'
     type: 0
     res:
-        mgm:
-            menu:
-                site: 2
-                data: 3
-                wechat: 4
-                userRole: 7
+        menu:
+            site: 2
+            data: 3
+            wechat: 4
+            userRole: 7
 
-            entity:
-                activity: 1
-                post: 3
-                content: 4
-                cat: 7
-                link: 8
+        entity:
+            activity: 1
+            post: 3
+            content: 4
+            cat: 7
+            link: 8
 
-                community: 'x'
-                role: 'x'
-                wechat: 'x'
-                codeMap: 'x'
+            community: 'x'
+            role: 'x'
+            wechat: 'x'
+            codeMap: 'x'
 
         permission:
             page: 'console'
 ,
-    _id: managerRoleId
     title: 'manager'
     label: 'p班级管理员'
     type: 0
     res:
-        menu:
-            pClass:
-                icon: 'education'
-                act:'pClass'
-                row:35
+        menu:[
+            icon: 'education'
+            label: '班级信息'
+            href: '#!/pClass'
+            row: 65
+        ]
         permission:
             page: 'wechat'
 
 ,
-    _id: memberRoleId
     title: 'member'
     label: 'p成员'
     type: 0
     res:
-        menu:
-            home:
-                icon: 'home'
-                act: 'user'
-                row: 10
-            search:
-                icon: 'search'
-                act: 'search'
-                row: 20
-            profile:
-                icon: 'user'
-                act: 'profile'
-                row: 30
-            ds:
-                icon: 'gift'
-                act: 'ds'
-                row: 40
-            addPost:
-                icon: 'file'
-                act: 'data/list/post'
-                row: 50
-            addActivity:
-                icon: 'th-large'
-                act: 'data/list/activity'
-                row: 60
+        menu: [
+            icon: 'blackboard'
+            label: '活动'
+            href: '#!/list/activity'
+            row: 20
+        ,
+            icon: 'tree-deciduous'
+            label: '项目'
+            href: '#!/list/project'
+            row: 30
+        ,
+            icon: 'gift'
+            label: '供需'
+            href: '#!/list/ds'
+            row: 40
+        ,
+            icon: 'search'
+            label: '家人'
+            href: '/search'
+            row: 50
+        ,
+            icon: 'file'
+            label: '文章'
+            href: '#!/list/post'
+            row: 60
+        ,
+            icon: 'user'
+            label: '个人信息'
+            href: '#!/profile'
+            row: 70
+        ]
         permission:
             page: 'wechat'
 ]
 
 user = [
-    _id: adminUserId
     username: code
     password: 'psd'
 ,
-    _id: alexUserId
     username: '王磊'
     password: 'psd'
     phone: '15810263968'
@@ -112,7 +103,6 @@ user = [
         case: '项目1，项目2'
     ]
 ,
-    _id: pieUserId
     username: '王珮'
     password: 'psd'
     phone: '123'
@@ -152,19 +142,6 @@ org = [
         pClass: 'elp4'
         role: '教练'
     ]
-]
-membership = [
-    uid: adminUserId
-    rid: adminRoleId
-,
-    uid: alexUserId
-    rid: memberRoleId
-,
-    uid: pieUserId
-    rid: memberRoleId
-,
-    uid: pieUserId
-    rid: managerRoleId
 ]
 
 roleMap = [
@@ -218,8 +195,13 @@ module.exports =
     data:
         'role:title': role
         'user:username': user
-        'membership:uid,rid': membership
         'roleMap:role': roleMap
         'org:title': org
         'pubAccount:appId': pubAccount
         'i18n:key': require('./zh')
+
+    member:[
+        "#{code},admin"
+        "王磊,member"
+        "王磊,manager"
+    ]

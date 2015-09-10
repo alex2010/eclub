@@ -6,13 +6,3 @@ block append js
     if !mode
         script(src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js')
 
-
-block content
-
-block st
-    :coffee(bare=true minify=true)
-        if app._sm
-            loadJS "#{cf.modPath}#{app._sm}.js",->
-                app.navigate util.navUrl(app._act||app._sm), trigger:true
-        else if app._act
-            app.navigate util.navUrl(app._act), trigger:true

@@ -56,5 +56,4 @@ block content
 block st
     :coffee(bare=true,minify=true)
         util.lcss "#{cf.modPath}router.css"
-        loadJS "#{cf.modPath}router.js", ->
-            log 'roter dd'
+        cf.loadJS "#{cf.modPath}router.js"

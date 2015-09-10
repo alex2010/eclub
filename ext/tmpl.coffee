@@ -44,11 +44,11 @@ module.exports =
             href: '/'
         ].concat items
 
-    img: (path, cls = 'avatar', pop = false, width = 'auto')->
+    img: (path, cls = 'avatar', pop = false,p)->
+        p ?=''
+        p += if pop then " onclick='cf.showPic(this)'" else ''
 
-        p = if pop then "onclick='cf.showPic(this)'" else ''
-
-        "<img id='#{String.randomChar(4)}' class='#{cls} _imgBox' bb-src='#{path}' #{p} width='#{width}'/>"
+        "<img id='#{String.randomChar(4)}' class='#{cls} _imgBox' bb-src='#{path}' #{p}/>"
 
     imgItem: (it, c, name = 'head', cls, index = 0, pop)->
         return '' unless it

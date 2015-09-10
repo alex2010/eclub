@@ -1,5 +1,3 @@
-#_ = require('underscore')
-#u = require '../util'
 async = require('async')
 
 attrs = (attr)->
@@ -12,7 +10,7 @@ attrs = (attr)->
 isOid = (k)->
     k.indexOf('_id') > -1 or k in ['rid', 'uid', 'oid']
 
-buildQuery = (q)->
+buildQuery = (q={})->
     for k, v of q
         if isOid(k)
             q[k] = new oid(v)
@@ -25,18 +23,18 @@ cleanItem = (q, isNew)->
     q.lastUpdated = new Date()
 
     for k,v of q
-        if k is 'status'
+        if k in ['status','row']
             q[k] = +v
-        if _.isObject(v)
+        else if _.isObject(v)
             for kk,vv of v
                 if isOid(kk)
                     v[kk] = new oid(vv)
-        else
-            if isOid(k)
-                q[k] = new oid(v)
-
-            if k.toString().charAt(0) is '_'
-                delete q[k]
+        else if isOid(k)
+            q[k] = new oid(v)
+        else if k in ['startedDate','endDate','putTime']
+            q[k] = Date.parseLocal(v)
+        else if k.toString().charAt(0) is '_'
+            delete q[k]
     q
 
 dataController =

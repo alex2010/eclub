@@ -2,12 +2,11 @@ extends inc/main
 
 block content
     include ../../inc/crumb
-    .row
+    .row.article
         .col-md-8
             include ../../inc/mod/post
         .col-md-4
             +panel('相关文章')(pClass='panel-info')
                 +media(postList,{})
-
+block st
     :coffee(bare=true minify=true)
-        loadJS "#{cf.modPath}main.js"

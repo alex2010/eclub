@@ -2,13 +2,10 @@ extends ./inc/main
 
 block content
     .container
-        if crumb
-            include ../../inc/crumb
-
+        include ../../inc/crumb
         .row.article
             #main.col-md-8
                 include ../../inc/mod/post
-
             #side.col-md-4
                 h3 相关文章
                 ul

@@ -19,20 +19,34 @@ _env = true;
 
 require('./ext/string')
 dao = new require('./service/dao')()
-dao.pick('main','cache')
-dao.pick(code,'post')
+dao.pick('main', 'cache')
+dao.pick(code, 'post')
+
+addMember = (username, title)->
+    dao.get code, 'user', {username: username}, (u)->
+        if u
+            dao.get code, 'role', {title: title}, (r)->
+                if r
+                    mOpt =
+                        uid: u._id
+                        rid: r._id
+                        username: username
+                        role: title
+                    dao.save code, "membership:uid,rid", mOpt, ->
+
+
 _.delay ->
     if args.length > 3
         if args[3] is '-p'
             `
-            _env = false;
+                _env = false;
             `
         else
             entity = args[3]
 
     if entity
-        filter = if entity in ['user','role']
-             x:'x'
+        filter = if entity in ['user', 'role']
+            x: 'x'
         else
             {}
 
@@ -61,15 +75,16 @@ _.delay ->
 
                     if entity is 'user'
                         if it.woid
-                            ob.wt =
-                                oid: it.woid
-                            delete it.woid
-                            if it.wid
-                                ob.wt.id = it.wid
-                                delete it.wid
-                            if it.wunid
-                                ob.wt.unid = it.wunid
-                                delete it.wunid
+                            ob.w_PostEnglishTime = it.woid
+#                            ob.wt =
+#                                oid: it.woid
+#                            delete it.woid
+#                            if it.wid
+#                                ob.wt.id = it.wid
+#                                delete it.wid
+#                            if it.wunid
+#                                ob.wt.unid = it.wunid
+#                                delete it.wunid
                     else if entity is 'cat'
                         if ob.label
                             ob.title = ob.label
@@ -99,7 +114,7 @@ _.delay ->
                             act.master = {}
                             dao.find code, 'user', filter, {}, (ru)->
                                 for u in ru
-                                    act.master[u._id] = _.pick(u,'username', 'title', 'industry', 'introduction')
+                                    act.master[u._id] = _.pick(u, 'username', 'title', 'industry', 'introduction')
                                 dao.save code, estr, act, ->
                                     if act.cat
 #                                        dao.get code, 'cat', {code: act.cat}, (res)->
@@ -109,26 +124,18 @@ _.delay ->
 #                                                    code: res.code
                                         dao.save code, estr, act, ->
                                             if act.vid
-                                                dao.get code, 'venue', {id:act.vid}, (res)->
+                                                dao.get code, 'venue', {id: act.vid}, (res)->
                                                     if res
-                                                        act.venue =
-                                                            title: res.title
-                                                            fee: res.fee
-                                                            phone: res.phone
-                                                            lng: res.lng
-                                                            lat: res.lat
-                                                            _id: res._id
+                                                        act.venue = res
                                                         dao.save code, estr, act
 
                     else if entity is 'post'
                         act = res.ops[0]
                         estr = entity + ':_id'
                         return if _.isString(act.uid) and act.uid.isEmpty()
-                        log act.uid
                         dao.get code, 'user', {id: act.uid}, (doc)->
-                            log doc
                             if doc
-                                act.author = _.pick(doc,'_id', 'username', 'title', 'industry', 'introduction')
+                                act.author = _.pick(doc, '_id', 'username', 'title', 'industry', 'introduction')
                             dao.save code, estr, act, ->
 #                                if act.cat
 #                                    dao.get code, 'cat', {code: act.cat}, (res)->
@@ -140,50 +147,44 @@ _.delay ->
                 if entity is 'participant'
                     it.ref = it.ref.replace ':', 'x'
                     it.ref = it.ref.replace 'x-', 'x'
-                    log it.ref
                     [aid,uid] = it.ref.split('x')
-                    log 'aid: '+aid
-                    log 'uid: '+uid
-                    do(aid,uid,it)->
+                    do(aid, uid, it)->
                         if uid isnt 'undefined'
                             dao.get code, 'user', id: +uid, (u)->
                                 return unless u
-                                log 'user: ' + u.username
                                 dao.findAndUpdate code, 'activity', id: +aid,
                                     $push:
-                                        _participant:
-                                            _id:u._id
+                                        participant:
+                                            _id: u._id
                                             username: it.username
                                             phone: it.phone
                                             woid: it.woid
                                             info: it.info
 
-                            dao.get code, 'activity', id: +aid,(act)->
-                                dao.findAdnUpdate code, 'user', id: +uid,
-                                    $push:
-                                        _track:
-                                            type: 'participate_activity'
-                                            _id: act._id
-                                            _e: 'activity'
-                                            title: it.title
-                                            createdDate: it.started_date
+                            dao.get code, 'activity', id: +aid, (act)->
+                                if act
+                                    dao.findAndUpdate code, 'user', id: +uid,
+                                        $push:
+                                            track:
+                                                type: 'participate_activity'
+                                                _id: act._id
+                                                _e: 'activity'
+                                                title: it.title
+                                                createdDate: it.started_date
+                                    ,->
+
                             if it.feedback
-                                log 'feedback'
                                 dao.get code, 'activity', id: +aid, (act)->
                                     return unless act
-                                    log　'act: ' + it.title
-                                    log　'act: ' + act.title
                                     opt =
-                                        $set:{}
+                                        $set: {}
                                     dao.get code, 'user', id: +uid, (uu)->
                                         return unless uu
-                                        log 'fuck it'
                                         for kk,vv of it.feedback
-                                            opt.$set["_feedback.#{act._id}.#{uu._id}"] = vv
-                                            opt.$set["_feedback.#{act._id}._info"] =
+                                            opt.$set["feedback.#{act._id}.#{uu._id}"] = vv
+                                            opt.$set["feedback.#{act._id}._info"] =
                                                 title: act.title || it.title
                                                 startedDate: act.startedDate || it.started_date
-                                            log opt
                                             dao.findAndUpdate code, 'user', id: +kk, opt
 
     else
@@ -192,7 +193,16 @@ _.delay ->
 
         for k, v of data.data
             dao.save code, k, v
-, 1000
+
+        if data.member
+            _.delay ->
+                for it in data.member
+                    [u,r] = it.split(',')
+                    addMember(u, r)
+            , 3000
+, 500
+
+
 #        dao.save code, 'role:title', [data.r], ->
 
 _.delay ->
