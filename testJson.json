@@ -1,0 +1,33 @@
+{
+  "code" : "yukof",
+  "name" : "优寇坊",
+  "resPath" : "/res",
+  "url" : "t.yukof.com",
+  "title" : "优寇坊",
+  "nav" : [
+    {
+      "label" : "首页",
+      "href" : "/"
+    },
+    {
+      "label" : "听力健康",
+      "href" : "/itemList?entity=health"
+    },
+    {
+      "label" : "互动论坛",
+      "href" : "/itemList?entity=forum"
+    },
+    {
+      "label" : "聆听秒杀",
+      "href" : "/itemList?entity=pubchips"
+    },
+    {
+      "label" : "助听返券",
+      "href" : "/itemList?entity=feedback"
+    },
+    {
+      "label" : "听力问询",
+      "href" : "/inquiry"
+    }
+  ]
+}
