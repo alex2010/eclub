@@ -36,6 +36,31 @@ db.getCollection('shop').find({}).forEach (it)->
             db.getCollection('shop').update {_id: it._id}, opt
 
 
+db.getCollection('product').find({}).forEach (it)->
+    if it.brand
+        db.getCollection('brand').find({_id: new ObjectId(it.brand)}).forEach (sh)->
+            if sh
+                it.brand =
+                    _id: sh._id
+                    title: sh.title
+                    origin: sh.origin
+                db.getCollection('product').update {_id: it._id}, it
+
+Date.parseLocal = (time) ->
+    time = time.substring(0, 19) if time.length > 19
+    new Date((time or "").replace(/-/g, "/").replace(/[TZ]/g, " "))
+
+db.getCollection('consultant').find({}).forEach (it)->
+    if it.exp
+        it.exp = Date.parseLocal it.exp
+        db.getCollection('consultant').update {_id: it._id}, it
+
+db.getCollection('shop').find({}).forEach (it)->
+    if it.operTime
+        it.operTime = Date.parseLocal it.operTime
+        db.getCollection('shop').update {_id: it._id}, it
+
+
 #    "ds" : {
 #        "icon" : "gift",
 #        "act" : "ds",

@@ -54,7 +54,6 @@ module.exports =
         return '' unless it
         if it.refFile and it.refFile[name]
             path = it.refFile[name][index]
-
         else
             path = ''
         @img @resPath(c, path), cls, pop
@@ -77,7 +76,7 @@ module.exports =
 
         "<a href='#{href}' title='#{text}' class='#{cls || ''}'>#{text}</a>"
 
-    catLink: (cat, list)->
+    catLink: (cat, list=[])->
         res = []
         for it in cat.split(',')
             item = list.findBy('code', it)

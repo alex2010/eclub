@@ -51,9 +51,3 @@ block content
                     .col-md-4.mt17-mob
                         +panel(it.title)
                             +media(productList,{singleR:false})
-                            //(pClass='panel-info')
-
-block st
-    :coffee(bare=true,minify=true)
-        util.lcss "#{cf.modPath}router.css"
-        cf.loadJS "#{cf.modPath}router.js"

@@ -115,14 +115,3 @@ mixin ddItem(title,content)
         -content='--'
     dt= title+'：'
     dd= content
-mixin thumbnail(opt,name)
-    if !name
-        -name='logo'
-    div(class='col-md-6')
-        .thumbnail: != f.imgItem(opt, c, name)
-            .caption
-                h4=opt.title
-        if block
-            block
-    if attributes.clearfix
-        .clear

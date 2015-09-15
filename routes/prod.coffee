@@ -153,4 +153,22 @@ router.use '/a/wt/notify/:code', wxpay::useWXCallback (msg,req,res)->
     # do biz here
     res.success()
 
+ipn = require('paypal-ipn')
+
+router.use '/a/paypal/notify', (req,rsp)->
+    ipn.verify req.body, (err,msg)->
+        if err
+            log err
+        else
+            if params.payment_status is 'Completed'
+#                send email, update deal status
+                dao.update code, 'deal', {num: num},(status: 1),(res)->
+
+                email.setEmail
+
+                log 'paypal ipn......'
+                log params
+                log 'good'
+    rsp.send(200)
+
 module.exports = router

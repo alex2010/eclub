@@ -1,5 +1,11 @@
 extends ../../../main
 
+block append js
+    if !mode
+        script(src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js')
+    - p = mode?'http://127.0.0.1:8088/':libPath
+    script(src='#{p}router.js')
+
 block style
     :less(minify=true)
         #bit {
@@ -25,9 +31,11 @@ block ctn
                 a(href= '/')
                     img(src= f.resPath(c, 'images/logo_03.jpg'))
             .col-md-3.p0
-                    .input-group(style= 'margin-top:45px')
-                        .input-group-btn.sbar
-                            button.btn.btn-default Sight &nbsp;
+                    .input-group.sbar(style= 'margin-top:45px')
+                        .input-group-btn
+                            button.btn.btn-sm.btn-default(style='width: 85px')
+                                span.et Sight
+                                |&nbsp;
                                 span.caret
                             ul.dropdown-menu(style='margin:-3px 0 0 -1px;')
                                 li: a Sight
@@ -38,7 +46,7 @@ block ctn
                                 li: a Car
                                 li: a Guide
                                 li: a Tour
-                        input#q.form-control(name='q', type='text', placeholder='Search...')
+                        input#q.form-control.input-sm(name='q', type='text', placeholder='Search...')
                         != f.icon('search', 'span', null, 'form-control-feedback')
     block slide
 

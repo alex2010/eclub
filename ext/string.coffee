@@ -68,7 +68,7 @@ _.extend Date::,
         new Date(@getFullYear(), @getMonth() + 1, 1);
     lastMonth: ->
         new Date(@getFullYear(), @getMonth() - 1, 1);
-    pattern: (fmt) ->
+    pattern: (fmt = 'yyyy-MM-dd HH:mm:ss') ->
         o =
             'Y+': @getFullYear()
             'M+': @getMonth() + 1

@@ -1,13 +1,11 @@
 h2=title
     small= subTitle
-        if cat
-            span.cat 【#{_cat[cat]}】
-
+    if _cat[cat]
+        span.cat.pull-right 【#{_cat[cat].title}】
+hr
 != f.imgItem(locals, c, 'head', 'postPic')
-
 h3 主题介绍
 != content
-
 h3 主持人介绍
 if master
     .author
@@ -17,54 +15,65 @@ if master
             - _uClass = 'host'
             include userInfo
 
-if fee.toString().length >5 && feeTable
-    .well.well-sm.fee=fee
-    .reg
-
+//if fee && fee.toString().length > 5 && feeTable
+//    .well
+//        .fee= fee
+//    .reg
 //h3 地图
 //
 //.regBtn
 //    a.btn.btn-lg.btn-info.btn-block&attributes(reg) 我要报名
 //hr
-
-
-
 if participant
     h3 活动报名
-    .row
+    .clearfix
         each it in participant
-            a.col-xs-2(href= '/user/' + it._id,title= it.username)
-                != f.img(f.resPath(c, 'portrait/' + it._id + '.jpg'))
-
-each it in itemTable
-    if it.title
-        h3= it.title
-    if it.content
-        != it.content
-
-
+            a.col-xs-2.col-md-1.p0(href= '/user/' + it._id,title= it.username)
+                != f.img(f.resPath(c, 'portrait/' + it._id + '.jpg'), 'square')
 if venue
-    - v = venue[0]
-    h3 场地介绍
-    .row
+    - v = _.isArray(venue)?venue[0]:venue
+    if v
+        h3 场地介绍
         != f.imgItem(v, c)
-    h4= v.title
-    != v.content
-    .venue.clearfix
-        p
-            != f.icon('time')
-            if startedDate
-                span= startedDate
+        h4= v.title
+        != v.content
+        dl.venue.dl-horizontal.well
+            dt
+                != f.icon('time')
+                | 时间/Time：
+            dd
+                if startedDate
+                    = startedDate.pattern()
                     | (两小时)
-        p
-            != f.icon('glass')
-            span.feeStr= v.fee
-        p
-            != f.icon('phone-alt')
-            span= v.phone
-        p
-            != f.icon('home')
-            span= v.address
-        p
-            != f.icon('road')
-            span= v.route
+            dt
+                != f.icon('glass')
+                | 费用/Fee：
+            dd
+                div.feeStrr= v.fee
+                if v.langsTable && v.langsTable.findBy('key', 'fee')
+                    div= v.langsTable.findBy('key', 'fee').value
+            dt
+                != f.icon('phone-alt')
+                | 电话/Phone：
+            dd
+                div= v.phone
+            dt
+                != f.icon('home')
+                | 地址/Address：
+            dd
+                div= v.address
+                if v.langsTable && v.langsTable.findBy('key', 'address')
+                    div= v.langsTable.findBy('key', 'address').value
+            dt
+                != f.icon('road')
+                | 路线/Route：
+            dd
+                div= v.route
+                if v.langsTable && v.langsTable.findBy('key', 'route')
+                    div= v.langsTable.findBy('key', 'route').value
+if itemTable
+    each it in itemTable
+        if it.title
+            h3= it.title
+        if it.content
+            != it.content

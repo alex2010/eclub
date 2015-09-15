@@ -10,44 +10,63 @@ attrs = (attr)->
 isOid = (k)->
     k.indexOf('_id') > -1 or k in ['rid', 'uid', 'oid']
 
-buildQuery = (q={})->
-    for k, v of q
-        if isOid(k)
-            q[k] = new oid(v)
+_wkt = (obj, fu)->
+    for k, v of obj
+        if _.isObject(v) and !_.isArray(v) and !_.isFunction(v)
+            arguments.callee(v, fu)
+        else if v
+            fu(v, k, obj)
+#    for k,v of q
+#        if k in ['status', 'row']
+#            q[k] = +v
+#        else if _.isObject(v)
+#            for kk,vv of v
+#                if isOid(kk)
+#                    v[kk] = new oid(vv)
+#        else if isOid(k)
+#            q[k] = new oid(v)
+#        else if k in ['startedDate', 'endDate', 'putTime']
+##        else if /^\d{4}-\d{1,2}-\d{1,2}/.text(k) and k.length < 22
+#            q[k] = Date.parseLocal(v)
+#        else if k.toString().charAt(0) is '_'
+#            delete q[k]
+_cv = (v, k, obj)->
+    if k.charAt(0) is '_' and k isnt '_id'
+        delete obj[k]
+    else
+        obj[k] = if isOid(k)
+            if v.$in
+                new oid(it) for it in v.$in
+            else
+                new oid(v)
+        else if k in ['status', 'row']
+            +v
+        else if /^\d{4}-\d{1,2}-\d{1,2}/.test(v) and v.length < 22
+            log v
+            log Date.parseLocal(v)
+            Date.parseLocal(v)
+        else
+            v
+
+buildQuery = (q)->
+    _wkt q, _cv
     q
 
 cleanItem = (q, isNew)->
     if isNew
         q.dateCreated = new Date()
-
     q.lastUpdated = new Date()
-
-    for k,v of q
-        if k in ['status','row']
-            q[k] = +v
-        else if _.isObject(v)
-            for kk,vv of v
-                if isOid(kk)
-                    v[kk] = new oid(vv)
-        else if isOid(k)
-            q[k] = new oid(v)
-        else if k in ['startedDate','endDate','putTime']
-            q[k] = Date.parseLocal(v)
-        else if k.toString().charAt(0) is '_'
-            delete q[k]
+    _wkt q, _cv
     q
 
 dataController =
-
     comp: (req, rsp) ->
         opt = {}
         code = req.c.code
         for k,v of req.query
             if k.indexOf('_')
                 [entity,limit] = k.split('_')
-                log k
-                opt[entity] = do(entity,limit,v)->
-                    log limit
+                opt[entity] = do(entity, limit, v)->
                     (cb)->
                         op =
                             skip: 0
@@ -56,10 +75,10 @@ dataController =
                                 lastUpdated: -1
                             fields:
                                 title: 1
-                                brief:1
-                                lastUpdated:1
-                                refFile:1
-                                list:1
+                                brief: 1
+                                lastUpdated: 1
+                                refFile: 1
+                                list: 1
                         if v.status
                             v.status = +v.status
                         dao.find code, entity, v, op, (res)->
@@ -70,15 +89,14 @@ dataController =
 
     list: (req, rsp) ->
         code = req.c.code
-        qu = req.query
-        if qu
-            op =
-                skip: util.d(qu, 'offset') || 0
-                limit: util.d(qu, 'max') || 10
-                sort:
-                    lastUpdated: -1
-            if qu._attrs
-                op.fields = attrs util.d qu, '_attrs'
+        qu = req.query || {q:{}}
+        op =
+            skip: util.d(qu, 'offset') || 0
+            limit: util.d(qu, 'max') || 10
+            sort:
+                lastUpdated: -1
+        if qu._attrs
+            op.fields = attrs util.d qu, '_attrs'
         q = buildQuery qu.q
         entity = req.params.entity
         dao.find code, entity, q, op, (entities)->
@@ -88,9 +106,6 @@ dataController =
     get: (req, rsp) ->
         code = req.c.code
         entity = req.params.entity
-        prop = req.params.prop
-
-
         dao.get code, entity, _id: req.params.id, (item)->
             rsp.send util.r item
 
@@ -103,7 +118,7 @@ dataController =
         dao.get code, pa.entity, filter, (item)->
             rsp.send util.r item
 
-    subOp:(req,rsp)->
+    subOp: (req, rsp)->
         code = req.c.code
         entity = req.params.entity
         pEntity = req.params.pEntity
@@ -112,9 +127,10 @@ dataController =
         filter = {}
 
         opt =
-            $push: entity: obj
+            $push:
+                entity: obj
 
-        dao.findAndUpdate code, pEntity,filter, opt, (item)->
+        dao.findAndUpdate code, pEntity, filter, opt, (item)->
 
 
     edit: (req, rsp) ->
@@ -159,11 +175,11 @@ dataController =
         before = util.del 'beforeSave', req.body
 
 
-#        _attrs = bo._attrs || ''
-#        _attrs = _attrs.split(',')
-#        _attrs.push '_id'
-#
-#        cleanItem(bo, true)
+        #        _attrs = bo._attrs || ''
+        #        _attrs = _attrs.split(',')
+        #        _attrs.push '_id'
+        #
+        #        cleanItem(bo, true)
 
         if before
             rt = []
@@ -182,7 +198,7 @@ dataController =
         else
             _.keys(bo)
 
-        cleanItem(bo,true)
+        cleanItem(bo, true)
 
         dao.save code, entity, bo, (item)->
             gs(it)(req, item) for it in after.split(',') if after
@@ -203,9 +219,9 @@ dataController =
             log 'clean Cache...'
             rsp.send msg: 'del.ok'
 
-    editSub:(req,rsp)->
+    editSub: (req, rsp)->
 
-    getSub:(req,rsp)->
+    getSub: (req, rsp)->
         code = req.c.code
         entity = req.params.entity
         prop = req.params.prop
@@ -217,9 +233,9 @@ dataController =
             po = util.r item[prop]
             rsp.send po
 
-    delSub:(req,rsp)->
+    delSub: (req, rsp)->
 
-    saveSub:(req,rsp)->
+    saveSub: (req, rsp)->
         code = req.c.code
         entity = req.params.entity
         qs = {}
