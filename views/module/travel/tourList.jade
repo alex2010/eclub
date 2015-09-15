@@ -68,9 +68,9 @@ block style
         }
 
         .dl-horizontal {
+            line-height: 28px;
             dt {
                 width: 100px;
-                line-height: 28px;
             }
             dd {
                 margin-left: 120px;
@@ -176,7 +176,10 @@ block content
             .panel
                 a.panel-heading(data-toggle='collapse', data-parent='#tourListCtn', href= '#col' + i)
                     h3
-                        span #{catMap[it.cat]} Tour
+                        -catt = it.cat.split(',')
+                        -catt.remove('tour_gw')
+                        -catt.remove('tour_fw')
+                        span #{catMap[catt[0]]} Tour
                         != f.icon('share-alt')
                         = it.title
                         .pull-right
@@ -341,15 +344,14 @@ block content
                                     a.btn.btn.btn-info(onclick='cf.showRatingMore(this)' tid=it._id) View More
 
                     p.text-center.btns(style='padding-top:10px')
-                        a(style='margin-right: 50px',onclick='cf.showEnquire(this)').btn.btn-warning Enquire
-                        a.btn.btn-success(href='#!/bookTour/#{it._id}') Book
+                        a(style='margin-right: 50px',onclick='cf.showEnquire(this)').btn.btn-warning.btn-xs Enquire
+                        a.btn.btn-success.btn-xs(href='#!/bookTour/#{it._id}') Book
 
     script.
         _shows = !{JSON.stringify(shows)};
 
 block st
     :coffee(bare=true minify=true)
-        cf.loadJS "#{cf.modPath}router.js", ->
-            util.lcss "#{cf.modPath}tour.css?c=1"
-            cf.loadJS "#{cf.modPath}tour.js"
+        util.lcss "#{cf.modPath}tour.css?c=1"
+        cf.loadJS "#{cf.modPath}tour.js"
 //            $('#tourListCtn .panel-heading:first').trigger 'click'

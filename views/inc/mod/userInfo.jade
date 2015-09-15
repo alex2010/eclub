@@ -1,8 +1,8 @@
 .hostInfo.media
     .media-body
-        .media-left.pull-left!= f.img(f.resPath(c, 'portrait/' + _user._id + '.jpg'))
-        h4.media-heading!= f.link(_user, 'username')
-            small=_user.title
+        .media-left(style='float:left;width:25%;margin-right:15px')!= f.img(f.resPath(c, 'portrait/' + _user._id + '.jpg'))
+        .media-heading: strong!= f.link(_user, 'username')
+            small(style='float:right')=_user.title
                 if _user.industry
                     span &nbsp;-&nbsp;
                     if i18.iCat('industry')

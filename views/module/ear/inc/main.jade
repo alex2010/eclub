@@ -1,5 +1,18 @@
 extends ../../../main
+
 block ctn
+    mixin thumbnail(opt,name)
+        if !name
+            -name='logo'
+        div(class='col-md-6')
+            .thumbnail: != f.imgItem(opt, c, name)
+            .caption
+                h4=opt.title
+            if block
+                block
+        if attributes.clearfix
+            .clear
+
     mixin panel(title)
         if !attributes.class
             -attributes.class='panel panel-default'
@@ -65,20 +78,20 @@ block ctn
                                     strong.text-danger#resCount 0
                                     | &nbsp;个结果
                                 a.list-group-item(stag="#sProduct" )
-                                    != f.icon('home')
-                                    | 找助听器中心
-                                    != f.icon('chevron-right')
-                                a.list-group-item(stag="#sProduct" )
-                                    != f.icon('education')
-                                    | 找康复学校
+                                    != f.icon('th')
+                                    | 查找助听器
                                     != f.icon('chevron-right')
                                 a.list-group-item(stag="#sConsultant" )
                                     != f.icon('user')
-                                    | 找验配师
+                                    | 查找验配师
                                     != f.icon('chevron-right')
                                 a.list-group-item(stag="#sShop" )
-                                    != f.icon('th')
-                                    | 找听力中心
+                                    != f.icon('home')
+                                    | 查找听力中心
+                                    != f.icon('chevron-right')
+                                a.list-group-item(stag="#sProduct" )
+                                    != f.icon('education')
+                                    | 查找康复学校
                                     != f.icon('chevron-right')
                                 .block-panel-search
                                     #sConsultant
@@ -130,3 +143,9 @@ block ctn
                         li
                             a
                                 img.img-responsive(src='#{resPath}images/icon-share_29.png', alt='')
+
+
+block st
+    :coffee(bare=true,minify=true)
+        util.lcss "#{cf.modPath}router.css"
+        cf.loadJS "#{cf.modPath}router.js"

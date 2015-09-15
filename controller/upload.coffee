@@ -4,7 +4,6 @@ gm = require('gm')
 
 `
     _fileStack = {};
-    _fileStackTotal = 0;
 `
 
 sPath = (code, exPath)->
@@ -24,15 +23,18 @@ walk = (path, max, offset) ->
             if item
                 if item.startsWith('.') or fs.statSync("#{path}/#{item}").isDirectory()
                     list.remove item
-    _fileStackTotal = list.length
+        list.sort (a,b)->
+            fs.statSync(path+'/'+b).mtime.getTime() - fs.statSync(path+'/'+a).mtime.getTime()
+
+    total = list.length
     start = +offset
     end = start + +max
-    if start > _fileStackTotal
+    if start > total
         entities: []
         count: 0
     else
-        entities: list.slice(start, (if _fileStackTotal > end then end else _fileStackTotal))
-        count: _fileStackTotal
+        entities: list.slice(start, (if total > end then end else total))
+        count: total
 
 app.use multer
     dest: './public/res/img'
@@ -53,7 +55,14 @@ app.use multer
         log 'oversize'
 
     changeDest: (dest, req)->
-        sPath(req.query.code)
+        log dest
+        if req.query.func is 'portrait'
+            p = "#{req.query.code}/portrait"
+        else
+            p = req.query.code
+        sPath(p)
+
+#        sPath(req.query.code)
 
 thumbPath = (path, folder)->
     return path unless folder
@@ -79,7 +88,10 @@ module.exports =
     remove: (req, rsp)->
         bo = req.body
         path = sPath(req.params.code) + '/' + bo.id
+        log sPath(req.params.code)
         fs.unlink path, ->
+            _fileStack[sPath(req.params.code)] = null
+
         if bo.thumb
             fs.unlink thumbPath(path, bo.thumb.split(':')[0]), ->
         rsp.send
@@ -87,9 +99,14 @@ module.exports =
 
     upload: (req, rsp)->
         file = _.values(req.files)[0]
+        log file
         qu = req.query
         if qu.thumb
             file.path = thumbPath file.path, qu.thumb.split(':')[0]
+
+        if req.query.func isnt 'portrait'
+            _fileStack[sPath(req.c.code)] = null
+
         rsp.send
             success: true
             entity: file
@@ -99,4 +116,5 @@ module.exports =
         qu = req.query
         code = req.c.code
         path = qu.path
+        log sPath(code, path)
         rsp.send walk sPath(code, path), qu.max, qu.offset

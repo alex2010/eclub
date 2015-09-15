@@ -11,9 +11,10 @@ block content
     .row.mt
         .col-md-8.artitle-main
             .thumbnail
-                != f.imgItem(detail,c,'slide')
+                != f.imgItem(locals,c,'slide')
                 .caption
                     h2.title.text-center.pl0= title
+                    h3 店铺介绍
                     p.desc= description
             if consultant && consultant.length != 0
                 +panel('验配师')
@@ -26,6 +27,14 @@ block content
                                     h4
                                         a(href='/consultant?id=#{it._id}')= it.username
                                     p= it.description
+            if brand
+                +panel('经营品牌')
+                    .row
+                        each it,i in brand
+                            if i%2==1
+                                +thumbnail(it)(clearfix=true)
+                            else
+                                +thumbnail(it)
         .col-md-4.article-aside
             +panel('基本信息')
                 .row

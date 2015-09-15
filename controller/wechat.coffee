@@ -75,7 +75,8 @@ module.exports =
                     unless n.thumb_media_id.startsWith 'http'
                         n.thumb_media_id = util.sPath(code + '/' + n.thumb_media_id)
                     log 'start to upload pic' + n.thumb_media_id
-                    api.uploadMaterial n.thumb_media_id, 'image', (err, res)->
+                    api.uploadMaterial n.thumb_media_id, 'thumb', (err, res)->
+                        log res
                         return unless res
                         n.thumb_media_id = res.media_id
                         log n.thumb_media_id
@@ -84,7 +85,7 @@ module.exports =
                         tmpl = util.del 'tmpl', n # tmpl to render
                         if entity and _id
                             dao.get code, entity, _id: _id, (et)->
-                                dao.get code, 'cat', {code:et.code},(ct)->
+                                dao.get code, 'cat', {code:et.cat},(ct)->
                                     dao.find code, "i18n", {lang:req.body.lang || 'zh'}, {},(res)->
                                         langs = {}
                                         for it in res
@@ -96,17 +97,15 @@ module.exports =
                                             i18: require('../service/lang')(langs)
                                             catObj:ct
                                         _.extend ctx, et
-                                        path = "#{_path}/public/module/#{code}/tmpl/wechat/#{tmpl}.jade"
+                                        path = "#{_path}/views/module/#{code}/wechat/#{tmpl}.jade"
                                         ccc = jade.renderFile path, ctx
-#                                        ccc = content.toString()
                                         if styles
                                             for k,v of styles
                                                 ccc = ccc.replaceAll("<#{k}>", "<#{k} style='#{v}'>")
                                         ccc = ccc.replaceAll "bb-src", 'src'
-                                        log ccc
                                         n.content = ccc
-                                        n.digest = et.brief
-                                        n.author = _.pluck(et.author, 'username').join(',')
+#                                        util.del 'thumb_media_id', n
+#                                        util.del 'content_source_url', n
                                         cb()
                         else
                             n.content || n.content = 'no content'
@@ -114,7 +113,9 @@ module.exports =
                             cb()
                 , ->
                     log 'upload news ...'
-                    api.uploadNews articles: opt, (err, res) ->
+                    api.uploadNewsMaterial articles: opt, (err, res) ->
+                        log err
+                        log res
                         if isPre
                             k = "w_#{wCode}"
                             for it in req.body.testUser
@@ -125,13 +126,13 @@ module.exports =
                                         rsp.send
                                             success: true
                                             msg: '测试通过'
-#                        else
-#                            api.massSendNews res.media_id,
-#                                is_to_all: true
-#                            ,->
-#                                rsp.send
-#                                    success: true
-#                                    msg: '发送成功'
+                        else
+                            api.massSendNews res.media_id,
+                                is_to_all: true
+                            ,->
+                                rsp.send
+                                    success: true
+                                    msg: '发送成功'
     massSend: (req, rsp)->
         getApi req.body.code, (api)->
             api.massSend req.body.qrNum, (err, res) ->
