@@ -136,13 +136,33 @@ block content
                     a(href='javascript:void(0);') 泥泞跑
                     img(src='#{resPath}images/title-page_09.png', alt='')
                 .row.panel-events
-                    .col-md-4.col-md-offset-4.logo-events
-                        img(src='#{resPath}images/logo-events_03.png', alt='')
+                    .col-md-8.col-md-offset-2.content-events
+                        embed(src="http://player.youku.com/player.php/sid/XMTI4NjA2NTk1Ng==/v.swf",allowFullScreen="true",quality="high",width="770",height="500",align="middle",allowScriptAccess="always",type="application/x-shockwave-flash")
+                        .panel.panel-default
+                            .panel-body
+                                ul.l-label.list-inline
+                                    li.btn.btn-default 公测视频
+                                    li.btn.btn-default 开幕视频
+                                    li.btn.btn-default 马布里
+                                    li.btn.btn-default 赛后狂欢
+                                    li.btn.btn-default 关卡视频
+                                    li.btn.btn-default 疯狂泥鳅
+                                    li.btn.btn-default 鼠洞求生
+                                    li.btn.btn-default 人猿泰山
+                                    li.btn.btn-default 泥里白条
+                                    li.btn.btn-default 重获新生
+                                    li.btn.btn-default 蠕动电鳗
+                                    li.btn.btn-default 飞跃柏林墙
+                                    li.btn.btn-default 百米跨栏
+                                    li.btn.btn-default 网下求生
+                                    li.btn.btn-default 大战甜甜圈
+                                    li.btn.btn-default 人体榨汁机
+                                    li.btn.btn-default 颤抖吧勇士
+                        //img(src='#{resPath}images/logo-events_03.png', alt='')
             .section
                 h2
                     a(href='javascript:void(0);') 泥泞跑
                     img(src='#{resPath}images/title-page_03.png', alt='')
-
                 .slide
                     -var it = comments[0]
                     include ./inc/comment
