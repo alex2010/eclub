@@ -2,31 +2,30 @@ role = [
     title: 'admin'
     type: 0
     res:
-        mgm:
-            menu:
-                site: 2
-                data: 3
-                wechat: 4
-                userRole: 7
-            entity:
-                post: 3
-                content: 4
-                comment: 5
-                application: 6
-                cat: 7
-                link: 8
+        menu:
+            site: 2
+            data: 3
+            wechat: 4
+            userRole: 7
+        entity:
+            post: 3
+            content: 4
+            comment: 5
+            application: 6
+            cat: 7
+            link: 8
 
-                community: 'x'
-                role: 'x'
-                wechat: 'x'
-                codeMap: 'x'
+            community: 'x'
+            role: 'x'
+            wechat: 'x'
+            codeMap: 'x'
         permission:
             page: 'console'
 ]
 
 user = [
     username: code
-    password: 'psd'
+    password: 'bk9ULZCWUd81eZ0vOIjLuqDvozllFEWBKM7QTiy85NI='
 ]
 
 
