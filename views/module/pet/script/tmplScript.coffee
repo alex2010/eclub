@@ -2,12 +2,20 @@ module.exports =
 
     _init: (ctx)->
         ctx.css = ctx.cssPath('css')
+
         _cat: (cb)->
             dao.find ctx.c.code, 'cat', {},{}, (res)->
                 opt = {}
                 for it in res
                     opt[it.code] = it
                 cb(null, opt)
+
+        wt: (cb)->
+            log 'wt.....'
+            dao.get ctx.c.code, 'pubAccount', {code:'PostEnglishTime'}, (res)->
+                log 'zzz'
+                log res
+                cb(null, res)
 
     index: (ctx)->
         slides: (cb)->
@@ -17,8 +25,6 @@ module.exports =
                     row: -1
             dao.find ctx.c.code, 'activity', {}, opt, (res)->
                 cb(null, res)
-
-
         post: (cb)->
             filter = {}
             opt =

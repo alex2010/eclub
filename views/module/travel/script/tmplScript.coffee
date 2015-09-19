@@ -235,7 +235,7 @@ module.exports =
             et = 'guide'
             dao.find ctx.c.code, et, filter, {}, (res)->
                 dao.count ctx.c.code, et, filter, (count)->
-                    cb null, res
+                    cb null, res.sortBy('row', false)
 
     itemList: (ctx, req)->
         et = req.query.entity

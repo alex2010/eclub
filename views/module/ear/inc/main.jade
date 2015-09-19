@@ -33,9 +33,9 @@ block ctn
             a.media.media_left.clearfix(href='/#{it._e}/#{it._id}',target='_blank')
                 if !opt.singleR
                     .media-left
-                        != f.imgItem(it, c, 'slide', 'media-object')
+                        != f.imgItem(it, c, opt.func ||'head', 'media-object')
                 else
-                    != f.imgItem(it, c, 'slide', 'media-object')
+                    != f.imgItem(it, c, opt.func ||'head', 'media-object')
                 .media-body
                     h4.media-heading!=it.title || it.username
                     != f.dStr(it.description || it.address, 20)
@@ -70,7 +70,7 @@ block ctn
                             span.icon-bar
                         .searchBox
                             .navbar-brand
-                                a.btn.btn-danger
+                                a.btn.btn-danger(style='width:160px')
                                     != f.icon('search')
                                     | 听力搜索专家
                             #searchPanel.list-group.l-search
@@ -117,7 +117,7 @@ block ctn
             footer
                 .col-md-7.intro
                     p
-                        | 全国助听器验配师网
+                        | 免费咨询电话
                         br
                         | 400-0688-153
                         br

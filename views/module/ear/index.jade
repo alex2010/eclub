@@ -42,7 +42,7 @@ block content
                 when '验配中心'
                     .col-md-4.mt17-mob
                         +panel(it.title)(data-cid='123')
-                           +media(shopList,{singleR:false})
+                           +media(shopList,{singleR:false,func:'slide'})
                 when '验配师'
                     .col-md-4.mt17-mob
                         +panel(it.title)
@@ -50,4 +50,4 @@ block content
                 when '助听器'
                     .col-md-4.mt17-mob
                         +panel(it.title)
-                            +media(productList,{singleR:false})
+                            +media(productList,{singleR:false,func:'slide'})

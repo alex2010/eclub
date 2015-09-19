@@ -2,18 +2,18 @@ extends ./inc/main
 block content
     .row.main
         .col-md-12
-            .row.pt20
+            .row
                 .col-md-7
                     img.img-responsive(src='#{resPath}images/1.jpg', alt='')
                 //+panel('听力健康阅读榜')(class='col-md-5')
                     //+media(shop)
-            .row.pt20
+            .row
                 .col-md-4
                     +panel(_item.titleA)
-                        +media(_item.objA,{ttLimits:10,singleR:true})
+                        +media(_item.objA,{ttLimits:10,func:'head'})
                 .col-md-4
                     +panel(_item.titleB)
-                        +media(_item.objB,{ttLimits:10,singleR:true})
+                        +media(_item.objB,{ttLimits:10})
                 .col-md-4
                     +panel(_item.titleC)
-                        +media(_item.objC,{ttLimits:10,singleR:true})
+                        +media(_item.objC,{ttLimits:10})
