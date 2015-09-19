@@ -23,7 +23,6 @@ ck = (req)->
     req.hostname + req.url
 
 pre = (req, rsp, next)->
-
     unless app.env
         req.hostname = req.get('Host')
 
@@ -50,7 +49,7 @@ pre = (req, rsp, next)->
         if res and !app.env
             rsp.end res.str
         else
-            rStr = req.hostname.replace('www.','')
+            rStr = req.hostname.replace('www.', '')
             req.c = app._community[rStr]
             req.k = k
             next()
@@ -59,12 +58,12 @@ checkPage = (req, rsp, next)->
     pm = req.params
     page = pm.page || pm.entity || 'index'
     #    log req.originalUrl
-    if page in ['a','r']
+    if page in ['a', 'r']
         next()
         return
     req.fp = path.join(_path, "views/module/#{req.c.code}")
 
-    if page in ['res','images']
+    if page in ['res', 'images']
         rsp.end 'no page'
         return
 
@@ -115,7 +114,6 @@ router.get '/r/:entity/:q/:qv/:prop', data.getSub
 router.get '/r/:entity/:key/:val', data.getByKey
 
 
-
 router.put '/r/:entity/:id', data.edit
 router.post '/r/:entity', data.save
 router.delete '/r/:entity/:id', data.del
@@ -147,28 +145,13 @@ router.get '/:page', page.page
 router.get '/:entity/:id', page.entity
 router.get '/:entity/:attr/:id', page.entity
 
-router.use '/a/wt/notify/:code', wxpay::useWXCallback (msg,req,res)->
+router.use '/a/wt/notify/:code', wxpay::useWXCallback (msg, req, res)->
     log req.c.code
     log msg
     # do biz here
     res.success()
 
-ipn = require('paypal-ipn')
 
-router.use '/a/paypal/notify', (req,rsp)->
-    ipn.verify req.body, (err,msg)->
-        if err
-            log err
-        else
-            if params.payment_status is 'Completed'
-#                send email, update deal status
-                dao.update code, 'deal', {num: num},(status: 1),(res)->
-
-                email.setEmail
-
-                log 'paypal ipn......'
-                log params
-                log 'good'
-    rsp.send(200)
+router.use '/a/paypal/notify', require '../controller/paypal'
 
 module.exports = router

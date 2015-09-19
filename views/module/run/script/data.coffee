@@ -1,8 +1,4 @@
-adminRoleId = new oid()
-adminUserId = new oid()
-
 role = [
-    _id: adminRoleId
     title: 'admin'
     type: 0
     res:
@@ -29,15 +25,10 @@ role = [
 ]
 
 user = [
-    _id: adminUserId
     username: code
     password: 'psd'
 ]
 
-membership = [
-    uid: adminUserId
-    rid: adminRoleId
-]
 
 comment = [
     username: '孙娜 Grace Sun'
@@ -111,7 +102,10 @@ module.exports =
     data:
         'role:title': role
         'user:username': user
-        'membership:uid,rid': membership
         'comment:username': comment
         'post:title': post
         'i18n:key': require('./zh')
+
+    member:[
+        "#{code},admin"
+    ]
