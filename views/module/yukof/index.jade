@@ -1,8 +1,234 @@
+//#{resPath}images/poster-panel_07.jpg
 extends ./inc/main
 block style
     :less(minify=true)
 
+mixin slide(numof,imgSrc)
+    .carousel.slide#carousel-yukof(data-ride='carousel')
+        ol.carousel-indicators
+            -var n=0;
+            while n<numof
+                if n==0
+                    li.active(data-slide-to='#{n}',data-target='#carousel-yukof')
+                else
+                    li(data-slide-to='#{n}',data-target='#carousel-yukof')
+                -n++
+        .carousel-inner(role='listbox')
+            -var n=0;
+            while n<numof
+                -var bannerImg=imgSrc+(n+1)+'.jpg'
+                if n==0
+                    .item.active
+                        img(src="#{resPath}images/#{bannerImg}",alt="")
+                else
+                    .item
+                        img(src="#{resPath}images/#{bannerImg}",alt="")
+                -n++
+        a.left.carousel-control(href="#carousel-yukof",role="button",data-slide="prev")
+            span.glyphicon.glyphicon-chevron-left
+            span.sr-only 上一页
+        a.right.carousel-control(href="#carousel-yukof",role="button",data-slide="next")
+            span.glyphicon.glyphicon-chevron-right
+            span.sr-only 下一页
+
 block content
+    +slide(9,'banner')
+    .row
+        .col-md-4
+            .panel.panel-y-1
+                .panel-heading
+                    h4 新闻动态
+                        span.en News
+                .panel-body
+                    .thumbnail
+                        img(src="#{resPath}images/img-panel1_06.jpg",alt="")
+                        .caption
+                            h3 优寇坊美丽打造成果展示
+                            p 2014.11.11
+                            .arrow-right
+                                span.glyphicon.glyphicon-arrow-right
+        .col-md-4
+            .tab.tab-y-1
+                ul.nav.nav-tabs
+                    li.active
+                        a(href="#news",data-toggle="tab") 行业新闻
+                    li
+                        a(href="#knowledge",data-toggle="tab") 行业知识
+                .tab-content
+                    .tab-pane.active.fade.in(id="news")
+                        .list-group
+                            -var i=0
+                            while i<5
+                                -i++
+                                a.list-group-item
+                                    span.badge More
+                                    h5 优蔻坊美丽打造成果
+                                    p 2014.11.11
+                    .tab-pane.fade(id="knowledge")
+                        .list-group
+                            -var i=0
+                            while i<5
+                                -i++
+                                a.list-group-item
+                                    span.badge More
+                                    h5 优蔻坊美丽打造成果
+                                    p 2014.11.11
+        .col-md-4
+            .panel.panel-y-1
+                .panel-heading
+                    h4 最新招聘
+                        span.en Latest Jobs
+                .panel-body
+                    .list-group
+                        -var i=0
+                        while i<5
+                            -i++
+                            a.list-group-item
+                                .media
+                                    .media-left
+                                        .arrow-right
+                                            span.glyphicon.glyphicon-arrow-right
+                                    .media-body
+                                        h4 人物形象设计讲师
+                                        small 时装戏，2名
+
+    .panel.panel-y-2
+        .panel-heading
+            h3 作品展示
+                span.en Works Show
+        .panel-body
+            p 优蔻坊专注于个人整体形象设计，我们有一群专家级明星设计师团队<br />会根据客户需求，来策划及提供最专业的高性价比服务<br />这里是坊间部分作品及相关专业级别的合作业务案例
+        .panel-footer
+            .btn-more
+                span.ctn 点击更多
+    .tab-y-2
+        ul.nav.nav-tabs
+            li.active
+                a(href="#cooperStar",data-toggle="tab") 合作名星
+            li
+                a(href="#TVshow",data-toggle="tab") 电视台栏目
+            li
+                a(href="#cooperMagazine",data-toggle="tab") 杂志合作
+            li
+                a(href="#filmWork",data-toggle="tab") 影视剧合作
+            li
+                a(href="#tStation",data-toggle="tab") T台秀场
+            li
+                a(href="#undertake",data-toggle="tab") 大型活动承接
+        .tab-content
+            .tab-pane.active.fade.in#cooperStar
+                .row
+                    -var i=0
+                    while i<6
+                        -i++
+                        .col-md-2
+                            img.img-responsive(src="#{resPath}images/testImg_07.jpg",alt="")
+            .tab-pane.fade#TVshow
+                .row
+                    -var i=0
+                    while i<6
+                        -i++
+                        .col-md-2
+                            img.img-responsive(src="#{resPath}images/testImg_07.jpg",alt="")
+            .tab-pane.fade#cooperMagazine
+                .row
+                    -var i=0
+                    while i<6
+                        -i++
+                        .col-md-2
+                            img.img-responsive(src="#{resPath}images/testImg_07.jpg",alt="")
+            .tab-pane.fade#filmWork
+                .row
+                    -var i=0
+                    while i<6
+                        -i++
+                        .col-md-2
+                            img.img-responsive(src="#{resPath}images/testImg_07.jpg",alt="")
+            .tab-pane.fade#tStation
+                .row
+                    -var i=0
+                    while i<6
+                        -i++
+                        .col-md-2
+                            img.img-responsive(src="#{resPath}images/testImg_07.jpg",alt="")
+            .tab-pane.fade#undertake
+                .row
+                    -var i=0
+                    while i<6
+                        -i++
+                        .col-md-2
+                            img.img-responsive(src="#{resPath}images/testImg_07.jpg",alt="")
+    .adv-y-1
+        img.img-responsive(src="#{resPath}images/adv_29.jpg",alt="")
+    .tab-y-3
+        ul.nav.nav-tabs
+            li
+                a(href="javascript:void(0);")
+                    h4.title 视频教育
+                        span.en Video&nbsp;Education
+                    .arrow-down
+                        span.glyphicon.glyphicon-arrow-down
+            li
+                a(href="javascript:void(0);")
+                    h4.title 电子书
+                        span.en EBooks
+                    .arrow-down
+                        span.glyphicon.glyphicon-arrow-down
+        .tab-content
+            .tab-pane.active
+                img.img-responsive(src="#{resPath}images/poster-panel_07.jpg",alt="")
+    .row
+        .col-md-7
+            .panel.panel-y-3
+                .panel-heading 一站式形象托管&nbsp;&&nbsp;管家式服务
+                .panel-body.row
+                    .col-md-8
+                        ul.list-unstyled
+                            li.glyphicon.glyphicon-record.
+                                这里由<strong>资深明星设计师</strong>Yuko及其团队成员，通过一系列科学方法，和丰富的造型经验，<strong>帮你解决由于外表形象而带来的困惑</strong>。
+                            li.glyphicon.glyphicon-record.
+                                也是<strong>中国首家专业衣橱整理规划</strong>做的最好的机构，根据客户的职业、性格、五官特征、身材比例......按客户的自身条件，以及不同场合着装原则，对现有衣物重新整理，<strong>合理规划搭配，做到一衣多穿，一饰多配</strong>，帮客户找到<strong>最适合自己的穿衣风格及搭配方式</strong>。淘汰不适合物品，详细列出所需物品清单，明确购物目标。
+                            li.glyphicon.glyphicon-record.
+                                同时提供陪同购物服务，通过现场试穿帮客户落地解决问题，找到最适合自己的装扮方式，并传授给正确的选择服装、配饰的颜色，质地、款型、图案等，重塑和提高客户的整体形象。
+                            li.glyphicon.glyphicon-record.
+                                帮客户解决了很多日常困惑，并受到客户的广泛好评，为大家做到<strong>省时－省钱－省沟</strong>通成本。
+                            //（......）
+                    .col-md-4.right-panel
+                        //转为banner
+                        a(href="javascript:void(0);").thumbnail: img.img-responsive(src="#{resPath}images/poster-server_11.jpg",alt="")
+                        span.glyphicon.glyphicon-menu-left
+                        span.glyphicon.glyphicon-menu-right
+        .col-md-5
+            .panel.panel-y-3
+                .panel-heading 专家疑难问答
+                .panel-body
+                    form.form-horizontal
+                        .form-group
+                            label.col-sm-2 邮箱：
+                            .col-sm-10
+                                input.form-control(type="text")
+                        .form-group
+                            label.col-sm-2 内容：
+                            .col-sm-8
+                                textarea.form-control(rows="3")
+                            .col-sm-2
+                                button.btn.btn-exper(type="submit") 提交
+                    .row
+                        .col-md-4.sm-spacing
+                            .thumbnail
+                                img.img-responsive(src="#{resPath}images/img-form_14.jpg",alt="")
+                                .caption
+                                    p 培养把消费<br />变成投资的观点
+                        .col-md-4.sm-spacing
+                            .thumbnail
+                                img.img-responsive(src="#{resPath}images/img-form_14.jpg",alt="")
+                                .caption
+                                    p 培养把消费<br />变成投资的观点
+                        .col-md-4.sm-spacing
+                            .thumbnail
+                                img.img-responsive(src="#{resPath}images/img-form_14.jpg",alt="")
+                                .caption
+                                    p 培养把消费<br />变成投资的观点
 
 block st
     :coffee(bare=true,minify=true)
