@@ -1,4 +1,10 @@
 extends ../../../main
+block append js
+    - p = mode?'http://127.0.0.1:8088/':libPath
+    script(src='#{p}router.js')
+    link(rel='stylesheet', type='text/css', href='#{p}router.css?#{_ts}', media='all')
+
+block append js
 
 block ctn
     mixin thumbnail(opt,name)
@@ -70,13 +76,11 @@ block ctn
                             span.icon-bar
                         .searchBox
                             .navbar-brand
-                                a.btn.btn-danger(style='width:160px')
+                                a.btn.btn-danger
                                     != f.icon('search')
                                     | 听力搜索专家
                             #searchPanel.list-group.l-search
-                                h3.list-group-item 您找到了&nbsp;
-                                    strong.text-danger#resCount 0
-                                    | &nbsp;个结果
+                                h3.list-group-item 助听器行业搜索神器
                                 a.list-group-item(stag="#sProduct" )
                                     != f.icon('th')
                                     | 查找助听器
@@ -100,9 +104,9 @@ block ctn
                     .collapse.navbar-collapse(id='bs-example-navbar-collapse-1')
                         ul#nav.nav.navbar-nav
                             each it in c.nav
-                                if it.children && it.children != []
+                                if it.children && it.children.length>0
                                     li.dropdown
-                                        a.dropdown-toggle(data-toggle='dropdown',role='button',aria-haspopup='true',aria-expanded='false')= it.label
+                                        a.dropdown-toggle(href=it.href)= it.label
                                             span.caret
                                         ul.dropdown-menu
                                             each item in it.children
@@ -143,7 +147,7 @@ block ctn
                         li
                             a
                                 img.img-responsive(src='#{resPath}images/icon-share_29.png', alt='')
-block st
-    :coffee(bare=true,minify=true)
-        util.lcss "#{cf.modPath}router.css"
-        cf.loadJS "#{cf.modPath}router.js"
+//block st
+//    :coffee(bare=true,minify=true)
+//        util.lcss "#{cf.modPath}router.css"
+//        cf.loadJS "#{cf.modPath}router.js"

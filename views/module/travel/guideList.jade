@@ -1,4 +1,14 @@
 extends inc/main
+
+block style
+    :less(minify=true)
+        .carousel-control{
+            opacity: 0.2;
+            &:hover{
+                opacity: 1;
+            }
+        }
+
 block content
     .panel
         .panel-heading

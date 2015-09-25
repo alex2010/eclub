@@ -84,17 +84,26 @@ block content
                     include ../../inc/crumb
             .row.article.pt20
                 .col-md-8.article-main
-                    .media.mb20.thumbnail.summary
-                        .media-left
-                            a(href=''): != f.imgItem(local,c,'portrait')
-                        .media-body
-                            h2.media-heading= username
+                    +panel('验配师介绍')
+                        .thumbnail
+                            != f.imgItem(local,c,'portrait')
+                        .caption
+                            h2#username.media-heading= username
                             dl.dl-horizontal
-                                +ddItem('入行时间',exp)
+                                +ddItem('入行时间',exp.pattern('yyyy-MM-dd'))
                                 +ddItem('电话号码',phone)
-                                +ddItem('QQ号码',qq)
                                 +ddItem('工作职称',workTitle)
                                 +ddItem('所学专业',major)
+                        if shop
+                            h4 所属验配中心
+                            div: a#shop(href='/shop/#{shop._id}' sid=shop._id)= shop.title
+                            p 地址：#[span#shop_addr= shop.address] 【#[span#shop_phone=shop.phone]】
+
+                        if description
+                            h4 验配师简介
+                            p.tightening= description
+                        p.text-center
+                            a(href=f.navUrl('apply/order')).btn.btn-primary.btn-lg 问诊预约
                     -var brandArr=goodAtBrand
                     if brandArr && brandArr!=[]
                         +panel('擅长品牌')
@@ -104,9 +113,9 @@ block content
                                         +thumbnail(it)(clearfix=true)
                                     else
                                         +thumbnail(it)
-                    if description
-                        +panel('验配师介绍')
-                            p.tightening= description
+                    if comments
+                        +panel('用户评价')
+
                 .col-md-4.article-aside
                     +panel('相关验配师')
                         +media(consultantList,{singleR:false})

@@ -97,6 +97,10 @@ router.post '/a/auth/logoutByWoid', auth.logoutByWoid
 #wechat call
 
 wt = require '../controller/wechat'
+
+
+#router.post '/a/wechat/:cid', wt.createMenu
+
 router.post '/a/wt/createMenu', wt.createMenu
 router.post '/a/wt/createLimitQRCode', wt.createLimitQRCode
 router.post '/a/wt/showQRCodeURL', wt.showQRCodeURL

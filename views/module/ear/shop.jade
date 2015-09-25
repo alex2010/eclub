@@ -10,23 +10,27 @@ block content
     include ../../inc/crumb
     .row.mt
         .col-md-8.artitle-main
-            .thumbnail
-                != f.imgItem(locals,c,'slide')
+            +panel('验配中心介绍')
+                .thumbnail
+                    != f.imgItem(locals,c,'slide')
                 .caption
-                    h2.title.text-center.pl0= title
-                    h3 店铺介绍
+                    h3.title.text-center.pl0= title
+                    h4 店铺介绍
                     p.desc= description
+                p.text-center
+                    a(href=f.navUrl('apply/order')).btn.btn-primary.btn-lg 问诊预约
             if consultant && consultant.length != 0
                 +panel('验配师')
                     each it in consultant
                             .media
                                 .media-left
-                                    a(href='/consultant?id=#{it._id}')
+                                    a(href='/consultant/#{it._id}')
                                         != f.imgItem(it, c)
                                 .media-body
                                     h4
-                                        a(href='/consultant?id=#{it._id}')= it.username
+                                        a(href='/consultant/#{it._id}')= it.username
                                     p= it.description
+
             if brand
                 +panel('经营品牌')
                     .row
@@ -53,12 +57,12 @@ block content
                                 li
                                     span.tip 提供上门服务
                     .col-md-12.pt20
-                        ul.list-inline
+                        ul#phone.list-inline
                             li
                                 span.glyphicon.glyphicon-phone
                             +item('联系电话',phone)
                     .col-md-12.pt20
-                        ul.list-inline
+                        ul#address.list-inline
                             li
                                 span.glyphicon.glyphicon-road
                             +item('地址',address)(class='w180')

@@ -1,6 +1,6 @@
 h2=title
     small= subTitle
-    if _cat[cat]
+    if _cat && _cat[cat]
         span.cat.pull-right 【#{_cat[cat].title}】
 hr
 != f.imgItem(locals, c, 'head', 'postPic')
@@ -44,7 +44,7 @@ if venue
             dd
                 if startedDate
                     = startedDate.pattern()
-                    | (两小时)
+                    | &nbsp;[#{endDate.getHours() - startedDate.getHours()}小时]
             dt
                 != f.icon('glass')
                 | 费用/Fee：
@@ -64,13 +64,14 @@ if venue
                 div= v.address
                 if v.langsTable && v.langsTable.findBy('key', 'address')
                     div= v.langsTable.findBy('key', 'address').value
-            dt
-                != f.icon('road')
-                | 路线/Route：
-            dd
-                div= v.route
-                if v.langsTable && v.langsTable.findBy('key', 'route')
-                    div= v.langsTable.findBy('key', 'route').value
+            if v.route
+                dt
+                    != f.icon('road')
+                    | 路线/Route：
+                dd
+                    div= v.route
+                    if v.langsTable && v.langsTable.findBy('key', 'route')
+                        div= v.langsTable.findBy('key', 'route').value
 if itemTable
     each it in itemTable
         if it.title

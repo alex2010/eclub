@@ -34,19 +34,24 @@ module.exports =
             dao.find ctx.c.code, 'post', filter, opt, (res)->
                 cb(null, res)
 
-    activityList: (ctx)->
+    activityList: (ctx,req)->
         ctx.crumb = ctx.f.crumbItem [
             label: '活动'
         ]
 
         items: (cb)->
+            filter = {}
             opt =
-                skip: 0
-                limit: 20
+                skip: +req.query.skip || 0
+                limit: +req.query.limit || 10
                 sort:
                     lastUpdated: -1
-            dao.find ctx.c.code, 'activity', {}, opt, (res)->
-                cb(null, res)
+            ctx._skip = opt.skip
+            ctx._limit = opt.limit
+            dao.find ctx.c.code, 'activity', filter, opt, (res)->
+                dao.count ctx.c.code, 'activity', filter, (count)->
+                    ctx._max = count
+                    cb(null, res)
 
         cats: (cb)->
             dao.find ctx.c.code, 'cat', {type: 'activity'}, {}, (res)->

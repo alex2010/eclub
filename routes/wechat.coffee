@@ -103,10 +103,6 @@ app.post '/wechat/:code', (req, rsp)->
         handler code, _wtHandler
         rsp.send 'System init, please send again.'
 
-
-
-
-
 #wtreg[code] = require("../views/module/#{code}/script/wt")(code)
 #opt = wechat cfg
 #    .text (msg, req, res, next) ->

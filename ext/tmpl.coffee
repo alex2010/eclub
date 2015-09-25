@@ -31,7 +31,7 @@ module.exports =
         path = "http://#{c.url}/#{name}/#{id}"
         """
         <div class="copyright"><strong>C</strong><div>
-            <p>除非特别声明，本站文章均为原创文章，转载请注明原文链接：<a href="#{path}">#{path}</a></p>
+            <p>除非特别声明，本站文章均为原创文章，转载请注明原文链接</p>
         </div></div>
         """
     navPage: (page, it)->

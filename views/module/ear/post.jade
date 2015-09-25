@@ -11,3 +11,7 @@ block content
                 ul
                     each it in postList
                         li!= f.link(it)
+
+block st
+    :coffee(bare=true,minify=true)
+        cf.noCopy()

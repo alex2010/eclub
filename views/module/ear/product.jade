@@ -39,14 +39,16 @@ block content
                     include ../../inc/crumb
             .row.article.pt20
                 .col-md-8.article-main
-                    .thumbnail
-                        != f.imgItem(locals,c)
+                    +panel('助听器产品介绍')
+
+                        .thumbnail
+                            != f.imgItem(locals,c)
                         .caption
                             h2.title= title
                             .box-label
                                 +label('价格',price)(class='label-danger')
-                                +label('品牌',brand)
-                                +label('上市时间',pubTime)
+                                +label('品牌',brand.title)
+                                +label('上市时间',pubTime.pattern('yyyy-MM-dd'))
                                 +label('外型',outline)
                                 +label('通道',channel)
                                 +label('保修时间',warranty)

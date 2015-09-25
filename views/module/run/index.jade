@@ -1,5 +1,16 @@
 extends ./inc/main
 
+mixin formItem(title,name,help)
+    .form-group
+        label(style='padding-left:0').col-sm-3.control-label=title
+        .col-sm-9
+            if block
+                block
+            else
+                input.form-control.input-sm(name=name type='input')
+            if help
+                p.help-block= help
+
 block content
     .header.navbar-fixed-top
         .container
@@ -98,36 +109,93 @@ block content
                     img(src='#{resPath}images/title-page_06.png', alt='')
                 .row.bg-register
                     .col-md-12.panel-register
-                        form#regForm
+                        form#regForm.form-horizontal
                             .row
-                                .col-md-5.left-panel-register
+                                .col-md-4.left-panel-register
                                     h3
                                         img(src='#{resPath}images/title-register_03.png', alt='')
                                     h4 Terms & Condition:
                                     p
                                         | 泥泞跑里体现的体育精神，这个是我们自己举办这个赛事的灵魂指标！不管是坚持不懈，还是永不放弃，这些大家都知道的，战胜和挑战自己这个最大的敌人，除了这些，我心目中的泥泞跑，还应该是一种生活态度，并且辐射到每一个人的生活方式中！说点番外篇每个时代都有每个时代的审美观，唐代喜欢杨贵妃，西汉专宠赵飞燕，之前我们喜欢竹签腿，现在都在追求人鱼线！泥泞跑带来的运动风潮就是全民运动健康生活的新概念，我们打造的运动王国里，是标志性的，是老少皆宜的！让不爱运动的，没时间运动的，为减肥找借口的，被亚健康折磨的都来参加泥泞跑，它跟健身的绑定，随时随地让你为它动起来，不来泥泞征服一下，都不敢说自己是健全人。最近网络上各种**体，跟病毒传播一样，引起全民反馈，之前的“辞职体”，世界那么大，我想去看看，最早的“凡客体”，还有最近火的“苍白体”，vivo手机的  再美的文字赞美这部手机都是苍白，引起无数广告文案的亲睐，我们可以造自己的“泥泞体”，来拍摄短小的视频，让任何普通人都可以来说这些话，并深入到自己的生活中，隔壁家王大爷可以说，办公室里的前台小妹可以说，甚至发现楼底下郑阿姨连广场舞都不跳了加入泥泞跑了，她也在说！泥泞跑就是一种健康的生活态度。比如“我不在泥泞跑，就在去泥泞跑的路上”；”真正的快乐，是像我一样有颗摸爬滚打的心” ； “爹娘给的身材是本钱，把身体练好是你的本事”；“健
-                                .col-md-7.right-panel-register
-                                    ul.l-form-register
-                                        li.li-form-register
-                                            label.label-form-register(for='regsName')
-                                                | 姓名 
-                                                span.en NAME:
-                                            input.itxt-form-register(name='username', type='text')
-                                        li.li-form-register
-                                            label.label-form-register(for='regsPhone')
-                                                | 电话号码 
-                                                span.en TELEPHONE NUMBER:
-                                            input.itxt-form-register(name='phone', type='text')
-                                        li.li-form-register
-                                            label.label-form-register(for='regsMail')
-                                                | 电子邮件 
-                                                span.en EMAIL:
-                                            input.itxt-form-register(name='email', type='text')
-                                        li.li-form-register
-                                            label
-                                                input.check-form-register(name='subscribe', type='checkbox')
-                                                | &nbsp
-                                                span.tip-form-register Do you wish receive newsletter?
+                                .col-md-5.right-panel-register
+                                    h4 提交选手报名信息
+                                    +formItem('*姓名','username','必须与证件名一致')
+                                    +formItem('性别','gender')
+                                        select.form-control
+                                            option 男
+                                            option 女
+                                    +formItem('*证件类型','idType','所有大陆内地选手必须选择身份证')
+                                        select.form-control
+                                            option 身份证
+                                    +formItem('*证件号码','idNum')
+                                    +formItem('出生日期','birthday','年年年年/月月/日日')
+                                    +formItem('*血型','blood')
+                                        select.form-control
+                                            option A型
+                                            option B型
+                                            option AB型
+                                            option O型
+                                    +formItem('*手机号码','tel')
+                                    +formItem('电子邮箱','email')
+                                    +formItem('*紧急联系人','contact')
+                                    +formItem('*紧急联系人手机','contactTel')
+                                    .form-group
+                                        label.checkbox
+                                                .col-sm-3.text-right
+                                                    input(type='checkbox' name='accept')
+                                                .col-sm-9
+                                                    | 已阅读并同意免责声明
+                                        //
+                                        //.col-sm-3
+                                        //    input.pull-right.form-control.input-sm(type='checkbox' name='accept')
+                                        //label(style='text-align:left').control-label.col-sm-9
+
+
+                                    //ul.l-form-register
+
+                                    //    li.li-form-register
+                                    //        label.label-form-register(for='regsName')
+                                    //            | 姓名 
+                                    //            span.en NAME:
+                                    //        input.itxt-form-register(name='username', type='text')
+                                    //    li.li-form-register
+                                    //        label.label-form-register(for='regsPhone')
+                                    //            | 电话号码 
+                                    //            span.en TELEPHONE NUMBER:
+                                    //        input.itxt-form-register(name='phone', type='text')
+                                    //    li.li-form-register
+                                    //        label.label-form-register(for='regsMail')
+                                    //            | 电子邮件 
+                                    //            span.en EMAIL:
+                                    //        input.itxt-form-register(name='email', type='text')
+                                    //    li.li-form-register
+                                    //        label
+                                    //            input.check-form-register(name='subscribe', type='checkbox')
+                                    //            | &nbsp
+                                    //            span.tip-form-register Do you wish receive newsletter?
+                                .col-md-3
+                                    h4  选择交通方式
+                                    .form-group
+                                        .checkbox
+                                            label(style='padding:0')
+                                                .col-sm-2
+                                                    input(type='radio' name='transport' value='bdc')
+                                                .col-sm-10(style='padding:0')
+                                                    p.text-danger 摆渡车
+                                                    p 地铁六里桥D口（9，10号线换乘站）
+                                                    p 选择发车时间
+                                                        select.form-control(name='dbcTime')
+                                                            option 09:00
+                                    .form-group
+
+                                        .checkbox
+                                            label(style='padding:0')
+                                                .col-sm-2
+                                                    input(type='radio' name='transport' value='zjc')
+                                                .col-sm-10(style='padding:0')
+                                                    p.text-danger 自驾车
+                                                    p 车牌号
+                                                    input.form-control(type='text' name='zjcNo')
                             .submitBlock-form-register
                                 a.save.btn-submitItem-register
                                 span.triangle-submitItem-register
@@ -137,27 +205,28 @@ block content
                     img(src='#{resPath}images/title-page_09.png', alt='')
                 .row.panel-events
                     .col-md-8.col-md-offset-2.content-events
-                        embed(src="http://player.youku.com/player.php/sid/XMTI4NjA2NTk1Ng==/v.swf",allowFullScreen="true",quality="high",width="770",height="500",align="middle",allowScriptAccess="always",type="application/x-shockwave-flash")
+                        #videoPlayer(style='width: 770px;height:500px;' )
                         .panel.panel-default
                             .panel-body
-                                ul.l-label.list-inline
-                                    li.btn.btn-default 公测视频
-                                    li.btn.btn-default 开幕视频
-                                    li.btn.btn-default 马布里
-                                    li.btn.btn-default 赛后狂欢
-                                    li.btn.btn-default 关卡视频
-                                    li.btn.btn-default 疯狂泥鳅
-                                    li.btn.btn-default 鼠洞求生
-                                    li.btn.btn-default 人猿泰山
-                                    li.btn.btn-default 泥里白条
-                                    li.btn.btn-default 重获新生
-                                    li.btn.btn-default 蠕动电鳗
-                                    li.btn.btn-default 飞跃柏林墙
-                                    li.btn.btn-default 百米跨栏
-                                    li.btn.btn-default 网下求生
-                                    li.btn.btn-default 大战甜甜圈
-                                    li.btn.btn-default 人体榨汁机
-                                    li.btn.btn-default 颤抖吧勇士
+                                ul.l-label.list-inline.videos
+                                    each it in videos
+                                        li.btn.btn-default(data-url=it.url)= it.title
+                                    //li.btn.btn-default 开幕视频
+                                    //li.btn.btn-default 马布里
+                                    //li.btn.btn-default 赛后狂欢
+                                    //li.btn.btn-default 关卡视频
+                                    //li.btn.btn-default 疯狂泥鳅
+                                    //li.btn.btn-default 鼠洞求生
+                                    //li.btn.btn-default 人猿泰山
+                                    //li.btn.btn-default 泥里白条
+                                    //li.btn.btn-default 重获新生
+                                    //li.btn.btn-default 蠕动电鳗
+                                    //li.btn.btn-default 飞跃柏林墙
+                                    //li.btn.btn-default 百米跨栏
+                                    //li.btn.btn-default 网下求生
+                                    //li.btn.btn-default 大战甜甜圈
+                                    //li.btn.btn-default 人体榨汁机
+                                    //li.btn.btn-default 颤抖吧勇士
                         //img(src='#{resPath}images/logo-events_03.png', alt='')
             .section
                 h2

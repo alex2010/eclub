@@ -343,6 +343,10 @@ module.exports =
     content: (ctx, req)->
         log 'zzz'
 
+#    tour:(ctx,req)->
+#        dao.get ctx.c.code, 'deal', {}, (res)->
+#            require('jade').renderFile "#{_path}/views/module/#{code}/tmpl/email/tour.jade", res
+
 
 #                dao.find ctx.c.code, 'food', {}, {}, (res)->
 #                ctx.slides = []

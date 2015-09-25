@@ -1,12 +1,18 @@
 extends inc/main
 block content
     #activity.container
-        include ../../inc/crumb
         .row
             #main.col-md-8
+                include ../../inc/crumb
                 #activityList.boxList
                     each it in items
                         include inc/boxItem
+                    .nav
+                        ul.pager
+                            if _skip != 0
+                                li.pull-left: a(href='/activityList?skip=#{_skip - _limit}') 上一页
+                            if _skip + _limit < _max
+                                li.pull-right: a(href='/activityList?skip=#{_skip + _limit}') 下一页
             #side.col-md-4
                 h3 活动分类
                 ul

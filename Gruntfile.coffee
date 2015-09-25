@@ -45,6 +45,34 @@ module.exports = (grunt)->
                 dest: _remote + "#{if it is './' then '' else it}"
         res
 
+    grunt.registerTask 'pack', () ->
+        srcPath = '/Users/alex/Projects/eclub/public/module/newLogin/app/'
+        dstPath = '/Users/alex/Projects/account/public/dev/273775908/js/'
+        files = {}
+        files["#{dstPath}login.js"] = [
+            "#{srcPath}lib/util.js"
+            "#{srcPath}lib/rsa.js"
+            "#{srcPath}cmLogin.js"
+        ]
+        ugfile = {}
+        ugfile["#{dstPath}login.js"] = ["#{dstPath}login.js"]
+        ugfile["#{dstPath}en.js"] = ["#{srcPath}i18n/en.js"]
+
+        grunt.config.init
+            concat:
+                cat:
+                    files: files
+            uglify:
+                ug:
+                    files: ugfile
+
+        grunt.loadNpmTasks('grunt-contrib-concat');
+        grunt.loadNpmTasks('grunt-contrib-uglify');
+
+        grunt.task.run "concat:cat"
+        grunt.task.run "uglify:ug"
+
+
     grunt.registerTask 'bk', (code,mode) ->
         setting = require "#{__dirname}/views/module/#{code}/script/setting.js"
 

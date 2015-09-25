@@ -81,7 +81,8 @@ module.exports = ->
         delete opt._id
         @pick(db, entity).findAndModify filter, null, opt, {upsert: true,new: true}, (err, doc)->
             log err if err
-            callback?(doc)
+            item = doc.value
+            callback?(item)
 
     @save = (db, entity, items, callback)->
         [entity,keys] = entity.split(':')
@@ -93,11 +94,11 @@ module.exports = ->
                 filter = _.pick(it, keys)
                 @pick(db, entity).update filter, it, upsert: true, (err, docs)->
                     throw err if err
-                    callback?(docs)
+                    callback?(docs.ops)
         else
             @pick(db, entity).insert items, {safe: true}, (err, docs)->
                 log err if err
-                callback?(docs)
+                callback?(docs.ops)
 
     @del = ()->
         log 'rm'

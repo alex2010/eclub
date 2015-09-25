@@ -1,7 +1,7 @@
 .media
     .col-xs-12.col-md-4.imgSide.p0
         != f.imgItem(it, c)
-        if it.cat
+        if it.cat && _cat[it.cat]
             .pre-cat
                 a(href='/')= _cat[it.cat].title
     .col-xs-12.col-md-8.textSide
@@ -12,9 +12,9 @@
             if it._e == 'activity'
                 if it.master
                     each u in it.master
-                        != f.link('user',u, 'username')
+                        != f.link(u, 'username')
                 if it.startedDate
-                    strong!= it.startedDate
+                    strong!= it.startedDate.pattern()
             else if it._e == 'post'
                 if it.author
                     != f.link(it.author, 'username')

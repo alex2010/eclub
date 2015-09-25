@@ -27,6 +27,7 @@ _cache = cache.createCache('LRU',100*100)
 wtCtn = {};
 ctCtn = {};
 _wtcCtn={};
+_ePool={};
 `
 
 require('./ext/string')

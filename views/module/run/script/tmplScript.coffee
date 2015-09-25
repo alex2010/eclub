@@ -7,6 +7,14 @@ module.exports =
 #                cb(null, res.nav)
 
     index: (ctx)->
+        videos:(cb)->
+            opt =
+                limit: 20
+                sort:
+                    row: -1
+            dao.find ctx.c.code, 'video',{},opt,(res)->
+                cb null, res
+
         comments: (cb)->
             opt =
                 limit: 9

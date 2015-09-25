@@ -8,6 +8,7 @@ OAuth = require('wechat-oauth')
 getApi = require '../service/wechat'
 
 WXPay = require('weixin-pay')
+
 module.exports =
     jsSign: (req, rsp)->
         bo = req.body

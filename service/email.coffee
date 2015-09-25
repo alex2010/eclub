@@ -1,37 +1,29 @@
 nodemailer = require('nodemailer')
-`
-    _ePool = {};
-`
-#gmail =
-#    service: 'Gmail'
-#    auth:
-#        user: email
-#        pass: 'xxxxx'
+smtpTransport = require('nodemailer-smtp-transport')
 
-
-transPool(email) ->
-    _ePool[email] ?= nodemailer.createTransport 'SMTP',
-        host: 'smtp.exmail.qq.com'
+transPool = (email,host,psd)->
+    log arguments
+    _ePool[email] ?= nodemailer.createTransport smtpTransport
+        host: host
         secureConnection: true
-#        port: 465
         auth:
             user: email
-            pass: 'rock200*'
+            pass: psd
     _ePool[email]
 
 module.exports = (req, mo)->
     c = req.c
-    mo.from ?= "#{c.name} #{c.email}"
-    transPool(c.email).sendMail mo, (err, info)->
+    mo.from ?= "#{c.name} <#{c.email}>"
+    mo = _.pick mo, 'from', 'to', 'subject', 'html'
+    transPool(c.email,c.mailHost, c.mailPsd).sendMail mo, (err, info)->
+        log 'email...'
         if err
             log err
         else
             log info
 
-
 #    mo =
 #        from: 'bsspirit '
 #        to: 'xxxxx@163.com'
 #        subject: 'Hello ✔'
-#        text: 'Hello world ✔'
 #        html: '<b>Hello world ✔</b>'

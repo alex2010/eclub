@@ -13,7 +13,7 @@ if _slides.length > 1
                             p= it.subTitle
 
                     else if _.isString(it)
-                        != f.imgItem(_ctx, c, _prop, i)
+                        != f.imgItem(_ctx, c, _prop, null,i)
                         .carousel-caption
                             - kk = it.split('.')[0]
                             if _ctx.refFile[kk]

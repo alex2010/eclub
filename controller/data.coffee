@@ -47,6 +47,9 @@ _cv = (v, k, obj)->
             Date.parseLocal(v)
         else
             v
+_afterEdit = (item,entity)->
+    if entity is 'community'
+        app._community[item.url] = item
 
 buildQuery = (q)->
     _wkt q, _cv
@@ -93,12 +96,18 @@ dataController =
         op =
             skip: util.d(qu, 'offset') || 0
             limit: util.d(qu, 'max') || 10
-            sort:
-                lastUpdated: -1
+            sort:[
+                ['lastUpdated', 'desc']
+            ]
+        if qu.p
+            _.extend op, qu.p
         if qu._attrs
             op.fields = attrs util.d qu, '_attrs'
+
         q = buildQuery qu.q
+
         entity = req.params.entity
+
         dao.find code, entity, q, op, (entities)->
             dao.count code, entity, q, (count)->
                 rsp.send util.r entities, count
@@ -162,9 +171,11 @@ dataController =
         bo =
             $set: bo
         dao.findAndUpdate code, entity, _id: req.params.id, bo, (item)->
-            gs(it)(req, item.value) for it in after.split(',') if after
+            _afterEdit(item,entity)
+
+            gs(it)(req, item) for it in after.split(',') if after
             _attrs.push('_id')
-            rsp.send util.r(_.pick(item.value, _attrs), 'm_update_ok', entity)
+            rsp.send util.r(_.pick(item, _attrs), 'm_update_ok', entity)
 
     save: (req, rsp) ->
         code = req.c.code
@@ -201,9 +212,16 @@ dataController =
         cleanItem(bo, true)
 
         dao.save code, entity, bo, (item)->
-            gs(it)(req, item) for it in after.split(',') if after
-            _attrs.push('_id')
-            rsp.send util.r(_.pick(item.ops[0], _attrs), 'm_create_ok', entity)
+            for s in item
+                _afterEdit(s,entity)
+                gs(it)(req, s) for it in after.split(',') if after
+
+            if item.length is 1
+                _attrs.push('_id')
+                ri = _.pick(item[0], _attrs)
+            else
+                ri = item
+            rsp.send util.r(ri, 'm_create_ok', entity)
 
     del: (req, rsp) ->
         code = req.c.code
