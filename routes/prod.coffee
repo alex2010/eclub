@@ -6,6 +6,7 @@ data = require '../controller/data'
 page = require '../controller/page'
 up = require '../controller/upload'
 captcha = require '../controller/captcha'
+sms = require '../controller/sms'
 
 wxpay = require('weixin-pay')
 
@@ -89,6 +90,7 @@ router.post '/a/upload/remove', up.remove
 router.post '/a/cleanCache', data.cleanCache
 
 router.get '/a/captcha', captcha.cap
+router.get '/a/smsVerify', sms.getCode
 
 router.post '/a/auth/login', auth.login
 router.post '/a/auth/loginByWoid', auth.loginByWoid
