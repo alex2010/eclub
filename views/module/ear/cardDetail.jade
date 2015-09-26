@@ -1,2 +1,71 @@
 extends ./inc/main
 block style
+    :less(minify=true)
+        .panel {
+            margin-top:15px;
+            margin-bottom:5px;
+            .panel-title {
+                font-size: 16px;
+            }
+            .panel-body {
+                padding:15px 30px;
+            }
+            .notice {
+                margin-top:10px;
+                padding:10px 15px;
+                border-top:1px dashed #e1e1e1;
+                p {
+                    padding-top:10px;
+                    text-indent: 2em;
+                }
+            }
+        }
+        .media {
+            .media-left {
+                padding-top:15px;
+                .thumbnail {
+                    padding:15px 10px;
+                }
+                img {
+                    max-width:none;
+                }
+            }
+            .media-body {
+                padding:20px 0 0 15px;
+                p {
+                    padding-bottom:8px;
+                    &:first-child{
+
+                    }
+                    .label {
+                        margin-right:10px;
+                    }
+                }
+            }
+        }
+block content
+    .row
+        .col-md-8
+            //it
+            .panel.panel-default
+                .panel-heading
+                    h2.panel-title 卡券
+                .panel-body
+                    .media.media-card
+                        .media-left
+                            .thumbnail
+                                img(src="#{resPath}images/logo_03.png")
+                        .media-body
+                            p 文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍
+                            p <strong>价格：</strong>
+                                a.label.label-danger(href="") ¥500
+                            p <strong>有效期至：</strong>2015-09-28
+                            p <strong>使用条件：</strong>
+                                span.label.label-info 条件1
+                                span.label.label-info 条件2
+                                span.label.label-info 条件3
+                                span.label.label-info 条件4
+                    .notice
+                        h4.text-primary 温馨提示
+                        p 温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示
+        .col-md-4

@@ -30,26 +30,6 @@ module.exports =
         productList: (cb)->
             dao.find ctx.c.code, 'product', {}, opt, (res)->
                 cb null, res
-#    index: (ctx, req, rsp)->
-#        opt =
-#            limit: 5
-#            sort:
-#                row: -1
-#        shop: (cb)->
-#            dao.find ctx.c.code, 'shop', {}, opt, (res)->
-#                for it in res
-#                    if it.refFile && it.refFile.head
-#                        it.imgSrc = ctx.f.resPath ctx.c, it.refFile.head
-#                cb(null, res)
-#        consultant: (cb)->
-#            dao.find ctx.c.code, 'consultant', {}, opt, (res)->
-#                for it in res
-#                    if it.refFile && it.refFile.head
-#                        it.imgSrc = ctx.f.resPath ctx.c, it.refFile.head
-#                cb(null, res)
-#        product: (cb)->
-#            dao.find ctx.c.code, 'product', {}, opt, (res)->
-#                cb null, res
     post: (ctx,req,res) ->
         postList: (cb)->
             opt =
@@ -96,31 +76,16 @@ module.exports =
                             data.titleB=matchArr[1].title
                             data.titleC=matchArr[2].title
                             cb(null,data)
-#    shop:(ctx, req, res) ->
-#        opt =
-#            limit: 5
-#            sort:
-#                row: -1
-#        list:(cb)->
-#            dao.find ctx.c.code, 'shop', {}, opt, (res)->
-#                cb(null, res)
-#    consultant:(ctx, req, res) ->
-#        opt =
-#            limit: 5
-#            sort:
-#                row: -1
-#        list:(cb)->
-#            dao.find ctx.c.code, 'consultant', {}, opt, (res)->
-#
-#                cb(null, res)
-#    product:(ctx, req, res) ->
-#        opt =
-#            limit: 5
-#            sort:
-#                row: -1
-#        list:(cb)->
-#            dao.find ctx.c.code, 'product', {}, opt, (res)->
-#                cb(null, res)
+    seckilling: (ctx,req,res) ->
+        opt =
+            limit:5
+            sort:
+                row:-1
+        filter={}
+        list:(cb) ->
+            dao.find ctx.c.code, 'product' , filter, opt, (res)->
+                cb(null, res)
+
     wechat: (ctx)->
         wt: (cb)->
             dao.get ctx.c.code, 'pubAccount', {}, (res)->
