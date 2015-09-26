@@ -1,4 +1,5 @@
-class cc
+class ccObj
+
     ctx: {}
 
     constructor: ->
@@ -14,4 +15,4 @@ class cc
     del: (key)->
         delete ctx[key]
 
-module.exports = cc
+module.exports = ccObj

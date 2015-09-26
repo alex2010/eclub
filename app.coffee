@@ -5,6 +5,9 @@ logger = require('morgan')
 cookieParser = require('cookie-parser')
 bodyParser = require('body-parser')
 cache = require("node-smple-cache/Cache")
+_cc = new require('./service/cc')
+
+
 
 `_ = require('underscore');
 async = require('async');
@@ -28,8 +31,8 @@ wtCtn = {};
 ctCtn = {};
 _wtcCtn={};
 _ePool={};
+cc = new _cc();
 `
-
 require('./ext/string')
 # view engine setup
 app.set 'view engine', 'jade'
