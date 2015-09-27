@@ -50,71 +50,63 @@ block ctn
             header.row.hidden-xs
                 .col-md-12
                     .row
-                        .col-md-4.pull-right
-                            ul.list-inline.pull-right.l-login
-                                li
-                                    a(href='') 登录
-                                span /
-                                li
-                                    a(href='') 注册
-                            .clearfix
-                    .row
                         .col-md-7.logo
                             h1
                                 a(href='/'): img.img-responsive(src='#{resPath}images/logo_03.png', alt='')
-                            p 聆听在线--最好用的听力健康平台
-                        .col-md-5.block-search-hder.pl170.mt10
-                            input.itxt-search(name='', type='text', placeholder='站内搜索')
-                            input.btn-search(type='button')
+                            p 聆听在线-最好用的听力健康平台
+                        .col-md-5.pl170.mt10
+                            ul#topBar.list-inline.pull-right
+                            .block-search-hder
+                                input.itxt-search(name='', type='text', placeholder='站内搜索')
+                                input.btn-search(type='button')
             nav.navbar.navbar-default
-                .container-fluid
-                    .navbar-header
-                        button.navbar-toggle(type='button',data-toggle='collapse',data-target='#bs-example-navbar-collapse-1',aria-expanded='false')
-                            span.sr-only Toggle navigation
-                            span.icon-bar
-                            span.icon-bar
-                            span.icon-bar
-                        .searchBox
-                            .navbar-brand
-                                a.btn.btn-danger
-                                    != f.icon('search')
-                                    | 听力搜索专家
-                            #searchPanel.list-group.l-search
-                                h3.list-group-item 助听器行业搜索神器
-                                a.list-group-item(stag="#sProduct" )
-                                    != f.icon('th')
-                                    | 查找助听器
-                                    != f.icon('chevron-right')
-                                a.list-group-item(stag="#sConsultant" )
-                                    != f.icon('user')
-                                    | 查找验配师
-                                    != f.icon('chevron-right')
-                                a.list-group-item(stag="#sShop" )
-                                    != f.icon('home')
-                                    | 查找听力中心
-                                    != f.icon('chevron-right')
-                                a.list-group-item(stag="#sProduct" )
-                                    != f.icon('education')
-                                    | 查找康复学校
-                                    != f.icon('chevron-right')
-                                .block-panel-search
-                                    #sConsultant
-                                    #sShop
-                                    #sProduct
-                    .collapse.navbar-collapse(id='bs-example-navbar-collapse-1')
-                        ul#nav.nav.navbar-nav
-                            each it in c.nav
-                                if it.children && it.children.length>0
-                                    li.dropdown
-                                        a.dropdown-toggle(href=it.href)= it.label
-                                            span.caret
-                                        ul.dropdown-menu
-                                            each item in it.children
-                                                li
-                                                    a(href='#{item.href}')= item.label
-                                else
-                                    li
-                                        a(href='#{it.href}')= it.label
+                .navbar-header
+                    button.navbar-toggle(type='button',data-toggle='collapse',data-target='#bs-example-navbar-collapse-1',aria-expanded='false')
+                        span.sr-only Toggle navigation
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
+                    .searchBox
+                        .navbar-brand
+                            a.btn.btn-danger
+                                != f.icon('search')
+                                | 听力搜索专家
+                        #searchPanel.list-group.l-search
+                            h3.list-group-item 助听器行业搜索神器
+                            a.list-group-item(stag="#sProduct" )
+                                != f.icon('th')
+                                | 查找助听器
+                                != f.icon('chevron-right')
+                            a.list-group-item(stag="#sConsultant" )
+                                != f.icon('user')
+                                | 查找验配师
+                                != f.icon('chevron-right')
+                            a.list-group-item(stag="#sShop" )
+                                != f.icon('home')
+                                | 查找听力中心
+                                != f.icon('chevron-right')
+                            a.list-group-item(stag="#sProduct" )
+                                != f.icon('education')
+                                | 查找康复学校
+                                != f.icon('chevron-right')
+                            .block-panel-search
+                                #sConsultant
+                                #sShop
+                                #sProduct
+                .collapse.navbar-collapse
+                    ul#nav.nav.navbar-nav
+                        each it in c.nav
+                            if it.children && it.children.length>0
+                                li.dropdown
+                                    a.dropdown-toggle(href=it.href)= it.label
+                                        span.caret
+                                    ul.dropdown-menu
+                                        each item in it.children
+                                            li
+                                                a(href='#{item.href}')= item.label
+                            else
+                                li
+                                    a(href='#{it.href}')= it.label
             #content.row
             #static
                 block content

@@ -4,7 +4,7 @@ module.exports =
     randomChar: util.randomChar
 
     viewItem: (entity, k, v)->
-        opt = cf.meta[entity][k] || cf.meta.common[k]
+        opt = meta[entity][k] || meta.common[k]
         if opt.showText
             opt.showText(v)
         else if opt.type is 'text' or !opt.type

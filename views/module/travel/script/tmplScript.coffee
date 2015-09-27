@@ -36,7 +36,7 @@ module.exports =
         _attraction: (cb)->
             n = _.clone btm_opt
             n.limit = 100
-            dao.find ctx.c.code, 'sight', {}, btm_opt, (res)->
+            dao.find ctx.c.code, 'sight', {}, n, (res)->
                 cb(null, res)
 
         btm_top: (cb)->

@@ -1,43 +1,30 @@
-adminRoleId = new oid()
-adminUserId = new oid()
-
-ownerRoleId = new oid() # 店长
-ownerUserId = new oid()
-
-consultantRoleId = new oid() # 眼配师
-consultantUserId = new oid()
-
-
 role = [
-    _id: adminRoleId
     title: 'admin'
     label: '管理员'
     type: 0
     res:
-        mgm:
-            menu:
-                site: 2
-                data: 3
-                wechat: 4
-                userRole: 7
-            entity:
-                brand: 1
-                product: 20
-                shop: 30
-                post: 40
-                content: 50
-                cat: 70
-                link: 80
+        menu:
+            site: 2
+            data: 3
+            wechat: 4
+            userRole: 7
+        entity:
+            brand: 1
+            product: 20
+            shop: 30
+            post: 40
+            content: 50
+            cat: 70
+            link: 80
 
-                community: 'x'
-                role: 'x'
-                wechat: 'x'
-                codeMap: 'x'
+            community: 'x'
+            role: 'x'
+            wechat: 'x'
+            codeMap: 'x'
 
         permission:
             page: 'console'
 ,
-    _id: ownerRoleId
     title: 'manager'
     label: '店长'
     type: 0
@@ -55,7 +42,6 @@ role = [
             page: 'wechat'
 
 ,
-    _id: consultantRoleId
     title: 'member'
     label: '眼配师'
     type: 0
@@ -65,16 +51,18 @@ role = [
 ]
 
 user = [
-    _id: adminUserId
     username: code
     password: 'psd'
+,
+    username: 'u' + code
+    password: 'psd'
+,
+    username: 'yps'
+    password: 'psd'
+,
+    username: 'dz'
+    password: 'psd'
 ]
-
-membership = [
-    uid: adminUserId
-    rid: adminRoleId
-]
-
 pubAccount = [
     'appId': 'wx41872ec02d39aaf9'
     'code': 'EAR_Helper'
@@ -117,6 +105,14 @@ module.exports =
     data:
         'role:title': role
         'user:username': user
-        'membership:uid,rid': membership
         'pubAccount:appId': pubAccount
         'i18n:key': require('./zh')
+
+    member: [
+        "#{code},admin"
+        "u#{code},user"
+        "yps,member"
+        "dz,manager"
+    ]
+
+

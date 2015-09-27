@@ -2,22 +2,19 @@ extends inc/main
 
 block content
     #post.container
-        include ../../inc/crumb
         .row
             #main.col-md-8
+                include ../../inc/crumb
                 #postList.boxList
                     each it in items
                         include inc/boxItem
             #side.col-md-4
-                h3 文章分类
-                ul
-                    li
-                        a(href='/postList') 全部
+                .list-group.double
+                    h3: strong 文章分类
+                    a.list-group-item(href='/postList') 全部
                     each it in cats
-                        li!= f.link(it)
+                        != f.link(it,null,'list-group-item')
 
-                h3.pt.all
-                    strong 专栏
-                ul#catList.menus
-                    li
-                        a(onclick='cf.showAllItems()') 全部
+                .list-group.double
+                    h3: strong 专栏
+                    a.list-group-item(onclick='cf.showAllItems()') 全部
