@@ -86,7 +86,6 @@ pubAccount = [
                 'url': 'http://elp.newenglishtime.com/search'
                 'type': 'view'
                 'name': '查询P成员'
-
             ]
         ,
             'type': 'view'
@@ -105,6 +104,7 @@ brand = [
     'dateCreated': '2015-07-08T15:57:06.855Z'
     'lastUpdated': new Date()
 ]
+
 pid = new oid()
 product = [
     '_id': pid
@@ -140,12 +140,44 @@ seckilling = [
         _id: pid
         title: '芭蕾·梦90-SP Bolero Q90-SP'
         price: 40900
+        description:'商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述'
+        refFile:
+            head:['']
+            slide:[]
+        evaluation:[
+            'aaa111'
+        ,
+            'bbb222'
+        ,
+            'ccc333'
+        ]
+        contact:13870894526
     ]
     price: 12000
+    discount:8
+    origin:'中国'
+    surplus:10
 ]
 
+cid = new oid()
 card = [
-
+    _id:cid
+    title: 'X中心优惠卡券'
+    description: '优利康听力总部位于加拿大的安大略省，凯基纳市。业务遍及加拿大，美国，德国和全球的经销商网络。公司员工550人，为全世界70多个国家的客户服务。五十多年来，优利康听力一直致力于使'
+    startedDate:new Date()
+    endDate:new Date().addDays(20)
+    price:500
+    refFile:
+        head:[]
+        slide:[]
+    condition:[
+        '五环路'
+    ,
+        '四环路'
+    ,
+        '三环路'
+    ]
+    tip:'这是一个提示，Xman要来了'
 ]
 
 module.exports =
@@ -240,6 +272,7 @@ module.exports =
         'product:title': product
         'seckilling:title': seckilling
         'i18n:key': require('./zh')
+        'card:title':card
 
     member: [
         "#{code},admin"
@@ -247,5 +280,3 @@ module.exports =
         "yps,member"
         "dz,manager"
     ]
-
-

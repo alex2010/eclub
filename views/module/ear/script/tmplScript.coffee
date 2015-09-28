@@ -76,15 +76,26 @@ module.exports =
                             data.titleB=matchArr[1].title
                             data.titleC=matchArr[2].title
                             cb(null,data)
-    seckilling: (ctx,req,res) ->
+    seckillingList: (ctx,req,rsp) ->
         opt =
             limit:5
             sort:
                 row:-1
         filter={}
         list:(cb) ->
-            dao.find ctx.c.code, 'product' , filter, opt, (res)->
+            dao.find ctx.c.code, 'seckilling' , filter, opt, (res)->
                 cb(null, res)
+
+    cardList: (ctx,req,rsp)->
+        opt =
+            limit:5
+            sort:
+                row:-1
+        filter={}
+        list:(cb) ->
+            dao.find ctx.c.code, 'card' , filter , opt , (res)->
+                cb(null,res)
+
 
     wechat: (ctx)->
         wt: (cb)->

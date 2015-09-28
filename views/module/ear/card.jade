@@ -7,30 +7,63 @@ block style
             .panel-title {
                 font-size: 16px;
             }
+            .panel-body {
+                padding:15px 30px;
+            }
+            .notice {
+                margin-top:10px;
+                padding:10px 15px;
+                border-top:1px dashed #e1e1e1;
+                p {
+                    padding-top:10px;
+                    text-indent: 2em;
+                }
+            }
         }
-        .thumbnail {
-            padding-top:10px;
-            border:1px solid #e9e9e9;
-            .caption {
-                text-align:center;
+        .media {
+            .media-left {
+                padding-top:15px;
+                .thumbnail {
+                    padding:15px 10px;
+                }
+                img {
+                    max-width:none;
+                }
+            }
+            .media-body {
+                padding:20px 0 0 15px;
+                p {
+                    padding-bottom:8px;
+                    &:first-child{
+
+                    }
+                    .label {
+                        margin-right:10px;
+                    }
+                }
             }
         }
 block content
     .row
         .col-md-8
-            //each it in data
+            //it
             .panel.panel-default
                 .panel-heading
                     h2.panel-title 卡券
-                .panel-body.row
-                    -var n=0
-                    while n<6
-                        .col-md-4
-                            a(href="").thumbnail
-                                img(src="#{resPath}images/testShopHead.jpg")
-                                .caption
-                                    h3 xx中心优惠卡券
-                                    p 领取价格&nbsp;<strong class="text-danger">500元</strong>
-                                    span.btn.btn-primary(href="") 领取
-                        -n++
+                .panel-body
+                    .media.media-card
+                        .media-left
+                            .thumbnail
+                                != f.imgItem(it, c)
+                        .media-body
+                            p= description
+                            p <strong>价格：</strong>
+                                a.label.label-danger(href="") ¥#{price}
+                            p <strong>有效期至：</strong>#{endDate}
+                            p <strong>使用条件：</strong>
+                                each it in condition
+                                    span.label.label-info= it
+                    .notice
+                        h4.text-primary 温馨提示
+                        p= tip
         .col-md-4
