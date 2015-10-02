@@ -41,7 +41,7 @@ block content
                 .col-md-8.article-main
                     +panel('助听器产品介绍')
                         .thumbnail
-                            != f.imgItem(locals,c)
+                            != f.imgItem(locals,c, 'slide')
                         .caption
                             h2.title= title
                             .box-label
@@ -67,7 +67,7 @@ block content
                                         span.glyphicon.glyphicon-ok
                 .col-md-4.article-aside
                     +panel('相关助听器')
-                        +media(productList,{singleR:false})
+                        +media(productList,{singleR:false,func:'slide'})
 block st
     :coffee(bare=true,minify=true)
         $('.item-perfms:last').css 'border-bottom','none'

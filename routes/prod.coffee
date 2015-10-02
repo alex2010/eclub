@@ -11,7 +11,12 @@ sms = require '../controller/sms'
 wxpay = require('weixin-pay')
 
 checkPagePattern = (req, rsp, next, page)->
+    log 'check...'
     if /^\w+$/.test(page)
+        next()
+    else if /^\w+\.html$/.test(page)
+        log 'zxcvzxvxzcv statick'
+        req._html = page
         next()
     else
         rsp.end('name error')
@@ -24,6 +29,7 @@ ck = (req)->
     req.hostname + req.url
 
 pre = (req, rsp, next)->
+    log 'pre'
     unless app.env
         req.hostname = req.get('Host')
 
@@ -46,6 +52,12 @@ pre = (req, rsp, next)->
                 log 'del...'
 
     k = ck req
+    if req._html
+        rStr = req.hostname.replace('www.', '')
+        req.c = app._community[rStr]
+        path = "#{_path}/public/res/upload/#{req.c.code}/html/#{req._html}"
+        rsp.sendfile(path)
+        return
     dao.get _mdb, 'cache', k: k, (res)->
         if res and !app.env
             rsp.end res.str
@@ -56,6 +68,7 @@ pre = (req, rsp, next)->
             next()
 
 checkPage = (req, rsp, next)->
+    log 'checkpage'
     pm = req.params
     page = pm.page || pm.entity || 'index'
     #    log req.originalUrl
@@ -78,6 +91,7 @@ checkPage = (req, rsp, next)->
             next()
         else
             rsp.end 'no page'
+
 
 router.get '/', pre
 router.all '/a/*', pre

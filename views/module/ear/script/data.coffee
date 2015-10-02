@@ -1,3 +1,4 @@
+psd = 'bk9ULZCWUd81eZ0vOIjLuqDvozllFEWBKM7QTiy85NI='
 role = [
     title: 'admin'
     label: '管理员'
@@ -52,16 +53,16 @@ role = [
 
 user = [
     username: code
-    password: 'psd'
+    password: psd
 ,
     username: 'u' + code
-    password: 'psd'
+    password: psd
 ,
     username: 'yps'
-    password: 'psd'
+    password: psd
 ,
     username: 'dz'
-    password: 'psd'
+    password: psd
 ]
 pubAccount = [
     'appId': 'wx41872ec02d39aaf9'

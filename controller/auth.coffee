@@ -12,7 +12,8 @@ checkType = (k)->
     else
         username: k
 
-afterAuth = (code,user,rsp)->
+afterAuth = (user, req, rsp)->
+    code = req.c.code
     dao.find code, 'membership', uid: user._id, {}, (ms)->
         opt =
             _id:
@@ -26,7 +27,6 @@ afterAuth = (code,user,rsp)->
                 deepExtend user.res, role.res
                 op =
                     uid: user._id
-
             dao.find code, 'orgRelation', op, {}, (os)->
                 user.orgs = for r in os
                     _id: r.oid
@@ -57,7 +57,7 @@ authController =
                 errAuth rsp
             else
                 delete user.password
-                afterAuth code, user, rsp
+                afterAuth user, req, rsp
 #                dao.find code, 'membership', uid: user._id, {}, (ms)->
 #                    opt =
 #                        _id:
@@ -82,7 +82,7 @@ authController =
             woid: req.body.woid
         dao.get code, 'user', filter, (user)->
             if user
-                afterAuth code, user, rsp
+                afterAuth user, req, rsp
             else
                 errAuth rsp
 

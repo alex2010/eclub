@@ -1,4 +1,3 @@
-log 'fetcher'
 getApi = require './wechat'
 fs = require 'fs'
 module.exports = (req, item)->
@@ -28,7 +27,6 @@ module.exports = (req, item)->
                 refFile: item.refFile
 
         log item.refFile
-
         dao.findAndUpdate code, entity, _id: item._id, so, ->
 
 

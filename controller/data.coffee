@@ -42,8 +42,6 @@ _cv = (v, k, obj)->
         else if k in ['status', 'row']
             +v
         else if /^\d{4}-\d{1,2}-\d{1,2}/.test(v) and v.length < 22
-            log v
-            log Date.parseLocal(v)
             Date.parseLocal(v)
         else
             v
@@ -265,11 +263,14 @@ dataController =
         bo = cleanItem bo
 
         op = {}
+        rt =  bo._root
+        delete bo._root
+        if rt
+            op["$set"] = rt
         op["$#{req.params.type}"] = {}
         op["$#{req.params.type}"][req.params.prop] = bo
-
-        dao.findAndUpdate code, entity, qs, op, ->
-            rsp.send util.r(bo, 'm_create_ok')
+        dao.findAndUpdate code, entity, qs, op, (doc)->
+            rsp.send util.r(doc, 'm_create_ok')
 
 
 module.exports = dataController

@@ -15,16 +15,16 @@ if itemTable
                     if it.title == 'Watch Video'
                         if it.content
                             -img = f.resPath(c, 'images/youtube.png')
-                            -it.content = "<a target='_blank' href='#{it.content}'><img width='100%' src='#{img}'></a>"
+                            -it.content = "<a target='_blank' href='"+it.content+"'><img width='100%' src='"+img+"'></a>"
                         else
                             -it.content = '<p>Coming soon...</p>'
                     else if it.title == 'Price Seats' && refFile.seat
                         -img = f.resPath(c, refFile.seat[0])
-                        -it.content = "<img width='100%' onclick='cf.showPic(this)' data-url='#{img}' src='#{img}'/>"
+                        -it.content = "<img width='100%' onclick='cf.showPic(this)' data-url='"+img+"' src='"+img+"'/>"
                     else if it.title == 'English Map' && map
                         if map.refFile.slide
                             -img = f.resPath(c, map.refFile.slide[0])
-                            -it.content = "<img width='100%' onclick='cf.showPic(this)' data-url='#{img}' src='#{img}'>"
+                            -it.content = "<img width='100%' onclick='cf.showPic(this)' data-url='"+img+"' src='"+img+"'>"
                         else
                             -it.content = '<p>Coming soon...</p>'
                     .panel-body!= it.content

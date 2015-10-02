@@ -64,6 +64,8 @@ setTimeout ->
         log 'init data...'
         for it in res
             app._community[it.url] = it
+            if it.exDomain
+                app._community[tt] = it for tt in it.exDomain
             dao.pick(it.code, 'user');
 
 , 2000

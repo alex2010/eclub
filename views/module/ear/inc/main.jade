@@ -59,9 +59,11 @@ block ctn
                             .block-search-hder
                                 input.itxt-search(name='', type='text', placeholder='站内搜索')
                                 input.btn-search(type='button')
-            nav.navbar.navbar-default
+
+        nav.navbar.navbar-default
+            .container
                 .navbar-header
-                    button.navbar-toggle(type='button',data-toggle='collapse',data-target='#bs-example-navbar-collapse-1',aria-expanded='false')
+                    button#menuBtn.navbar-toggle(type='button',data-toggle='collapse',data-target='#navBox',aria-expanded='false')
                         span.sr-only Toggle navigation
                         span.icon-bar
                         span.icon-bar
@@ -93,7 +95,7 @@ block ctn
                                 #sConsultant
                                 #sShop
                                 #sProduct
-                .collapse.navbar-collapse
+                #navBox.collapse.navbar-collapse
                     ul#nav.nav.navbar-nav
                         each it in c.nav
                             if it.children && it.children.length>0
@@ -107,6 +109,7 @@ block ctn
                             else
                                 li
                                     a(href='#{it.href}')= it.label
+        .container
             #content.row
             #static
                 block content
@@ -127,7 +130,7 @@ block ctn
                             a 联系我们
                         li
                             a 免责声明
-                .col-md-3.share(style='margin:0')
+                .col-md-3.share
                     h5 关注我们
                     ul.l-share
                         li
@@ -139,7 +142,3 @@ block ctn
                         li
                             a
                                 img.img-responsive(src='#{resPath}images/icon-share_29.png', alt='')
-//block st
-//    :coffee(bare=true,minify=true)
-//        util.lcss "#{cf.modPath}router.css"
-//        cf.loadJS "#{cf.modPath}router.js"

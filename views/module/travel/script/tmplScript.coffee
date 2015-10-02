@@ -250,15 +250,18 @@ module.exports =
         ctx.title = "Most Famous #{title} In Beijing"
         ctx._entity = et
 
+
         head: (cb)->
             if req.query.cat
-                cb()
+                dao.get ctx.c.code, 'cat', code: req.query.cat, (item)->
+                    if item.subTitle
+                        ctx.title = item.subTitle
+                        cb(null,item)
             else
                 filter =
 #                    row:
 #                        $gt: 1000
                     type: et
-
                 dao.get ctx.c.code, 'head', filter, (res)->
                     cb(null, res)
 

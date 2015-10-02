@@ -22,6 +22,29 @@ role = [
             codeMap: 'x'
         permission:
             page: 'console'
+,
+    title: ''
+    label: '精英培训师'
+,
+    title: ''
+    label: '精英团队'
+    #单页显示
+,
+    title: ''
+    label: '异业联盟'
+,
+    title: ''
+    label: '学员'
+    #学院风采
+,
+    title: ''
+    label: '客户'
+,
+    title: ''
+    label: 'Vip客户'
+,
+    title: 'user'
+    label: '用户'
 ]
 
 user = [
@@ -29,6 +52,72 @@ user = [
     password: 'bk9ULZCWUd81eZ0vOIjLuqDvozllFEWBKM7QTiy85NI='
 ]
 
+cat = [
+    code: 'workShow'
+    label: '作品展示'
+    refClass: 'post'
+,
+    code: 'pp'
+    label: '定位流程'
+    refClass: 'post'
+,
+    code: 'femaleClass'
+    label: '女子学堂'
+    refClass: 'feedback'
+,
+    code: 'beauty'
+    label: '美容'
+    refClass: 'partner'
+]
+
+feedback = [
+    cat: 'femaleClass'
+    title: '1年的蜕变'
+    content: '学堂太有货了'
+]
+
+service = [
+    title: ''
+    cat: 'privateImageMgm'
+    content: ''
+    package: [
+        title: ''
+        description: ''
+        price: ''
+    ]
+]
+
+course = [
+    title: ''
+    content: ''
+    itemsTable:[
+        title:'收费标准'
+        content: '90天课程，收费8990'
+    ]
+    price:9000
+    discount: 8000
+    phases: [
+
+    ]
+]
+
+apply = [ #申请elite team，异业联盟
+
+]
+
+order = [ #预约，购买
+
+]
+
+
+partner = [#异业联盟 cat=>footer下的数据
+
+]
+
+qa = [#首页
+    question: '为什么不好看'
+    answer: '因为不会打扮'
+]
 
 module.exports =
     community:
@@ -61,10 +150,6 @@ module.exports =
             label: "异业联盟"
             href: "/"
             labelCls: "label-danger"
-        ,
-            label: "优寇美联盟",
-            href: "/",
-            labelCls: "label-primary"
         ]
 
     data:

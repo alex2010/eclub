@@ -90,7 +90,8 @@ block content
                         .caption
                             h2#username.media-heading= username
                             dl.dl-horizontal
-                                +ddItem('入行时间',exp.pattern('yyyy-MM-dd'))
+                                if exp
+                                    +ddItem('入行时间',exp.pattern('yyyy-MM-dd'))
                                 +ddItem('电话号码',phone)
                                 +ddItem('工作职称',workTitle)
                                 +ddItem('所学专业',major)

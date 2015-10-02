@@ -27,7 +27,7 @@ block ctn
         header#header.container
             h1.col-md-9
                 a(href= '/')
-                    img(src= f.resPath(c, 'images/logo.png') style='width: 95px;margin-top: -5px;')
+                    img(src= f.resPath(c, 'images/logo_light.png') style='width: 105px;margin-top: -5px;')
             .col-md-3.p0
                     .input-group.sbar(style= 'margin-top:45px')
                         .input-group-btn
@@ -102,10 +102,18 @@ block ctn
         .container
             .row
                 .col-md-2.logo
-                    img(src= f.resPath(c, 'images/logo.png') style='width: 70px')
+                    img(src= f.resPath(c, 'images/logo_strong.png') style='width: 75px')
                 ul.col-md-6.list-inline
                     each it in c.foot
                         li
                             a(href= it.href)= it.label
                 .col-md-4.text-bottom
-                    p.row © 2014 China Viator. All rights reserved. No part of this site may be reproduced without our written permission.
+                    p.row © 2015 WikiBeijing. All rights reserved. No part of this site may be reproduced without our written permission.
+block append stat
+    script.
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q || []).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-68364869-1', 'auto');
+        ga('send', 'pageview');
