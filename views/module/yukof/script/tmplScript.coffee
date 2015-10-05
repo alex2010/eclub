@@ -1,7 +1,7 @@
 module.exports =
     _init: (ctx)->
 
-    service:(ctx,req,rsp) ->
+    serviceContent:(ctx,req,rsp) ->
         privateImageMgm_pp:(cb) ->
             opt =
                 limit:10
