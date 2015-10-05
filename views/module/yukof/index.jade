@@ -1,4 +1,3 @@
-//#{resPath}images/poster-panel_07.jpg
 extends ./inc/main
 block style
     :less(minify=true)
@@ -30,7 +29,6 @@ mixin slide(numof,imgSrc)
         a.right.carousel-control(href="#carousel-yukof",role="button",data-slide="next")
             span.glyphicon.glyphicon-chevron-right
             span.sr-only 下一页
-
 block content
     +slide(9,'banner')
     .row
@@ -91,10 +89,9 @@ block content
                                     .media-body
                                         h4 人物形象设计讲师
                                         small 时装戏，2名
-
     .panel.panel-y-2
         .panel-heading
-            h3 作品展示
+            h3.hot 作品展示
                 span.en Works Show
         .panel-body
             p 优蔻坊专注于个人整体形象设计，我们有一群专家级明星设计师团队<br />会根据客户需求，来策划及提供最专业的高性价比服务<br />这里是坊间部分作品及相关专业级别的合作业务案例

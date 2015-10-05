@@ -1,0 +1,26 @@
+extends ./inc/main
+
+block style
+   :less(minify=true)
+
+block content
+   .row
+      .col-md-8
+         .adv-y-2
+            img.img-responsive(src="#{resPath}images/adv_03.jpg",alt="")
+      .col-md-4
+         .panel.panel-y-4
+            .panel-heading
+               h3.title 就业招聘&学习
+                  span.en LOVE
+            .panel-body
+               ul.list-unstyled.row.l-tcode-panel4
+                  li.col-md-6
+                     .thumbnail
+                        img.img-responsive(src="#{resPath}images/t_code_06.jpg",alt="")
+                     h4.btn.btn-default 形象托管
+                  li.col-md-6
+                     .thumbnail
+                        img.img-responsive(src="#{resPath}images/t_code_08.jpg",alt="")
+                     h4.btn.btn-default 精英培训
+            .panel-footer
