@@ -3,6 +3,8 @@ if geo
         img(width='100%',src='http://maps.googleapis.com/maps/api/staticmap?center=#{geo.lat},#{geo.lng}&zoom=11&scale=1&size=272x200&maptype=roadmap&format=png&visual_refresh=true&markers=color:red%7Clabel:A%7C#{geo.lat},#{geo.lng}')
 if itemTable
     each it,i in itemTable
+        if it.title == 'Last Updated'
+            - it.content = lastUpdated.pattern()
         if it.content
             .panel
                 a.panel-heading(data-toggle='collapse', data-parent='#info', href= '#itemTable' + i)

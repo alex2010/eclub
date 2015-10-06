@@ -39,10 +39,11 @@ block st
         $('.menus').find("a[href*='entity=#{ent}']").parent().addClass 'active'
 
         # set top icon
-        tops = ($(it).attr('href') for it in $('footer .top a')).join(',')
-        for it in $('.pBox>a')
-            if tops.indexOf($(it).attr('href'))>-1
-                $(it).before '<div class="topIcon"></div>'
+        titles = ($(it).text() for it in $('footer .top a'))
+        for it in $('.pBox h4')
+            if titles.has($(it).text())
+                $(it).closest('.pBox').prepend '<div class="topIcon"></div>'
+
 
         # pop map
         m = $('#myMap')

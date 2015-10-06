@@ -5,7 +5,7 @@ if _items.length
                 div(class= it.cls || 'col-md-3')
                     .pBox
                         if it._e == 'map'
-                            a(onclick='cf.showPic(this)', data-url='#{it.url}', data-list='#{it.list}')
+                            a(title=it.title onclick='cf.showPic(this)' data-url='#{it.url}' data-list='#{it.list}')
                                 != f.img(it.imgPath)
                                 .text
                                     h4(style='font-size: 18px')= it.title

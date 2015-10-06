@@ -12,12 +12,20 @@ block ctn
         .headerWrapper
             nav.navbar.navbar-inverse.navbar-fixed-top
                 header.container
-                    .navbar-header
-                        a(href='#').navbar-brand= c.name
-                        #topBar
-        #content
+                    .row
+                        .navbar-header.col-md-3.col-xs-8
+                            a(href='#').navbar-brand= c.name
+                        +mobBtn('#navBox')
+                        .col-md-6.col-xs-12.p0
+                            #navBox.collapse.navbar-collapse.navbar-inverse
+                                ul#nav.nav.navbar-nav
+                                    li: a(href="/") 首页
+                                    li: a(href="/") 关于我们
+                        ul#topBar.col-md-3.text-right
+
+        #content.container
         #static.container
             block content
         footer.navbar-inverse
             .text-center(style='padding: 10px')
-                a(href= c.url) P家族 2015
+                a(href='http://'+ c.url) P家族 2015

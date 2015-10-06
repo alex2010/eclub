@@ -2,9 +2,10 @@
     .media-body
         .media-left(style='float:left;width:25%;margin-right:15px')!= f.img(f.resPath(c, 'portrait/' + _user._id + '.jpg'))
         .media-heading: strong!= f.link(_user, 'username')
-            small(style='float:right')=_user.title
-                if _user.industry
-                    span &nbsp;-&nbsp;
-                    if i18.iCat('industry')
-                        span= i18.iCat('industry')[_user.industry]
+            if _user.title
+                small(style='float:right')=_user.title
+                    if _user.industry
+                        span &nbsp;-&nbsp;
+                        if i18.iCat('industry')
+                            span= i18.iCat('industry')[_user.industry]
         != _user.introduction

@@ -8,7 +8,10 @@ String::splitCap = (i, t)->
 pageOpt = (req)->
     c = req.c
 
-    libPath = "#{c.resPath}/upload/#{c.code}/lib/"
+    if req.originalUrl is '/consoles'
+        libPath = "#{c.resPath}/upload/console/lib/"
+    else
+        libPath = "#{c.resPath}/upload/#{c.code}/lib/"
     resPath = "#{c.resPath}/upload/#{c.code}/"
 
     code = c.code
@@ -25,16 +28,16 @@ pageOpt = (req)->
     cstr: JSON.stringify(_.pick(c, 'code','name', 'url', '_id','resPath'))
     libPath: libPath
     resPath: resPath
-    cssPath: (name = 'css')->
-        if app.env
-            if name is 'admin'
-                "/lib/admin/style/#{name}.css"
-            else
-                "/module/#{c.code}/src/style/#{name}.css"
-        else
-            "#{libPath}#{name}.css?#{new Date().getTime()}"
-    jsPath: (name = 'main')->
-        "#{libPath}#{name}.js?#{new Date().getTime()}"
+#    cssPath: (name = 'css')->
+#        if app.env
+#            if name is 'admin'
+#                "/lib/admin/style/#{name}.css"
+#            else
+#                "/module/#{c.code}/src/style/#{name}.css"
+#        else
+#            "#{libPath}#{name}.css?#{new Date().getTime()}"
+#    jsPath: (name = 'main')->
+#        "#{libPath}#{name}.js?#{new Date().getTime()}"
 
 
 pre = (req)->

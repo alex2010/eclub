@@ -3,14 +3,14 @@
 script.
     var cf = { lang: '#{lang}', code: '#{c.code}', console: true, app: '#{app}', mode: #{mode}, community: !{cstr}, dm: '#{c.resPath}', index: '#{index}'};
 block js
-    if dev || !mode
         script(src='#{libPath}lib.js?#{_ts}')
         if main
             script(src='#{libPath}#{main}.js?#{_ts}')
-    else
-        script(src='http://127.0.0.1:8088/lib.js')
-        if main
-            script(src='http://127.0.0.1:8088/#{main}.js')
+//if dev || !mode
+//    else
+//        script(src='http://127.0.0.1:8088/lib.js')
+//        if main
+//            script(src='http://127.0.0.1:8088/#{main}.js')
 script
     block st
 

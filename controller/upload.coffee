@@ -10,10 +10,13 @@ sPath = (code, exPath)->
     path = "/public/res/upload/#{code}"
     if exPath
         path += "/#{exPath}"
-    if app.env
-        '.' + path
-    else
-        _path + path
+    pa = if app.env
+            '.' + path
+        else
+            _path + path
+    if !fs.existsSync pa
+        fs.mkdirSync pa
+    pa
 
 walk = (path, max, offset) ->
     list = _fileStack[path]
@@ -23,8 +26,8 @@ walk = (path, max, offset) ->
             if item
                 if item.startsWith('.') or fs.statSync("#{path}/#{item}").isDirectory()
                     list.remove item
-        list.sort (a,b)->
-            fs.statSync(path+'/'+b).mtime.getTime() - fs.statSync(path+'/'+a).mtime.getTime()
+        list.sort (a, b)->
+            fs.statSync(path + '/' + b).mtime.getTime() - fs.statSync(path + '/' + a).mtime.getTime()
 
     total = list.length
     start = +offset
@@ -55,14 +58,11 @@ app.use multer
         log 'oversize'
 
     changeDest: (dest, req)->
-        log dest
         if req.query.func is 'portrait'
             p = "#{req.query.code}/portrait"
         else
             p = req.query.code
         sPath(p)
-
-#        sPath(req.query.code)
 
 thumbPath = (path, folder)->
     return path unless folder

@@ -12,6 +12,15 @@ checkType = (k)->
     else
         username: k
 
+extendRes = (u,r,name)->
+    if r[name]
+        if u[name]
+            for it in r[name]
+                u[name].pushById it, 'key'
+        else
+            u[name] = r[name]
+        u[name].sortBy 'row', true
+
 afterAuth = (user, req, rsp)->
     code = req.c.code
     dao.find code, 'membership', uid: user._id, {}, (ms)->
@@ -19,12 +28,13 @@ afterAuth = (user, req, rsp)->
             _id:
                 $in: (it.rid for it in ms)
         dao.find code, 'role', opt, {}, (rs)->
-            user.res = {}
             user.roles = for r in rs
                 title: r.title
                 label: r.label
             for role in rs
-                deepExtend user.res, role.res
+                extendRes(user,role,'menu')
+                extendRes(user,role,'entities')
+                extendRes(user,role,'permission')
                 op =
                     uid: user._id
             dao.find code, 'orgRelation', op, {}, (os)->
@@ -51,8 +61,6 @@ authController =
             unless user
                 errAuth rsp
                 return
-            log user.password
-            log req.body.password
             if user.password isnt sha256(req.body.password)
                 errAuth rsp
             else

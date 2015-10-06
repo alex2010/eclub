@@ -1,6 +1,7 @@
 module.exports =
     _init: (ctx)->
 
+
     serviceContent:(ctx,req,rsp) ->
         privateImageMgm_pp:(cb) ->
             opt =

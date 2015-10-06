@@ -91,6 +91,14 @@ db.getCollection('consultant').find({}).forEach (it)->
             it.shop.address = sh.address
             db.getCollection('consultant').update {_id: it._id}, it
 
+db.getCollection('user').find({}).forEach (it)->
+    delete it.roles
+    delete it.menu
+    delete it.permission
+    delete it.orgs
+    log it
+    db.getCollection('user').update {_id: it._id}, it
+
 #    "ds" : {
 #        "icon" : "gift",
 #        "act" : "ds",

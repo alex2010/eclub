@@ -1,3 +1,5 @@
+include ../../../inc/mixin
+
 extends ../../../main
 block append js
     - p = mode?'http://127.0.0.1:8088/':libPath
@@ -60,14 +62,10 @@ block ctn
                                 input.itxt-search(name='', type='text', placeholder='站内搜索')
                                 input.btn-search(type='button')
 
-        nav.navbar.navbar-default
+        nav.navbar.navbar-default.navbar-fixed-top
             .container
                 .navbar-header
-                    button#menuBtn.navbar-toggle(type='button',data-toggle='collapse',data-target='#navBox',aria-expanded='false')
-                        span.sr-only Toggle navigation
-                        span.icon-bar
-                        span.icon-bar
-                        span.icon-bar
+                    +mobBtn('#navBox')
                     .searchBox
                         .navbar-brand
                             a.btn.btn-danger

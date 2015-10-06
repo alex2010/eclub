@@ -41,8 +41,8 @@ module.exports =
 
         btm_top: (cb)->
             n = _.clone btm_opt
-            n.fields = '_e,title,refClass,ref'
-            dao.find ctx.c.code, 'top', {}, btm_opt, (res)->
+            n.fields = '_e,title,refClass,ref'.split(',')
+            dao.find ctx.c.code, 'top', {}, n, (res)->
                 for it in res
                     it._e = it.refClass
                     it._id = it.ref
@@ -300,12 +300,10 @@ module.exports =
                             if le > 1
                                 idx = ctx.f.randomInt(0, le - 1)
                             it.imgPath = ctx.f.resPath ctx.c, it.refFile.list[idx]
-
                         if et is 'map'
                             if it.refFile && it.refFile.slide
                                 it.list = it.refFile.slide
                                 it.url = ctx.f.resPath ctx.c, it.refFile.slide[idx]
-
 
                     if et in ['sight', 'map'] and count > res.length
                         qu.max || qu.max = 10

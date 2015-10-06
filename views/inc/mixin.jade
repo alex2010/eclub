@@ -1,4 +1,4 @@
-mixin panel(title)
+mixin panel(title,cls)
     if !attributes.class
         -attributes.class='panel panel-default ' + cls
     div&attributes(attributes)
@@ -7,6 +7,15 @@ mixin panel(title)
         .panel-body
             if block
                 block
+
+mixin mobBtn(id,icon)
+    button#menuBtn.navbar-toggle(type='button',data-toggle='collapse',data-target=id)
+        if icon
+            != f.icon(icon)
+        else
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
 
 mixin media(posts,opt)
 
@@ -36,6 +45,11 @@ mixin media(posts,opt)
                     block
                 else
                     h4.media-heading!=it.title || it.username
+                    .small
+                        if it.author
+                            | #{it.author.username}
+                        if it.pubTime
+                            | 发表于 #{it.pubTime.pattern()}
                     != f.dStr(it.brief || it.description || it.address, 20)
 
 mixin avatars(users)

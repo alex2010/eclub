@@ -1,68 +1,56 @@
-psd = 'bk9ULZCWUd81eZ0vOIjLuqDvozllFEWBKM7QTiy85NI='
 role = [
     title: 'admin'
     label: '管理员'
     type: 0
-    res:
-        menu:
-            site: 2
-            data: 3
-            wechat: 4
-            userRole: 7
-        entity:
-            brand: 1
-            product: 20
-            shop: 30
-            post: 40
-            content: 50
-            cat: 70
-            link: 80
-
-            community: 'x'
-            role: 'x'
-            wechat: 'x'
-            codeMap: 'x'
-
-        permission:
-            page: 'console'
+    entities: [
+        key: '_biz'
+        row: 101
+    ,
+        key: 'brand'
+        row: 110
+    ,
+        key: 'product'
+        row: 120
+    ,
+        key: 'shop'
+        row: 130
+    ]
 ,
     title: 'manager'
     label: '店长'
     type: 0
-    res:
-        menu:
-            home:
-                icon: 'user'
-                act: 'profile'
-                row: 1
-            shop:
-                icon: 'gift'
-                act: 'shop'
-                row: 10
-        permission:
-            page: 'wechat'
-
+    menu: [
+        "label": "店铺信息"
+        "icon": "gift"
+        "href": "#!/home/shop"
+        "row": 10
+    ,
+        "label": "验配师信息"
+        "icon": "leaf"
+        "href": "#!/home/consultant"
+        "row": 20
+    ,
+        "label": "预约管理"
+        "icon": "calendar"
+        "href": "#!/home/order"
+        "row": 30
+    ]
+    permission: ['wechat']
 ,
     title: 'member'
     label: '眼配师'
     type: 0
-    res:
-        permission:
-            page: 'wechat'
+    permission: ['wechat']
 ]
 
 user = [
     username: code
-    password: psd
 ,
     username: 'u' + code
-    password: psd
 ,
     username: 'yps'
-    password: psd
 ,
     username: 'dz'
-    password: psd
 ]
 pubAccount = [
     'appId': 'wx41872ec02d39aaf9'
@@ -141,44 +129,44 @@ seckilling = [
         _id: pid
         title: '芭蕾·梦90-SP Bolero Q90-SP'
         price: 40900
-        description:'商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述'
+        description: '商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述'
         refFile:
-            head:['']
-            slide:[]
-        evaluation:[
+            head: ['']
+            slide: []
+        evaluation: [
             'aaa111'
         ,
             'bbb222'
         ,
             'ccc333'
         ]
-        contact:13870894526
+        contact: 13870894526
     ]
     price: 12000
-    discount:8
-    origin:'中国'
-    surplus:10
+    discount: 8
+    origin: '中国'
+    surplus: 10
 ]
 
 cid = new oid()
 card = [
-    _id:cid
+    _id: cid
     title: 'X中心优惠卡券'
     description: '优利康听力总部位于加拿大的安大略省，凯基纳市。业务遍及加拿大，美国，德国和全球的经销商网络。公司员工550人，为全世界70多个国家的客户服务。五十多年来，优利康听力一直致力于使'
-    startedDate:new Date()
-    endDate:new Date().addDays(20)
-    price:500
+    startedDate: new Date()
+    endDate: new Date().addDays(20)
+    price: 500
     refFile:
-        head:[]
-        slide:[]
-    condition:[
+        head: []
+        slide: []
+    condition: [
         '五环路'
     ,
         '四环路'
     ,
         '三环路'
     ]
-    tip:'这是一个提示，Xman要来了'
+    tip: '这是一个提示，Xman要来了'
 ]
 
 module.exports =
@@ -267,17 +255,17 @@ module.exports =
         ]
     data:
         'role:title': role
-        'user:username': user
-        'pubAccount:appId': pubAccount
-        'brand:title': brand
-        'product:title': product
-        'seckilling:title': seckilling
-        'i18n:key': require('./zh')
-        'card:title':card
+#        'user:username': user
+#        'pubAccount:appId': pubAccount
+#        'brand:title': brand
+#        'product:title': product
+#        'seckilling:title': seckilling
+#        'i18n:key': require('./zh')
+#        'card:title':card
 
-    member: [
-        "#{code},admin"
-        "u#{code},user"
-        "yps,member"
-        "dz,manager"
-    ]
+#    member: [
+#        "#{code},admin"
+#        "u#{code},user"
+#        "yps,member"
+#        "dz,manager"
+#    ]

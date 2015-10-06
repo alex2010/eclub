@@ -7,6 +7,7 @@ module.exports =
         _i[k]
 
     ii: (k, m...) ->
+        return '' unless k
         if _i[k] and res = _i[k] # res # and _.isString res
             if res and res.indexOf('{') > -1
                 for it in m

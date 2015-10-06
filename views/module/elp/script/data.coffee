@@ -2,87 +2,73 @@ role = [
     title: 'admin'
     label: '管理员'
     type: 0
-    res:
-        menu:
-            site: 2
-            data: 3
-            wechat: 4
-            userRole: 7
-
-        entity:
-            activity: 1
-            post: 3
-            content: 4
-            cat: 7
-            link: 8
-
-            community: 'x'
-            role: 'x'
-            wechat: 'x'
-            codeMap: 'x'
-
-        permission:
-            page: 'console'
+    entities: [
+        key: '_biz'
+        row: 101
+    ,
+        key: 'activity'
+        row: 110
+    ,
+        key: 'ds'
+        row: 120
+    ,
+        key: 'project'
+        row: 130
+    ]
 ,
     title: 'manager'
     label: 'p班级管理员'
     type: 0
-    res:
-        menu:[
-            icon: 'education'
-            label: '班级信息'
-            href: '#!/pClass'
-            row: 65
-        ]
-        permission:
-            page: 'wechat'
+    menu: [
+        key: 'pClass'
+        icon: 'education'
+        href: '#!/home/pClass'
+        row: 65
+    ]
+    permission:['wechat']
 
 ,
     title: 'member'
     label: 'p成员'
     type: 0
-    res:
-        menu: [
-            icon: 'blackboard'
-            label: '活动'
-            href: '#!/list/activity'
-            row: 20
-        ,
-            icon: 'tree-deciduous'
-            label: '项目'
-            href: '#!/list/project'
-            row: 30
-        ,
-            icon: 'gift'
-            label: '供需'
-            href: '#!/list/ds'
-            row: 40
-        ,
-            icon: 'search'
-            label: '家人'
-            href: '/search'
-            row: 50
-        ,
-            icon: 'file'
-            label: '文章'
-            href: '#!/list/post'
-            row: 60
-        ,
-            icon: 'user'
-            label: '个人信息'
-            href: '#!/profile'
-            row: 70
-        ]
-        permission:
-            page: 'wechat'
+    menu: [
+        key: 'activity'
+        icon: 'blackboard'
+        label: '活动'
+        href: '#!/list/activity'
+        row: 20
+    ,
+        key: 'search'
+        icon: 'search'
+        label: '家人'
+        href: '#!/search'
+        row: 30
+    ,
+        key: 'ds'
+        icon: 'gift'
+        label: '供需'
+        href: '#!/list/ds'
+        row: 40
+    ,
+        key: 'project'
+        icon: 'tree-deciduous'
+        label: '项目'
+        href: '#!/list/project'
+        row: 50
+    ,
+        key: 'post'
+        icon: 'file'
+        label: '文章'
+        href: '#!/list/post'
+        row: 60
+    ]
+    permission: ['wechat']
 ]
 
 user = [
     username: code
-    password: 'psd'
 ,
     username: '王磊'
-    password: 'psd'
     phone: '15810263968'
     email: 'alexwl2008@gmail.com'
     gender: true
@@ -104,7 +90,6 @@ user = [
     ]
 ,
     username: '王珮'
-    password: 'psd'
     phone: '123'
     gender: false
     pClass: 'elp8'
@@ -194,14 +179,14 @@ module.exports =
 
     data:
         'role:title': role
-        'user:username': user
-        'roleMap:role': roleMap
-        'org:title': org
-        'pubAccount:appId': pubAccount
-        'i18n:key': require('./zh')
-
-    member:[
-        "#{code},admin"
-        "王磊,member"
-        "王磊,manager"
-    ]
+#        'user:username': user
+#        'roleMap:role': roleMap
+#        'org:title': org
+#        'pubAccount:appId': pubAccount
+#        'i18n:key': require('./zh')
+#
+#    member: [
+#        "#{code},admin"
+#        "王磊,member"
+#        "王磊,manager"
+#    ]
