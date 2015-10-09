@@ -221,6 +221,34 @@ cat = [
     label: '美容'
     type: 'partner'
 ,
+    code: 'makeup'
+    label: '化妆'
+    type: 'partner'
+,
+    code: 'clothing'
+    label: '服装'
+    type: 'partner'
+,
+    code: 'apparel'
+    label: '服饰'
+    type: 'partner'
+,
+    code: 'customMade'
+    label: '定制'
+    type: 'partner'
+,
+    code: 'photography'
+    label: '摄影'
+    type: 'partner'
+,
+    code: 'camera'
+    label: '摄像'
+    type: 'partner'
+,
+    code: 'wedding'
+    label: '婚庆'
+    type: 'partner'
+,
     code: 'team_xxgw'
     label: '个人形象顾问'
     type: 'user'
@@ -635,7 +663,7 @@ order = [#预约，购买
 
 partner = [#异业联盟 cat=>footer下的数据
     title:'美容'
-    row:8
+    row:801
     content:''
     cat:'beauty'
     brief:''
@@ -644,56 +672,63 @@ partner = [#异业联盟 cat=>footer下的数据
     phone:111
     owner:''
     refFile:
-        head:[]
+        head:['partner_logo_29.jpg']
         slide:[]
 ,
     title:'化妆'
-    row:7
+    row:989
+    cat:'makeup'
     brief:''
     refFile:
-        head:[]
+        head:['partner_logo_31.jpg']
         slide:[]
 ,
     title:'服装'
-    row:6
+    row:6212
+    cat:'clothing'
     brief:''
     refFile:
-        head:[]
+        head:['partner_logo_33.jpg']
         slide:[]
 ,
     title:'服饰'
-    row:5
+    row:53
+    cat:'apparel'
     brief:''
     refFile:
-        head:[]
+        head:['partner_logo_35.jpg']
         slide:[]
 ,
     title:'定制'
-    row:4
+    row:41
+    cat:'customMade'
     brief:''
     refFile:
-        head:[]
+        head:['partner_logo_37.jpg']
         slide:[]
 ,
     title:'摄影'
-    row:3
+    row:13
+    cat:'photography'
     brief:''
     refFile:
-        head:[]
+        head:['partner_logo_39.jpg']
         slide:[]
 ,
     title:'摄像'
-    row:2
+    row:23
+    cat:'camera'
     brief:''
     refFile:
-        head:[]
+        head:['partner_logo_41.jpg']
         slide:[]
 ,
     title:'婚庆'
-    row:1
+    row:41
+    cat:'wedding'
     brief:''
     refFile:
-        head:[]
+        head:['partner_logo_43.jpg']
         slide:[]
 ]
 
@@ -727,26 +762,32 @@ module.exports =
         nav: [
             label: "首页"
             href: "/"
+            cur:'index'
             labelCls: "label-info"
         ,
             label: "体验式服务"
             href: "/serviceChannel"
+            cur:'serviceChannel'
             labelCls: "label-exper"
         ,
             label: "精英培训学院"
             href: "/courseChannel"
+            cur:'courseChannel'
             labelCls: "label-warning"
         ,
             label: "女子学堂"
             href: "/schoolChannel"
+            cur:'schoolChannel'
             labelCls: "label-success"
         ,
             label: "精英团队"
             href: "/teamChannel"
+            cur:'teamChannel'
             labelCls: "label-team"
         ,
             label: "异业联盟"
             href: "/partnerChannel"
+            cur:'partnerChannel'
             labelCls: "label-danger"
         ]
     data:
