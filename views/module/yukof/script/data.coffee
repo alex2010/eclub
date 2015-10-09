@@ -309,7 +309,7 @@ content=[
 post=[
     title:'异业联盟战略规划'
     cat:'partner'
-    brief:'内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要'
+    brief:'内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要'
     content:''
     refFile:
         head:['']
@@ -730,23 +730,23 @@ module.exports =
             labelCls: "label-info"
         ,
             label: "体验式服务"
-            href: "/"
+            href: "/serviceChannel"
             labelCls: "label-exper"
         ,
             label: "精英培训学院"
-            href: "/"
+            href: "/courseChannel"
             labelCls: "label-warning"
         ,
             label: "女子学堂"
-            href: "/"
+            href: "/schoolChannel"
             labelCls: "label-success"
         ,
             label: "精英团队"
-            href: "/"
+            href: "/teamChannel"
             labelCls: "label-team"
         ,
             label: "异业联盟"
-            href: "/"
+            href: "/partnerChannel"
             labelCls: "label-danger"
         ]
     data:
