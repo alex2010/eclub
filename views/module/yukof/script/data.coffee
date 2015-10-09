@@ -40,16 +40,177 @@ role = [
 ]
 
 user = [
-    username: code
+    username:'用户一（团队人员）'
+    hometown:'china'
+    cat: 'team'
+    code:'team_xxgw'
+    age:23
+    exp: '3年'
+    goodAt: '剪发 烫头'
+    blood: 'AB'
+    introduction:''
+    content:''
+    studied:[
+        title: ''
+        _id:''
+    ,
+        title: ''
+        _id:''
+    ]
+,
+    username:'用户二（团队人员）'
+    hometown:'china'
+    cat: 'team'
+    code:'team_pgs'
+    age:28
+    exp: '4年'
+    goodAt: '挑衣 试穿 混搭'
+    blood: 'A'
+    introduction:''
+    content:''
+    studied:[
+        title: ''
+        _id:''
+    ,
+        title: ''
+        _id:''
+    ]
+,
+    username:'用户三（团队人员）'
+    hometown:'china'
+    cat: 'team'
+    code:'team_yczls'
+    age:21
+    exp: '5年'
+    goodAt: '小衣橱整理 大衣橱整理 收拾'
+    blood: 'B'
+    introduction:''
+    content:''
+    studied:[
+        title: ''
+        _id:''
+    ,
+        title: ''
+        _id:''
+    ]
+,
+    username:'用户四（团队人员）'
+    hometown:'china'
+    cat: 'team'
+    code:'team_hzs'
+    age:26
+    exp: '6年'
+    goodAt: '眼影 描眉 脸谱'
+    blood: 'O'
+    introduction:''
+    content:''
+    studied:[
+        title: ''
+        _id:''
+    ,
+        title: ''
+        _id:''
+    ]
+,
+    username:'用户五（团队人员）'
+    hometown:'china'
+    cat: 'team'
+    code:'team_fxs'
+    age:28
+    exp: '8年'
+    goodAt: '山寨头 平头 卡头'
+    blood: 'O'
+    introduction:''
+    content:''
+    studied:[
+        title: ''
+        _id:''
+    ,
+        title: ''
+        _id:''
+    ]
+,
+    username:'用户六（团队人员）'
+    hometown:'china'
+    cat: 'team'
+    code:'team_fzsjs'
+    age:29
+    exp: '10年'
+    goodAt: '各种设计 卡其裤'
+    blood: 'O'
+    introduction:''
+    content:''
+    studied:[
+        title: ''
+        _id:''
+    ,
+        title: ''
+        _id:''
+    ]
+,
+    username:'用户七（注册学员，白金会员）'
+    hometown:'America'
+    cat: 'student'
+    code:''
+    blood: 'O'
+    age:30
+    studied:[
+        title: ''
+        _id:''
+    ,
+        title: ''
+        _id:''
+    ]
 ]
 
 cat = [
-    code: 'workShow'
+#储存分类 分类管理
+    code: 'workShow_hzmx'
     label: '作品展示'
-    type: 'post'
+    type: 'content'
 ,
+    code: 'workShow_hzmx'
+    label: '电视台栏目'
+    type: 'content'
+,
+    code: 'workShow_hzmx'
+    label: '杂志合作'
+    type: 'content'
+,
+    code: 'workShow_hzmx'
+    label: '影视剧作品'
+    type: 'content'
+,
+    code: 'workShow_hzmx'
+    label: 'T台秀场'
+    type: 'content'
+,
+    code: 'workShow_hzmx'
+    label: '大型活动承接'
+    type: 'content'
+,
+#    code: 'workShow'
+#    label: '作品展示'
+#    type: 'post'
+#,
     code: 'pp'
     label: '定位流程'
+    type: 'post'
+,
+    code: 'partner'
+    label: '异业'
+    type: 'post'
+,
+    code: 'knowledge'
+    label: '行业知识'
+    type: 'post'
+,
+    code: 'news'
+    label: '行业新闻'
+    type: 'post'
+,
+    code: 'jobs'
+    label: '招聘'
     type: 'post'
 ,
     code: 'femaleClass'
@@ -59,7 +220,6 @@ cat = [
     code: 'beauty'
     label: '美容'
     type: 'partner'
-
 ,
     code: 'team_xxgw'
     label: '个人形象顾问'
@@ -69,13 +229,95 @@ cat = [
     label: '陪购师'
     type: 'user'
 ,
-    code: 'student'
-    label: '个人形象顾问'
+    code: 'team_yczls'
+    label: '衣橱整理师'
     type: 'user'
 ,
-    code: 'trainer'
-    label: '个人形象顾问'
+    code: 'team_hzs'
+    label: '化妆师'
     type: 'user'
+,
+    code: 'team_fxs'
+    label: '发型师'
+    type: 'user'
+,
+    code: 'team_fzsjs'
+    label: '服装设计师'
+    type: 'user'
+,
+    code: 'student'
+    label: '学员'
+    type: 'user'
+#,
+#    code: 'trainer'
+#    label: '个人形象顾问'
+#    type: 'user'
+]
+
+content=[
+    title:'合作明星'
+    cat:'workShow_hzmx'
+    row:6
+    content:''
+    refFile:
+        head:[]
+        slide:[]
+,
+    title:'电视台栏目'
+    cat:'workShow_dstlm'
+    row:5
+    content:''
+    refFile:
+        head:[]
+        slide:[]
+,
+    title:'杂志合作'
+    cat:'workShow_zzhz'
+    row:4
+    content:''
+    refFile:
+        head:[]
+        slide:[]
+,
+    title:'影视剧作品'
+    cat:'workShow_ysjzp'
+    row:3
+    content:''
+    refFile:
+        head:[]
+        slide:[]
+,
+    title:'T台秀场'
+    cat:'workShow_Ttxc'
+    row:2
+    content:''
+    refFile:
+        head:[]
+        slide:[]
+,
+    title:'大型活动承接'
+    cat:'workShow_dxhdcj'
+    row:1
+    content:''
+    refFile:
+        head:[]
+        slide:[]
+#6 ge
+#dao xun
+]
+
+post=[
+    title:'异业联盟战略规划'
+    cat:'partner'
+    brief:'内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要'
+    content:''
+    refFile:
+        head:['']
+    author:
+        username:'学堂版主'
+        userinfo:
+            age:18
+            sex:'boy'
 ]
 
 feedback = [
@@ -95,23 +337,23 @@ service = [
     package: [
         title: '套餐一'
         description: '汉堡包＋鸡腿＋薯条'
-        price: '100'
+        price: 100
     ,
         title: '套餐二'
         description: '汉堡包＋鸡腿＋薯条'
-        price: '110'
+        price: 110
     ,
         title: '套餐三'
         description: '汉堡包＋鸡腿＋薯条'
-        price: '120'
+        price: 120
     ,
         title: '套餐四'
         description: '汉堡包＋鸡腿＋薯条'
-        price: '130'
+        price: 130
     ,
         title: '套餐五'
         description: '汉堡包＋鸡腿＋薯条'
-        price: '140'
+        price: 140
     ]
 ,
     title: '职场规划形象'
@@ -124,23 +366,23 @@ service = [
     package: [
         title: '套餐一'
         description: '礼仪'
-        price: '100'
+        price: 100
     ,
         title: '套餐二'
         description: '汉堡包＋鸡腿＋薯条'
-        price: '110'
+        price: 110
     ,
         title: '套餐三'
         description: '汉堡包＋鸡腿＋薯条'
-        price: '120'
+        price: 120
     ,
         title: '套餐四'
         description: '汉堡包＋鸡腿＋薯条'
-        price: '130'
+        price: 130
     ,
         title: '套餐五'
         description: '汉堡包＋鸡腿＋薯条'
-        price: '140'
+        price: 140
     ]
 ,
     title: '企业形象定位一'
@@ -153,23 +395,23 @@ service = [
     package: [
         title: '套餐一'
         description: '汉堡包＋鸡腿＋薯条'
-        price: '100'
+        price: 100
     ,
         title: '套餐二'
         description: '汉堡包＋鸡腿＋薯条'
-        price: '110'
+        price: 110
     ,
         title: '套餐三'
         description: '汉堡包＋鸡腿＋薯条'
-        price: '120'
+        price: 120
     ,
         title: '套餐四'
         description: '汉堡包＋鸡腿＋薯条'
-        price: '130'
+        price: 130
     ,
         title: '套餐五'
         description: '汉堡包＋鸡腿＋薯条'
-        price: '140'
+        price: 140
     ]
 ,
     title: '明星立体包装一'
@@ -182,23 +424,23 @@ service = [
     package: [
         title: '套餐一'
         description: '造型＋化妆'
-        price: '100'
+        price: 100
     ,
         title: '套餐二'
         description: '造型＋化妆'
-        price: '110'
+        price: 110
     ,
         title: '套餐三'
         description: '造型＋化妆'
-        price: '120'
+        price: 120
     ,
         title: '套餐四'
         description: '造型＋化妆＋薯条'
-        price: '130'
+        price: 130
     ,
         title: '套餐五'
         description: '造型＋化妆'
-        price: '140'
+        price: 140
     ]
 ,
     title: '新娘形象定制一'
@@ -211,23 +453,81 @@ service = [
     package: [
         title: '套餐一'
         description: '婚礼＋庆典＋喜宴'
-        price: '100'
+        price: 100
     ,
         title: '套餐二'
         description: '婚礼＋庆典＋喜宴'
-        price: '110'
+        price: 110
     ,
         title: '套餐三'
         description: '婚礼＋庆典＋喜宴'
-        price: '120'
+        price: 120
     ,
         title: '套餐四'
         description: '婚礼＋庆典＋喜宴'
-        price: '130'
+        price: 130
     ,
         title: '套餐五'
         description: '婚礼＋庆典＋喜宴'
-        price: '140'
+        price: 140
+    ]
+,
+    title:'vip线下活动和课堂'
+    cat:'vip'
+    code:'vip_a'
+    content:''
+    refFile:
+        head:[]
+    pubTime:new Date()
+    package:[
+        title:'青铜圣斗士'
+        description:''
+        price:100
+    ,
+        title:'白银会员'
+        description:''
+        price:110
+    ,
+        title:'黄金剩斗士'
+        description:''
+        price:120
+    ,
+        title:'白金会员'
+        description:''
+        price:130
+    ,
+        title:'黑金'
+        description:''
+        price:140
+    ]
+,
+    title:'美丽特训营'
+    cat:'trainingCamp'
+    code:'trainingCamp_a'
+    content:''
+    refFile:
+        head:[]
+    pubTime:new Date()
+    package:[
+        title:'特训组合套餐1'
+        description:''
+        price:100
+    ,
+        title:'特训组合套餐2'
+        description:''
+        price:110
+    ,
+        title:'特训组合套餐3'
+        description:''
+        price:120
+    ,
+        title:'特训组合套餐4'
+        description:''
+        price:130
+    ,
+        title:'特训组合套餐5'
+        description:''
+        price:140
     ]
 ,
     title: '体验式服务'
@@ -289,7 +589,6 @@ service = [
                 poster: ['']
 ]
 
-
 course = [
     title: ''
     description: ''
@@ -321,7 +620,6 @@ course = [
             'asdfsadfsdf'
             'asdfdsfsdf'
         ]
-
     ]
     price: 9000
     discount: 8000
@@ -335,32 +633,89 @@ order = [#预约，购买
 
 ]
 
-
 partner = [#异业联盟 cat=>footer下的数据
-
-]
-
-user = [
-    username:''
-    hometown:''
-    cat: 'trainer'
-    age:''
-    exp: '3年'
-    goodAt: '建房 烫头'
-    blood: 'AB'
-
-    introduction:''
+    title:'美容'
+    row:8
     content:''
-    studied:[
-        title: 'sdfasdfsdf'
-        _id:'asdfsdf'
-    ]
+    cat:'beauty'
+    brief:''
+    postcode:'' #地区
+    address:''
+    phone:111
+    owner:''
+    refFile:
+        head:[]
+        slide:[]
+,
+    title:'化妆'
+    row:7
+    brief:''
+    refFile:
+        head:[]
+        slide:[]
+,
+    title:'服装'
+    row:6
+    brief:''
+    refFile:
+        head:[]
+        slide:[]
+,
+    title:'服饰'
+    row:5
+    brief:''
+    refFile:
+        head:[]
+        slide:[]
+,
+    title:'定制'
+    row:4
+    brief:''
+    refFile:
+        head:[]
+        slide:[]
+,
+    title:'摄影'
+    row:3
+    brief:''
+    refFile:
+        head:[]
+        slide:[]
+,
+    title:'摄像'
+    row:2
+    brief:''
+    refFile:
+        head:[]
+        slide:[]
+,
+    title:'婚庆'
+    row:1
+    brief:''
+    refFile:
+        head:[]
+        slide:[]
 ]
 
 qa = [#首页
     question: '为什么不好看'
     answer: '因为不会打扮'
+,
+    question: '为什么不好看2'
+    answer: '因为不会打扮2'
+,
+    question:'问题三'
+    answer:'回答三'
+,
+    question:'问题四'
+    answer:'回答四'
+,
+    question:'问题五'
+    answer:'回答五'
 ]
+
+
+
 
 module.exports =
     community:
@@ -398,6 +753,10 @@ module.exports =
         'role:title': role
         'user:username': user
         'i18n:key': require('./zh')
+        'post:title':post
+        'content:title':content
+        'partner:title':partner
+        'qa:question':qa
         'service:title': service
 
     member: [

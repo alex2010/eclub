@@ -1,8 +1,7 @@
 module.exports =
     _init: (ctx)->
 
-
-    serviceContent:(ctx,req,rsp) ->
+    serviceChannel:(ctx,req,rsp) ->
         privateImageMgm_pp:(cb) ->
             opt =
                 limit:10
@@ -13,7 +12,6 @@ module.exports =
             }
             dao.find ctx.c.code, 'service' , filter, opt, (res)->
                 cb(null, res)
-
 
         privateImageMgm_sp:(cb) ->
             opt =
@@ -26,7 +24,6 @@ module.exports =
             dao.find ctx.c.code, 'service', filter, opt, (res)->
                 cb(null, res)
 
-
         entrepreneurImagePositioning:(cb) ->
             opt =
                 limit:1
@@ -38,17 +35,20 @@ module.exports =
             dao.find ctx.c.code, 'service', filter, {}, (res)->
                 cb(null, res)
 
-
         intro:(cb) ->
             filter={
                 cat:'intro'
             }
             dao.find ctx.c.code, 'service', filter, {}, (res)->
-#                for k of res[0].content
-#                    item=res[0].content[k]
-#                    console.log(item)
-
                 cb(null, res[0])
+
+    partnerChannel:(ctx,req,rsp)->
+        post:(cb)->
+            filter={
+                cat:'partner'
+            }
+            dao.find ctx.c.code , 'post', filter, {}, (res)->
+                cb(null,res[0])
 
 #        actorSolidPackaging:(cb) ->
 #            opt =
