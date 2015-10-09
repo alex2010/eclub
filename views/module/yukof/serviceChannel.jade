@@ -2,7 +2,7 @@ extends ./inc/main
 block style
    :less(minify=true)
       .panel-y-2 {
-         padding-bottom: 60px;
+         padding-bottom:60px;
          .panel-heading {
             padding:0 15px 15px;
             h3 {
@@ -153,6 +153,8 @@ block content
    -var introQyj=intro.content.actorSolidPackaging
    -var introMx=intro.content.entrepreneurImagePositioning
    -var introXn=intro.content.designOfTheBrideImage
+
+   include ./inc/topFragment
 
    +contentPanel(introSr)(class="hot")
       +codePanel('定位&流程','Positioning & Process',privateImageMgm_pp)

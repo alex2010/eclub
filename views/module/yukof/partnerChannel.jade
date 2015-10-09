@@ -38,45 +38,10 @@ block style
             }
          }
       }
+
 block content
-   .row
-      .col-md-8
-         .adv-y-2
-            img.img-responsive(src="#{resPath}images/adv_partner.jpg",alt="")
-      .col-md-4
-         .panel.panel-y-4
-            .panel-heading
-               h3.title 就业招聘&学习
-                  span.en LOVE
-            .panel-body
-               ul.list-unstyled.row.l-panel-y4
-                  li.col-md-6
-                     .thumbnail
-                        img.img-responsive(src="#{resPath}images/t_code_06.jpg",alt="")
-                     h4.btn.btn-default 形象托管
-                  li.col-md-6
-                     .thumbnail
-                        img.img-responsive(src="#{resPath}images/t_code_08.jpg",alt="")
-                     h4.btn.btn-default 精英培训
-            .panel-footer
-               .row
-                  .col-md-5.col-md-offset-1
-                     h4 合作共赢
-                  .col-md-5
-                     p 强强联手
-                     p 专业支撑
-   .row
-      .col-md-8
-         .panel.panel-y-6
-            .panel-heading.light 异业联盟
-                  span.en Alliance Of Different Industries
-            .panel-body.img
-               img.img-responsive(src="#{resPath}images/static-partner_06.jpg")
-      .col-md-4
-         .panel.panel-y-6
-            .panel-heading.darken 视频教育
-               span.en Video Educational
-            .panel-body
+   include ./inc/topFragment
+
    .row.panel.panel-y-7
       .col-md-7
          .panel-heading
@@ -86,5 +51,3 @@ block content
             p= post.brief
          .panel-footer
             a(href="").btn.btn-danger 阅读更多
-
-
