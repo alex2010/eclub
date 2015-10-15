@@ -220,34 +220,42 @@ cat = [
     code: 'beauty'
     label: '美容'
     type: 'partner'
+    row:908
 ,
     code: 'makeup'
     label: '化妆'
     type: 'partner'
+    row:907
 ,
     code: 'clothing'
     label: '服装'
     type: 'partner'
+    row:906
 ,
     code: 'apparel'
     label: '服饰'
     type: 'partner'
+    row:905
 ,
     code: 'customMade'
     label: '定制'
     type: 'partner'
+    row:904
 ,
     code: 'photography'
     label: '摄影'
     type: 'partner'
+    row:903
 ,
     code: 'camera'
     label: '摄像'
     type: 'partner'
+    row:902
 ,
     code: 'wedding'
     label: '婚庆'
     type: 'partner'
+    row:901
 ,
     code: 'team_xxgw'
     label: '个人形象顾问'
@@ -663,7 +671,7 @@ order = [#预约，购买
 
 partner = [#异业联盟 cat=>footer下的数据
     title:'美容'
-    row:801
+    row:9999999
     content:''
     cat:'beauty'
     brief:''
@@ -794,6 +802,7 @@ module.exports =
         'role:title': role
         'user:username': user
         'i18n:key': require('./zh')
+        'cat:label':cat
         'post:title':post
         'content:title':content
         'partner:title':partner

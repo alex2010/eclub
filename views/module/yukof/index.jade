@@ -199,6 +199,11 @@ block content
             .panel.panel-y-3
                 .panel-heading 专家疑难问答
                 .panel-body
+                    .list-group
+                        each it in qa
+                            a.list-group-item(href='')
+                                p.list-group-item-heading= it.question
+                                p.list-group-item-text= it.answer
                     form.form-horizontal
                         .form-group
                             label.col-sm-2 邮箱：

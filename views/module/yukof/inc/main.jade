@@ -55,14 +55,11 @@ block ctn
                     h3 战略合作&nbsp;
                         span Strategic Cooperation
                     ul.nav.nav-pills
-                        +item("美容",true)(href="#beauty",data-toggle="pill")
-                        +item("化妆")(href="#makeup",data-toggle="pill")
-                        +item("服装")(href="#clothing",data-toggle="pill")
-                        +item("服饰")(href="#apparel",data-toggle="pill")
-                        +item("定制")(href="#customade",data-toggle="pill")
-                        +item("摄影")(href="#photography",data-toggle="pill")
-                        +item("摄像")(href="#camera",data-toggle="pill")
-                        +item("婚庆")(href="#wedding",data-toggle="pill")
+                        each it,i in partnerNav
+                            -var cur=false
+                            if i==0
+                                -cur=true
+                            +item(it.label,cur)(href='##{it.code}',data-toggle='pill')
                     .tab-content
                         .tab-pane.fade.active.in#beauty
                             ul.list-inline.row
@@ -71,13 +68,13 @@ block ctn
                                     +item("",false,"col-md-1")(class="thumbnail")
                                         img(src="#{resPath}images/logo_03.png",alt="")
                                     -n++
-                        .tab-pane.fade#makeup 222
-                        .tab-pane.fade#clothing 333
-                        .tab-pane.fade#apparel 444
-                        .tab-pane.fade#customade 555
-                        .tab-pane.fade#photography 666
-                        .tab-pane.fade#camera 777
-                        .tab-pane.fade#wedding 888
+                        .tab-pane.fade#makeup 化妆
+                        .tab-pane.fade#clothing 服装
+                        .tab-pane.fade#apparel 服饰
+                        .tab-pane.fade#customMade 定制
+                        .tab-pane.fade#photography 摄影
+                        .tab-pane.fade#camera 摄像
+                        .tab-pane.fade#wedding 婚庆
                     hr
                     h3 友情链接&nbsp;
                         span Links

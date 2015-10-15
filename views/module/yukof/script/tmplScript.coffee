@@ -1,38 +1,31 @@
 module.exports =
     _init: (ctx,req,rsp)->
-#        partnerCat:(cb)->
-#            opt=
-#                limit:8
-#                sort:
-#                    row:-1
-#            filter=
-#                cat:'partner'
-#            dao.find ctx.c.code, 'cat' , filter, opt, (res)->
-#                data=[]
-#                opt=
-#                    limit:16
-#                    sort:
-#                        row:-1
-#                filter={}
-#                i = 0
-#                while i < res.length
-#                    obj={}
-#                    obj.label=res[i].label
-#                    dao.find ctx.c.code, '', {car:res[i].label},opt,(res)->
-#                        obj.content=res
-#                        data.push obj
-#                    res[i].code
-#                    i++
+        partnerNav:(cb)->
+            opt =
+                limit:8
+                sort:
+                    row:-1
+            filter =
+                type:'partner'
 
+            dao.find ctx.c.code, 'cat', filter, opt, (res)->
+                cb(null,res)
+        qa:(cb)->
+            opt =
+                limit:5
+                sort:
+                    row:-1
+            dao.find ctx.c.code, 'qa', {}, opt, (res)->
+                cb(null,res)
     serviceChannel:(ctx,req,rsp) ->
         privateImageMgm_pp:(cb) ->
             opt =
                 limit:10
                 sort:
                     row:-1
-            filter={
+            filter=
                 code:'privateImageMgm_pp'
-            }
+
             dao.find ctx.c.code, 'service' , filter, opt, (res)->
                 cb(null, res)
 
