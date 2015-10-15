@@ -1,42 +1,40 @@
 .container.actSlide
-    .row
-        h2!= f.link('activity', it)
-            small= it.subTitle
-            if it.cat
-                span.cat 【#{it.cat.title}】
-        .col-md-7.mainImg
-            a(href='/activity/' + it._id)
-                != f.imgItem(it, c)
-            .venue.row
+    h2!= f.link(it)
+        small= it.subTitle
+        if it.cat
+            span 【#{it.cat}】
+    .col-md-6.mainImg
+        a(href='/activity/' + it._id)
+            != f.imgItem(it, c)
+        .venue.row.hidden-xs
+            p.col-md-6
+                != f.icon('time')
+                if it.startedDate
+                    span= new Date().pattern('yyyy-MM-dd HH:mm')
+                    //span= it.startedDate.pattern('yyyy-MM-dd HH:mm')
+                        | (两小时)
+            if it.venue
                 p.col-md-6
-                    != f.icon('time')
-                    if it.startedDate
-                        span= new Date().pattern('yyyy-MM-dd HH:mm')
-                        //span= it.startedDate.pattern('yyyy-MM-dd HH:mm')
-                            | (两小时)
-                if it.venue
-                    p.col-md-6
-                        != f.icon('flag')
-                        span= it.venue.title
-                    p.col-md-6
-                        != f.icon('glass')
-                        span= it.venue.fee
-                    p.col-md-6
-                        != f.icon('phone-alt')
-                        span= it.venue.phone
-        .col-md-5.mainInfo
-            h3 主持人
-            if it.master
-                .author
-                    each v,k in it.master
-                        - v._id = k
-                        - _user = v
-                        - _user._e = 'user'
-                        - _uClass = 'host'
-                        include ../../../inc/mod/userInfo
-
-            h3 话题介绍
-            .intro!= it.brief
-
-    .jBtn.col-md-12.text-center
+                    != f.icon('flag')
+                    span= it.venue.title
+                p.col-md-6
+                    != f.icon('glass')
+                    span= it.venue.fee
+                p.col-md-6
+                    != f.icon('phone-alt')
+                    span= it.venue.phone
+    .col-md-6.mainInfo
+        h3.hidden-xs 主持人
+        if it.master
+            .author.hidden-xs
+                each v,k in it.master
+                    - v._id = k
+                    - _user = v
+                    - _user._e = 'user'
+                    - _uClass = 'host'
+                    include ../../../inc/mod/userInfo
+        p.hidden-xs
+        h3 话题介绍
+        .intro!= it.brief
+    .col-md-12.jBtn.text-center
         a(href='/activity/' + it._id).btn.btn-lg.btn-info 我要报名

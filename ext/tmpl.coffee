@@ -105,8 +105,8 @@ module.exports =
                     k += '/' + it
         k
 
-    tmpl: (name, opt)->
-        cf.rtp name, opt
+    tmpl: (name, opt, lib)->
+        cf.rtp name, opt, lib
 
     actDate:(start,end)->
         "#{start.substr(0,16)}-#{end.substr(11,5)}"

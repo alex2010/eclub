@@ -5,6 +5,10 @@ block style
         .media {
             padding-top:10px;
         }
+        .media_left{
+
+
+        }
 block content
     #carousel-example-generic.carousel.slide.banner(data-ride='carousel')
         // Indicators
@@ -36,18 +40,19 @@ block content
         a.right.carousel-control(href='#carousel-example-generic', role='button', data-slide='next')
             span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
             span.sr-only Next
+
     .main.row
         each it in _cat
             case it.title
                 when '验配中心'
                     .col-md-4.mt17-mob
-                        +panel(it.title)(data-cid='123')
+                        +panel(it.title,'p5')
                            +media(shopList,{singleR:false,func:'slide'})
                 when '验配师'
                     .col-md-4.mt17-mob
-                        +panel(it.title)
+                        +panel(it.title,'p5')
                             +media(consultantList,{singleR:false})
                 when '助听器'
                     .col-md-4.mt17-mob
-                        +panel(it.title)
+                        +panel(it.title,'p5')
                             +media(productList,{singleR:false,func:'slide'})

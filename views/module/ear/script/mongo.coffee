@@ -84,11 +84,13 @@ db.getCollection('shop').find({}).forEach (it)->
 
 
 db.getCollection('consultant').find({}).forEach (it)->
-    if it.shop
-        db.getCollection('shop').find({_id: it.shop._id}).forEach (sh)->
+    if it.shop and !it.shop._id
+        db.getCollection('shop').find({title: it.shop.title}).forEach (sh)->
             it.shop.postcode = sh.postcode
             it.shop.phone = sh.phone
             it.shop.address = sh.address
+            it.shop.title = sh.title
+            it.shop._id = sh._id
             db.getCollection('consultant').update {_id: it._id}, it
 
 db.getCollection('user').find({}).forEach (it)->
@@ -96,21 +98,28 @@ db.getCollection('user').find({}).forEach (it)->
     delete it.menu
     delete it.permission
     delete it.orgs
-    log it
     db.getCollection('user').update {_id: it._id}, it
 
-#    "ds" : {
-#        "icon" : "gift",
-#        "act" : "ds",
-#        "row" : 40
-#    },
-#    "addPost" : {
-#        "icon" : "file",
-#        "act" : "data/list/post",
-#        "row" : 50
-#    },
-#    "addActivity" : {
-#        "icon" : "th-large",
-#        "act" : "data/list/activity",
-#        "row" : 60
-#    }
+
+
+db.getCollection('consultant').find({}).forEach (it)->
+    if it.refFile
+        if it.refFile.portrait
+            it.refFile.head = it.refFile.portrait
+            delete it.refFile.portrait
+            if !it.refFile.head.length and it.refFile.head[0].length < 14
+                it.refFile.head = []
+    else it.refFile = {}
+    db.getCollection('consultant').update {_id: it._id}, it
+
+
+db.getCollection('shop').find({}).forEach (it)->
+    if it.refFile and it.refFile.slide
+        nt = []
+        for p in it.refFile.slide
+            if p.indexOf('.jpg')>-1
+                nt.push p
+        it.refFile.slide = nt
+        db.getCollection('shop').update {_id: it._id}, it
+
+

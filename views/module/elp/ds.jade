@@ -2,13 +2,12 @@ extends inc/main
 
 block content
     include ../../inc/crumb
-    .row.article
+    .article
         .col-md-8
-            h2.event-name= title
+            h2(style='font-size: 20px;').event-name= title
                 small: a(href='/postList.html?cat=topic')= cat
-            p
             .row
-                != f.imgItem(locals, c, 'head', 'postPic')
+                != f.imgItem(locals, c, 'head')
 
             p.text-right= createdDate
 
@@ -18,29 +17,38 @@ block content
                 - _uClass = 'author'
                 include ../../inc/mod/userInfo
 
-            .well.well-sm #{startedDate} - #{endDate}
+            p
+                span.label.label-info.normal 时间范围
+                | &nbsp; #{startedDate.pattern('yyyy年MM月dd日')}-#{endDate.pattern('yyyy年MM月dd日')}
 
-            .article-content!= description
+            p
+                span.label.label-danger.normal 紧急程度
+                | &nbsp; #{level}
+
+            +panel('项目介绍')(pClass='panel-info')
+                .article-content!= content
 
             .clearfix
                 .col-xs-6
-                    a.btn.btn-lg.btn-block.btn-danger(onclick="cf.care('#{_id}','ds')") 关注
+                    a.btn.btn-block.btn-danger(onclick="cf._eAct('#{_id}','ds','care')") 关注
                 .col-xs-6
-                    a.btn.btn-lg.btn-block.btn-primary(onclick="cf.offerHelp('#{_id}','ds')") 提供支持
+                    a.btn.btn-block.btn-primary(onclick="cf._comment('#{_id}','ds','help','我能给与的支持')") 提供支持
 
             if care
                 +panel('关注的家人')
-                    +avatars(care)(class='col-xs-2')
+                    .row
+                        +avatars(care)(class='col-xs-2')
 
             if help
                 +panel('提供支持的家人')
-                    +avatars(help)(class='col-xs-2 p0')
+                    .row
+                        +avatars(help)(class='col-xs-2')
 
 
             +comments(_id,'ds',comment)
 
         .col-md-4
-            +panel('最新供需信息')(pClass='panel-info')
+            +panel('最新供需信息')(class='panel-info')
                 +media(dsList,{})
 block st
     :coffee(bare=true minify=true)

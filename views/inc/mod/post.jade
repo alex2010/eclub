@@ -2,8 +2,9 @@ h2.event-name= title
     if subTitle
         small= subTitle
 hr
-.row
+.row.imgBox
     != f.imgItem(locals, c, 'head', 'postPic')
+
 if author
     hr
     - _user = author
@@ -11,6 +12,7 @@ if author
     - _uClass = 'author'
     include userInfo
     p
+
 .well.well-sm
     strong [核心提示]
     = brief

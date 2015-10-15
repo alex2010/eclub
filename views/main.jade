@@ -2,7 +2,8 @@ doctype html
 
 block script
     - main = 'main'
-
+    if mode
+        -libPath = 'http://127.0.0.1:8088/'
 html
     head
         include ./inc/smeta

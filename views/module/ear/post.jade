@@ -1,9 +1,24 @@
 extends ./inc/main
 
+block style
+    :less(minify=true)
+        .postPic{
+            width: 450px !important;
+            float: left
+        }
+        .imgBox{
+            text-align: left;
+        }
+        .hostInfo{
+            display: none;
+        }
+        h2{
+            font-size: 22px !important;
+        }
 block content
     .container
         include ../../inc/crumb
-        .row.article
+        .article
             #main.col-md-8
                 include ../../inc/mod/post
             #side.col-md-4

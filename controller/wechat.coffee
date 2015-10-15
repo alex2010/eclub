@@ -115,8 +115,8 @@ module.exports =
                 , ->
                     log 'upload news ...'
                     api.uploadNewsMaterial articles: opt, (err, res) ->
-                        log err
-                        log res
+#                        log err
+#                        log res
                         if isPre
                             k = "w_#{wCode}"
                             for it in req.body.testUser
@@ -134,12 +134,12 @@ module.exports =
                                 rsp.send
                                     success: true
                                     msg: '发送成功'
-    massSend: (req, rsp)->
-        getApi req.body.code, (api)->
-            api.massSend req.body.qrNum, (err, res) ->
-                api.showQRCodeURL res.ticket, (res)->
-                    log 'qrcode'
-                    rsp.send res
+#    massSend: (req, rsp)->
+#        getApi req.body.code, (api)->
+#            api.massSend req.body.qrNum, (err, res) ->
+#                api.showQRCodeURL res.ticket, (res)->
+#                    log 'qrcode'
+#                    rsp.send res
 
     userInfoByCode: (req, rsp)->
         log 'userInfoByCode'

@@ -16,6 +16,7 @@ module.exports = ->
         if app.env
             s =
                 db_host: '127.0.0.1'
+#                db_host: '123.57.189.54'
                 db_port: 27017
         else
             s = require("../views/module/#{name}/script/setting")

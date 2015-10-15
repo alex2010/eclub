@@ -14,6 +14,9 @@ role = [
     ,
         key: 'shop'
         row: 130
+    ,
+        key: 'consultant'
+        row: 140
     ]
 ,
     title: 'manager'
@@ -172,7 +175,7 @@ card = [
 module.exports =
     community:
         code: code
-        title: '掌上听力专家'
+        name: '掌上听力专家'
         resPath: if _env then '/res' else 'http://s.postenglishtime.com'
         url: if _env then 't.ear.com' else 'ear.postenglishtime.com'
         nav: [
@@ -259,9 +262,9 @@ module.exports =
 #        'pubAccount:appId': pubAccount
 #        'brand:title': brand
 #        'product:title': product
-#        'seckilling:title': seckilling
+        'seckilling:title': seckilling
 #        'i18n:key': require('./zh')
-#        'card:title':card
+        'card:title':card
 
 #    member: [
 #        "#{code},admin"

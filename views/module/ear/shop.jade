@@ -35,10 +35,8 @@ block content
                 +panel('经营品牌')
                     .row
                         each it,i in brand
-                            if i%2==1
-                                +thumbnail(it)(clearfix=true)
-                            else
-                                +thumbnail(it)
+                            +thumbnail(it).col-md-3
+
         .col-md-4.article-aside
             +panel('基本信息')
                 .row

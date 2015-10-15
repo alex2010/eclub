@@ -3,12 +3,10 @@ extends inc/main
 
 block content
     .container
-        .row.article
-            #main.col-md-8
+        .article
+            .col-md-8
                 include ../../inc/crumb
                 include ../../inc/mod/post
-            #side.col-md-4
-                .list-group.double
-                    h3: strong 相关文章
-                    each it in postList
-                        != f.link(it,null,'list-group-item')
+            .col-md-4
+                +panel('相关文章')(pClass='panel-info')
+                    +media(postList,{})

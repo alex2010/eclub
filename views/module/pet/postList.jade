@@ -9,12 +9,14 @@ block content
                     each it in items
                         include inc/boxItem
             #side.col-md-4
-                .list-group.double
-                    h3: strong 文章分类
-                    a.list-group-item(href='/postList') 全部
-                    each it in cats
-                        != f.link(it,null,'list-group-item')
 
-                .list-group.double
-                    h3: strong 专栏
-                    a.list-group-item(onclick='cf.showAllItems()') 全部
+                +panel('文章主题').panel-danger
+                    .list-group
+                        a.list-group-item(href='/postList') 全部
+                        each it in cats
+                            != f.link(it, null, 'list-group-item')
+
+                //+panel('专栏').panel-danger
+                //    .list-group
+                //        a.list-group-item(href='/postList') 全部
+                //

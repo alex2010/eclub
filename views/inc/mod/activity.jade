@@ -6,8 +6,9 @@ hr
 != f.imgItem(locals, c, 'head', 'postPic')
 h3 主题介绍
 != content
-h3 主持人介绍
-if master
+
+if master && master.length
+    h3 主持人介绍
     .author
         each v in master
             - _user = v;
@@ -21,15 +22,21 @@ if master
 //    .reg
 //h3 地图
 //
-//.regBtn
-//    a.btn.btn-lg.btn-info.btn-block&attributes(reg) 我要报名
-//hr
+if title && title.indexOf('秋趴')>-1
+    .regBtn
+        a(href=f.navUrl('enroll')).btn.btn-lg.btn-info.btn-block&attributes(reg) 我要报名
+
+hr
 if participant
     h3 活动报名
     .clearfix
-        each it in participant
-            a.col-xs-2.col-md-1.p0(href= '/user/' + it._id,title= it.username)
-                != f.img(f.resPath(c, 'portrait/' + it._id + '.jpg'), 'square')
+        each it,i in participant
+            if i.length > 5
+                - it._id = i
+            -href = '/user/' + it._id
+            -imgPath = f.resPath(c, 'portrait/' + it._id + '.jpg')
+            a.col-xs-2.col-md-1.p0(href= href,title= it.username)
+                != f.img(imgPath, 'square')
 if venue
     - v = _.isArray(venue)?venue[0]:venue
     if v
