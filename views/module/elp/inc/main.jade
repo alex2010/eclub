@@ -1,13 +1,13 @@
 extends ../../../main
 include ../../../inc/mixin
-
-block append js
+block prepend js
     if !mode
         script(src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js')
-    - p = mode?'http://127.0.0.1:8088/':libPath
-    script(src='#{p}router.js')
-block ctn
 
+block append js
+    script(src='#{libPath}router.js')
+
+block ctn
     body(data-wid= wt.appId, data-wcode= wt.code)
         .headerWrapper
             nav.navbar.navbar-inverse.navbar-fixed-top

@@ -15,7 +15,6 @@ checkPagePattern = (req, rsp, next, page)->
     if /^\w+$/.test(page)
         next()
     else if /^\w+\.html$/.test(page)
-        log 'zxcvzxvxzcv statick'
         req._html = page
         next()
     else
@@ -29,7 +28,6 @@ ck = (req)->
     req.hostname + req.url
 
 pre = (req, rsp, next)->
-    log 'pre'
     unless app.env
         req.hostname = req.get('Host')
 
@@ -71,7 +69,6 @@ checkPage = (req, rsp, next)->
     log 'checkpage'
     pm = req.params
     page = pm.page || pm.entity || 'index'
-    #    log req.originalUrl
     if page in ['a', 'r']
         next()
         return
@@ -80,18 +77,15 @@ checkPage = (req, rsp, next)->
     if page in ['res', 'images']
         rsp.end 'no page'
         return
-
     if fs.existsSync("#{req.fp}/#{page}.jade")
         next()
     else
         req.fp = path.join(_path, "views")
-        log "#{req.fp}/#{page}.jade"
+        log "find the: #{req.fp}/#{page}.jade"
         if fs.existsSync("#{req.fp}/#{page}.jade")
-
             next()
         else
             rsp.end 'no page'
-
 
 router.get '/', pre
 router.all '/a/*', pre

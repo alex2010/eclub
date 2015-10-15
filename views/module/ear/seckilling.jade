@@ -85,11 +85,11 @@ block content
                 .tab-content
                     .tab-pane.active.fade.in#detail
                         p= pro.description
-
-                    .tab-pane.fade#evaluation
-                        ul.list-unstyled
-                            each it in msgList
-                                li= it
+                    if msgList
+                        .tab-pane.fade#evaluation
+                            ul.list-unstyled
+                                each it in msgList
+                                    li= it
 
 
 

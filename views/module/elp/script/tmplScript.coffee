@@ -7,6 +7,7 @@ module.exports =
         wt: (cb)->
             dao.get ctx.c.code, 'pubAccount', {}, (res)->
                 cb(null, res)
+
         postList: (cb)->
             dao.find ctx.c.code, 'post', {}, opt, (res)->
                 cb(null, res)

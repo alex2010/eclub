@@ -7,5 +7,6 @@
                     if _user.industry
                         span &nbsp;-&nbsp;
                         if i18.iCat('industry')
+                            - log(i18.iCat('industry'))
                             span= i18.iCat('industry')[_user.industry]
         != _user.introduction

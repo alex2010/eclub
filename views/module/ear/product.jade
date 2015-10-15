@@ -40,18 +40,19 @@ block content
             .row.article.pt20
                 .col-md-8.article-main
                     +panel('助听器产品介绍')
-                        .thumbnail
-                            != f.imgItem(locals,c, 'slide')
-                        .caption
-                            h2.title= title
-                            .box-label
-                                +label('价格',price)(class='label-danger')
-                                +label('品牌',brand.title)
-                                +label('上市时间',pubTime.pattern('yyyy-MM-dd'))
-                                +label('外型',outline)
-                                +label('通道',channel)
-                                +label('保修时间',warranty)
-                                +label('水平',level)
+                        .col-md-4
+                            .thumbnail
+                                != f.imgItem(locals,c, 'slide')
+                        .col-md-8
+                            .caption
+                                h2.title= title
+                                .box-label
+                                    +label('价格',price)(class='label-danger')
+                                    +label('品牌',brand.title)
+                                    +label('上市时间',pubTime.pattern('yyyy-MM-dd'))
+                                    +label('外型',outline)
+                                    +label('通道',channel)
+                                    +label('保修时间',warranty)
                     .mod-tab
                         ul.nav.nav-tabs(role='tablist')
                             li.active(role='presentation')

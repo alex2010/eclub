@@ -1,54 +1,42 @@
-doctype html
+extends ../../../main
+include ../../../inc/mixin
 
-block script
+block append js
+    if !mode
+        script(src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js')
+    - p = mode?'http://127.0.0.1:8088/':libPath
+    script(src='#{p}router.js')
 
-html
-    head
-        title= title
-        - main = 'main'
-        include ../../../inc/smeta
-
-        block style
-
-        block head
-
+block ctn
     body(data-wid= wt.appId, data-wcode= wt.code)
         .headerWrapper
-            .container
-                header.row.hidden-xs
-                    .col-md-3
-                        img.logoImg.img-responsive(src= f.resPath(c, 'images/title.png'))
-                    ul#topBar.list-inline.pull-right
+            nav.navbar.navbar-fixed-top
+                header.container
+                    .row
+                        .col-xs-8.col-md-3.p0
+                            .navbar-header
+                                h1.hidden=c.name
+                                a(href='#')
+                                    img.img-responsive.logoImg(src= f.resPath(c, 'images/title.png'))
+                        .col-xs-4.p0
+                            +mobBtn('#mainNav')
+                        .col-md-5.col-xs-12.col-md-offset-1
+                            #mainNav.collapse.navbar-collapse
+                                +nav(c.nav)#nav.nav.navbar-nav
 
-            nav.navbar.navbar-default.row
-                .container
-                    .navbar-header
-                        button.navbar-toggle(type='button',data-toggle='collapse',data-target='#mainNav')
-                            span.icon-bar
-                            span.icon-bar
-                            span.icon-bar
+                        ul#topBar.col-md-3.text-right
 
-                    .collapse.navbar-collapse.row
-                        ul#nav.nav.navbar-nav.col-md-10
-                            each it in c.nav
-                                if it.children && it.children.length>0
-                                    li.dropdown
-                                        a.dropdown-toggle(href=it.href)= it.label
-                                            span.caret
-                                        ul.dropdown-menu
-                                            each item in it.children
-                                                li
-                                                    a(href='#{item.href}')= item.label
-                                else
-                                    li
-                                        a(href='#{it.href}')= it.label
-                        .searchBox.col-md-2
-                            .has-feedback
-                                input#q.form-control.input-sm(name='q', type='text', placeholder= (label||'搜索') + '...')
-                                != f.icon('search', 'i', null, 'form-control-feedback')
 
-                            if btn
-                                a.btn.search(class= btn)= ii('search')
+            //nav.navbar.navbar-default.row
+            //    .container
+            //        .navbar-header
+            //
+            //        .searchBox.col-md-2.hidden-xs
+            //            .has-feedback
+            //                input#q.form-control.input-sm(name='q', type='text', placeholder= (label || '搜索') + '...')
+            //                != f.icon('search', 'i', null, 'form-control-feedback')
+            //            if btn
+            //                a.btn.search(class= btn)= ii('search')
             //header#header.container
             //    .navbar-header
             //        .col-xs-2.visible-xs-block.lb
@@ -61,10 +49,7 @@ html
 
         #static
             block content
-
-        .container
-            #content.row
-
+        #content.container
 
         section.footerWrapper
             footer#footer.container
@@ -99,6 +84,3 @@ html
         section.sbtm
             .container
                 p!= i18.ii('copyright', c.url, i18.ii('abbr'))
-
-    include ../../../inc/ssub
-                                        

@@ -1,8 +1,5 @@
 module.exports =
-
     _init: (ctx)->
-        ctx.css = ctx.cssPath('css')
-
         _cat: (cb)->
             dao.find ctx.c.code, 'cat', {},{}, (res)->
                 opt = {}
@@ -11,10 +8,7 @@ module.exports =
                 cb(null, opt)
 
         wt: (cb)->
-            log 'wt.....'
             dao.get ctx.c.code, 'pubAccount', {code:'PostEnglishTime'}, (res)->
-                log 'zzz'
-                log res
                 cb(null, res)
 
     index: (ctx)->
@@ -25,10 +19,11 @@ module.exports =
                     row: -1
             dao.find ctx.c.code, 'activity', {}, opt, (res)->
                 cb(null, res)
+
         post: (cb)->
             filter = {}
             opt =
-                limit: 4
+                limit: 6
                 sort:
                     lastUpdated: -1
             dao.find ctx.c.code, 'post', filter, opt, (res)->
@@ -58,6 +53,19 @@ module.exports =
                 if ctx.cat
                     cat = _.where(res, {code: ctx.cat.code})
                     ctx.cat = cat[0] if cat.length
+                cb(null, res)
+
+    groupList: (ctx)->
+        ctx.crumb = ctx.f.crumbItem [
+            label: 'PET小组'
+        ]
+        items: (cb)->
+            opt =
+                skip: 0
+                limit: 20
+                sort:
+                    lastUpdated: -1
+            dao.find ctx.c.code, 'group', {}, opt, (res)->
                 cb(null, res)
 
     postList: (ctx)->
@@ -109,7 +117,6 @@ module.exports =
         ,
             label: ctx.title
         ]
-        log ctx.startedDate
         ctx.reg =
 #            href: '/enroll/' + ctx._id
             href: tu.navUrl('enroll',ctx._id)

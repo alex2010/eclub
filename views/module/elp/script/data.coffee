@@ -22,7 +22,7 @@ role = [
     menu: [
         key: 'pClass'
         icon: 'education'
-        href: '#!/home/pClass'
+        href: '#!/club/edit/pClass'
         row: 65
     ]
     permission:['wechat']
@@ -35,31 +35,31 @@ role = [
         key: 'activity'
         icon: 'blackboard'
         label: '活动'
-        href: '#!/list/activity'
+        href: '#!/act'
         row: 20
     ,
         key: 'search'
         icon: 'search'
         label: '家人'
-        href: '#!/search'
+        href: '#!/club'
         row: 30
     ,
         key: 'ds'
         icon: 'gift'
         label: '供需'
-        href: '#!/list/ds'
+        href: '#!/ds'
         row: 40
     ,
         key: 'project'
         icon: 'tree-deciduous'
         label: '项目'
-        href: '#!/list/project'
+        href: '#!/project'
         row: 50
     ,
         key: 'post'
         icon: 'file'
         label: '文章'
-        href: '#!/list/post'
+        href: '#!/post'
         row: 60
     ]
     permission: ['wechat']
@@ -139,6 +139,14 @@ roleMap = [
     description: 'p成员'
 ]
 
+group = [
+    title: '创富组'
+    leader:
+        _id: 'dd'
+        username: '霄红'
+    manifesto: '好好睡觉 天天数钱'
+    description: '，Node.js的出现也使持续十年的云端一体梦想终于成真。 在所有App都努力迈向全实时能力的当下，移动App的研发也愈发需要性能和功能更强的新型开发框架作为强大的技术后盾。'
+]
 pubAccount = [
     'appId': 'wx2867dd2c8647a5c5'
     'code': 'ELPfamily'
@@ -179,6 +187,7 @@ module.exports =
 
     data:
         'role:title': role
+        'group:title': group
 #        'user:username': user
 #        'roleMap:role': roleMap
 #        'org:title': org

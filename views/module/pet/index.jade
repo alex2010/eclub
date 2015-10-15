@@ -1,11 +1,15 @@
 extends inc/main
 
-block head
-    meta(name="google-site-verification" content="DRE22JOyTgZ1k5WHZqkODet2Vh7CdIwKPf8LzRSFczk")
+
+block style
+    :less(minify=true)
+        .imgSide {
+            height: 110px;
+        }
+
 block content
     section#activity.s.s1
         h3 活动
-        - var _slideInfo = 'actInfo.jade'
         if slides.length
             #slide.carousel.slide(data-ride='carousel')
                 .carousel-inner
@@ -21,16 +25,11 @@ block content
     section#reading.s.s2
         .container
             h3 文章
-            .row
+            .row.boxList
                 each it in post
                     .col-md-6
-                        .postItem
-                            != f.imgItem(it, c)
-                            h4!= f.link(it)
-                            .author
-                                a.pull-left= it.lastUpdated.pattern('yyyy-MM-dd HH:mm')
-                            .content
-                                p=  it.brief || ''
+                        -it.brief = it.brief.dStr(50)
+                        include inc/boxItem
 
     section.sp.sp2
         .container

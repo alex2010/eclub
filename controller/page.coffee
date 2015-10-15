@@ -7,14 +7,14 @@ String::splitCap = (i, t)->
     (it.capitalize() for it in @split(i)).join(t)
 pageOpt = (req)->
     c = req.c
+    code = c.code
 
-    if req.originalUrl is '/consoles'
+    if req.originalUrl.indexOf('/console') > -1
         libPath = "#{c.resPath}/upload/console/lib/"
     else
-        libPath = "#{c.resPath}/upload/#{c.code}/lib/"
-    resPath = "#{c.resPath}/upload/#{c.code}/"
+        libPath = "#{c.resPath}/upload/#{code}/lib/"
 
-    code = c.code
+    resPath = "#{c.resPath}/upload/#{code}/"
 
     tRender: jade.renderFile
     mob: req.query.mob
@@ -25,7 +25,7 @@ pageOpt = (req)->
     c: c
     app: 'main'
     f: require('../ext/tmpl')
-    cstr: JSON.stringify(_.pick(c, 'code','name', 'url', '_id','resPath'))
+    cstr: JSON.stringify(_.pick(c, 'code', 'name', 'url', '_id', 'resPath'))
     libPath: libPath
     resPath: resPath
 #    cssPath: (name = 'css')->
@@ -42,6 +42,7 @@ pageOpt = (req)->
 
 pre = (req)->
     ctx = pageOpt(req)
+
     if req.query.dev
         ctx.dev = true
     ps = req.params
@@ -56,7 +57,7 @@ pickScript = (ctx, req)->
 
     sc = require("../views/module/#{ctx.c.code}/script/tmplScript")
 
-    initOpt = sc._init(ctx,req) || {}
+    initOpt = sc._init(ctx, req) || {}
 
     opt = if sc[ctx.index]
         sc[ctx.index](ctx, req) || {}
@@ -66,7 +67,7 @@ pickScript = (ctx, req)->
         {}
 
     opt.i18 = (cb)->
-        dao.find ctx.c.code, "i18n", {lang:req.query.lang || 'zh'}, {},(res)->
+        dao.find ctx.c.code, "i18n", {lang: req.query.lang || 'zh'}, {}, (res)->
             langs = {}
             for it in res
                 langs[it.key] = it.val
@@ -80,6 +81,7 @@ render = (req, rsp, ctx)->
     dao.pick(_mdb, 'cache').ensureIndex time: 1,
         expireAfterSeconds: 7200
         background: true
+
     async.parallel opt, (err, res)->
         _.extend ctx, res
         str = jade.renderFile("#{req.fp}/#{ctx.index}.jade", ctx)

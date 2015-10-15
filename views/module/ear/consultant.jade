@@ -85,19 +85,24 @@ block content
             .row.article.pt20
                 .col-md-8.article-main
                     +panel('验配师介绍')
-                        .thumbnail
-                            != f.imgItem(local,c,'portrait')
-                        .caption
-                            h2#username.media-heading= username
-                            dl.dl-horizontal
-                                if exp
-                                    +ddItem('入行时间',exp.pattern('yyyy-MM-dd'))
-                                +ddItem('电话号码',phone)
-                                +ddItem('工作职称',workTitle)
-                                +ddItem('所学专业',major)
+                        .row
+                            .col-md-5
+                                .thumbnail!= f.imgItem(locals,c,'head')
+                            .col-md-7
+                                .caption
+                                    h2#username.media-heading= username
+                                    dl.dl-horizontal
+                                        if exp
+                                            +ddItem('入行时间',exp.pattern('yyyy-MM-dd'))
+                                        +ddItem('电话号码',phone)
+                                        +ddItem('工作职称',workTitle)
+                                        +ddItem('所学专业',major)
                         if shop
                             h4 所属验配中心
-                            div: a#shop(href='/shop/#{shop._id}' sid=shop._id)= shop.title
+                            if shop._id
+                                div: a#shop(href='/shop/#{shop._id}' sid=shop._id)= shop.title
+                            else
+                                div= shop.title
                             p 地址：#[span#shop_addr= shop.address] 【#[span#shop_phone=shop.phone]】
 
                         if description
@@ -105,15 +110,16 @@ block content
                             p.tightening= description
                         p.text-center
                             a(href=f.navUrl('apply/order')).btn.btn-primary.btn-lg 问诊预约
+                    if strength
+                        +panel('专业特长')
+                            .row
+                                =strength
                     -var brandArr=goodAtBrand
                     if brandArr && brandArr!=[]
                         +panel('擅长品牌')
                             .row
                                 each it,i in brandArr
-                                    if i%2==1
-                                        +thumbnail(it)(clearfix=true)
-                                    else
-                                        +thumbnail(it)
+                                    +thumbnail(it).col-xs-3
                     if comments
                         +panel('用户评价')
 

@@ -16,7 +16,8 @@ extendRes = (u,r,name)->
     if r[name]
         if u[name]
             for it in r[name]
-                u[name].pushById it, 'key'
+                if u[name].pushById
+                    u[name].pushById it, 'key'
         else
             u[name] = r[name]
         u[name].sortBy 'row', true

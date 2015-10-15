@@ -2,75 +2,64 @@ role = [
     title: 'admin'
     label: '管理员'
     type: 0
-    res:
-        menu:
-            site: 2
-            data: 3
-            wechat: 4
-            tmpl: 5
-            file: 6
-            userRole: 7
-
-        entities:
-            activity: 1
-            topic: 2
-            post: 3
-            content: 4
-            head: 5
-            thread: 6
-            cat: 7
-            link: 8
-            venue: 9
-
-            participant: 'x'
-            community: 'x'
-            role: 'x'
-            wechat: 'x'
-            codeMap: 'x'
-        permission:
-            page: 'console'
+    entities: [
+        key: '_biz'
+        row: 101
+    ,
+        key: 'activity'
+        row: 110
+    ,
+        key: 'thread'
+        row: 120
+    ,
+        key: 'topic'
+        row: 130
+    ,
+        key: 'venue'
+        row: 140
+    ]
 ,
     title: 'user'
     label: '登录用户'
     type: 0
-    res:
-        menu: [
-            label: '个人信息'
-            icon: 'user'
-            href: '#!/club/profile'
-            row: 30
-        ,
-            label: '检索用户'
-            icon: 'search'
-            href: '#!/search'
-            row: 20
-        ,
-            label: '供需信息'
-            icon: 'gift'
-            href: '#!/ds'
-            row: 40
-        ,
-            label: '我的文章'
-            icon: 'file'
-            href: '#!/data/list/post'
-            row: 50
-        ,
-            label: '我的活动'
-            icon: 'th-large'
-            href: '#!/data/list/activity'
-            row: 60
-        ]
+    menu: [
+        label: '朋友圈'
+        icon: 'search'
+        href: '#!/club'
+        row: 10
+    ,
+        label: '活动管理'
+        icon: 'th-large'
+        href: '#!/act'
+        row: 20
+    ,
+        label: '文章管理'
+        icon: 'file'
+        href: '#!/post'
+        row: 30
+    ,
+
+        label: 'PET论坛'
+        icon: 'gift'
+        href: '#!/thread'
+        row: 40
+    ]
+    permission: ['wechat']
 ]
 
 user = [
     username: code
-    password: 'psd'
 ,
     username: 'u' + code
-    password: 'psd'
 ]
-
-
+group = [
+    title: 'Tyler运动分享社'
+    leader:
+        _id: 'dd'
+        username: 'Tyler'
+    manifesto: '不吃饭多运动'
+    description: '，Node.js的出现也使持续十年的云端一体梦想终于成真。 在所有App都努力迈向全实时能力的当下，移动App的研发也愈发需要性能和功能更强的新型开发框架作为强大的技术后盾。'
+]
 module.exports =
     community:
         code: code
@@ -80,42 +69,49 @@ module.exports =
         nav: [
             label: '活动'
             href: '/activityList'
-            children: [
-                label: '英语角'
-            ,
-                label: '工作坊'
-            ,
-                label: '旅行分享'
-            ,
-                label: '周末趴'
-            ,
-                label: '户外'
-            ]
+#            children: [
+#                label: '英语角'
+#                href: '/activityList?cat=salon'
+#            ,
+#                label: '工作坊'
+#                href: '/activityList?cat=workshop'
+#
+#            ,
+#                label: '旅行分享'
+#                href: '/activityList?cat=petup'
+#
+#            ,
+#                label: '周末趴'
+#                href: '/activityList?cat=party'
+#            ,
+#                label: '户外'
+#                href: '/activityList?cat=outdoor'
+#            ]
         ,
             label: '文章'
             href: '/postList'
-            children: [
-                label: '英文'
-                href: '/postList?cat=en'
-            ,
-                label: '旅行'
-                href: '/postList?cat=travel'
-            ,
-                label: '职场'
-                href: '/postList?cat=work'
-            ,
-                label: '情感'
-                href: '/postList?cat=love'
-            ,
-                label: '健身'
-                href: '/postList?cat=fitness'
-            ,
-                label: '格调'
-                href: '/postList?cat=life'
-            ,
-                label: '成长'
-                href: '/postList?cat=growing'
-            ]
+#            children: [
+#                label: '英文'
+#                href: '/postList?cat=en'
+#            ,
+#                label: '情感'
+#                href: '/postList?cat=love'
+#            ,
+#                label: '旅行'
+#                href: '/postList?cat=travel'
+#            ,
+#                label: '健身'
+#                href: '/postList?cat=fitness'
+#            ,
+#                label: '职场'
+#                href: '/postList?cat=work'
+#            ,
+#                label: '格调'
+#                href: '/postList?cat=life'
+#            ,
+#                label: '成长'
+#                href: '/postList?cat=growing'
+#            ]
         ]
         foot: [
             label: '关于我们'
@@ -133,13 +129,15 @@ module.exports =
 
     data:
         'role:title': role
-        'user:username': user
-        'i18n:key': require('./zh')
+        'group:title': group
 
-    member: [
-        "#{code},admin"
-        "u#{code},user"
-    ]
+#        'user:username': user
+#        'i18n:key': require('./zh')
+#
+#    member: [
+#        "#{code},admin"
+#        "u#{code},user"
+#    ]
 
 
 

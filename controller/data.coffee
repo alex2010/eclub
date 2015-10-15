@@ -45,7 +45,7 @@ _cv = (v, k, obj)->
             Date.parseLocal(v)
         else
             v
-_afterEdit = (item,entity)->
+_afterEdit = (item, entity)->
     if entity is 'community'
         app._community[item.url] = item
 
@@ -90,11 +90,11 @@ dataController =
 
     list: (req, rsp) ->
         code = req.c.code
-        qu = req.query || {q:{}}
+        qu = req.query || {q: {}}
         op =
             skip: util.d(qu, 'offset') || 0
             limit: util.d(qu, 'max') || 10
-            sort:[
+            sort: [
                 ['lastUpdated', 'desc']
             ]
         if qu.p
@@ -159,6 +159,7 @@ dataController =
                 rsp.send errors: rt
                 return
 
+        _rsMsg = bo._rsMsg
         _attrs = if bo._attrs
             bo._attrs.split(',')
         else
@@ -169,11 +170,11 @@ dataController =
         bo =
             $set: bo
         dao.findAndUpdate code, entity, _id: req.params.id, bo, (item)->
-            _afterEdit(item,entity)
+            _afterEdit(item, entity)
 
             gs(it)(req, item) for it in after.split(',') if after
             _attrs.push('_id')
-            rsp.send util.r(_.pick(item, _attrs), 'm_update_ok', entity)
+            rsp.send util.r(_.pick(item, _attrs), _rsMsg || 'm_update_ok', entity)
 
     save: (req, rsp) ->
         code = req.c.code
@@ -202,6 +203,7 @@ dataController =
                 rsp.send errors: rt
                 return
 
+        _rsMsg = bo._rsMsg
         _attrs = if bo._attrs
             bo._attrs.split(',')
         else
@@ -211,7 +213,7 @@ dataController =
 
         dao.save code, entity, bo, (item)->
             for s in item
-                _afterEdit(s,entity)
+                _afterEdit(s, entity)
                 gs(it)(req, s) for it in after.split(',') if after
 
             if item.length is 1
@@ -219,7 +221,7 @@ dataController =
                 ri = _.pick(item[0], _attrs)
             else
                 ri = item
-            rsp.send util.r(ri, 'm_create_ok', entity)
+            rsp.send util.r(ri, _rsMsg || 'm_create_ok', entity)
 
     del: (req, rsp) ->
         code = req.c.code
@@ -260,17 +262,18 @@ dataController =
             qs._id = new oid(qs._id)
 
         bo = req.body
+        _rsMsg = bo._rsMsg
         bo = cleanItem bo
 
         op = {}
-        rt =  bo._root
+        rt = bo._root
         delete bo._root
         if rt
             op["$set"] = rt
         op["$#{req.params.type}"] = {}
         op["$#{req.params.type}"][req.params.prop] = bo
         dao.findAndUpdate code, entity, qs, op, (doc)->
-            rsp.send util.r(doc, 'm_create_ok')
+            rsp.send util.r(doc, _rsMsg || 'm_create_ok')
 
 
 module.exports = dataController

@@ -1,10 +1,10 @@
 extends inc/main
 
 block content
-    .container
-        include ../../inc/crumb
+    #activity.container
         .article
             .col-md-8
+                include ../../inc/crumb
                 include ../../inc/mod/activity
                 hr
                 - cc = _cat[cat]
@@ -12,23 +12,18 @@ block content
                     blockquote
                         h4= cc.title
                         p!= cc.content
-
             .col-md-4
-                .pa
-                h3 主题活动
-                ul
-                    each it in cats
-                        li!= f.link(it)
+                +panel('活动主题').panel-default
+                    .list-group
+                        each it in cats
+                            != f.link(it,null,'list-group-item')
 
-                h3 最新活动
-                ul
-                    each it in latest
-                        li!= f.link(it)
+                +panel('最新活动').panel-default
+                    .list-group
+                        +media(latest,{})
     script.
         _ft = !{JSON.stringify(feeTable || '[]')};
-        _pa = !{JSON.stringify(participant || '[]')};
+        _pa = !{JSON.stringify(participant || '{}')};
 
 block st
     :coffee(bare=true minify=true)
-        cf.loadJS "#{cf.modPath}router.js",->
-            cf.loadJS "#{cf.modPath}enroll.js"

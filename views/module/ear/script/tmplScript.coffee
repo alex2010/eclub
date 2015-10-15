@@ -4,6 +4,10 @@ module.exports =
             limit: 5
             sort:
                 row: -1
+        wt: (cb)->
+            dao.get ctx.c.code, 'pubAccount', {}, (res)->
+                cb(null, res)
+
         _cat: (cb) ->
             dao.find ctx.c.code, 'cat', {}, {}, (res)->
                 opt = {}
@@ -30,7 +34,7 @@ module.exports =
         productList: (cb)->
             dao.find ctx.c.code, 'product', {}, opt, (res)->
                 cb null, res
-    post: (ctx,req,res) ->
+    post: (ctx, req, res) ->
         postList: (cb)->
             opt =
                 skip: 0
@@ -40,66 +44,58 @@ module.exports =
             dao.find ctx.c.code, 'post', {}, opt, (res)->
                 cb(null, res)
 
-    itemList: (ctx,req,res) ->
+    itemList: (ctx, req, res) ->
         opt =
             limit: 5
             sort:
                 row: -1
         et = req.query.entity.toString()
-        filter=
-            type:"post"
+        filter =
+            type: "post"
             code:
-                $regex:"#{et}_.*"
-        matchArr=[]
-        data={}
+                $regex: "#{et}_.*"
+        matchArr = []
+        data = {}
 
-        _item:(cb) ->
-            dao.find ctx.c.code, 'cat' , filter, {}, (res)->
+        _item: (cb) ->
+            dao.find ctx.c.code, 'cat', filter, {}, (res)->
                 for it in res
                     matchArr.push it
-                matchArr.sort (a,b)->
-                    if a.row>b.row
+                matchArr.sort (a, b)->
+                    if a.row > b.row
                         return -1
-                    else if a.row<b.row
+                    else if a.row < b.row
                         return 1
                     else
                         return 0
 
-                dao.find ctx.c.code, 'post', {cat:matchArr[0].code}, opt, (res) ->
-                    data.objA=res
-                    dao.find ctx.c.code, 'post', {cat:matchArr[1].code}, opt, (res) ->
-                        data.objB=res
-                        dao.find ctx.c.code, 'post', {cat:matchArr[2].code}, opt, (res) ->
-                            data.objC=res
+                dao.find ctx.c.code, 'post', {cat: matchArr[0].code}, opt, (res) ->
+                    data.objA = res
+                    dao.find ctx.c.code, 'post', {cat: matchArr[1].code}, opt, (res) ->
+                        data.objB = res
+                        dao.find ctx.c.code, 'post', {cat: matchArr[2].code}, opt, (res) ->
+                            data.objC = res
 
-                            data.titleA=matchArr[0].title
-                            data.titleB=matchArr[1].title
-                            data.titleC=matchArr[2].title
-                            cb(null,data)
-    seckillingList: (ctx,req,rsp) ->
+                            data.titleA = matchArr[0].title
+                            data.titleB = matchArr[1].title
+                            data.titleC = matchArr[2].title
+                            cb(null, data)
+    seckillingList: (ctx, req, rsp) ->
         opt =
-            limit:5
+            limit: 5
             sort:
-                row:-1
-        filter={}
-        list:(cb) ->
-            dao.find ctx.c.code, 'seckilling' , filter, opt, (res)->
+                row: -1
+        filter = {}
+        list: (cb) ->
+            dao.find ctx.c.code, 'seckilling', filter, opt, (res)->
                 cb(null, res)
 
-    cardList: (ctx,req,rsp)->
+    cardList: (ctx, req, rsp)->
         opt =
-            limit:5
+            limit: 5
             sort:
-                row:-1
-        filter={}
-        list:(cb) ->
-            dao.find ctx.c.code, 'card' , filter , opt , (res)->
-                cb(null,res)
-
-
-    wechat: (ctx)->
-        wt: (cb)->
-            dao.get ctx.c.code, 'pubAccount', {}, (res)->
+                row: -1
+        filter = {}
+        list: (cb) ->
+            dao.find ctx.c.code, 'card', filter, opt, (res)->
                 cb(null, res)
-
-

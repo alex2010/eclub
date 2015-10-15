@@ -1,10 +1,10 @@
-doctype html
+block script
+    - main = 'admin'
+    if mode
+        -libPath = 'http://127.0.0.1:8089/'
+    doctype html
 html
     head
-        meta(charset='UTF-8')
-        - main = 'admin'
         include ./inc/smeta
-
     body
-
-    include ./inc/ssub
+        include ./inc/ssub
