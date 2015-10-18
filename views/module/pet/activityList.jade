@@ -6,9 +6,7 @@ block content
                 include ../../inc/crumb
                 #activityList.boxList
                     each it in items
-                        +media(it)
-
-                        //include inc/boxItem
+                        include inc/boxItem
                     .nav
                         ul.pager
                             if _skip != 0
@@ -17,7 +15,7 @@ block content
                                 li.pull-right: a(href='/activityList?skip=#{_skip + _limit}') 下一页
             .col-md-4
                 +panel('活动主题').panel-danger
-                    a.list-group-item(href='/postList') 全部
                     .list-group
+                        a.list-group-item(href='/postList') 全部
                         each it in cats
                             != f.link(it,null,'list-group-item')

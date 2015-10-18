@@ -170,16 +170,13 @@ module.exports =
                                     wunid: res.unionid
                                     info:
                                         address: "#{res.province} #{res.city}"
-                                user["w_#{wCode}"] = res.openid
+                            user["w_#{wCode}"] = res.openid
                             if res.headimgurl and (!user.refFile or !user.refFile.portrait)
                                 fn = user._id.toString() + '.jpg'
-                                #                                log res.headimgurl
-                                #                                log "#{util.sPath(code)}/#{fn}"
-                                gs('fetchFile') res.headimgurl, "#{util.sPath(code)}/#{fn}", ->
+                                gs('fetchFile') res.headimgurl, "#{util.sPath(code)}/portrait/#{fn}", ->
                                 user.refFile =
                                     portrait: [fn]
-                            dao.save code, 'user', user
-
+                            dao.save code, 'user:_id', user
                             rsp.redirect ru
                 else
                     rsp.redirect ru

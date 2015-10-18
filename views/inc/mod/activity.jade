@@ -1,4 +1,4 @@
-h2=title
+h2(title=title)=title
     small= subTitle
     if _cat && _cat[cat]
         span.cat.pull-right 【#{_cat[cat].title}】
@@ -22,7 +22,7 @@ if master && master.length
 //    .reg
 //h3 地图
 //
-if title && title.indexOf('秋趴')>-1
+if title && title.indexOf('秋趴') > -1
     .regBtn
         a(href=f.navUrl('enroll')).btn.btn-lg.btn-info.btn-block&attributes(reg) 我要报名
 

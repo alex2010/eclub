@@ -367,7 +367,6 @@ content=[
 #dao xun
 ]
 
-
 feedback = [
     cat: 'femaleClass'
     title: '1年的蜕变'
@@ -772,6 +771,8 @@ qa = [#首页
     question:'问题五'
     answer:'回答五'
 ]
+r = (file)->
+    require "./data/#{file}"
 
 module.exports =
     community:
@@ -783,37 +784,36 @@ module.exports =
         nav: [
             label: "首页"
             href: "/"
-            cur:'index'
+            cur: 'index'
             labelCls: "label-info"
         ,
             label: "体验式服务"
             href: "/serviceChannel"
-            cur:'serviceChannel'
+            cur: 'serviceChannel'
             labelCls: "label-exper"
         ,
             label: "精英培训学院"
             href: "/courseChannel"
-            cur:'courseChannel'
+            cur: 'courseChannel'
             labelCls: "label-warning"
         ,
             label: "女子学堂"
             href: "/schoolChannel"
-            cur:'schoolChannel'
+            cur: 'schoolChannel'
             labelCls: "label-success"
         ,
             label: "精英团队"
             href: "/teamChannel"
-            cur:'teamChannel'
+            cur: 'teamChannel'
             labelCls: "label-team"
         ,
             label: "异业联盟"
             href: "/partnerChannel"
-            cur:'partnerChannel'
+            cur: 'partnerChannel'
             labelCls: "label-danger"
         ]
+
     data:
-        'role:title': role
-        'user:username': user
         'i18n:key': require('./zh')
         'cat:label':cat
         'post:title':post
@@ -821,6 +821,15 @@ module.exports =
         'partner:title':partner
         'qa:question':qa
         'service:title': service
+        'role:title': r 'role'
+        'user:username': r 'user'
+        'post:title': r 'post'
+        'content:title': r 'content'
+        'partner:title': r 'partner'
+        'qa:question': r 'qa'
+        'service:title': r 'service'
+        'cat:code': r 'cat'
+
     member: [
         "#{code},admin"
     ]

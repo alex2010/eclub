@@ -8,6 +8,8 @@ args = null
 process.argv.forEach (val, index, array)->
     args = array
 
+
+
 `app = {};
 _ = require('underscore');
 _mdb = 'main';

@@ -48,6 +48,8 @@ pre = (req, rsp, next)->
         if opt
             dao.delItem _mdb, 'cache', opt, (res)->
                 log 'del...'
+        if req.query._r
+            rsp.end 'cleaned'
 
     k = ck req
     if req._html
@@ -56,6 +58,7 @@ pre = (req, rsp, next)->
         path = "#{_path}/public/res/upload/#{req.c.code}/html/#{req._html}"
         rsp.sendfile(path)
         return
+
     dao.get _mdb, 'cache', k: k, (res)->
         if res and !app.env
             rsp.end res.str
