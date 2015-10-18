@@ -356,6 +356,18 @@ post=[
             sex:'boy'
 ]
 
+content=[
+    title:''
+    cat:'workShow'
+    row:1
+    content:''
+    refFile:
+        head:[]
+#6 ge
+#dao xun
+]
+
+
 feedback = [
     cat: 'femaleClass'
     title: '1年的蜕变'
@@ -657,6 +669,10 @@ course = [
             'asdfdsfsdf'
         ]
     ]
+    itemsTable:[
+        title:'收费标准'
+        content: '90天课程，收费8990'
+    ]
     price: 9000
     discount: 8000
 ]
@@ -757,9 +773,6 @@ qa = [#首页
     answer:'回答五'
 ]
 
-
-
-
 module.exports =
     community:
         code: code
@@ -808,7 +821,6 @@ module.exports =
         'partner:title':partner
         'qa:question':qa
         'service:title': service
-
     member: [
         "#{code},admin"
     ]
