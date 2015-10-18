@@ -1,5 +1,5 @@
 .container.actSlide
-    h2!= f.link(it)
+    h2(title=it.title)!= f.link(it)
         small= it.subTitle
         if it.cat
             span 【#{it.cat}】

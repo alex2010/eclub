@@ -3,13 +3,12 @@ extends inc/main
 block content
     #post.container
         .row
-            #main.col-md-8
+            .col-md-8
                 include ../../inc/crumb
                 #postList.boxList
                     each it in items
                         include inc/boxItem
-            #side.col-md-4
-
+            .col-md-4
                 +panel('文章主题').panel-danger
                     .list-group
                         a.list-group-item(href='/postList') 全部

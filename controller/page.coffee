@@ -98,14 +98,17 @@ module.exports =
         render req, rsp, pre(req)
 
     entity: (req, rsp) ->
-        ctx = pre(req)
-        filter = {}
-        if req.params.attr
-            filter[req.params.attr] = req.params.id
+        if req.params.id.length is 24
+            ctx = pre(req)
+            filter = {}
+            if req.params.attr
+                filter[req.params.attr] = req.params.id
+            else
+                filter._id = req.params.id
+            dao.get ctx.c.code, req.params.entity, filter, (item)->
+                unless item
+                    rsp.end('no item')
+                ctx = _.extend ctx, item
+                render req, rsp, ctx
         else
-            filter._id = req.params.id
-        dao.get ctx.c.code, req.params.entity, filter, (item)->
-            unless item
-                rsp.end('no item')
-            ctx = _.extend ctx, item
-            render req, rsp, ctx
+            rsp.end 'wrong param'

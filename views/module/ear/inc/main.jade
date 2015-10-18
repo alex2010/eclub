@@ -1,12 +1,17 @@
+
 extends ../../../main
 include ../../../inc/mixin
+
+block headRes
+    <!--[if lte IE 9]>
+    <!-- 适合于IE6及一下 -->
+    <link rel="stylesheet" type="text/css" href="#{libPath}ie8.css" />
+    <![endif]-->
 
 block append js
     if !mode
         script(src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js')
     script(src='#{libPath}router.js')
-
-block append js
 
 block ctn
     mixin thumbnail(opt,name)
