@@ -4,7 +4,7 @@ module.exports = [
     row:6
     content:''
     refFile:
-        head:[]
+        head:['']
         slide:[]
 ,
     title:'电视台栏目'
@@ -12,7 +12,7 @@ module.exports = [
     row:5
     content:''
     refFile:
-        head:[]
+        head:['']
         slide:[]
 ,
     title:'杂志合作'
@@ -20,7 +20,7 @@ module.exports = [
     row:4
     content:''
     refFile:
-        head:[]
+        head:['']
         slide:[]
 ,
     title:'影视剧作品'
@@ -28,7 +28,7 @@ module.exports = [
     row:3
     content:''
     refFile:
-        head:[]
+        head:['']
         slide:[]
 ,
     title:'T台秀场'
@@ -36,7 +36,7 @@ module.exports = [
     row:2
     content:''
     refFile:
-        head:[]
+        head:['']
         slide:[]
 ,
     title:'大型活动承接'
@@ -44,7 +44,7 @@ module.exports = [
     row:1
     content:''
     refFile:
-        head:[]
+        head:['']
         slide:[]
 #6 ge
 #dao xun

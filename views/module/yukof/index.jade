@@ -57,14 +57,14 @@ block content
                     .tab-pane.active.fade.in(id="news")
                         .list-group
                             each it in news
-                                a.list-group-item
+                                a.list-group-item(href='/post/#{it._id}')
                                     span.badge More
                                     h5= it.title
                                     p= it.pubTime.pattern()
                     .tab-pane.fade(id="knowledge")
                         .list-group
                             each it in knowledge
-                                a.list-group-item
+                                a.list-group-item(href='/post/#{it._id}')
                                     span.badge More
                                     h5= it.title
                                     p= it.pubTime.pattern()
@@ -76,7 +76,7 @@ block content
                 .panel-body
                     .list-group
                         each it in jobs
-                            a.list-group-item
+                            a.list-group-item(href='/post/#{it._id}')
                                 .media
                                     .media-left
                                         .arrow-right
@@ -95,61 +95,19 @@ block content
                 span.ctn 点击更多
     .tab-y-2
         ul.nav.nav-tabs
-            li.active
-                a(href="#cooperStar",data-toggle="tab") 合作名星
-            li
-                a(href="#TVshow",data-toggle="tab") 电视台栏目
-            li
-                a(href="#cooperMagazine",data-toggle="tab") 杂志合作
-            li
-                a(href="#filmWork",data-toggle="tab") 影视剧合作
-            li
-                a(href="#tStation",data-toggle="tab") T台秀场
-            li
-                a(href="#undertake",data-toggle="tab") 大型活动承接
+            each it,i in contentLabel
+                -var cls=''
+                if i==0
+                    -cls=''+' active'
+                li(class='#{it.code} #{cls}')
+                    a(href='##{it.code}',data-toggle="tab")=it.label
         .tab-content
-            .tab-pane.active.fade.in#cooperStar
-                .row
-                    -var i=0
-                    while i<6
-                        -i++
-                        .col-md-2
-                            img.img-responsive(src="#{resPath}images/testImg_07.jpg",alt="")
-            .tab-pane.fade#TVshow
-                .row
-                    -var i=0
-                    while i<6
-                        -i++
-                        .col-md-2
-                            img.img-responsive(src="#{resPath}images/testImg_07.jpg",alt="")
-            .tab-pane.fade#cooperMagazine
-                .row
-                    -var i=0
-                    while i<6
-                        -i++
-                        .col-md-2
-                            img.img-responsive(src="#{resPath}images/testImg_07.jpg",alt="")
-            .tab-pane.fade#filmWork
-                .row
-                    -var i=0
-                    while i<6
-                        -i++
-                        .col-md-2
-                            img.img-responsive(src="#{resPath}images/testImg_07.jpg",alt="")
-            .tab-pane.fade#tStation
-                .row
-                    -var i=0
-                    while i<6
-                        -i++
-                        .col-md-2
-                            img.img-responsive(src="#{resPath}images/testImg_07.jpg",alt="")
-            .tab-pane.fade#undertake
-                .row
-                    -var i=0
-                    while i<6
-                        -i++
-                        .col-md-2
-                            img.img-responsive(src="#{resPath}images/testImg_07.jpg",alt="")
+            each it,i in contentLabel
+                -var cls='tab-pane fade'
+                if i == 0
+                    -cls=cls+' active in'
+                div(class='#{cls}',id='#{it.code}')
+                    != f.imgItem(it, c, 'head', 'img-responsive')
     .adv-y-1
         img.img-responsive(src="#{resPath}images/adv_29.jpg",alt="")
     .tab-y-3

@@ -42,6 +42,17 @@ module.exports =
             dao.find ctx.c.code, 'qa', {}, opt, (res)->
                 cb(null,res)
 
+        contentLabel:(cb)->
+            filter=
+                code:
+                    $regex: 'workShow_.*'
+            opt =
+                limit:6
+                sort:
+                    row:-1
+            dao.find ctx.c.code, 'cat', filter, opt,(res)->
+                cb(null,res)
+
     serviceChannel:(ctx,req,rsp) ->
         privateImageMgm_pp:(cb) ->
             opt =
