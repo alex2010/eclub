@@ -1,13 +1,214 @@
 module.exports = [
-    title: '异业联盟战略规划'
-    cat: 'partner'
-    brief: '内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要'
-    content: ''
+    title:'异业联盟战略规划'
+    cat:'partner'
+    brief:'内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要'
+    content:''
+    pubTime:new Date()
     refFile:
-        head: ['']
+        head:['']
     author:
-        username: '学堂版主'
+        username:'学堂版主'
         userinfo:
-            age: 18
-            sex: 'boy'
+            age:18
+            sex:'boy'
+,
+    title:'行业新闻一'
+    cat:'news'
+    brief:'摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要'
+    content:'文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容'
+    pubTime:new Date()
+    refFile:
+        head:['']
+    author:
+        username:''
+        userinfo:
+            age:28
+            sex:'boy'
+,
+    title:'行业新闻二'
+    cat:'news'
+    brief:'摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要'
+    content:'文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容'
+    pubTime:new Date()
+    refFile:
+        head:['']
+    author:
+        username:''
+        userinfo:
+            age:28
+            sex:'boy'
+,
+    title:'行业新闻三'
+    cat:'news'
+    brief:'摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要'
+    content:'文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容'
+    pubTime:new Date()
+    refFile:
+        head:['']
+    author:
+        username:''
+        userinfo:
+            age:28
+            sex:'boy'
+,
+    title:'行业新闻四'
+    cat:'news'
+    brief:'摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要'
+    content:'文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容'
+    pubTime:new Date()
+    refFile:
+        head:['']
+    author:
+        username:''
+        userinfo:
+            age:28
+            sex:'boy'
+,
+    title:'行业新闻五'
+    cat:'news'
+    brief:'摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要'
+    content:'文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容'
+    pubTime:new Date()
+    refFile:
+        head:['']
+    author:
+        username:''
+        userinfo:
+            age:28
+            sex:'boy'
+,
+    title:'行业知识一'
+    cat:'knowledge'
+    brief:'摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要'
+    content:'文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容'
+    pubTime:new Date()
+    refFile:
+        head:['']
+    author:
+        username:''
+        userinfo:
+            age:28
+            sex:'boy'
+,
+    title:'行业知识二'
+    cat:'knowledge'
+    brief:'摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要'
+    content:'文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容'
+    pubTime:new Date()
+    refFile:
+        head:['']
+    author:
+        username:''
+        userinfo:
+            age:28
+            sex:'boy'
+,
+    title:'行业知识三'
+    cat:'knowledge'
+    brief:'摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要'
+    content:'文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容'
+    pubTime:new Date()
+    refFile:
+        head:['']
+    author:
+        username:''
+        userinfo:
+            age:28
+            sex:'boy'
+,
+    title:'行业知识四'
+    cat:'knowledge'
+    brief:'摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要'
+    content:'文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容'
+    pubTime:new Date()
+    refFile:
+        head:['']
+    author:
+        username:''
+        userinfo:
+            age:28
+            sex:'boy'
+,
+    title:'行业知识五'
+    cat:'knowledge'
+    brief:'摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要'
+    content:'文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容'
+    pubTime:new Date()
+    refFile:
+        head:['']
+    author:
+        username:''
+        userinfo:
+            age:28
+            sex:'boy'
+,
+    title:'时装戏'
+    cat:'jobs'
+    nums:2
+    brief:'摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要'
+    content:'文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容'
+    pubTime:new Date()
+    refFile:
+        head:['']
+    author:
+        username:''
+        userinfo:
+            age:28
+            sex:'boy'
+,
+    title:'时装戏二'
+    cat:'jobs'
+    nums:4
+    brief:'摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要'
+    content:'文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容'
+    pubTime:new Date()
+    refFile:
+        head:['']
+    author:
+        username:''
+        userinfo:
+            age:28
+            sex:'boy'
+,
+    title:'时装戏三'
+    cat:'jobs'
+    nums:6
+    brief:'摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要'
+    content:'文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容'
+    pubTime:new Date()
+    refFile:
+        head:['']
+    author:
+        username:''
+        userinfo:
+            age:28
+            sex:'boy'
+,
+    title:'时装戏四'
+    cat:'jobs'
+    nums:2
+    brief:'摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要'
+    content:'文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容'
+    pubTime:new Date()
+    refFile:
+        head:['']
+    author:
+        username:''
+        userinfo:
+            age:28
+            sex:'boy'
+,
+    title:'时装戏五'
+    cat:'jobs'
+    nums:8
+    brief:'摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要'
+    content:'文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容'
+    pubTime:new Date()
+    refFile:
+        head:['']
+    author:
+        username:''
+        userinfo:
+            age:28
+            sex:'boy'
 ]

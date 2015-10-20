@@ -11,7 +11,7 @@ module.exports = [
         key: 'course'
         row: 120
     ,
-        key: 'partner'
+        key: 'project'
         row: 130
     ]
 ,

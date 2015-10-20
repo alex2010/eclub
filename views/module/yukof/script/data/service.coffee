@@ -144,62 +144,62 @@ module.exports = [
         price: 140
     ]
 ,
-    title: 'vip线下活动和课堂'
-    cat: 'vip'
-    code: 'vip_a'
-    content: ''
+    title:'vip线下活动和课堂'
+    cat:'vip'
+    code:'vip_a'
+    content:''
     refFile:
-        head: []
-    pubTime: new Date()
-    package: [
-        title: '青铜圣斗士'
-        description: ''
-        price: 100
+        head:[]
+    pubTime:new Date()
+    package:[
+        title:'青铜圣斗士'
+        description:''
+        price:100
     ,
-        title: '白银会员'
-        description: ''
-        price: 110
+        title:'白银会员'
+        description:''
+        price:110
     ,
-        title: '黄金剩斗士'
-        description: ''
-        price: 120
+        title:'黄金剩斗士'
+        description:''
+        price:120
     ,
-        title: '白金会员'
-        description: ''
-        price: 130
+        title:'白金会员'
+        description:''
+        price:130
     ,
-        title: '黑金'
-        description: ''
-        price: 140
+        title:'黑金'
+        description:''
+        price:140
     ]
 ,
-    title: '美丽特训营'
-    cat: 'trainingCamp'
-    code: 'trainingCamp_a'
-    content: ''
+    title:'美丽特训营'
+    cat:'trainingCamp'
+    code:'trainingCamp_a'
+    content:''
     refFile:
-        head: []
-    pubTime: new Date()
-    package: [
-        title: '特训组合套餐1'
-        description: ''
-        price: 100
+        head:[]
+    pubTime:new Date()
+    package:[
+        title:'特训组合套餐1'
+        description:''
+        price:100
     ,
-        title: '特训组合套餐2'
-        description: ''
-        price: 110
+        title:'特训组合套餐2'
+        description:''
+        price:110
     ,
-        title: '特训组合套餐3'
-        description: ''
-        price: 120
+        title:'特训组合套餐3'
+        description:''
+        price:120
     ,
-        title: '特训组合套餐4'
-        description: ''
-        price: 130
+        title:'特训组合套餐4'
+        description:''
+        price:130
     ,
-        title: '特训组合套餐5'
-        description: ''
-        price: 140
+        title:'特训组合套餐5'
+        description:''
+        price:140
     ]
 ,
     title: '体验式服务'
@@ -259,40 +259,4 @@ module.exports = [
             refFile:
                 head: ['adv-service_20.jpg']
                 poster: ['']
-]
-
-course = [
-    title: ''
-    description: ''
-    registration: ''
-    recruitment: ''
-    favourableTerms: ''
-    charge: ''
-    content: [
-        title: '第一阶段'
-        lesson: [
-            'asdfasfsadf'
-            'asdfsdfsadsf'
-            'asdfsadfasdsadfsdffdsf'
-        ]
-        homework: [
-            'asfsdfasdfdsf'
-            'asdfsadfsdf'
-            'asdfdsfsdf'
-        ]
-    ,
-        title: '第二阶段'
-        lesson: [
-            'asdfasfsadf'
-            'asdfsdfsadsf'
-            'asdfsadfasdsadfsdffdsf'
-        ]
-        homework: [
-            'asfsdfasdfdsf'
-            'asdfsadfsdf'
-            'asdfdsfsdf'
-        ]
-    ]
-    price: 9000
-    discount: 8000
 ]

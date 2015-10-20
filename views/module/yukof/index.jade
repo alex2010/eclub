@@ -56,22 +56,18 @@ block content
                 .tab-content
                     .tab-pane.active.fade.in(id="news")
                         .list-group
-                            -var i=0
-                            while i<5
-                                -i++
+                            each it in news
                                 a.list-group-item
                                     span.badge More
-                                    h5 优蔻坊美丽打造成果
-                                    p 2014.11.11
+                                    h5= it.title
+                                    p= it.pubTime.pattern()
                     .tab-pane.fade(id="knowledge")
                         .list-group
-                            -var i=0
-                            while i<5
-                                -i++
+                            each it in knowledge
                                 a.list-group-item
                                     span.badge More
-                                    h5 优蔻坊美丽打造成果
-                                    p 2014.11.11
+                                    h5= it.title
+                                    p= it.pubTime.pattern()
         .col-md-4
             .panel.panel-y-1
                 .panel-heading
@@ -79,17 +75,15 @@ block content
                         span.en Latest Jobs
                 .panel-body
                     .list-group
-                        -var i=0
-                        while i<5
-                            -i++
+                        each it in jobs
                             a.list-group-item
                                 .media
                                     .media-left
                                         .arrow-right
                                             span.glyphicon.glyphicon-arrow-right
                                     .media-body
-                                        h4 人物形象设计讲师
-                                        small 时装戏，2名
+                                        h4= it.title
+                                        small #{it.title}，#{it.nums}名
     .panel.panel-y-2
         .panel-heading
             h3.hot 作品展示
@@ -232,6 +226,5 @@ block content
                                 img.img-responsive(src="#{resPath}images/img-form_14.jpg",alt="")
                                 .caption
                                     p 培养把消费<br />变成投资的观点
-
 block st
     :coffee(bare=true,minify=true)

@@ -55,34 +55,42 @@ module.exports = [
     code: 'beauty'
     label: '美容'
     type: 'partner'
+    row:908
 ,
     code: 'makeup'
     label: '化妆'
     type: 'partner'
+    row:907
 ,
     code: 'clothing'
     label: '服装'
     type: 'partner'
+    row:906
 ,
     code: 'apparel'
     label: '服饰'
     type: 'partner'
+    row:905
 ,
     code: 'customMade'
     label: '定制'
     type: 'partner'
+    row:904
 ,
     code: 'photography'
     label: '摄影'
     type: 'partner'
+    row:903
 ,
     code: 'camera'
     label: '摄像'
     type: 'partner'
+    row:902
 ,
     code: 'wedding'
     label: '婚庆'
     type: 'partner'
+    row:901
 ,
     code: 'team_xxgw'
     label: '个人形象顾问'

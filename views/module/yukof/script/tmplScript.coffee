@@ -10,6 +10,30 @@ module.exports =
 
             dao.find ctx.c.code, 'cat', filter, opt, (res)->
                 cb(null,res)
+        news: (cb)->
+            opt=
+                limit:5
+            filter =
+                cat:'news'
+            dao.find ctx.c.code, 'post', filter, opt, (res)->
+                cb(null,res)
+        knowledge: (cb)->
+            opt=
+                limit:5
+            filter=
+                cat:'knowledge'
+            dao.find ctx.c.code, 'post', filter, opt, (res)->
+                cb(null,res)
+        jobs: (cb)->
+            opt=
+                limit:5
+            filter=
+                cat:'jobs'
+            dao.find ctx.c.code, 'post', filter, opt, (res)->
+                cb(null,res)
+
+
+    index:(ctx,req,rsp)->
         qa:(cb)->
             opt =
                 limit:5
@@ -17,6 +41,7 @@ module.exports =
                     row:-1
             dao.find ctx.c.code, 'qa', {}, opt, (res)->
                 cb(null,res)
+
     serviceChannel:(ctx,req,rsp) ->
         privateImageMgm_pp:(cb) ->
             opt =
