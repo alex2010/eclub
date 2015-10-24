@@ -7,6 +7,6 @@ module.exports =
     local_path: "http://t.ear.com:3000/res/"
     log_path: '/opt/node/public/log/'
 
-    db_host: '123.57.189.54'
-#    db_host: '127.0.0.1'
+#    db_host: '123.57.189.54'
+    db_host: '127.0.0.1'
     db_port: 27017
