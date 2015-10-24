@@ -1,33 +1,23 @@
 role = [
     title: 'admin'
+    label: '管理员'
     type: 0
-    res:
-        menu:
-            site: 2
-            data: 3
-            wechat: 4
-            userRole: 7
-        entity:
-            post: 3
-            content: 4
-            comment: 5
-            application: 6
-            cat: 7
-            link: 8
+    entities: [
+        key: '_biz'
+        row: 101
+    ,
+        key: 'comment'
+        row: 105
+    ,
+        key: 'video'
+        row: 110
 
-            community: 'x'
-            role: 'x'
-            wechat: 'x'
-            codeMap: 'x'
-        permission:
-            page: 'console'
+    ]
 ]
 
 user = [
     username: code
-    password: 'bk9ULZCWUd81eZ0vOIjLuqDvozllFEWBKM7QTiy85NI='
 ]
-
 
 comment = [
     username: '孙娜 Grace Sun'
@@ -104,7 +94,7 @@ module.exports =
         'comment:username': comment
         'post:title': post
         'i18n:key': require('./zh')
-
-    member:[
-        "#{code},admin"
-    ]
+#
+#    member:[
+#        "#{code},admin"
+#    ]

@@ -24,8 +24,10 @@ module.exports =
             str.replace(/-/g, "/").replace(/[TZ]/g, " ").substr(0, len)
         else
             ''
-    icon: (icon, tag = 'i', str = '', cls = '')->
-        "<#{tag} class='glyphicon glyphicon-#{icon} #{cls}'>#{str}</#{tag}>"
+    icon: (icon, tag = 'i', str = '', cls = '', href)->
+        if href
+            href = "href='#{href}'"
+        "<#{tag} class='glyphicon glyphicon-#{icon} #{cls}' #{href||''}>#{str}</#{tag}>"
 
     copyRight: (c, name, id)->
         path = "http://#{c.url}/#{name}/#{id}"
@@ -54,9 +56,10 @@ module.exports =
         return '' unless it
         if it.refFile and it.refFile[name]
             path = it.refFile[name][index]
+            @img @resPath(c, path), cls, pop
         else
-            path = ''
-        @img @resPath(c, path), cls, pop
+            ''
+
 
     resPath: (c, path)->
         c.resPath + '/upload/' + c.code + '/' + path

@@ -4,7 +4,6 @@ block script
     - main = 'main'
     if mode
         -libPath = 'http://127.0.0.1:8088/';
-//        -libPath = 'http://10.33.156.19:8088/';
 html
     head
         include ./inc/smeta
@@ -16,6 +15,9 @@ html
         style(type='text/css')
             block style
 
+        <!--[if lt IE 9]>
+        <script src="#{c.resPath}/ie8.js"></script>
+        <![endif]-->
 
     block ctn
 

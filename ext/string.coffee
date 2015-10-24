@@ -28,7 +28,7 @@ _.extend String::,
     fileName: ->
         @substr(@lastIndexOf('/') + 1)
     dStr:(len=19)->
-        this.replace(/-/g, "/").replace(/[TZ]/g, " ").substr(0, len)
+        this.replace(/-/g, "-").replace(/[TZ]/g, " ").substr(0, len)
 
 String.randomChar = (len, x = '0123456789qwertyuioplkjhgfdsazxcvbnm') ->
     ret = x.charAt(Math.ceil(Math.random() * 10000000) % x.length)
@@ -99,6 +99,7 @@ _.extend Date::,
 Date.parseLocal = (time) ->
     time = time.substring(0, 19) if time.length > 19
     new Date((time or "").replace(/-/g, "/").replace(/[TZ]/g, " "))
+
 
 _.extend Number::,
     toOrdinal: ->
@@ -172,8 +173,9 @@ _.extend Array::,
         i = 0
         while i < @length
             if (if prop.indexOf('.') > 0 then seqProp(@[i], prop) else @[i][prop]) == val
+                v = @[i]
                 @splice i, 1
-                return @[i]
+                return v
             i++
         null
 

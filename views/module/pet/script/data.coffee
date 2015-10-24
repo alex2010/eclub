@@ -1,65 +1,12 @@
-role = [
-    title: 'admin'
-    label: '管理员'
-    type: 0
-    entities: [
-        key: '_biz'
-        row: 101
-    ,
-        key: 'activity'
-        row: 110
-    ,
-        key: 'thread'
-        row: 120
-    ,
-        key: 'topic'
-        row: 130
-    ,
-        key: 'venue'
-        row: 140
-    ]
-,
-    title: 'user'
-    label: '登录用户'
-    type: 0
-    menu: [
-        label: '朋友圈'
-        icon: 'search'
-        href: '#!/club'
-        row: 10
-    ,
-        label: '活动管理'
-        icon: 'th-large'
-        href: '#!/act'
-        row: 20
-    ,
-        label: '文章管理'
-        icon: 'file'
-        href: '#!/post'
-        row: 30
-    ,
-
-        label: 'PET论坛'
-        icon: 'gift'
-        href: '#!/thread'
-        row: 40
-    ]
-    permission: ['wechat']
-]
-
 user = [
     username: code
 ,
     username: 'u' + code
 ]
-group = [
-    title: 'Tyler运动分享社'
-    leader:
-        _id: 'dd'
-        username: 'Tyler'
-    manifesto: '不吃饭多运动'
-    description: '，Node.js的出现也使持续十年的云端一体梦想终于成真。 在所有App都努力迈向全实时能力的当下，移动App的研发也愈发需要性能和功能更强的新型开发框架作为强大的技术后盾。'
-]
+
+r = (file)->
+    require "./data/#{file}"
+
 module.exports =
     community:
         code: code
@@ -128,8 +75,8 @@ module.exports =
         ]
 
     data:
-        'role:title': role
-        'group:title': group
+        'role:title': r 'role'
+        'group:title': r 'group'
 
 #        'user:username': user
 #        'i18n:key': require('./zh')

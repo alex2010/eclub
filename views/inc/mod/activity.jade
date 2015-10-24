@@ -5,6 +5,7 @@ h2(title=title)=title
 hr
 != f.imgItem(locals, c, 'head', 'postPic')
 h3 主题介绍
+
 != content
 
 if master && master.length
@@ -37,6 +38,22 @@ if participant
             -imgPath = f.resPath(c, 'portrait/' + it._id + '.jpg')
             a.col-xs-2.col-md-1.p0(href= href,title= it.username)
                 != f.img(imgPath, 'square')
+
+if itemTable
+    each it in itemTable
+        if it.title
+            h3= it.title
+        if it.content
+            != it.content
+
+if partner
+    h3 主办方介绍
+    != f.imgItem(partner, c, 'logo')
+    h4= partner.title
+        small= partner.slogon
+    div!= partner.introduction
+    != f.imgItem(partner, c, 'qrcode')
+
 if venue
     - v = _.isArray(venue)?venue[0]:venue
     if v
@@ -44,6 +61,7 @@ if venue
         != f.imgItem(v, c)
         h4= v.title
         != v.content
+        != f.imgItem(v, c, 'qrcode')
         dl.venue.dl-horizontal.well
             dt
                 != f.icon('time')
@@ -79,9 +97,6 @@ if venue
                     div= v.route
                     if v.langsTable && v.langsTable.findBy('key', 'route')
                         div= v.langsTable.findBy('key', 'route').value
-if itemTable
-    each it in itemTable
-        if it.title
-            h3= it.title
-        if it.content
-            != it.content
+
+
+

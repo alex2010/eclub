@@ -88,6 +88,8 @@ module.exports =
                     ctx.cat = cat[0] if cat.length
                 cb(null, res)
 
+    biPost: (ctx)->
+
     post: (ctx)->
         ctx.crumb = ctx.f.crumbItem [
             label: '文章'

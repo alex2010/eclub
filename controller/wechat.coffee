@@ -62,12 +62,38 @@ module.exports =
             else
                 rsp.send msg: '二维码未生产'
 
+
+    removeRes:(req,rsp)->
+        code = req.c.code
+        wCode = req.body.account
+        getApi code, wCode, (api)->
+            async.each req.body.res.split('::'), (n, cb)->
+                api.removeMaterial n, ->
+                        cb
+                ,->
+                    rsp.send
+                        success: true
+                        msg: '删除成功'
+
+    sendMessNews:(req,rsp)->
+        code = req.c.code
+        wCode = req.body.account
+        log '群发送'
+        getApi code, wCode, (api)->
+            api.massSendNews req.body.media_id,
+                is_to_all: true
+            ,->
+                rsp.send
+                    success: true
+                    msg: '发送成功'
+
     uploadNews: (req, rsp)->
         log 'upload news'
         wCode = req.body.account
         code = req.c.code
         opt = req.body.sendOpt
-        isPre = req.body.isPre
+        resId = []
+        titles = []
         dao.get code, 'codeMap', type: 'wtStyle', (resStyle)->
             styles = resStyle.value if resStyle
             getApi code, wCode, (api)->
@@ -81,11 +107,13 @@ module.exports =
                         return unless res
                         n.thumb_media_id = res.media_id
                         log n.thumb_media_id
+                        resId.push res.media_id
                         entity = util.del 'entity', n
                         _id = util.del '_id', n # entity's _id
                         tmpl = util.del 'tmpl', n # tmpl to render
                         if entity and _id
                             dao.get code, entity, _id: _id, (et)->
+                                titles.push "【#{entity}】#{et.title || et.username}"
                                 dao.get code, 'cat', {code:et.cat},(ct)->
                                     dao.find code, "i18n", {lang:req.body.lang || 'zh'}, {},(res)->
                                         langs = {}
@@ -115,25 +143,37 @@ module.exports =
                 , ->
                     log 'upload news ...'
                     api.uploadNewsMaterial articles: opt, (err, res) ->
-#                        log err
-#                        log res
-                        if isPre
-                            k = "w_#{wCode}"
-                            for it in req.body.testUser
-                                if it[k]
-                                    api.previewNews it[k], res.media_id, (err, res) ->
-                                        log err
-                                        log res
-                                        rsp.send
-                                            success: true
-                                            msg: '测试通过'
-                        else
-                            api.massSendNews res.media_id,
-                                is_to_all: true
-                            ,->
-                                rsp.send
-                                    success: true
-                                    msg: '发送成功'
+                        k = "w_#{wCode}"
+                        for it in req.body.testUser
+                            if it[k]
+                                api.previewNews it[k], res.media_id, ->
+                        bo =
+                            title: titles
+                            resId:resId
+                            mediaId: res.media_id
+                            account: wCode
+                            type: 'news'
+
+                        dao.save code, 'wtUploaded', bo, (item)->
+                            rsp.send
+                                success: true
+                                meidaId: res.media_id
+                                msg: '测试通过'
+
+    sendTest:(req, rsp)->
+        log req.body.mediaId
+        code = req.c.code
+        wCode = req.body.account
+        getApi code, wCode, (api)->
+            k = "w_#{wCode}"
+            for it in req.body.testUser
+                if it[k]
+                    api.previewNews it[k],req.body.mediaId,->
+            rsp.send
+                success: true
+                msg: '测试已发送'
+
+
 #    massSend: (req, rsp)->
 #        getApi req.body.code, (api)->
 #            api.massSend req.body.qrNum, (err, res) ->

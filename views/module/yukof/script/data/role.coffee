@@ -11,8 +11,11 @@ module.exports = [
         key: 'course'
         row: 120
     ,
-        key: 'project'
+        key: 'partner'
         row: 130
+    ,
+        key: 'qa'
+        row: 140
     ]
 ,
     title: 'trainer'

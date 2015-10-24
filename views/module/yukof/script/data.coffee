@@ -47,19 +47,20 @@ module.exports =
             labelCls: "label-danger"
         ]
 
-    data:
-        'i18n:key': require('./zh')
-        'content:title':r 'content'
-        'partner:title':r 'partner'
-        'cat:label':r 'cat'
+#    data:
+#        'i18n:key': require('./zh')
+#        'content:title':r 'content'
+#        'partner:title':r 'partner'
+#        'cat:label':r 'cat'
         'role:title': r 'role'
-        'user:username': r 'user'
-        'post:title': r 'post'
-        'course':r 'course'
-        'qa:question': r 'qa'
-        'service:title': r 'service'
-        'cat:code': r 'cat'
+#        'user:username': r 'user'
+#        'post:title': r 'post'
+#        'course':r 'course'
+#        'qa:question': r 'qa'
+#        'service:title': r 'service'
+#        'cat:code': r 'cat'
+#        'course:title': r 'course'
 
-    member: [
-        "#{code},admin"
-    ]
+#    member: [
+#        "#{code},admin"
+#    ]

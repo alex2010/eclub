@@ -5,7 +5,7 @@ hr
 .row.imgBox
     != f.imgItem(locals, c, 'head', 'postPic')
 
-if author
+if author && author.username != c.code
     hr
     - _user = author
     - _user._e = 'user'
@@ -43,5 +43,7 @@ if pubTime
 //            strong#postLike= support
 //            | 人喜欢
     //include ../../inc/bdShare.html
-!= f.copyRight(c, 'post', _id)
+if !source
+    != f.copyRight(c, 'post', _id)
+
 #_comments
