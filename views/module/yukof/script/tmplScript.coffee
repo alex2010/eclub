@@ -42,15 +42,17 @@ module.exports =
             dao.find ctx.c.code, 'qa', {}, opt, (res)->
                 cb(null,res)
 
-        contentLabel:(cb)->
+        content:(cb)->
+            #filter=
+                #code:
+                    #$regex: 'workShow_.*'
             filter=
-                code:
-                    $regex: 'workShow_.*'
+                cat:'workShow'
             opt =
                 limit:6
                 sort:
                     row:-1
-            dao.find ctx.c.code, 'cat', filter, opt,(res)->
+            dao.find ctx.c.code, 'content', filter, opt,(res)->
                 cb(null,res)
 
     serviceChannel:(ctx,req,rsp) ->
@@ -85,8 +87,30 @@ module.exports =
                 cat:'entrepreneurImagePositioning'
             }
             dao.find ctx.c.code, 'service', filter, {}, (res)->
+                res=res[0]
                 cb(null, res)
-
+        actorSolidPackaging:(cb) ->
+            opt =
+                limit:1
+                sort:
+                    row:-1
+            filter={
+                cat:'actorSolidPackaging'
+            }
+            dao.find ctx.c.code, 'service', filter, {}, (res)->
+                res=res[0]
+                cb(null, res)
+        designOfTheBrideImage:(cb) ->
+            opt =
+                limit:1
+                sort:
+                    row:-1
+            filter={
+                cat:'designOfTheBrideImage'
+            }
+            dao.find ctx.c.code, 'service', filter, {}, (res)->
+                res=res[0]
+                cb(null, res)
         intro:(cb) ->
             filter={
                 cat:'intro'
@@ -101,30 +125,3 @@ module.exports =
             }
             dao.find ctx.c.code , 'post', filter, {}, (res)->
                 cb(null,res[0])
-
-#        actorSolidPackaging:(cb) ->
-#            opt =
-#                limit:1
-#                sort:
-#                    row:-1
-#            filter={
-#                cat:'actorSolidPackaging'
-#            }
-#            dao.find ctx.c.code, 'service', filter, opt, (res)->
-#                console.log(res.title);
-#                cb(null, res)
-#
-#
-#        designOfTheBrideImage:(cb) ->
-#            opt =
-#                limit:1
-#                sort:
-#                    row:-1
-#            filter={
-#                cat:'designOfTheBrideImage'
-#            }
-#            dao.find ctx.c.code, 'service', filter, opt, (res)->
-#                console.log(res.title);
-#                cb(null, res)
-#
-#

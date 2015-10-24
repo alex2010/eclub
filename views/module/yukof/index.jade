@@ -95,19 +95,20 @@ block content
                 span.ctn 点击更多
     .tab-y-2
         ul.nav.nav-tabs
-            each it,i in contentLabel
+            each it,i in content
                 -var cls=''
                 if i==0
                     -cls=''+' active'
                 li(class='#{it.code} #{cls}')
-                    a(href='##{it.code}',data-toggle="tab")=it.label
+                    a(href='##{it.code}',data-toggle="tab")=it.title
         .tab-content
-            each it,i in contentLabel
+            each it,i in content
                 -var cls='tab-pane fade'
                 if i == 0
                     -cls=cls+' active in'
                 div(class='#{cls}',id='#{it.code}')
-                    != f.imgItem(it, c, 'head', 'img-responsive')
+                    a(href='/content/#{it._id}')
+                        != f.imgItem(it, c, 'head', 'img-responsive')
     .adv-y-1
         img.img-responsive(src="#{resPath}images/adv_29.jpg",alt="")
     .tab-y-3

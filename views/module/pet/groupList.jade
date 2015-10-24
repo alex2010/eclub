@@ -1,0 +1,9 @@
+extends inc/main
+block content
+    #group.container
+        .row
+            include ../../inc/crumb
+            each it in items
+                .col-md-6
+                    include inc/boxItem
+

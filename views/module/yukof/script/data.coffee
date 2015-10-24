@@ -59,7 +59,8 @@ module.exports =
         'qa:question': r 'qa'
         'service:title': r 'service'
         'cat:code': r 'cat'
+        'course:title': r 'course'
 
-    member: [
-        "#{code},admin"
-    ]
+#    member: [
+#        "#{code},admin"
+#    ]

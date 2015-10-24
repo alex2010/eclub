@@ -90,6 +90,14 @@ module.exports =
             dao.find ctx.c.code, 'seckilling', filter, opt, (res)->
                 cb(null, res)
 
+    shop: (ctx, req, rsp)->
+        consultant:(cb)->
+            opt =
+                sort:
+                    lastUpdated: -1
+            dao.find ctx.c.code, 'consultant', {'shop._id':ctx._id}, opt, (res)->
+                cb(null, res)
+
     cardList: (ctx, req, rsp)->
         opt =
             limit: 5

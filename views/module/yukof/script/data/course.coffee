@@ -1,10 +1,10 @@
 module.exports = [
-    title: ''
-    description: ''
-    registration:''
-    recruitment:''
-    favourableTerms:''
-    charge:''
+    title: '课程一'
+    description: '撒旦法士大夫'
+    registration:'阿斯顿发生'
+    recruitment:'撒旦法士大夫'
+    favourableTerms:'撒旦法士大夫'
+    charge:'阿斯顿发斯蒂芬'
     content: [
         title: '第一阶段'
         lesson: [

@@ -5,9 +5,14 @@ block content
             .col-md-8
                 include ../../inc/crumb
                 h2.event-name= title
+                .sub-content
+                    span 发表于
+                    i= pubTime.pattern()
                 hr.thin
                 .article-content
-                    = content
+                    != f.imgItem(locals, c, 'head', 'img-responsive')
+                    .p= content
+
             .col-md-4
                 .row
                     if contentList

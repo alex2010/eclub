@@ -1,45 +1,45 @@
 module.exports = [
 #储存分类 分类管理
-    code: 'workShow_hzmx'
-    label: '合作明星'
-    type: 'content'
-    refFile:
-        head:['contentImg.png']
-,
-    code: 'workShow_dstlm'
-    label: '电视台栏目'
-    type: 'content'
-    refFile:
-        head:['contentImg.png']
-,
-    code: 'workShow_zzhz'
-    label: '杂志合作'
-    type: 'content'
-    refFile:
-        head:['contentImg.png']
-,
-    code: 'workShow_ysjzp'
-    label: '影视剧作品'
-    type: 'content'
-    refFile:
-        head:['contentImg.png']
-,
-    code: 'workShow_Ttxc'
-    label: 'T台秀场'
-    type: 'content'
-    refFile:
-        head:['contentImg.png']
-,
-    code: 'workShow_dxhdcj'
-    label: '大型活动承接'
-    type: 'content'
-    refFile:
-        head:['contentImg.png']
-,
 #    code: 'workShow'
-#    label: '作品展示'
-#    type: 'post'
+#    label: '合作明星'
+#    type: 'content'
+#    refFile:
+#        head:['contentImg.png']
 #,
+#    code: 'workShow'
+#    label: '电视台栏目'
+#    type: 'content'
+#    refFile:
+#        head:['contentImg.png']
+#,
+#    code: 'workShow'
+#    label: '杂志合作'
+#    type: 'content'
+#    refFile:
+#        head:['contentImg.png']
+#,
+#    code: 'workShow'
+#    label: '影视剧作品'
+#    type: 'content'
+#    refFile:
+#        head:['contentImg.png']
+#,
+#    code: 'workShow'
+#    label: 'T台秀场'
+#    type: 'content'
+#    refFile:
+#        head:['contentImg.png']
+#,
+#    code: 'workShow'
+#    label: '大型活动承接'
+#    type: 'content'
+#    refFile:
+#        head:['contentImg.png']
+#,
+    code: 'workShow'
+    label: '作品展示'
+    type: 'content'
+,
     code: 'pp'
     label: '定位流程'
     type: 'post'

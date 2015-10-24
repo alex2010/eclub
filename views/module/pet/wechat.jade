@@ -1,8 +1,1 @@
 extends ./inc/main
-
-block append js
-    - p = mode?'http://127.0.0.1:8088/':libPath
-    script(src='#{p}router.js')
-
-block prepend js
-    script(src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js')
