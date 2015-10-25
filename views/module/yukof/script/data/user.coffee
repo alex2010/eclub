@@ -15,6 +15,10 @@ module.exports = [
     ,
         title: ''
         _id:''
+    ],
+    refFile:[
+        head:['']
+        work:['','','','','','']
     ]
 ,
     username:'用户二（团队人员）'

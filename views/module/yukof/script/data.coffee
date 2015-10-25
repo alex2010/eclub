@@ -55,7 +55,7 @@ module.exports =
         'role:title': r 'role'
         'user:username': r 'user'
         'post:title': r 'post'
-        'course':r 'course'
+        'course:title':r 'course'
         'qa:question': r 'qa'
         'service:title': r 'service'
         'cat:code': r 'cat'

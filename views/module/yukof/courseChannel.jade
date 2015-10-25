@@ -1,6 +1,23 @@
 extends ./inc/main
 block style
     :less(minify=true)
+        .tab-y-4 {
 
+        }
 block content
     include ./inc/topFragment
+    .tab-y-4
+        ul.nav.nav-tabs
+            each it,i in course
+                -var cls=''
+                if (i==0)
+                    -cls+='active'
+                li(class="#{cls}")
+                    a(href="##{it.code}",data-toggle="tab")= it.title
+        .tab-content
+            each it,i in course
+                -var cls='tab-pane fade'
+                if (i==0)
+                    -cls+=' active in'
+                div(class="#{cls}",id="#{it.code}")
+                    .test= it.content

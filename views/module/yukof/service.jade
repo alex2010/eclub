@@ -90,6 +90,7 @@ block content
 block st
    :coffee(bare=true,minify=true)
       $('.btn-group .btn').click ->
-         ndx = $(this).index()+1
-         $('[data-toggle=collapse]:eq(' + ndx + ')').trigger 'click'
+         ndx = $(this).index()
+         if $('.panel-collapse:eq('+ndx+')').is(':hidden')
+            $('[data-toggle=collapse]:eq('+(ndx+1)+')').trigger 'click'
          return

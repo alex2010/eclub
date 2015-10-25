@@ -32,7 +32,6 @@ module.exports =
             dao.find ctx.c.code, 'post', filter, opt, (res)->
                 cb(null,res)
 
-
     index:(ctx,req,rsp)->
         qa:(cb)->
             opt =
@@ -117,6 +116,13 @@ module.exports =
             }
             dao.find ctx.c.code, 'service', filter, {}, (res)->
                 cb(null, res[0])
+
+    courseChannel:(ctx,req,rsp)->
+        course:(cb)->
+            opt=
+                limit:7
+            dao.find ctx.c.code,'course',{},opt,(res)->
+                cb(null,res)
 
     partnerChannel:(ctx,req,rsp)->
         post:(cb)->
