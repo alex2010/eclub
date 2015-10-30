@@ -2,7 +2,7 @@ extends ./inc/main
 block style
     :less(minify=true)
         .tab-y-4 {
-
+            
         }
 block content
     include ./inc/topFragment
@@ -20,4 +20,3 @@ block content
                 if (i==0)
                     -cls+=' active in'
                 div(class="#{cls}",id="#{it.code}")
-                    .test= it.content
