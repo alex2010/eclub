@@ -2,8 +2,210 @@ extends ./inc/main
 block style
     :less(minify=true)
         .tab-y-4 {
-            
+            .nav-tabs {
+                border:none !important;
+                li {
+                    width:14.28571428571429%;
+                    border:none !important;
+                    position:relative;
+                    .thumbnail {
+                        display: block;
+                        position: relative;
+                        margin:0;
+                        padding:1px;
+                        border:none !important;
+                        border-radius:0;
+                        box-shadow:none;
+                        img {
+                            box-sizing: border-box;
+                            height:104px;
+                        }
+                        .caption {
+                            padding:0;
+                            top:50%;
+                            left:0;
+                            position: absolute;
+                            width:100%;
+                            text-align: center;
+                            color:#fff;
+                            h3 {
+                                font-size:20px;
+                                margin:-12px 0 0;
+                            }
+                        }
+                    }
+                    &.active {
+                        .thumbnail {
+                            img {
+                                border:2px solid #f33 !important;
+                            }
+                        }
+                        &:after {
+                            content:'';
+                            position:absolute;
+                            left:50%;
+                            bottom:-19px;
+                            display:block;
+                            margin-left:-5px;
+                            width:0;
+                            height:0;
+                            border-left:10px solid transparent;
+                            border-right:10px solid transparent;
+                            border-bottom:10px solid #f33;
+                        }
+                    }
+                }
+            }
+            .tab-content {
+                margin-top:20px;
+                margin-bottom:56px;
+                padding-bottom:30px;
+                border: 1px solid #ff5c5c;
+                .intro{
+                    padding:0 50px;
+                    &:first-child {
+                        padding-top:50px;
+                        .panel {
+                            &:first-child {
+                                margin-top:0;
+                            }
+                            border-bottom:1px solid #c2c2c2;
+                        }
+                    }
+                    .col-md-8 {
+                        padding-left:0;
+                    }
+                    .col-md-4 {
+                        padding-left:8px;
+                        padding-right:8px;
+                    }
+                    .list-unstyled {
+                        padding-right:30px;
+                        li {
+                            float: left;
+                            width:50%;
+                            padding:0 15px 15px 0;
+                            img {
+                                width:100%;
+                            }
+                        }
+                    }
+                }
+            }
         }
+        .panel-y-8 {
+            margin-top:20px;
+            margin-bottom:0;
+            .panel-heading {
+                padding:0 0 15px;
+                .panel-title {
+                    font-size:20px;
+                    color:#e50065;
+                    font-weight:bold;
+                    .en {
+                        font-family: 'Arial';
+                        font-weight: normal;
+                        padding-left:8px;
+                    }
+                }
+            }
+            .panel-body {
+                padding:0;
+                p {
+                    margin-bottom:20px;
+                    line-height:26px;
+                    font-size:12px;
+                    color:#666;
+                }
+            }
+            .panel-subtitle {
+                margin:0;
+                line-height:32px;
+                font-size:18px;
+                color:#000;
+            }
+        }
+        .panelbox-y-1 {
+            clear:both;
+            &:after {
+                content:'';
+                display:block;
+                height:0;
+                overflow: hidden;
+                clear:both;
+            }
+            .panel-y-9 {
+                float:left;
+                &:nth-child(1) {
+                    width:17%;
+                }
+                &:nth-child(2) {
+                    width:50%;
+                    .panel-body {
+                        border-left:4px dotted #a9a9a9;
+                        border-right:4px dotted #a9a9a9;
+                    }
+                }
+                &:nth-child(3) {
+                    width:33%;
+                }
+                .panel-heading {
+                    background:#a9a9a9;
+                    .panel-title {
+                        text-align:center;
+                        font-weight:normal;
+                        font-size:20px;
+                        letter-spacing:2px;
+                        color: #fff;
+                    }
+                }
+                .panel-body {
+                    ul {
+                        padding:0 18px;
+                        li {
+                            padding:0 18px;
+                            border-bottom: 1px solid #a9a9a9;
+                            line-height:48px;
+                            font-size:14px;
+                            color:#666;
+                            &:nth-child(5) {
+                                border-bottom:none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .mt20 {
+            margin-top:20px;
+        }
+mixin tablePanel(data)
+    -var title=data.title
+    -var subtitle=data.subtitle
+    -var content=data.content
+    -var en=data.en
+
+    .panel.panel-y-8
+        .panel-heading
+            h3.panel-title= title
+                span.en= en
+        .panel-body
+            each it,i in content
+                if subtitle
+                    h4.panel-subtitle= subtitle[i]
+                p!= it
+mixin contentPanel(title,content,poster)
+        .panel-y-9
+            .panel-heading
+                h3.panel-title= title
+            .panel-body
+                if poster
+
+                else
+                    ul
+                        each it in content
+                            li=it
+
 block content
     include ./inc/topFragment
     .tab-y-4
@@ -13,10 +215,35 @@ block content
                 if (i==0)
                     -cls+='active'
                 li(class="#{cls}")
-                    a(href="##{it.code}",data-toggle="tab")= it.title
+                    a.thumbnail(href="##{it.code}",data-toggle="tab")
+                        !=f.imgItem(it,c,'head','img-responsive')
+                        .caption
+                            h3= it.title
         .tab-content
             each it,i in course
                 -var cls='tab-pane fade'
+                -var slide=it.refFile.slide
+                -var content=it.content
                 if (i==0)
                     -cls+=' active in'
                 div(class="#{cls}",id="#{it.code}")
+                    .row.intro
+                        ul.col-md-4.list-unstyled
+                            each item,x in slide
+                                li!=f.imgItem(it,c,'slide','img-responsive',x)
+                        .col-md-8
+                            +tablePanel(it.studentPrivileges)
+                            +tablePanel(it.registration)
+                    .row.intro
+                        .col-md-4
+                            +tablePanel(it.recruitment)
+                        .col-md-4
+                            +tablePanel(it.favourableTerms)
+                        .col-md-4
+                            +tablePanel(it.charge)
+                    .mt20
+                        each item in content
+                            .panelbox-y-1
+                                +contentPanel(item.title,'',true)
+                                +contentPanel('课程',item.lesson)
+                                +contentPanel('作业练习',item.homework)
