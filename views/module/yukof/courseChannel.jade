@@ -62,7 +62,7 @@ block style
                 padding-bottom:30px;
                 border: 1px solid #ff5c5c;
                 .intro{
-                    padding:0 50px;
+                    padding:0 40px;
                     &:first-child {
                         padding-top:50px;
                         .panel {
@@ -74,10 +74,11 @@ block style
                     }
                     .col-md-8 {
                         padding-left:0;
+                        padding-right:0;
                     }
                     .col-md-4 {
-                        padding-left:8px;
-                        padding-right:8px;
+                        padding-left:10px;
+                        padding-right:10px;
                     }
                     .list-unstyled {
                         padding-right:30px;
@@ -230,6 +231,8 @@ block content
                     .row.intro
                         ul.col-md-4.list-unstyled
                             each item,x in slide
+                                if (x>=6)
+                                    -break;
                                 li!=f.imgItem(it,c,'slide','img-responsive',x)
                         .col-md-8
                             +tablePanel(it.studentPrivileges)

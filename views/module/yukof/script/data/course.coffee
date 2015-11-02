@@ -5,7 +5,7 @@ module.exports = [
     row:10
     refFile:
         head:['head_course_09.jpg']
-        slide:['slide_course_27.jpg','slide_course_27.jpg','slide_course_27.jpg','slide_course_27.jpg','slide_course_27.jpg','slide_course_27.jpg']
+        slide:['slide_course_27.jpg','slide_course_27.jpg','slide_course_27.jpg','slide_course_27.jpg','slide_course_27.jpg','slide_course_27.jpg','slide_course_27.jpg','slide_course_27.jpg']
     content: [
         title: '第一阶段'
         lesson: [
@@ -90,6 +90,7 @@ module.exports = [
         content:['工作室学员第二次报名任意课程9折优惠<br />三人以上组团报名，享有9折优惠']
     charge:
         title:'收费标准'
+        en:'Charge'
         content:['90天课程，收费8990']
     itemsTable:[
         title:'收费标准'
@@ -189,6 +190,7 @@ module.exports = [
         content:['工作室学员第二次报名任意课程9折优惠<br />三人以上组团报名，享有9折优惠']
     charge:
         title:'收费标准'
+        en:'Charge'
         content:['90天课程，收费8990']
     itemsTable:[
         title:'收费标准'
@@ -288,6 +290,7 @@ module.exports = [
         content:['工作室学员第二次报名任意课程9折优惠<br />三人以上组团报名，享有9折优惠']
     charge:
         title:'收费标准'
+        en:'Charge'
         content:['90天课程，收费8990']
     itemsTable:[
         title:'收费标准'
@@ -387,6 +390,7 @@ module.exports = [
         content:['工作室学员第二次报名任意课程9折优惠<br />三人以上组团报名，享有9折优惠']
     charge:
         title:'收费标准'
+        en:'Charge'
         content:['90天课程，收费8990']
     itemsTable:[
         title:'收费标准'
@@ -486,6 +490,7 @@ module.exports = [
         content:['工作室学员第二次报名任意课程9折优惠<br />三人以上组团报名，享有9折优惠']
     charge:
         title:'收费标准'
+        en:'Charge'
         content:['90天课程，收费8990']
     itemsTable:[
         title:'收费标准'
@@ -585,6 +590,7 @@ module.exports = [
         content:['工作室学员第二次报名任意课程9折优惠<br />三人以上组团报名，享有9折优惠']
     charge:
         title:'收费标准'
+        en:'Charge'
         content:['90天课程，收费8990']
     itemsTable:[
         title:'收费标准'
@@ -684,6 +690,7 @@ module.exports = [
         content:['工作室学员第二次报名任意课程9折优惠<br />三人以上组团报名，享有9折优惠']
     charge:
         title:'收费标准'
+        en:'Charge'
         content:['90天课程，收费8990']
     itemsTable:[
         title:'收费标准'
