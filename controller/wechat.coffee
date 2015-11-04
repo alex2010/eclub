@@ -9,6 +9,12 @@ getApi = require '../service/wechat'
 
 WXPay = require('weixin-pay')
 
+matchPic = (str)->
+    imgs = {}
+    for it in str.match /http:\/\/s.postenglishtime.com\/upload\/\S+.(jpg|jpeg|png|JPG|PNG|JPEG)/g
+        imgs[it] = null
+    imgs
+
 module.exports =
     jsSign: (req, rsp)->
         bo = req.body
@@ -69,7 +75,7 @@ module.exports =
         getApi code, wCode, (api)->
             async.each req.body.res.split('::'), (n, cb)->
                 api.removeMaterial n, ->
-                        cb
+                        cb()
                 ,->
                     rsp.send
                         success: true
@@ -94,11 +100,19 @@ module.exports =
         opt = req.body.sendOpt
         resId = []
         titles = []
+
+#        dao.get code, 'activity', _id: '5618e3717f1ef776b521f4a2',(res)->
+#            log matchPic res.content
+#            rsp.send
+#                success: true
+#                msg: '测试通过'
+
+
         dao.get code, 'codeMap', type: 'wtStyle', (resStyle)->
             styles = resStyle.value if resStyle
             getApi code, wCode, (api)->
                 async.each opt, (n, cb)->
-                    log util.sPath(code + '/' + n.thumb_media_id)
+                    log 'upload path:' + util.sPath(code + '/' + n.thumb_media_id)
                     unless n.thumb_media_id.startsWith 'http'
                         n.thumb_media_id = util.sPath(code + '/' + n.thumb_media_id)
                     log 'start to upload pic' + n.thumb_media_id
@@ -125,6 +139,7 @@ module.exports =
                                             c: req.c
                                             i18: require('../service/lang')(langs)
                                             catObj:ct
+                                            redirect: n.content_source_url
                                         _.extend ctx, et
                                         path = "#{_path}/views/module/#{code}/wechat/#{tmpl}.jade"
                                         ccc = jade.renderFile path, ctx
@@ -133,9 +148,21 @@ module.exports =
                                                 ccc = ccc.replaceAll("<#{k}>", "<#{k} style='#{v}'>")
                                         ccc = ccc.replaceAll "bb-src", 'src'
                                         n.content = ccc
-#                                        util.del 'thumb_media_id', n
-#                                        util.del 'content_source_url', n
-                                        cb()
+
+                                        # pick img
+                                        imgs = matchPic n.content
+                                        async.each _.keys(imgs), (n, icb)->
+                                            path = n.replace('http://s.postenglishtime.com/upload/pet', util.sPath(code))
+                                            api.uploadLogo path, (err, ires)->
+                                                if err
+                                                    log err
+                                                else
+                                                    imgs[n] = ires.url
+                                                icb()
+                                        ,->
+                                            for k, v of imgs
+                                                n.content = n.content.replaceAll k, v
+                                            cb()
                         else
                             n.content || n.content = 'no content'
                             n.digest || n.brief = 'no digest'
@@ -143,22 +170,26 @@ module.exports =
                 , ->
                     log 'upload news ...'
                     api.uploadNewsMaterial articles: opt, (err, res) ->
-                        k = "w_#{wCode}"
-                        for it in req.body.testUser
-                            if it[k]
-                                api.previewNews it[k], res.media_id, ->
-                        bo =
-                            title: titles
-                            resId:resId
-                            mediaId: res.media_id
-                            account: wCode
-                            type: 'news'
+                        if err
+                            log err
+                        else
+                            k = "w_#{wCode}"
+                            for it in req.body.testUser
+                                if it[k]
+                                    api.previewNews it[k], res.media_id, ->
 
-                        dao.save code, 'wtUploaded', bo, (item)->
-                            rsp.send
-                                success: true
-                                meidaId: res.media_id
-                                msg: '测试通过'
+                            bo =
+                                title: titles
+                                resId:resId
+                                mediaId: res.media_id
+                                account: wCode
+                                type: 'news'
+
+                            dao.save code, 'wtUploaded', bo, (item)->
+                                rsp.send
+                                    success: true
+                                    meidaId: res.media_id
+                                    msg: '测试通过'
 
     sendTest:(req, rsp)->
         log req.body.mediaId

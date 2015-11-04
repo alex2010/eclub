@@ -1,8 +1,8 @@
 extends ../../../main
+include ../../../inc/mixin
 
 block append js
-    - p = mode?'http://127.0.0.1:8088/':libPath
-    script(src='#{p}router.js')
+    script(src='#{libPath}router.js')
 
 block style
     :less(minify=true)

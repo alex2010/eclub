@@ -1,5 +1,6 @@
 _path = "#{_ph}/public/res/upload/pet/"
 
+
 for it in fs.readdirSync(_path)
     continue if fs.statSync("#{_path}#{it}").isDirectory()
     if it.startsWith('portrait') or it.startsWith('photo')

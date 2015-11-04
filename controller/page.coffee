@@ -54,9 +54,7 @@ pickScript = (ctx, req)->
         console: (ctx)->
             ctx.app = 'admin'
             null
-
     sc = require("../views/module/#{ctx.c.code}/script/tmplScript")
-
     initOpt = sc._init(ctx, req) || {}
 
     opt = if sc[ctx.index]
@@ -65,7 +63,6 @@ pickScript = (ctx, req)->
         ts[ctx.index](ctx, req) || {}
     else
         {}
-
     opt.i18 = (cb)->
         dao.find ctx.c.code, "i18n", {lang: req.query.lang || 'zh'}, {}, (res)->
             langs = {}
@@ -98,6 +95,7 @@ module.exports =
         render req, rsp, pre(req)
 
     entity: (req, rsp) ->
+        et = req.params.entity
         if req.params.id.length is 24
             ctx = pre(req)
             filter = {}
@@ -105,10 +103,22 @@ module.exports =
                 filter[req.params.attr] = req.params.id
             else
                 filter._id = req.params.id
-            dao.get ctx.c.code, req.params.entity, filter, (item)->
+            dao.get ctx.c.code, et, filter, (item)->
                 unless item
                     rsp.end('no item')
+
+                opt =
+                    skip: 0
+                    limit: 10
+                    sort:
+                        lastUpdated: -1
+
                 ctx = _.extend ctx, item
+
+                dao.find ctx.c.code, et, status: 2, opt, (res)->
+                    if res.length
+                        ctx["#{et}List"] = res
+
                 render req, rsp, ctx
         else
             rsp.end 'wrong param'

@@ -60,6 +60,8 @@ app.use multer
     changeDest: (dest, req)->
         if req.query.func is 'portrait'
             p = "#{req.query.code}/portrait"
+        else if req.query.func in ['logo','banner']
+            p = "#{req.query.code}/images"
         else
             p = req.query.code
         sPath(p)
@@ -99,7 +101,6 @@ module.exports =
 
     upload: (req, rsp)->
         file = _.values(req.files)[0]
-        log file
         qu = req.query
         if qu.thumb
             file.path = thumbPath file.path, qu.thumb.split(':')[0]

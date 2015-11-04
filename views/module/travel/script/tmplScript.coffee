@@ -1,7 +1,5 @@
 module.exports =
-
     _init: (ctx)->
-        ctx.css = ctx.cssPath('main')
         ctx.headMenu = 'sns'
         ctx.btm_cg = [
             title: 'Private Car'
@@ -96,6 +94,7 @@ module.exports =
                 cb(null, res)
 
         btm_map: (cb)->
+            btm_opt.fields.push 'code'
             dao.find ctx.c.code, 'cat', {type: 'map'}, btm_opt, (res)->
                 for it in res
                     it.href = "/itemList?entity=map&cat=#{it.code}"
@@ -103,6 +102,7 @@ module.exports =
 
 
     index: (ctx)->
+        log 'index...'
         top: (cb)->
             filter =
                 type: 'top'

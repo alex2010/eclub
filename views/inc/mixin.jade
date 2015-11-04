@@ -1,3 +1,18 @@
+mixin userInfo(user)
+    .hostInfo.media
+        .media-body
+            .media-left(style='float:left;width:25%;margin-right:15px')!= f.img(f.resPath(c, 'portrait/' + user._id + '.jpg'))
+            .media-heading
+                strong!= f.link(user, 'username')
+                    small(style='float:right')
+                        if user.title
+                            span=user.title
+                        if user.industry
+                            span &nbsp;-&nbsp;
+                            if i18.iCat('industry')
+                                span= i18.iCat('industry')[user.industry]
+            != user.introduction
+
 mixin panel(title,cls)
     if !attributes.class
         -attributes.class='panel-default ' + cls
@@ -32,6 +47,12 @@ mixin nav(nav)
             else
                 li
                     a(href='#{it.href}')= it.label
+mixin itemList(items, title)
+    if items
+        +panel(title)
+            .list-group
+                +media(items,{})
+
 
 mixin media(posts,opt)
     if !opt
@@ -46,8 +67,12 @@ mixin media(posts,opt)
     if !opt.headKey
         -opt.headKey= 'head'
 
+    if !opt.text
+        -opt.text= 'brief'
+
     if !attributes.class
         -attributes.class = 'media_left list-group-item'
+
     if !attributes.target
         -attributes.target = '_blank'
 
@@ -58,9 +83,9 @@ mixin media(posts,opt)
                 if opt.oneCol
                     != f.imgItem(it, c, opt.headKey)
                 else
-                    .col-xs-4.pr0
+                    .col-xs-4.col-md-3.pr0
                         != f.imgItem(it, c, opt.headKey)
-                .col-xs-8
+                .col-xs-8.col-md-9
                     if block
                         block
                     else
@@ -70,7 +95,8 @@ mixin media(posts,opt)
                                 | #{it.author.username}
                             if it.pubTime
                                 | 发表于 #{it.pubTime.pattern()}
-                        != f.dStr(it.brief || it.description || it.address, opt.ctLimit)
+                        != f.dStr(it.text, opt.ctLimit)
+        //brief || it.description || it.address
 
 mixin avatars(users)
     .avatars
@@ -81,18 +107,6 @@ mixin avatars(users)
 mixin userPic(u)
     != f.img(f.resPath(c, 'portrait/' + u._id + '.jpg'))
 
-mixin userInfo(it)
-    .hostInfo.media
-        .media-body
-            .media-left.pull-left
-                != +userPic(it)
-            h4.media-heading!= f.link(it, 'username')
-            small=it.title
-            if it.industry
-                span &nbsp;-&nbsp;
-                if i18.iCat('industry')
-                    span= i18.iCat('industry')[it.industry]
-            != it.introduction
 
 mixin comments(id,entity,cs,cls)
     if !cls

@@ -21,7 +21,8 @@ module.exports =
                 cb(null, res)
 
         post: (cb)->
-            filter = {}
+            filter =
+                status: 2
             opt =
                 limit: 6
                 sort:
@@ -88,8 +89,6 @@ module.exports =
                     ctx.cat = cat[0] if cat.length
                 cb(null, res)
 
-    biPost: (ctx)->
-
     post: (ctx)->
         ctx.crumb = ctx.f.crumbItem [
             label: '文章'
@@ -151,9 +150,17 @@ module.exports =
 #                cb(null, res)
 
     content: (ctx)->
-        ctx.crumb = u.crumbItem [
+        ctx.crumb = ctx.f.crumbItem [
             label: '内容'
             href: '/contentList'
         ,
-            label: item.title
+            label: ctx.title
         ]
+        contentList:(cb)->
+            opt =
+                skip: 0
+                limit: 10
+                sort:
+                    lastUpdated: -1
+            dao.find ctx.c.code, 'content', {}, opt, (res)->
+                cb(null, res)
