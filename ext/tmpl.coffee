@@ -1,4 +1,3 @@
-
 module.exports =
     randomInt: util.randomInt
     randomChar: util.randomChar
@@ -39,7 +38,6 @@ module.exports =
     navPage: (page, it)->
         "/#{page}/#{it._id}"
 
-
     crumbItem: (items)->
         [
             label: '首页'
@@ -59,7 +57,6 @@ module.exports =
             @img @resPath(c, path), cls, pop
         else
             ''
-
 
     resPath: (c, path)->
         c.resPath + '/upload/' + c.code + '/' + path
@@ -94,7 +91,6 @@ module.exports =
             pp = @resPath(c, 'portrait.jpg')
             p = "<img src='#{pp}'/>"
         "<a href='/user/#{user._id}' title='#{user.username}'>#{p}<div>#{user.username}</div></a>"
-
 
 #    navUrl: util.navUrl
     navUrl: (p)->

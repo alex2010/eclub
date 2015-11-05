@@ -1,0 +1,37 @@
+extends ../../../main
+block ctn
+    body
+        .container
+            .navbar.navbar-default.navbar-moka
+                .container-fluid
+                    .navbar-header
+                        a.navbar-brand(href="javascript:void(0);"): img.img-responsive(alt="恋爱能量",src="#{resPath}images/logo.jpg")
+                    .collapse.navbar-collapse
+                        ul.nav.navbar-nav
+                            each it in c.nav
+                                -var cls=''
+                                -var subnav=it.children
+                                if subnav.length!=0
+                                    -cls+=' dropdown'
+                                    li(class='#{cls}')
+                                        a.dropdown-toggle(href="javascript:void(0);",data-toggle="dropdown")= it.label
+                                            //span.caret
+                                        ul.dropdown-menu
+                                            each item in subnav
+                                                li
+                                                    a(href="#{item.href}")= item.label
+                                else
+                                    li
+                                        a(href="#{it.href}")= it.label
+                        form.navbar-form.navbar-right
+                            .input-group
+                                span.input-group-addon.glyphicon.glyphicon-search(type="submit")
+                                input.form-control(type="search")
+            block content
+            footer
+                p Copyright © 2015, Lianai Power Co., Ltd. All Rights Reserved.北京恋爱能量教育咨询有限公司&nbsp;&nbsp;&nbsp;&nbsp;法律声明&nbsp;&nbsp;&nbsp;&nbsp;隐私条款
+                p 京公安网安备 11010500896 京ICP备10214630
+                .thumbnail
+                    .caption
+                        h4 在线咨询导师
+                    img(src="#{resPath}images/tcode_17.jpg",alt="")

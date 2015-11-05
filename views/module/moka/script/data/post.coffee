@@ -1,0 +1,28 @@
+module.exports=[
+    title:'约会学讲座'
+    subtitle:'清华大学'
+    content:''
+    cat:'hot'
+    row:9
+    refFile:
+        head:['head-post_08.jpg']
+        slide:[]
+,
+    title:'我知女人心'
+    subtitle:'河北卫视'
+    content:''
+    cat:'hot'
+    row:8
+    refFile:
+        head:['head-post_10.jpg']
+        slide:[]
+,
+    title:'约会顾问'
+    subtitle:'怪杰'
+    content:''
+    cat:'hot'
+    row:7
+    refFile:
+        head:['head-post_12.jpg']
+        slide:[]
+]

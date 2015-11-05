@@ -1,0 +1,65 @@
+extends inc/main
+block style
+    :less(minify=true)
+        .carousel-inner {
+            .item {
+                height:400px;
+            }
+        }
+        .thumbnail-moka {
+            position:relative;
+            .caption {
+                position:absolute;
+                z-index:2;
+                top:85px;
+                left:0;
+                width:100%;
+                color:#fff;
+                text-align:center;
+                h3 {
+                    margin:0;
+                    line-height:32px;
+                }
+                h4 {
+                    margin:0;
+                    line-height:38px;
+                }
+            }
+        }
+block content
+    .carousel.slide#carousel-moka(data-ride="carousel")
+        ol.carousel-indicators
+            li(data-target="#carousel-moka",data-slide-to="0")
+            li(data-target="#carousel-moka",data-slide-to="1")
+            li(data-target="#carousel-moka",data-slide-to="2")
+        .carousel-inner(role="listbox")
+            .item.active
+                img(src="",alt="")
+                .carousel-caption
+                    h3 一切的发生都是最好的安排
+                    h4 --摩卡
+            .item
+                img(src="",alt="")
+                .carousel-caption
+                    h3 一切的发生都是最好的安排
+                    h4 --摩卡1
+            .item
+                img(src="",alt="")
+                .carousel-caption
+                    h3 一切的发生都是最好的安排
+                    h4 --摩卡2
+    .row
+        each it in post
+            .col-md-4.thumbnail-moka
+                a.thumbnail(href="/post/#{it._id}")
+                    !=f.imgItem(it, c)
+                    .caption
+                        h4= it.subtitle
+                        h3= it.title
+    .row
+        .col-md-4
+        .col-md-4
+        .col-md-4
+
+block st
+    :coffee(bare=true,minify=true)
