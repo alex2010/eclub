@@ -2,8 +2,17 @@ extends inc/main
 block content
     #group.container
         .row
-            include ../../inc/crumb
-            each it in items
-                .col-md-6
-                    include inc/boxItem
+            .col-md-8
+                include ../../inc/crumb
+                #postList.boxList
+                    each it in items
+                        include inc/boxItem
+            .col-md-4
+                if cats
+                    +panel('文章主题').panel-danger
+                        .list-group
+                            a.list-group-item(href='/postList') 全部
+                            each it in cats
+                                != f.link(it, null, 'list-group-item')
+
 

@@ -61,6 +61,10 @@ module.exports =
     resPath: (c, path)->
         c.resPath + '/upload/' + c.code + '/' + path
 
+    avatarImg: (c, user, cls='img-circle')->
+        p = @resPath c, "portrait/#{user._id}.jpg"
+        @img p, cls
+
     link: (it, prop = 'title', cls)->
         text = if prop is '_str'
             it

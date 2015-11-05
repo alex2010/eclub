@@ -59,6 +59,9 @@ module.exports =
 #                label: '成长'
 #                href: '/postList?cat=growing'
 #            ]
+        ,
+            label: '小组'
+            href: '/groupList'
         ]
         foot: [
             label: '关于我们'

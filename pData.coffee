@@ -191,7 +191,8 @@ _.delay ->
 
     else
         data = require("./views/module/#{code}/script/data")
-        dao.save _mdb, 'community:code', data.community
+        if data.community
+            dao.save _mdb, 'community:code', data.community
 
         for k, v of data.data
             if k is 'user:username'

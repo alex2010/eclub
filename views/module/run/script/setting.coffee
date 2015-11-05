@@ -2,7 +2,7 @@ module.exports =
     ftp: '123.57.189.54'
     url: 'chinamudrun.com'
 
-    upload_path: '/opt/node/'
+    upload_path: '/opt/node/run/'
     res_path: "http://s.postenglishtime.com/"
     local_path: "http://t.run.com:3000/res/"
     log_path: '/opt/node/public/log/'

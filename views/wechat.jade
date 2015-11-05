@@ -1,4 +1,10 @@
 extends ./main
+include ./inc/mixin
+
+block append js
+    if !mode
+        script(src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js')
+    script(src='#{libPath}router.js')
 
 block ctn
     body(data-wid= wt.appId, data-wcode= wt.code)
@@ -7,10 +13,12 @@ block ctn
                 #header.container.text-center
                     #logo.navbar-header
                         a.navbar-brand(href='#')= name
+
         .container
             #static.row
                 block content
             #content.row
+
         .footerWrapper
             #footer.container
                 p(onclick= 'user.logout()').text-center!= i18.iim('copyright', c.url, i18.ii('abbr'))

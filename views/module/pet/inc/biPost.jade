@@ -1,33 +1,20 @@
 h2.event-name= title
 if subTitle
-    br
     small= subTitle
 hr
 .row.imgBox
-    != f.imgItem(locals, c, 'head')
-
+    != f.imgItem(locals, c, 'head', 'postPic')
 if author && author.username != c.code
     hr
     - _user = author
     - _user._e = 'user'
     - _uClass = 'author'
     include userInfo
-
-p
-
+    p
 .well.well-sm
     strong [核心提示]
     = brief
-
-.article-content
-    != content.replaceAll('_cImg" src', '_cImg" bb-src')
-
-    if biContent
-        each it in biContent
-            p.en= it.en
-            p.zh= it.zh
-
-
+.article-content!= content
 //dl.meta
 //    if cat
 //        dt(title='类别')!= f.icon('th-list')
@@ -38,7 +25,6 @@ p
 //        a(onclick='app.support()') 0人喜欢
 //    dt(title='访问')!= f.icon('eye-open')
 //    dd 访问#{'100'}次
-
 if pubTime
     p.text-right 发表于
         = pubTime.pattern()
@@ -54,5 +40,4 @@ if pubTime
     //include ../../inc/bdShare.html
 if !source
     != f.copyRight(c, 'post', _id)
-
 #_comments

@@ -1,12 +1,13 @@
 h2(title=title)=title
     small= subTitle
-    if _cat && _cat[cat]
-        span.cat.pull-right 【#{_cat[cat].title}】
+    //if _cat && _cat[cat]
+    //    span.cat.pull-right 【#{_cat[cat].title}】
 hr
 != f.imgItem(locals, c, 'head', 'postPic')
 h3 主题介绍
 
-!= content
+!= content.replaceAll('_cImg" src', '_cImg" bb-src')
+
 
 if master && master.length
     h3 主持人介绍

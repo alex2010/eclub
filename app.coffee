@@ -1,12 +1,16 @@
 express = require('express')
+session = require('express-session')
+mongoStore = require('connect-mongo')(session);
+
+
 path = require('path')
 favicon = require('serve-favicon')
 logger = require('morgan')
 cookieParser = require('cookie-parser')
 bodyParser = require('body-parser')
 cache = require("node-smple-cache/Cache")
-_cc = new require('./service/cc')
 
+_cc = new require('./service/cc')
 
 
 `_ = require('underscore');
@@ -47,6 +51,11 @@ app.use bodyParser.json()
 app.use bodyParser.urlencoded(extended: false)
 app.use cookieParser()
 
+#app.use session
+#    secret: 'secretkey'
+#    store: new mongoStore
+#        host: setting.host
+#        port: setting.port
 
 app.use express.static(path.join(__dirname, 'public'))
 #app.use express.static(path.join(__dirname, 'public'))

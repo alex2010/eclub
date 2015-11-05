@@ -262,6 +262,10 @@ dataController =
             qs._id = new oid(qs._id)
 
         bo = req.body
+
+        if bo._q
+            $.extend qs, bo._q
+            delete bo._q
         _rsMsg = bo._rsMsg
         bo = cleanItem bo
 

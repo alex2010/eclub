@@ -11,7 +11,7 @@ sms = require '../controller/sms'
 wxpay = require('weixin-pay')
 
 checkPagePattern = (req, rsp, next, page)->
-    log 'check...'
+    log 'checkPagePattern...'
     if /^\w+$/.test(page)
         next()
     else if /^\w+\.html$/.test(page)
@@ -85,7 +85,7 @@ checkPage = (req, rsp, next)->
         next()
     else
         req.fp = path.join(_path, "views")
-        log "find the: #{req.fp}/#{page}.jade"
+        log "default find the: #{req.fp}/#{page}.jade"
         if fs.existsSync("#{req.fp}/#{page}.jade")
             next()
         else
@@ -142,8 +142,9 @@ router.post '/r/:entity', data.save
 router.delete '/r/:entity/:id', data.del
 
 router.post '/r/:type/:entity/:q/:qv/:prop', data.saveSub
+router.post '/a/:type/:entity/:q/:qv/:prop', data.saveSub
 
-router.delete '/r/:type/:entity/:q/:qv/:key', data.delSub
+router.delete '/a/:type/:entity/:q/:qv/:key', data.delSub
 
 
 #wechat request
