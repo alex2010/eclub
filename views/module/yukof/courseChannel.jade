@@ -230,10 +230,11 @@ block content
                 div(class="#{cls}",id="#{it.code}")
                     .row.intro
                         ul.col-md-4.list-unstyled
-                            each item,x in slide
-                                if (x>=6)
-                                    -break;
-                                li!=f.imgItem(it,c,'slide','img-responsive',x)
+                            if slide
+                                each item,x in slide
+                                    if (x>=6)
+                                        -break;
+                                    li!=f.imgItem(it,c,'slide','img-responsive',x)
                         .col-md-8
                             +tablePanel(it.studentPrivileges)
                             +tablePanel(it.registration)

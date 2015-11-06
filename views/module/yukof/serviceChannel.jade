@@ -1,158 +1,159 @@
 extends ./inc/main
 block style
-   :less(minify=true)
-      .panel-y-2 {
-         padding-bottom:60px;
-         .panel-heading {
-            padding:0 15px 15px;
-            h3 {
-               font-weight:normal;
-               .en {
-                  font-size:24px;
-               }
+    :less(minify=true)
+        .panel-y-2 {
+            padding-bottom: 60px;
+            .panel-heading {
+                padding: 0 15px 15px;
+                h3 {
+                    font-weight: normal;
+                    .en {
+                        font-size: 24px;
+                    }
+                }
             }
-         }
-         .panel-body {
-            border:none;
-            padding:0 15px;
-            margin-bottom:0;
-            .panel-subtitle {
-               padding-bottom:30px;
-               h3 {
-                  margin-top:14px;
-                  margin-bottom:0;
-                  font-size:20px;
-               }
+            .panel-body {
+                border: none;
+                padding: 0 15px;
+                margin-bottom: 0;
+                .panel-subtitle {
+                    padding-bottom: 30px;
+                    h3 {
+                        margin-top: 14px;
+                        margin-bottom: 0;
+                        font-size: 20px;
+                    }
+                }
+                .adv-panel-2 {
+                    margin-top: 40px;
+                }
             }
-            .adv-panel-2 {
-               margin-top:40px;
+            .panel-footer {
+                padding-top: 0;
+                margin-top: 0;
             }
-         }
-         .panel-footer {
-            padding-top:0;
-            margin-top:0;
-         }
-      }
-      .panel-y-5 {
-         margin-bottom: 0;
-         padding-bottom:0;
-         .panel-heading {
-            padding:10px 0;
-            text-align:left;
-         }
-         .panel-body {
-            padding:15px;
-         }
-         .col-md-2 {
-            padding-left:4px;
-            padding-right:4px;
-            width:20%;
-            &:first-child {
-               .caption {
-                  background: #aea190;
-               }
+        }
+
+        .panel-y-5 {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            .panel-heading {
+                padding: 10px 0;
+                text-align: left;
             }
-            &:nth-child(2) {
-               .caption {
-                  background:#ae8e8f;
-               }
+            .panel-body {
+                padding: 15px;
             }
-            &:nth-child(3) {
-               .caption {
-                  background:#ad92b1;
-               }
+            .col-md-2 {
+                padding-left: 4px;
+                padding-right: 4px;
+                width: 20%;
+                &:first-child {
+                    .caption {
+                        background: #aea190;
+                    }
+                }
+                &:nth-child(2) {
+                    .caption {
+                        background: #ae8e8f;
+                    }
+                }
+                &:nth-child(3) {
+                    .caption {
+                        background: #ad92b1;
+                    }
+                }
+                &:nth-child(4) {
+                    .caption {
+                        background: #93b39e;
+                    }
+                }
+                &:nth-child(5) {
+                    .caption {
+                        background: #919294;
+                    }
+                }
+                &:nth-child(6) {
+                    .caption {
+                        background: #8eaeae;
+                    }
+                }
+                &:nth-child(7) {
+                    .caption {
+                        background: #9094ae;
+                    }
+                }
+                &:nth-child(8) {
+                    .caption {
+                        background: #8e8e8e;
+                    }
+                }
+                &:nth-child(9) {
+                    .caption {
+                        background: #cfa5a5;
+                    }
+                }
+                &:nth-child(10) {
+                    .caption {
+                        background: #c4b891;
+                    }
+                }
             }
-            &:nth-child(4) {
-               .caption {
-                  background:#93b39e;
-               }
+            .thumbnail {
+                margin-bottom: 8px;
+                padding: 0;
+                border: 1px solid #a9a9a9;
+                .caption {
+                    padding: 0;
+                    text-align: center;
+                    color: #fff;
+                    h4 {
+                        margin: 0;
+                        line-height: 48px;
+                        font-size: 22px;
+                    }
+                }
             }
-            &:nth-child(5) {
-               .caption {
-                  background:#919294;
-               }
-            }
-            &:nth-child(6) {
-               .caption {
-                  background:#8eaeae;
-               }
-            }
-            &:nth-child(7) {
-               .caption {
-                  background:#9094ae;
-               }
-            }
-            &:nth-child(8) {
-               .caption {
-                  background:#8e8e8e;
-               }
-            }
-            &:nth-child(9) {
-               .caption {
-                  background:#cfa5a5;
-               }
-            }
-            &:nth-child(10) {
-               .caption {
-                  background:#c4b891;
-               }
-            }
-         }
-         .thumbnail {
-            margin-bottom: 8px;
-            padding:0;
-            border:1px solid #a9a9a9;
-            .caption {
-               padding:0;
-               text-align:center;
-               color:#fff;
-               h4 {
-                  margin:0;
-                  line-height:48px;
-                  font-size:22px;
-               }
-            }
-         }
-      }
+        }
 
 mixin contentPanel(data,hasAdv)
-   .panel.panel-y-2
-      .panel-heading.bg-dotted
-         h3&attributes(attributes)=data.title
+    .panel.panel-y-2
+        .panel-heading.bg-dotted
+            h3&attributes(attributes)=data.title
             span.en= data.titleEn
-      .panel-body
-         .panel-subtitle
-            each it in data.subtitle
-               h3= it
-         if hasAdv
-            a(href="/service/#{data._id}")
-               != f.imgItem(data, c, 'head', 'media-object adv-panel-2')
-         if block
-            block
-      .panel-footer
-         a.btn-more(href="/serviceList")
-            span.ctn 点击更多
+        .panel-body
+            if data.subtitle
+                .panel-subtitle
+                    each it in data.subtitle
+                        h3= it
+            if hasAdv
+                a(href="/service/#{data._id}")
+                    != f.imgItem(data, c, 'head', 'media-object adv-panel-2')
+            if block
+                block
+        .panel-footer
+            a.btn-more(href="/serviceList")
+                span.ctn 点击更多
 
 mixin codePanel(title,en,data)
-   .panel.panel-y-5
-      .panel-heading
-         h4.panel-title= title
+    .panel.panel-y-5
+        .panel-heading
+            h4.panel-title= title
             small.en= en
-      .panel-body.row
-         each it in data
-            .col-md-2
-               a.thumbnail(href="/service/#{it._id}")
-                  != f.imgItem(it, c, 'head', 'media-object')
-                  .caption
-                     h4= it.title
+        .panel-body.row
+            each it in data
+                .col-md-2
+                    a.thumbnail(href="/service/#{it._id}")
+                        != f.imgItem(it, c, 'head', 'media-object')
+                        .caption
+                            h4= it.title
 
 block content
-   -var introSr=intro.content.privateImageMgm
-   include ./inc/topFragment
-
-   +contentPanel(introSr)(class="hot")
-      +codePanel('定位&流程','Positioning & Process',privateImageMgm_pp)
-      +codePanel('服务&套餐','Service & packages',privateImageMgm_sp)
-   +contentPanel(entrepreneurImagePositioning,true)
-   +contentPanel(actorSolidPackaging,true)(class="hot")
-   +contentPanel(designOfTheBrideImage,true)
+    -var introSr=intro.content.privateImageMgm
+    include ./inc/topFragment
+    +contentPanel(introSr)(class="hot")
+        +codePanel('定位&流程','Positioning & Process',privateImageMgm_pp)
+        +codePanel('服务&套餐','Service & packages',privateImageMgm_sp)
+    +contentPanel(entrepreneurImagePositioning,true)
+    +contentPanel(actorSolidPackaging,true)(class="hot")
+    +contentPanel(designOfTheBrideImage,true)
