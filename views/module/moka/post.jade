@@ -1,0 +1,36 @@
+extends ./inc/main
+
+block style
+    :less(minify=true)
+        .postPic {
+            width: 450px !important;
+            float: left
+        }
+
+        .imgBox {
+            text-align: left;
+        }
+
+        .hostInfo {
+            display: none;
+        }
+
+        h2 {
+            font-size: 22px !important;
+        }
+block content
+    .container
+        include ../../inc/crumb
+        .article
+            .col-md-8
+                include ../../inc/mod/post
+            .col-md-4
+                .row
+                    if postList
+                        +panel('相关文章')
+                            .list-group
+                                +media(postList,{})
+
+block st
+    :coffee(bare=true,minify=true)
+        cf.noCopy()

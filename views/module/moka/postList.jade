@@ -1,0 +1,15 @@
+extends inc/main
+block content
+    #post.container
+        .row
+            .col-md-8
+                include ../../inc/crumb
+                #postList.boxList
+                    each it in items
+                        include inc/boxItem
+            .col-md-4
+                +panel('文章主题').panel-danger
+                    .list-group
+                        a.list-group-item(href='/postList') 全部
+                        each it in cats
+                            != f.link(it, null, 'list-group-item')
