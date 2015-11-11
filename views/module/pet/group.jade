@@ -1,0 +1,47 @@
+extends inc/main
+
+block content
+
+    .container
+        .article
+
+            .col-md-8
+
+                include ../../inc/crumb
+
+                h2.event-name= title
+                    if idea
+                        small= idea
+
+                if leader
+                    hr
+                    - _user = leader
+                    - _user._e = 'user'
+                    - _uClass = 'author'
+                    include ../../inc/mod/userInfo
+
+                hr
+                .row
+                    != f.imgItem(locals, c)
+                hr
+
+
+                .article-content
+                    != content.replaceAll('_cImg" src', '_cImg" bb-src')
+
+                if members && members>5
+                    h3 成员
+
+
+
+                h3 微信群
+                .row.imgBox
+                    != f.imgItem(locals, c, 'qrcode')
+
+
+
+                h3 评论
+
+            .col-md-4
+                .row
+                    +itemList(groupList, '其他小组')

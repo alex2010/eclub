@@ -1,0 +1,56 @@
+h2.event-name= title
+    if subTitle
+        small= subTitle
+hr
+
+.row.imgBox
+    != f.imgItem(locals, c, 'head')
+
+//hr
+//
+//if author
+//    +userInfo(author)
+
+//p
+//.well.well-sm
+//    strong [PET 双语阅读&公益翻译]
+//    | PET公益翻译小组致力于搜寻优秀的外文读物，通过公益翻译的形式进行节译。让喜爱英语的小伙伴们，通过翻译学习与使用英语，让翻译变成一种深度阅读，从而在这个浮躁的时代沉静，细细品味西方有价值的文化与知识。
+
+.article-content
+    if content
+        != content.replaceAll('_cImg" src', '_cImg" bb-src')
+    if biContent
+        .biText
+            each it in biContent
+                p(class=it.cat)
+                    if it.en
+                        span.en=it.en
+                    if it.zh
+                        br
+                        span(style='color:orangered').zh=it.zh
+
+
+//if book
+//    +userInfo(translater)
+//hr
+
+if translator
+    h3 译者
+    each u in translator
+        +userInfo(u)
+
+//if reviewer
+//    h3 审阅
+//    +userInfo(reviewer)
+
+if group
+    h3= group.title
+    p: small= group.idea
+    div!= group.content
+    != f.imgItem(group, c, 'qrcode')
+
+p.text-right 发表于 #{pubTime.pattern()}
+
+if !source
+    != f.copyRight(c, 'post', _id)
+    #_comments

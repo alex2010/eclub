@@ -60,6 +60,7 @@ module.exports =
         'service:title': r 'service'
         'cat:code': r 'cat'
         'course:title': r 'course'
+        'pubAccount:code': r 'pubAccount'
 
 #    member: [
 #        "#{code},admin"

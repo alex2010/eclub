@@ -1,7 +1,7 @@
 module.exports = [
     'appId': 'wx62c92a3005eb9419'
     'code': 'yukoPID'
-    'secret': '082e424ee09418e49d2042618ba2d657'
+    'secret': '901b252b9da8423cfa4115ce8f82ce2f'
     'sid': 'gh_c28ec1c5dcb1'
     'status': 1
     'title': '私人形象管家'
@@ -11,25 +11,25 @@ module.exports = [
             'name': 'Yukof服务'
             'sub_button': [
                 'type': 'view'
-                'url': 'http://elp.postenglishtime.com/wechat#!/user'
+                'url': 'http://yukof.postenglishtime.com/serviceChannel'
                 'name': '体验式服务'
             ,
-                'url': 'http://elp.postenglishtime.com/wechat#!/search'
+                'url': 'http://yukof.postenglishtime.com/courseChannel'
                 'type': 'view'
                 'name': '精英培训'
             ,
-                'url': 'http://elp.postenglishtime.com/wechat#!/search'
+                'url': 'http://yukof.postenglishtime.com/teamChannel'
                 'type': 'view'
                 'name': '精英团队'
             ]
         ,
             'type': 'view'
             'name': '女子学堂'
-            'url': 'http://url.com/wechat.html#!/sd'
+            'url': 'http://yukof.postenglishtime.com/schoolChannel'
         ,
 
             'type': 'view'
             'name': '异业联盟'
-            'url': 'http://elp.postenglishtime.com/wechat#!/sd'
+            'url': 'http://yukof.postenglishtime.com/partnerChannel'
         ]
 ]

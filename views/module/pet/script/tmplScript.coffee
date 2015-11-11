@@ -11,7 +11,8 @@ module.exports =
             dao.get ctx.c.code, 'pubAccount', {code:'PostEnglishTime'}, (res)->
                 cb(null, res)
 
-    index: (ctx)->
+    index: (ctx,req)->
+        req.session._id = '123123'
         slides: (cb)->
             opt =
                 limit: 6

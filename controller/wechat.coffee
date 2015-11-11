@@ -9,6 +9,9 @@ getApi = require '../service/wechat'
 
 WXPay = require('weixin-pay')
 
+
+_spStr = 'azbzc'
+
 matchPic = (str)->
     imgs = {}
     for it in str.match /http:\/\/s.postenglishtime.com\/upload\/\S+.(jpg|jpeg|png|JPG|PNG|JPEG)/g
@@ -212,6 +215,28 @@ module.exports =
 #                    log 'qrcode'
 #                    rsp.send res
 
+    login: (req, rsp)->
+        log 'login'
+        log req.cookies
+        code = req.c.code
+
+        qy = req.query
+
+        page = qy.page || 'wechat'
+        func = qy.func
+
+        if req.cookies.woid
+            url = "http://#{req.c.url}/#{page}"
+            if func
+                url += "#!/#{func}"
+            rsp.redirect url
+        else
+            appId = qy.appId
+            scope = qy.scope || 'snsapi_userinfo'
+            wCode = qy.wCode
+            state = encodeURIComponent(qy.state || "#{wCode}::#{page}::#{func}")
+            rsp.redirect "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{appId}&redirect_uri=#{encodeURIComponent("http://#{req.c.url}/a/wt/userInfoByCode")}&response_type=code&scope=#{scope}&state=#{state}#wechat_redirect"
+
     userInfoByCode: (req, rsp)->
         log 'userInfoByCode'
         qy = req.query
@@ -219,9 +244,14 @@ module.exports =
         code = req.c.code
         if ctCtn[wCode]
             ctCtn[wCode].getAccessToken qy.code, (err, result)->
-                accessToken = result.data.access_token
                 openid = result.data.openid
-                ru = "#{req.c.url}/#{page}?woid=#{openid}&aToken=#{accessToken}"
+#                req.session.woid = openid
+                rsp.cookie 'woid', openid, maxAge: 1000 * 3600 * 2
+#                exp = new Date()
+#                exp.setTime(exp.getTime + )
+#                rsp.setHeader 'Set-Cookie', "woid=#{openid};expire=#{exp.toGMTString()}"
+#                req.session.atk = result.data.access_token
+                ru = "#{req.c.url}/#{page}"
                 ru = 'http://' + ru if ru.indexOf('http') is -1
                 ru += "#!/#{func.replace('azbzc', '/')}" if func
                 if result.data.scope is 'snsapi_userinfo'
@@ -245,8 +275,8 @@ module.exports =
                             if res.headimgurl and (!user.refFile or !user.refFile.portrait)
                                 fn = user._id.toString() + '.jpg'
                                 gs('fetchFile') res.headimgurl, "#{util.sPath(code)}/portrait/#{fn}", ->
-                                user.refFile =
-                                    portrait: [fn]
+#                                user.refFile =
+#                                    portrait: [fn]
                             dao.save code, 'user:_id', user
                             rsp.redirect ru
                 else
@@ -254,8 +284,7 @@ module.exports =
         else
             dao.get code, 'pubAccount', code: wCode, (res)->
                 ctCtn[wCode] = new OAuth(res.appId, res.secret)
-                log "http://#{req.c.url}/#{page}"
-                rsp.redirect "http://#{req.c.url}/#{page}"
+                rsp.redirect "http://#{req.c.url}"
         return
 
 

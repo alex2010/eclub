@@ -1,7 +1,8 @@
 express = require('express')
-session = require('express-session')
-mongoStore = require('connect-mongo')(session);
+#session = require('express-session')
+#mongoStore = require('connect-mongo')(session);
 
+setting = require './setting'
 
 path = require('path')
 favicon = require('serve-favicon')
@@ -27,14 +28,14 @@ dao = new require('./service/dao')();
 dao.pick(_mdb, 'community');
 util = require('./ext/util');
 tu = require('./ext/tmpl');
-gs = function(fn){
-    return require(_path + '/service/'+fn)
+gs = function (fn) {
+    return require(_path + '/service/' + fn)
 };
-_cache = cache.createCache('LRU',100*100)
+_cache = cache.createCache('LRU', 100 * 100)
 wtCtn = {};
 ctCtn = {};
-_wtcCtn={};
-_ePool={};
+_wtcCtn = {};
+_ePool = {};
 cc = new _cc();
 `
 require('./ext/string')
@@ -54,6 +55,7 @@ app.use cookieParser()
 #app.use session
 #    secret: 'secretkey'
 #    store: new mongoStore
+#        db: 'session'
 #        host: setting.host
 #        port: setting.port
 
@@ -62,7 +64,7 @@ app.use express.static(path.join(__dirname, 'public'))
 #app.use express.static(path.join(__dirname, 'public/res'))
 
 if app.env
-    app.use '/res/*',(req, res,next)->
+    app.use '/res/*', (req, res, next)->
         res.header 'Access-Control-Allow-Origin', '*'
         next()
 

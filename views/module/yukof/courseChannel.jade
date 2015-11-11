@@ -181,20 +181,23 @@ block style
             margin-top:20px;
         }
 mixin tablePanel(data)
-    -var title=data.title
-    -var subtitle=data.subtitle
-    -var content=data.content
-    -var en=data.en
+    if data
+        -var title=data.title
+        -var subtitle=data.subtitle
+        -var content=data.content
+        -var en=data.en
 
-    .panel.panel-y-8
-        .panel-heading
-            h3.panel-title= title
-                span.en= en
-        .panel-body
-            each it,i in content
-                if subtitle
-                    h4.panel-subtitle= subtitle[i]
-                p!= it
+        .panel.panel-y-8
+            .panel-heading
+                h3.panel-title= title
+                    span.en= en
+            .panel-body
+                if content
+                    each it,i in content
+                        if subtitle
+                            h4.panel-subtitle= subtitle[i]
+                        p!= it
+
 mixin contentPanel(title,content,poster)
         .panel-y-9
             .panel-heading
@@ -223,7 +226,8 @@ block content
         .tab-content
             each it,i in course
                 -var cls='tab-pane fade'
-                -var slide=it.refFile.slide
+                if it.refFile
+                    -var slide=it.refFile.slide
                 -var content=it.content
                 if (i==0)
                     -cls+=' active in'
