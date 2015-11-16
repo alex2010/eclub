@@ -25,7 +25,6 @@ module.exports =
                 for it,i in res
                     it.index = i
                     [it.pt,it.arrow] = pics[i].split(',')
-                log res
                 cb(null, res)
 
 

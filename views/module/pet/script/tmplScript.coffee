@@ -1,18 +1,18 @@
 module.exports =
     _init: (ctx)->
         _cat: (cb)->
-            dao.find ctx.c.code, 'cat', {},{}, (res)->
+            dao.find ctx.c.code, 'cat', {}, {}, (res)->
                 opt = {}
                 for it in res
                     opt[it.code] = it
                 cb(null, opt)
 
         wt: (cb)->
-            dao.get ctx.c.code, 'pubAccount', {code:'PostEnglishTime'}, (res)->
+            dao.get ctx.c.code, 'pubAccount', {code: 'PostEnglishTime'}, (res)->
                 cb(null, res)
 
-    index: (ctx,req)->
-        req.session._id = '123123'
+    index: (ctx, req)->
+#        req.session._id = '123123'
         slides: (cb)->
             opt =
                 limit: 6
@@ -31,7 +31,7 @@ module.exports =
             dao.find ctx.c.code, 'post', filter, opt, (res)->
                 cb(null, res)
 
-    activityList: (ctx,req)->
+    activityList: (ctx, req)->
         ctx.crumb = ctx.f.crumbItem [
             label: '活动'
         ]
@@ -70,17 +70,23 @@ module.exports =
             dao.find ctx.c.code, 'group', {}, opt, (res)->
                 cb(null, res)
 
-    postList: (ctx)->
+    postList: (ctx,req)->
         ctx.crumb = ctx.f.crumbItem [
             label: '文章'
         ]
+        if req.query.cat
+            cat = req.query.cat.toString()
+            filter =
+                cat:
+                    $regex: ".*#{cat}.*"
         items: (cb)->
             opt =
                 skip: 0
                 limit: 20
                 sort:
                     lastUpdated: -1
-            dao.find ctx.c.code, 'post', {}, opt, (res)->
+            dao.find ctx.c.code, 'post', (filter||{}), opt, (res)->
+                log res
                 cb(null, res)
 
         cats: (cb)->
@@ -121,10 +127,10 @@ module.exports =
         ]
         ctx.reg =
 #            href: '/enroll/' + ctx._id
-            href: tu.navUrl('enroll',ctx._id)
-#        venue: (cb)->
-#            dao.get ctx.c.code, 'venue', {_id: ctx.venue._id}, (res)->
-#                cb(null, res)
+            href: tu.navUrl('enroll', ctx._id)
+        #        venue: (cb)->
+        #            dao.get ctx.c.code, 'venue', {_id: ctx.venue._id}, (res)->
+        #                cb(null, res)
 
         cats: (cb)->
             dao.find ctx.c.code, 'cat', {type: 'activity'}, {}, (res)->
@@ -157,7 +163,7 @@ module.exports =
         ,
             label: ctx.title
         ]
-        contentList:(cb)->
+        contentList: (cb)->
             opt =
                 skip: 0
                 limit: 10

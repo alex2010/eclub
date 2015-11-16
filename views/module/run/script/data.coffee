@@ -107,7 +107,7 @@ module.exports =
         'post:title': post
         'video:title': video
         'i18n:key': require('./zh')
-#
-#    member:[
-#        "#{code},admin"
-#    ]
+
+    member:[
+        "#{code},admin"
+    ]

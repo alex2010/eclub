@@ -2,6 +2,7 @@
 #
 #log setting
 
+
 String::replaceAll = (s1, s2)->
     this.replace(new RegExp(s1, "gm"), s2);
 

@@ -2,11 +2,19 @@
 #_cache
 
 script.
-    var cf = { lang: '#{lang}', code: '#{c.code}', console: true, app: '#{app}', mode: #{mode}, community: !{cstr}, dm: '#{c.resPath}', index: '#{index}'};
+    var cf = {
+        lang: '#{lang}',
+        code: '#{c.code}',
+        console: true,
+        app: '#{app}',
+        mode: #{mode},
+        community: !{cstr},
+        dm: '#{c.resPath}',
+        index: '#{index}'
+    };
 block js
-        script(src='#{libPath}lib.js?#{_ts}')
-        if main
-            script(src='#{libPath}#{main}.js?#{_ts}')
+    script(src='#{libPath}lib.js?#{_ts}')
+    script(src='#{libPath}/#{main}.js?#{_ts}')
 script
     block st
 
