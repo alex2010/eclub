@@ -1,3 +1,14 @@
+pageOpt = (ctx, req, et)->
+    opt =
+        skip: +req.query.skip || 0
+        limit: +req.query.limit || 10
+        sort:
+            lastUpdated: -1
+    ctx._skip = opt.skip
+    ctx._limit = opt.limit
+    ctx._e = et
+    opt
+
 module.exports =
     _init: (ctx)->
         _cat: (cb)->
@@ -32,21 +43,16 @@ module.exports =
                 cb(null, res)
 
     activityList: (ctx, req)->
+        et = 'activity'
         ctx.crumb = ctx.f.crumbItem [
             label: '活动'
         ]
 
         items: (cb)->
             filter = {}
-            opt =
-                skip: +req.query.skip || 0
-                limit: +req.query.limit || 10
-                sort:
-                    lastUpdated: -1
-            ctx._skip = opt.skip
-            ctx._limit = opt.limit
-            dao.find ctx.c.code, 'activity', filter, opt, (res)->
-                dao.count ctx.c.code, 'activity', filter, (count)->
+            opt = pageOpt(ctx, req, et)
+            dao.find ctx.c.code, et, filter, opt, (res)->
+                dao.count ctx.c.code, et, filter, (count)->
                     ctx._max = count
                     cb(null, res)
 
@@ -70,7 +76,8 @@ module.exports =
             dao.find ctx.c.code, 'group', {}, opt, (res)->
                 cb(null, res)
 
-    postList: (ctx,req)->
+    postList: (ctx, req)->
+        et = 'post'
         ctx.crumb = ctx.f.crumbItem [
             label: '文章'
         ]
@@ -80,14 +87,11 @@ module.exports =
                 cat:
                     $regex: ".*#{cat}.*"
         items: (cb)->
-            opt =
-                skip: 0
-                limit: 20
-                sort:
-                    lastUpdated: -1
-            dao.find ctx.c.code, 'post', (filter||{}), opt, (res)->
-                log res
-                cb(null, res)
+            opt = pageOpt(ctx, req, et)
+            dao.find ctx.c.code, et, (filter || {}), opt, (res)->
+                dao.count ctx.c.code, et, filter, (count)->
+                    ctx._max = count
+                    cb(null, res)
 
         cats: (cb)->
             dao.find ctx.c.code, 'cat', {type: 'post'}, {}, (res)->

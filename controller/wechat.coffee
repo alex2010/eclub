@@ -26,14 +26,13 @@ module.exports =
                 jsApiList: bo.res.split(',')
                 url: bo.url
             , (err, res) ->
+                log err if err
                 rsp.send res
-
-#    apiCall:(name, opt)->
-#        getApi
 
     createMenu: (req, rsp)->
         getApi req.body.code, req.body.pubCode, (api)->
             api.createMenu req.body.menu, (err, res) ->
+                log err if err
                 rsp.send res
 
     createLimitQRCode: (req, rsp)->
@@ -291,12 +290,12 @@ module.exports =
     wxPay: (req, rsp)->
         rp = req.body
         da = new Date()
+        code = req.c.code
         dao.get code, 'pubAccount', code: rp.wCode, (pa)->
             wxpay = WXPay
                 appid: pa.appId
                 mch_id: pa.mid
                 partner_key: pa.tradeSecret
-
             opt =
                 openid: rp.woid
                 body: rp.body

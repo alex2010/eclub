@@ -59,7 +59,7 @@ block content
                h3= title
             .panel-body
                != f.imgItem(locals, c, 'head', 'img-responsive')
-               p= content
+               != content
                .sub
                   span 发表于
                   i= pubTime.pattern()

@@ -2,7 +2,7 @@ extends ./inc/main
 block style
     :less(minify=true)
         .mod-tab {
-            margin-top: 25px;
+            margin-top: 10px;
             .tab-pane {
                 background: #fff;
                 border: 1px solid #ddd;
@@ -26,49 +26,48 @@ block style
 
 block content
     mixin label(title,content)
-        if !content || content==''
+        if !content || content == ''
             -content='-'
-        if !attributes.class || attributes.class==''
+        if !attributes.class || attributes.class == ''
             -attributes.class='label-default'
-        h4.mb16= title+'：'
-            span(class='label '+'#{attributes.class}')= content
-    .main.row
-        .col-md-12
+        .div(style='font-size: 14px;height: 28px')
+                strong= title + '：'
+                span(class='label ' + '#{attributes.class}')= content
+
+    .row.mt
+        .col-md-8.article-main
             if crumb
-                .row
-                    include ../../inc/crumb
-            .row.article.pt20
-                .col-md-8.article-main
-                    +panel('助听器产品介绍')
-                        .col-md-4
-                            .thumbnail
-                                != f.imgItem(locals,c, 'slide')
-                        .col-md-8
-                            .caption
-                                h2.title= title
-                                .box-label
-                                    +label('价格',price)(class='label-danger')
-                                    +label('品牌',brand.title)
-                                    +label('上市时间',pubTime.pattern('yyyy-MM-dd'))
-                                    +label('外型',outline)
-                                    +label('通道',channel)
-                                    +label('保修时间',warranty)
-                    .mod-tab
-                        ul.nav.nav-tabs(role='tablist')
-                            li.active(role='presentation')
-                                a(href='#desc',aria-controls='desc',role='tab',data-toggle='tab') 助听器介绍
-                            li(role='presentation')
-                                a(href='#perfms',aria-controls='perfms',role='tab',data-toggle='tab') 规格参数
-                        .tab-content
-                            .tab-pane.active.fade.in(role='tabpanel',id='desc')
-                                p= description
-                            .tab-pane.fade(role='tabpanel',id='perfms')
-                                each it in performance.split(',')
-                                    p.item-perfms= it
-                                        span.glyphicon.glyphicon-ok
-                .col-md-4.article-aside
-                    +panel('相关助听器')
-                        +media(productList,{singleR:false,func:'slide'})
+                include ../../inc/crumb
+            +panel('助听器产品介绍')
+                .panel-body.row
+                    .col-md-4
+                        .thumbnail
+                            != f.imgItem(locals, c, 'slide')
+                    .col-md-8
+                        h2.title= title
+                        +label('价格',price)(class='label-danger')
+                        +label('品牌',brand.title)
+                        +label('上市时间',pubTime.pattern('yyyy-MM-dd'))
+                        +label('外型',outline)
+                        +label('通道',channel)
+                        +label('保修时间',warranty)
+            .mod-tab
+                ul.nav.nav-tabs(role='tablist')
+                    li.active(role='presentation')
+                        a(href='#desc',aria-controls='desc',role='tab',data-toggle='tab') 助听器介绍
+                    li(role='presentation')
+                        a(href='#perfms',aria-controls='perfms',role='tab',data-toggle='tab') 规格参数
+                .tab-content
+                    .tab-pane.active.fade.in(role='tabpanel',id='desc')
+                        p= description
+                    .tab-pane.fade(role='tabpanel',id='perfms')
+                        each it in performance.split(',')
+                            p.item-perfms= it
+                            span.glyphicon.glyphicon-ok
+        .col-md-4.article-aside
+            +panel('相关助听器')
+                .list-group
+                    +media(productList,{singleR: false, func: 'slide'})
 block st
     :coffee(bare=true,minify=true)
-        $('.item-perfms:last').css 'border-bottom','none'
+        $('.item-perfms:last').css 'border-bottom', 'none'

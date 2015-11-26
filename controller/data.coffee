@@ -36,8 +36,12 @@ _cv = (v, k, obj)->
     else
         obj[k] = if isOid(k)
             if v.$in
-                new oid(it) for it in v.$in
+                for it in v.$in
+                    log it
+                    new oid(it)
             else
+                log k
+                log v
                 new oid(v)
         else if k in ['status', 'row']
             +v
@@ -113,7 +117,12 @@ dataController =
     get: (req, rsp) ->
         code = req.c.code
         entity = req.params.entity
-        dao.get code, entity, _id: req.params.id, (item)->
+        qu = req.query || {q: {}}
+        op =
+            _id: req.params.id
+        if req.query._attrs
+            op.fields = attrs util.d qu, '_attrs'
+        dao.get code, entity, op, (item)->
             rsp.send util.r item
 
     getByKey: (req, rsp) ->

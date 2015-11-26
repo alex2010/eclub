@@ -1,39 +1,46 @@
+pageOpt = (ctx, req, et)->
+    opt =
+        skip: +req.query.skip || 0
+        limit: +req.query.limit || 10
+        sort:
+            lastUpdated: -1
+    ctx._skip = opt.skip
+    ctx._limit = opt.limit
+    ctx._e = et
+    opt
+
+
+
+
 module.exports =
     _init: (ctx)->
-        opt =
-            limit: 5
-            sort:
-                row: -1
+        _.extend ctx.langs,
+            shop:'验配中心'
+            consultant: '验配师'
+            product: '助听器'
+
+        ctx._cd =
+            shop:
+                func: 'slide'
+                text: 'address'
+            consultant:
+                func: 'head'
+                text: 'description'
+            product:
+                func: 'slide'
+                text: 'description'
+
         wt: (cb)->
             dao.get ctx.c.code, 'pubAccount', {}, (res)->
                 cb(null, res)
 
-        _cat: (cb) ->
-            dao.find ctx.c.code, 'cat', {}, {}, (res)->
-                opt = {}
-                for it in res
-                    opt[it.code] = it.title
-                cb(null, res)
+
         _guest: (cb) ->
             filter =
                 title: 'guest'
             dao.find ctx.c.code, 'role', filter, {}, (res)->
                 cb(null, res)
-        shopList: (cb)->
-            dao.find ctx.c.code, 'shop', {}, opt, (res)->
-                for it in res
-                    if it.refFile && it.refFile.head
-                        it.imgSrc = ctx.f.resPath ctx.c, it.refFile.head
-                cb(null, res)
-        consultantList: (cb)->
-            dao.find ctx.c.code, 'consultant', {}, opt, (res)->
-                for it in res
-                    if it.refFile && it.refFile.head
-                        it.imgSrc = ctx.f.resPath ctx.c, it.refFile.head
-                cb(null, res)
-        productList: (cb)->
-            dao.find ctx.c.code, 'product', {}, opt, (res)->
-                cb null, res
+
     post: (ctx, req, res) ->
         postList: (cb)->
             opt =
@@ -43,6 +50,49 @@ module.exports =
                     lastUpdated: -1
             dao.find ctx.c.code, 'post', {}, opt, (res)->
                 cb(null, res)
+    index: (ctx, req, res) ->
+        opt =
+            limit: 5
+            sort:
+                row: -1
+        #        _cat: (cb) ->
+        #            dao.find ctx.c.code, 'cat', {}, {}, (res)->
+        #                opt = {}
+        #                for it in res
+        #                    opt[it.code] = it.title
+        #                cb(null, res)
+        shopList: (cb)->
+            dao.find ctx.c.code, 'shop', {}, opt, (res)->
+                cb(null, res)
+        consultantList: (cb)->
+            dao.find ctx.c.code, 'consultant', {}, opt, (res)->
+                cb(null, res)
+        productList: (cb)->
+            dao.find ctx.c.code, 'product', {}, opt, (res)->
+                cb null, res
+
+    entityList: (ctx, req, res)->
+        et = req.query.entity.toString()
+
+        if req.query.cat
+            cat = req.query.cat.toString()
+            filter =
+                cat:
+                    $regex: ".*#{cat}.*"
+        items: (cb)->
+            opt = pageOpt(ctx, req, et)
+            dao.find ctx.c.code, et, (filter || {}), opt, (res)->
+                dao.count ctx.c.code, et, filter, (count)->
+                    ctx._max = count
+                    cb(null, res)
+        cats: (cb)->
+            dao.find ctx.c.code, 'cat', {type: et}, {}, (res)->
+                if ctx.cat
+                    cat = _.where(res, {code: ctx.cat.code})
+                    ctx.cat = cat[0] if cat.length
+                cb(null, res)
+
+
 
     itemList: (ctx, req, res) ->
         opt =
@@ -80,6 +130,7 @@ module.exports =
                             data.titleB = matchArr[1].title
                             data.titleC = matchArr[2].title
                             cb(null, data)
+
     seckillingList: (ctx, req, rsp) ->
         opt =
             limit: 5
@@ -91,11 +142,11 @@ module.exports =
                 cb(null, res)
 
     shop: (ctx, req, rsp)->
-        consultant:(cb)->
+        consultant: (cb)->
             opt =
                 sort:
                     lastUpdated: -1
-            dao.find ctx.c.code, 'consultant', {'shop._id':ctx._id}, opt, (res)->
+            dao.find ctx.c.code, 'consultant', {'shop._id': ctx._id}, opt, (res)->
                 cb(null, res)
 
     cardList: (ctx, req, rsp)->

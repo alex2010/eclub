@@ -5,7 +5,10 @@ jade = require('jade')
 
 String::splitCap = (i, t)->
     (it.capitalize() for it in @split(i)).join(t)
+
 pageOpt = (req)->
+    log 'zxcvzxvx'
+
     c = req.c
     code = c.code
 
@@ -17,13 +20,13 @@ pageOpt = (req)->
     resPath = "#{c.resPath}/upload/#{code}/"
 
     tRender: jade.renderFile
-    mob: req.query.mob
+#    mob:
     lang: req.query.lang || 'zh'
     title: c.title
     mode: app.env
     _ts: new Date().getTime()
     c: c
-    app: 'main'
+    main: (if req.query.mob is '1' then 'mob' else 'main')
     f: require('../ext/tmpl')
     cstr: JSON.stringify(_.pick(c, 'code', 'name', 'url', '_id', 'resPath'))
     libPath: libPath
@@ -55,6 +58,8 @@ pickScript = (ctx, req)->
             ctx.app = 'admin'
             null
     sc = require("../views/module/#{ctx.c.code}/script/tmplScript")
+
+    ctx.langs = {}
     initOpt = sc._init(ctx, req) || {}
 
     opt = if sc[ctx.index]
@@ -65,10 +70,9 @@ pickScript = (ctx, req)->
         {}
     opt.i18 = (cb)->
         dao.find ctx.c.code, "i18n", {lang: req.query.lang || 'zh'}, {}, (res)->
-            langs = {}
             for it in res
-                langs[it.key] = it.val
-            cb null, require('../service/lang')(langs)
+                ctx.langs[it.key] = it.val
+            cb null, require('../service/lang')(ctx.langs)
 
     _.extend initOpt, opt
 
@@ -107,15 +111,16 @@ module.exports =
                 unless item
                     rsp.end('no item')
 
-                opt =
+                filter =
                     skip: 0
                     limit: 10
                     sort:
                         lastUpdated: -1
 
                 ctx = _.extend ctx, item
-
-                dao.find ctx.c.code, et, status: 2, opt, (res)->
+                opt =
+                    status: 2
+                dao.find ctx.c.code, et, {}, filter, (res)->
                     if res.length
                         ctx["#{et}List"] = res
 

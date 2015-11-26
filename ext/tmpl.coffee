@@ -54,9 +54,9 @@ module.exports =
         return '' unless it
         if it.refFile and it.refFile[name]
             path = it.refFile[name][index]
-            @img @resPath(c, path), cls, pop
-        else
-            ''
+            if path and path.length
+                return @img @resPath(c, path), cls, pop
+        ''
 
     resPath: (c, path)->
         c.resPath + '/upload/' + c.code + '/' + path

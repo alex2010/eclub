@@ -10,10 +10,13 @@ block content
             .row
                 .col-md-4
                     +panel(_item.titleA)
-                        +media(_item.objA,{ttLimits:10,func:'head'})
+                        .list-group
+                            +media(_item.objA,{ttLimits:10,func:'head'})
                 .col-md-4
                     +panel(_item.titleB)
-                        +media(_item.objB,{ttLimits:10})
+                        .list-group
+                            +media(_item.objB,{ttLimits:10})
                 .col-md-4
                     +panel(_item.titleC)
-                        +media(_item.objC,{ttLimits:10})
+                        .list-group
+                            +media(_item.objC,{ttLimits:10})

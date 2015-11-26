@@ -4,24 +4,33 @@ block content
         if !attributes.class
             -attributes.class=''
         li.item-data
-            span.tip= tip+'： '
+            span.tip= tip + '： '
             span(class='data #{attributes.class}')= data
 
     include ../../inc/crumb
-    .row.mt
-        .col-md-8.artitle-main
+    .row.article
+        .col-md-8
+            //.thumbnail
+            //    != f.imgItem(locals, c, 'slide')
+
             +panel('验配中心介绍')
-                .thumbnail
-                    != f.imgItem(locals,c,'slide')
-                .caption
-                    h3.title.text-center.pl0= title
+                h2.title.text-center.pl0= title
+
+                if refFile && refFile.slide
+                    +slide(c, refFile.slide)
+
+                .panel-body
                     h4 店铺介绍
+
                     p.desc= description
-                p.text-center
-                    a(href=f.navUrl('apply/order')).btn.btn-primary.btn-lg 问诊预约
+
+                    p.text-center
+                        a(href=f.navUrl('apply/order')).btn.btn-primary.btn-lg 问诊预约
             if consultant && consultant.length != 0
                 +panel('验配师')
-                    each it in consultant
+                    .panel-body
+
+                        each it in consultant
                             .media
                                 .media-left
                                     a(href='/consultant/#{it._id}')
@@ -33,13 +42,13 @@ block content
 
             if brand
                 +panel('经营品牌')
-                    .row
+                    .panel-body
                         each it,i in brand
                             +thumbnail(it).col-md-3
 
-        .col-md-4.article-aside
+        .col-md-4.m3
             +panel('基本信息')
-                .row
+                .panel-body
                     if park == '是'
                         .col-md-12
                             ul.list-inline
@@ -69,6 +78,15 @@ block content
                             li
                                 span.glyphicon.glyphicon-calendar
                             +item('营业面积',space)
+            if shopList
 
-            +panel('热门验配中心')
-                +media(shopList,{singleR:false,func:'slide'})
+                +panel('热门验配中心')
+                    - var v = _cd.shop
+                    .list-gourp
+                        +media(shopList,{func: v.func, text: v.text})
+block st
+    :coffee(bare=true,minify=true)
+        new cf.view.slide
+            el: '.carousel.slide'
+            controller: true
+            indicator: true

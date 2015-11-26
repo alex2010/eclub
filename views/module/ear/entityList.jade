@@ -1,0 +1,24 @@
+extends ./inc/main
+block content
+    .row.main
+        .col-md-8
+            include ../../inc/crumb
+            +panel('全部' + i18.ii(_e)).panel-info.mt10
+                - var v = _cd[_e]
+                .list-group
+                    +media(items,{func: v.func, text: v.text})
+                .panel-footer
+                    .nav
+                        ul.pager.m0
+                            if _skip != 0
+                                li.pull-left: a(href='?skip=#{_skip - _limit}&entity=#{_e}') 上一页
+                            if _skip + _limit < _max
+                                li.pull-right: a(href='?skip=#{_skip + _limit}&entity=#{_e}') 下一页
+        .col-md-4
+            +panel(i18.ii(_e) + '分类').panel-default.mt10
+                .list-group
+                    a.list-group-item(href='/entityList?entity=' + _e) 全部
+                    each it in cats
+                        != f.link(it, null, 'list-group-item')
+
+

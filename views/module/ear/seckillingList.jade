@@ -29,23 +29,22 @@ block content
             .panel.panel-default
                 .panel-heading
                     h3.panel-title 聆听秒杀
-                .panel-body
-                    .list-group
-                        each it in list
-                            -var n=0
-                            while n<5
-                                -n++
-                                a.list-group-item(href="/seckilling/#{it._id}")
-                                    .media
-                                        .media-left
-                                            != f.imgItem(it, c)
-                                        .media-body
-                                            p= it.description
-                                            p <strong>产地：</strong>
-                                                = it.origin
-                                            p <strong>数量：</strong>
-                                                = it.surplus
-                                            p
-                                                span.label.label-danger #{it.discount}折
-                                                span.label.label-info ¥#{it.price}
+                .list-group
+                    each it in list
+                        -var n=0
+                        while n<5
+                            -n++
+                            a.list-group-item(href="/seckilling/#{it._id}")
+                                .media
+                                    .media-left
+                                        != f.imgItem(it, c)
+                                    .media-body
+                                        p= it.description
+                                        p <strong>产地：</strong>
+                                            = it.origin
+                                        p <strong>数量：</strong>
+                                            = it.surplus
+                                        p
+                                            span.label.label-danger #{it.discount}折
+                                            span.label.label-info ¥#{it.price}
         .col-md-4

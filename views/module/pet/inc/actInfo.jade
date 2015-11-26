@@ -11,8 +11,6 @@
                 != f.icon('time')
                 if it.startedDate
                     span= new Date().pattern('yyyy-MM-dd HH:mm')
-                    //span= it.startedDate.pattern('yyyy-MM-dd HH:mm')
-                        | (两小时)
             if it.venue
                 p.col-md-6
                     != f.icon('flag')
@@ -28,11 +26,7 @@
         if it.master
             .author.hidden-xs
                 each v,k in it.master
-                    - v._id = k
-                    - _user = v
-                    - _user._e = 'user'
-                    - _uClass = 'host'
-                    include ../../../inc/mod/userInfo
+                    +userInfo(v)
         p.hidden-xs
         h3 话题介绍
         .intro!= it.brief

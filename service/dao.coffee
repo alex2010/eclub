@@ -43,9 +43,14 @@ module.exports = ->
     @index = (db, entity, index, opt)->
         @pick(db, entity).createIndex index, opt
 
-    @get = (db, entity, opt, callback)->
-        opt = @cleanOpt(opt)
-        @pick(db, entity).findOne opt, (err, doc)->
+    @get = (db, entity, filter, callback)->
+        opt = {}
+        if filter.fields
+            opt =
+                fields: util.d filter, 'fields'
+        filter = @cleanOpt(filter)
+
+        @pick(db, entity).findOne filter, opt, (err, doc)->
             log err if err
             doc._e = entity if doc
             callback?(doc)

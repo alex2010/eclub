@@ -1,10 +1,6 @@
 extends ../../../main
 include ../../../inc/mixin
 
-block prepend js
-    if !mode
-        script(src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js')
-
 block append js
     script(src='#{libPath}router.js')
 
@@ -19,49 +15,52 @@ block ctn
             //    h4=opt.title
             if block
                 block
-    mixin panel(title,tagCls)
-        if !tagCls
-            -tagCls='panel-body'
-        if !attributes.class
-            -attributes.class='panel panel-default'
-        div&attributes(attributes)
-            .panel-heading
-                h3.panel-title= title
-            div(class=tagCls)
-                if block
-                    block
-    mixin media(posts,opt)
-        if !opt.ttLimits
-            -opt.ttLimits= 12
-        if !opt.ctLimit
-            -opt.ctLimit= 24
-        if !opt.singleR
-            -opt.singleR= false
-        each it in posts
-            a.media.media_left.clearfix(href='/#{it._e}/#{it._id}',target='_blank')
-                if !opt.singleR
-                    .col-xs-4
-                        != f.imgItem(it, c, opt.func || 'head', 'media-object')
-                else
-                    != f.imgItem(it, c, opt.func || 'head', 'media-object')
-                .col-xs-8.body
-                    h4.media-heading!=it.title || it.username
-                    != f.dStr(it.description || it.address, 20)
+
+    //mixin panel(title,tagCls,more)
+    //    if !tagCls
+    //        -tagCls='panel-body'
+    //    if !attributes.class
+    //        -attributes.class='panel panel-default'
+    //    div&attributes(attributes)
+    //        .panel-heading
+    //            h3.panel-title= title
+    //            if more
+    //                a.pull-right(href=more,style='margin-top:-14px') 查看更多
+    //        div(class=tagCls)
+    //            if block
+    //                block
+
+    //mixin media(posts,opt)
+    //    if !opt.ttLimits
+    //        -opt.ttLimits= 12
+    //    if !opt.ctLimit
+    //        -opt.ctLimit= 24
+    //    if !opt.singleR
+    //        -opt.singleR= false
+    //    each it in posts
+    //        a.media.media_left.clearfix(href='/#{it._e}/#{it._id}',target='_blank')
+    //            if !opt.singleR
+    //                .col-xs-4
+    //                    != f.imgItem(it, c, opt.func || 'head', 'media-object')
+    //            else
+    //                != f.imgItem(it, c, opt.func || 'head', 'media-object')
+    //            .col-xs-8.body
+    //                h4.media-heading!=it.title || it.username
+    //                != f.dStr(it.description || it.address, 20)
 
     body(data-wid= wt.appId, data-wcode= wt.code)
-        .container
-            #header.row.hidden-xs
-                .col-md-12
-                    .row
-                        .col-md-7.logo
-                            h1
-                                a(href='/'): img.img-responsive(src='#{resPath}images/logo_03.png', alt='')
-                            p 聆听在线-最好用的听力健康平台
-                        .col-md-5.pl170.mt10
-                            ul#topBar.list-inline.pull-right
-                            .block-search-hder
-                                input.itxt-search(name='', type='text', placeholder='站内搜索')
-                                input.btn-search(type='button')
+        .container.topLogo
+            #header
+                .row
+                    .col-md-7.logo
+                        h1
+                            a(href='/'): img.img-responsive(src='#{resPath}images/logo_03.png', alt='')
+                        p 聆听在线-最好用的听力健康平台
+                    .col-md-5.pl170.mt10
+                        ul#topBar.list-inline.pull-right
+                        .block-search-hder
+                            input.itxt-search(name='', type='text', placeholder='站内搜索')
+                            input.btn-search(type='button')
 
         .navbar.navbar-default
             .container
@@ -69,10 +68,9 @@ block ctn
                     .navbar-header
                         +mobBtn('#navBox')
                         .searchBox
-                            .navbar-brand
-                                a.btn.btn-danger
-                                    != f.icon('search')
-                                    | 听力搜索专家
+                            a.btn.btn-danger.showBtn
+                                != f.icon('search')
+                                | 听力搜索专家
                             #searchPanel.list-group.l-search
                                 h3.list-group-item 助听器行业搜索神器
                                 a.list-group-item(stag="#sProduct" )
@@ -97,11 +95,12 @@ block ctn
                                     #sProduct
                     #navBox.collapse.navbar-collapse
                         +nav(c.nav)#nav.nav.navbar-nav
-        #content.container
-        #static.container
-            block content
         .container
-            #footer
+            #content.row
+            #static.row(class=index)
+                block content
+        .container
+            #footer.row.mt
                 .col-md-7.intro
                     p
                         | 免费咨询电话

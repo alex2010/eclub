@@ -24,8 +24,8 @@ if master && master.length
 //    .reg
 //h3 地图
 //
-if title && title.indexOf('秋趴') > -1
-    .regBtn
+if true || title && title.indexOf('秋趴') > -1
+    .regBtn.mt
         a(href=f.navUrl('enroll')).btn.btn-lg.btn-info.btn-block&attributes(reg) 我要报名
 
 hr
@@ -37,7 +37,7 @@ if participant
                 - it._id = i
             -href = '/user/' + it._id
             -imgPath = f.resPath(c, 'portrait/' + it._id + '.jpg')
-            a.col-xs-2.col-md-1.p0(href= href,title= it.username)
+            a.col-xs-2.col-md-1.pl0(href= href,title= it.username)
                 != f.img(imgPath, 'square')
 
 if itemTable

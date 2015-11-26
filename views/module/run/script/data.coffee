@@ -97,8 +97,8 @@ module.exports =
     community:
         code: code
         name: '泥泞跑 mudrun'
-        resPath: if _env then '/res' else 'http://s.postenglishtime.com'
-        url: if _env then 't.run.com' else 'run.postenglishtime.com'
+        resPath: if _env then '/res' else 'http://s.chinamudrun.com'
+        url: if _env then 't.run.com' else 'chinamudrun.com'
 
     data:
         'role:title': role
@@ -108,6 +108,6 @@ module.exports =
         'video:title': video
         'i18n:key': require('./zh')
 
-    member:[
-        "#{code},admin"
-    ]
+#    member:[
+#        "#{code},admin"
+#    ]
