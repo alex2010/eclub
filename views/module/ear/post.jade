@@ -2,30 +2,34 @@ extends ./inc/main
 
 block style
     :less(minify=true)
-        .postPic{
+        .postPic {
             width: 450px !important;
             float: left
         }
-        .imgBox{
+
+        .imgBox {
             text-align: left;
         }
-        .hostInfo{
+
+        .hostInfo {
             display: none;
         }
-        h2{
+
+        h2 {
             font-size: 22px !important;
         }
 block content
-    .container
-        include ../../inc/crumb
-        .article
-            #main.col-md-8
-                include ../../inc/mod/post
-            #side.col-md-4
-                h3 相关文章
-                ul
-                    each it in postList
-                        li!= f.link(it)
+    include ../../inc/crumb
+    .article
+        .col-md-8
+            include ../../inc/mod/post
+        .col-md-4.m3
+            if postList
+                .row
+                    +panel('相关文章')
+                        .list-group
+                            +media(postList,{})
+
 
 block st
     :coffee(bare=true,minify=true)

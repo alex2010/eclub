@@ -2,7 +2,10 @@ extends ../../../main
 include ../../../inc/mixin
 
 block append js
-    script(src='#{libPath}router.js')
+    if mob
+
+    else
+        script(src='#{libPath}router.js')
 
 block ctn
     mixin thumbnail(opt,name)
@@ -49,22 +52,22 @@ block ctn
     //                != f.dStr(it.description || it.address, 20)
 
     body(data-wid= wt.appId, data-wcode= wt.code)
-        .container.topLogo
-            #header
-                .row
-                    .col-md-7.logo
-                        h1
-                            a(href='/'): img.img-responsive(src='#{resPath}images/logo_03.png', alt='')
-                        p 聆听在线-最好用的听力健康平台
-                    .col-md-5.pl170.mt10
-                        ul#topBar.list-inline.pull-right
-                        .block-search-hder
-                            input.itxt-search(name='', type='text', placeholder='站内搜索')
-                            input.btn-search(type='button')
+        if !mob
+            .container.topLogo
+                #header
+                    .row
+                        .col-md-7.logo
+                            h1
+                                a(href='/'): img.img-responsive(src='#{resPath}images/logo_03.png', alt='')
+                            p 聆听在线-最好用的听力健康平台
+                        .col-md-5
+                            ul#topBar.list-inline.pull-right
+                            .block-search-hder
+                                input#q.form-control(name='q', type='text', placeholder='站内搜索')
+                                .btn-search
 
-        .navbar.navbar-default
-            .container
-                .row
+            .navbar.navbar-default
+                .container
                     .navbar-header
                         +mobBtn('#navBox')
                         .searchBox
@@ -129,3 +132,56 @@ block ctn
                         li
                             a
                                 img.img-responsive(src='#{resPath}images/icon-share_29.png', alt='')
+
+block commonjs
+    if mob
+        :coffee(bare=true,minify=true)
+            ls = $('.l-search')
+            bps = $('.block-panel-search')
+
+            $('.searchBox').prepend $('h1 img')
+            nav = $('#navBox')
+            nav.prepend $('.block-search-hder')
+            nav.prepend '<hr/>'
+            nav.prepend $('.logo p')
+
+            nav.find('.dropdown-menu').removeClass('dropdown-menu')
+
+            $('.navbar-brand').attr
+                'data-toggle': 'collapse'
+                'data-target': '#searchPanel'
+
+            ls.find('a').click (e)->
+                util.setActive(e)
+                cf[$(this).attr('stag').substr(1)]()
+                $('.navbar-brand').trigger 'click'
+    else
+        :coffee(bare=true,minify=true)
+            ls = $('.l-search')
+            bps = $('.block-panel-search')
+
+            $('.searchBox').hover ->
+                if cf._sbTimer
+                    clearTimeout cf._sbTimer
+                ls.show()
+            , ->
+                cf._sbTimer = setTimeout ->
+                    ls.hide()
+                , 1000
+
+            ls.hover ->
+                if cf._bpTimer
+                    clearTimeout cf._bpTimer
+                $(this).find('.block-panel-search').show()
+            , ->
+                cf._bpTimer = setTimeout =>
+                    $(this).find('.block-panel-search').hide()
+                , 1000
+
+
+            ls.find('a').hover (e)->
+                util.setActive(e)
+                ls.find("#{$(this).attr('stag')}").show().siblings().hide()
+            , ->
+                log 'left'
+

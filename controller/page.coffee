@@ -7,8 +7,6 @@ String::splitCap = (i, t)->
     (it.capitalize() for it in @split(i)).join(t)
 
 pageOpt = (req)->
-    log 'zxcvzxvx'
-
     c = req.c
     code = c.code
 
@@ -18,9 +16,8 @@ pageOpt = (req)->
         libPath = "#{c.resPath}/upload/#{code}/lib/"
 
     resPath = "#{c.resPath}/upload/#{code}/"
-
     tRender: jade.renderFile
-#    mob:
+    mob: req.mob
     lang: req.query.lang || 'zh'
     title: c.title
     mode: app.env

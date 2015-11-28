@@ -17,16 +17,6 @@ mixin userInfo(user)
                             span= i18.iCat('industry')[user.industry]
             != user.introduction
 
-//mixin panel(title,ccls)
-//    if !ccls
-//        -ccls = 'panel-body'
-//    .panel&attributes(attributes)
-//        .panel-heading
-//            h3.panel-title= title
-//        div(class=ccls)
-//            if block
-//                block
-//
 mixin panel(title,cls,more)
     if !attributes.class
         -attributes.class='panel-default ' + cls

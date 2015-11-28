@@ -28,17 +28,19 @@ ck = (req)->
     req.hostname + req.url
 
 pre = (req, rsp, next)->
-    log req.query
-    if /mobile/i.test(req.headers['user-agent'])
-        if !req.query.mob
-            pp = "#{req.protocol}://#{req.hostname}#{if true then ':3000' else ''}#{req.originalUrl}#{if _.isEmpty(req.query) then '?' else '&'}mob=1"
+    url = "#{req.protocol}://#{req.hostname}#{if app.env then ':3000' else ''}#{req.originalUrl}"
+    if req.originalUrl.indexOf('/a') != 0
+        if /mobile/i.test(req.headers['user-agent'])
             req.mob = true
-            rsp.redirect pp
-            return
-    else
-        if req.query.mob
-            req.query.mob = 0
-
+            if !req.query.mob
+                pp = url + "#{if _.isEmpty(req.query) then '?' else '&'}mob=1"
+                rsp.redirect pp
+                return
+        else
+            req.mob = false
+            if req.query.mob
+                rsp.redirect url
+                return
 
     unless app.env
         req.hostname = req.get('Host')
