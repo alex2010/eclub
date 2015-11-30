@@ -1,0 +1,209 @@
+extends inc/main
+block style
+   :less(minify=true)
+      .btn-forum {
+         padding: 8px 40px 8px 30px;
+         background: #6fafed;
+         border: 1px solid #9bbfdf;
+         border-radius: 4px;
+         box-shadow: -1px 1px 1px #d0dae6;
+         color: #fff;
+         font-size: 18px;
+         .glyphicon {
+            top: 3px;
+            margin-right: 6px;
+            font-size: 22px;
+         }
+         &:hover {
+            color: #fff;
+         }
+      }
+      .path-forum {}
+      .content-forum {}
+      .msgboard-forum {}
+      .reply-forum {}
+block content
+   .path-forum
+      .row
+         .col-md-4
+            ol.breadcrumb
+               li
+                  span.glyphicon.glyphicon-home
+                  a(href="") 论坛首页
+               li: a(href="") VIP专区
+               li: a.active(href="") 聊天技巧
+         .col-md-4.pull-right
+            .input-group
+               .input-group-btn
+                  button.btn.btn-default 帖子
+                  button.btn.btn-default.dropdown-toggle(type="button",data-toggle="dropdown")
+                     span.caret
+                  ul.dropdown-menu
+                     li: a(href="") a
+                     li: a(href="") b
+                     li: a(href="") c
+                     li: a(href="") d
+               input.form-control
+               span.input-group-addon.glyphicon.glyphicon-search
+      .row
+         .col-md-4
+            a.btn.btn-forum(href="")
+               span.glyphicon.glyphicon-edit
+               span 发帖
+            a.btn.btn-forum(href="")
+               span.glyphicon.glyphicon-edit
+               span 回复
+         .col-md-8
+            nav
+               ul.pagination.pagination-sm.pull-right
+                  li.disabled
+                     a(href="javascript:void(0);",aria-hidden="true",aria-label="Previous") &laquo;
+                  li.active
+                     a(href="javascript:void(0);") 1
+                  li
+                     a(href="javascript:void(0);") 2
+                  li
+                     a(href="javascript:void(0);",aria-hidden="true",aria-label="Next") &raquo;
+   .content-forum
+      .row
+         .col-md-2
+            ul.nav.nav-pills
+               li 查看
+                  span.badge 32200
+               li 回复
+                  span.badge 583
+            .thumbnail-forum
+               h2.name
+               .thumbnail
+                  img(src="")
+                  .caption
+                     h3 论坛元老
+                     ul.list-inline
+                        li
+                           h4 主题
+                           span 128
+                        li
+                           h4 帖子
+                           span 3万
+                        li
+                           h4 积分
+                           span 5万
+                     ul.list-inline
+                        li
+                           span.glyphicon.glyphicon-envelope 发信息
+                        li
+                           span.glyphicon.glyphicon-heart-empty 加好友
+         .col-md-10
+            .panel.panel-article
+               .panel-heading
+                  .row
+                     .col-md-10
+                        h3.title [PUA约会技巧] 怎么邀约，让女生不会拒绝你，并且有良好的互动
+                           a.copy-link [复制链接]
+                     .col-md-2.pull-right
+                        .btn-group
+                           button.btn.btn-default(type="button")
+                              span.glyphicon.glyphicon-arrow-left
+                           button.btn.btn-default(type="button")
+                              span.glyphicon.glyphicon-arrow-right
+                  .row
+                     .col-md-8
+                        h4
+                           span.glyphicon.glyphicon-user
+                           span 发表于 2015-9-11 20:11 来自手机 | 只看该作者
+                     .col-md-4
+                        .form-inline
+                           .form-group
+                              label 电梯直达
+                              .input-group
+                                 input(type="text").form-control
+                                 span.input-group-addon.glyphicon.glyphicon-sort
+                  p 本帖最后由 小魔卡 于 2015-10-25 19:26 编辑
+               .panel-body
+                  img(src="",alt="")
+                  p 所谓技巧，这个东西从字面上理解就是操作方法，而且是有别于一般方法的，相对效率比较高的方法才能谓之技巧。那么有些同学问道：约会技巧在感情中能起到什么作用？我想答案也就不言自明了。约会技巧在感情中能起到：“发动机，催化剂，指南针”的作用。我们经常听到“熟能生巧，巧夺天工，能工巧匠，花言巧语”等等。凡是带“巧”字的就是做的优秀的，超凡的，高效的，艺术性的。那么我们学习PUA，Pick Up Artist最重要的就是一个艺术。
+               .panel-footer
+                  p 本主题由 恋爱能量管理员 于 2015-10-25 11:11 置顶
+                  table
+                     tr
+                        th 评分人数
+                           span 10
+                        th 金钱
+                           span +9
+                        th 理由
+                     tr
+                        td: img(src="",alt="")
+                        td +1
+                        td 很给力！
+                  span.btn.btn-default 查看全部评分
+                  button.btn.btn-info(type="button")
+                     span.glyphicon.glyphicon-star
+                     span 收藏1520
+                  ul.list-inline
+                     li.pull-left
+                        span.glyphicon.glyphicon-comment
+                        span 回复
+                     li.pull-right 举报
+
+   .msgboard-forum
+      .row
+         .col-md-2
+            .thumbnail-forum
+               h2.name
+               .thumbnail
+                  img(src="")
+                  .caption
+                     h3 论坛元老
+                     ul.list-inline
+                        li
+                           h4 主题
+                           span 128
+                        li
+                           h4 帖子
+                           span 3万
+                        li
+                           h4 积分
+                           span 5万
+                     ul.list-inline
+                        li
+                           span.glyphicon.glyphicon-envelope 发信息
+                        li
+                           span.glyphicon.glyphicon-heart-empty 加好友
+         .col-md-10
+            .panel.panel-msg
+               .panel-heading
+                  h4
+                     span.glyphicon.glyphicon-user
+                     span 发表于 2015-9-11 20:11 来自手机 | 只看该作者
+               .panel-body
+                  p 太赞了
+               .panel-footer
+                  .row
+                     .col-md-4
+                        a.btn.btn-forum(href="")
+                           span.glyphicon.glyphicon-edit
+                           span 发帖
+                     .col-md-8
+                        nav.pull-right
+                           ul.pagination.pagination-sm
+                              li.disabled
+                                 a(href="javascript:void(0);",aria-hidden="true",aria-label="Previous") &laquo;
+                              li.active
+                                 a(href="javascript:void(0);") 1
+                              li
+                                 a(href="javascript:void(0);") 2
+                              li
+                                 a(href="javascript:void(0);",aria-hidden="true",aria-label="Next") &raquo;
+   .reply-forum
+      .richtext
+      .row
+         .col-md-8
+            a.btn.btn-forum(href="") 发表回复
+            .btn-group(data-toggle="buttons")
+               label.btn.btn-primary
+                  input(type="checkbox",autocomplete="off")
+                  span 回帖后跳转到最后一页
+         .col-md-4
+            a.text-right.pull-right(href="") 本版积分规则
+block st
+   :coffee(bare=true,minify=true)
