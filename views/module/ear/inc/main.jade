@@ -14,90 +14,55 @@ block ctn
 
         div&attributes(attributes)
             .thumbnail: != f.imgItem(opt, c, name)
-            //.caption
-            //    h4=opt.title
             if block
                 block
+    body(data-wid= wt.appId data-wcode= wt.code class=index+'_')
+        .container.topLogo
+            #header
+                .row
+                    .col-md-7.logo
+                        h1
+                            a(href='/'): img.img-responsive(src='#{resPath}images/logo_03.png', alt='')
+                        p 聆听在线-最好用的听力健康平台
+                    .col-md-5
+                        ul#topBar.list-inline.pull-right
+                        .block-search-hder
+                            input#q.form-control(name='q', type='text', placeholder='站内搜索')
+                            .btn-search
 
-    //mixin panel(title,tagCls,more)
-    //    if !tagCls
-    //        -tagCls='panel-body'
-    //    if !attributes.class
-    //        -attributes.class='panel panel-default'
-    //    div&attributes(attributes)
-    //        .panel-heading
-    //            h3.panel-title= title
-    //            if more
-    //                a.pull-right(href=more,style='margin-top:-14px') 查看更多
-    //        div(class=tagCls)
-    //            if block
-    //                block
-
-    //mixin media(posts,opt)
-    //    if !opt.ttLimits
-    //        -opt.ttLimits= 12
-    //    if !opt.ctLimit
-    //        -opt.ctLimit= 24
-    //    if !opt.singleR
-    //        -opt.singleR= false
-    //    each it in posts
-    //        a.media.media_left.clearfix(href='/#{it._e}/#{it._id}',target='_blank')
-    //            if !opt.singleR
-    //                .col-xs-4
-    //                    != f.imgItem(it, c, opt.func || 'head', 'media-object')
-    //            else
-    //                != f.imgItem(it, c, opt.func || 'head', 'media-object')
-    //            .col-xs-8.body
-    //                h4.media-heading!=it.title || it.username
-    //                != f.dStr(it.description || it.address, 20)
-
-    body(data-wid= wt.appId, data-wcode= wt.code)
-        if !mob
-            .container.topLogo
-                #header
-                    .row
-                        .col-md-7.logo
-                            h1
-                                a(href='/'): img.img-responsive(src='#{resPath}images/logo_03.png', alt='')
-                            p 聆听在线-最好用的听力健康平台
-                        .col-md-5
-                            ul#topBar.list-inline.pull-right
-                            .block-search-hder
-                                input#q.form-control(name='q', type='text', placeholder='站内搜索')
-                                .btn-search
-
-            .navbar.navbar-default
-                .container
-                    .navbar-header
-                        +mobBtn('#navBox')
-                        .searchBox
-                            a.btn.btn-danger.showBtn
-                                != f.icon('search')
-                                | 听力搜索专家
-                            #searchPanel.list-group.l-search
-                                h3.list-group-item 助听器行业搜索神器
-                                a.list-group-item(stag="#sProduct" )
-                                    != f.icon('th')
-                                    | 查找助听器
-                                    != f.icon('chevron-right')
-                                a.list-group-item(stag="#sConsultant" )
-                                    != f.icon('user')
-                                    | 查找验配师
-                                    != f.icon('chevron-right')
-                                a.list-group-item(stag="#sShop" )
-                                    != f.icon('home')
-                                    | 查找听力中心
-                                    != f.icon('chevron-right')
-                                a.list-group-item(stag="#sProduct" )
-                                    != f.icon('education')
-                                    | 查找康复学校
-                                    != f.icon('chevron-right')
-                                .block-panel-search
-                                    #sConsultant
-                                    #sShop
-                                    #sProduct
-                    #navBox.collapse.navbar-collapse
-                        +nav(c.nav)#nav.nav.navbar-nav
+        .navbar.navbar-default
+            .container
+                .navbar-header
+                    +mobBtn('#navBox')
+                    .searchBox
+                        a.btn.btn-danger.showBtn
+                            != f.icon('search')
+                            | 听力搜索专家
+                        #searchPanel.list-group.l-search
+                            h3.list-group-item 助听器行业搜索神器
+                            a.list-group-item(stag="#sProduct" )
+                                != f.icon('th')
+                                | 查找助听器品牌
+                                != f.icon('chevron-right')
+                            a.list-group-item(stag="#sShop" )
+                                != f.icon('home')
+                                | 查找助听器中心
+                                != f.icon('chevron-right')
+                            a.list-group-item(stag="#sConsultant" )
+                                != f.icon('user')
+                                | 查找专业验配师
+                                != f.icon('chevron-right')
+                            a.list-group-item(stag="#sSchool" )
+                                != f.icon('education')
+                                | 查找语训康复学校
+                                != f.icon('chevron-right')
+                            .block-panel-search
+                                #sConsultant
+                                #sShop
+                                #sProduct
+                                #sSchool
+                #navBox.collapse.navbar-collapse
+                    +nav(c.nav)#nav.nav.navbar-nav
         .container
             #content.row
             #static.row(class=index)
@@ -136,6 +101,8 @@ block ctn
 block commonjs
     if mob
         :coffee(bare=true,minify=true)
+            cf.loadJS "#{cf.modPath}search.js"
+
             ls = $('.l-search')
             bps = $('.block-panel-search')
 
@@ -147,14 +114,14 @@ block commonjs
 
             nav.find('.dropdown-menu').removeClass('dropdown-menu')
 
-            $('.navbar-brand').attr
+            $('.showBtn').attr
                 'data-toggle': 'collapse'
                 'data-target': '#searchPanel'
 
             ls.find('a').click (e)->
                 util.setActive(e)
+                $('.showBtn').trigger 'click'
                 cf[$(this).attr('stag').substr(1)]()
-                $('.navbar-brand').trigger 'click'
     else
         :coffee(bare=true,minify=true)
             ls = $('.l-search')

@@ -23,7 +23,7 @@ pageOpt = (req)->
     mode: app.env
     _ts: new Date().getTime()
     c: c
-    main: (if req.query.mob is '1' then 'mob' else 'main')
+    main: (if req.mob then 'mob' else 'main')
     f: require('../ext/tmpl')
     cstr: JSON.stringify(_.pick(c, 'code', 'name', 'url', '_id', 'resPath'))
     libPath: libPath
@@ -88,14 +88,38 @@ render = (req, rsp, ctx)->
             dao.save _mdb, 'cache',
                 k: req.k
                 str: str
+                mob: req.mob
                 time: new Date()
         rsp.end str
 
+
+checkMob = (req,rsp) ->
+    url = "#{req.protocol}://#{req.hostname}#{if app.env then ':3000' else ''}#{req.originalUrl}"
+    if /mobile/i.test(req.headers['user-agent'])
+        req.mob = true
+        if !req.query.mob
+            pp = url + "#{if _.isEmpty(req.query) then '?' else '&'}mob=1"
+            log 'mob redirect '+pp
+            rsp.redirect pp
+    else
+        req.mob = false
+        if req.query.mob
+            delete req.query.mob
+            url = if url.indexOf('&mob=1') > -1
+                url.replace('&mob=1','')
+            else if url.endsWith('?mob=1') > -1
+                url.replace('?mob=1','')
+            else if url.indexOf('?mob=1') > -1
+                url.replace('mob=1&','')
+            rsp.redirect url
+
 module.exports =
     page: (req, rsp) ->
+#        checkMob(req,rsp)
         render req, rsp, pre(req)
 
     entity: (req, rsp) ->
+#        checkMob(req,rsp)
         et = req.params.entity
         if req.params.id.length is 24
             ctx = pre(req)

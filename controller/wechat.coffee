@@ -31,6 +31,7 @@ module.exports =
 
     createMenu: (req, rsp)->
         getApi req.body.code, req.body.pubCode, (api)->
+            log api
             api.createMenu req.body.menu, (err, res) ->
                 log err if err
                 rsp.send res
@@ -86,7 +87,6 @@ module.exports =
     sendMessNews:(req,rsp)->
         code = req.c.code
         wCode = req.body.account
-        log '群发送'
         getApi code, wCode, (api)->
             api.massSendNews req.body.media_id,
                 is_to_all: true
@@ -96,7 +96,6 @@ module.exports =
                     msg: '发送成功'
 
     uploadNews: (req, rsp)->
-        log 'upload news'
         wCode = req.body.account
         code = req.c.code
         opt = req.body.sendOpt
@@ -122,7 +121,6 @@ module.exports =
                         log res
                         return unless res
                         n.thumb_media_id = res.media_id
-                        log n.thumb_media_id
                         resId.push res.media_id
                         entity = util.del 'entity', n
                         _id = util.del '_id', n # entity's _id
@@ -194,7 +192,6 @@ module.exports =
                                     msg: '测试通过'
 
     sendTest:(req, rsp)->
-        log req.body.mediaId
         code = req.c.code
         wCode = req.body.account
         getApi code, wCode, (api)->
@@ -215,8 +212,6 @@ module.exports =
 #                    rsp.send res
 
     login: (req, rsp)->
-        log 'login'
-        log req.cookies
         code = req.c.code
 
         qy = req.query
@@ -283,7 +278,7 @@ module.exports =
         else
             dao.get code, 'pubAccount', code: wCode, (res)->
                 ctCtn[wCode] = new OAuth(res.appId, res.secret)
-                rsp.redirect "http://#{req.c.url}"
+                rsp.redirect "http://#{req.c.url}?rwt=true"
         return
 
 

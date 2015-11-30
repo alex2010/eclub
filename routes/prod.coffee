@@ -28,44 +28,36 @@ ck = (req)->
     req.hostname + req.url
 
 pre = (req, rsp, next)->
-    url = "#{req.protocol}://#{req.hostname}#{if app.env then ':3000' else ''}#{req.originalUrl}"
-    if req.originalUrl.indexOf('/a') != 0
-        if /mobile/i.test(req.headers['user-agent'])
-            req.mob = true
-            if !req.query.mob
-                pp = url + "#{if _.isEmpty(req.query) then '?' else '&'}mob=1"
-                rsp.redirect pp
-                return
-        else
-            req.mob = false
-            if req.query.mob
-                rsp.redirect url
-                return
-
     unless app.env
         req.hostname = req.get('Host')
-
+    k = ck req
+    opt = {}
+    if /mobile/i.test(req.headers['user-agent'])
+        req.mob = true
+        opt.mob = true
+    else
+        opt.mob = false
     cc = req.query._c
     if cc
         if cc is '0' and req.query._e
-            opt =
-                $regex:
-                    k: "#{req.query._e}"
+            opt.$regex =
+                k: "#{req.query._e}"
+            kill = true
         else if cc is '1'
-            req.url = req.url.replace('&_c=1', '')
-            req.url = req.url.replace('?_c=1', '')
-            #            if req.url.endsWith('?')
-            #                req.url = req.url.substr(0, req.url.length - 1)
-            opt =
-                k: ck(req)
+            k = if k.indexOf('&') > -1
+                k.replace('_c=1&', '').replace('&_c=1', '')
+            else
+                k.replace('?_c=1', '')
+            opt.k = k
+            kill = true
 
-        if opt
+        if kill
             dao.delItem _mdb, 'cache', opt, (res)->
                 log 'del...'
+
         if req.query._r
             rsp.end 'cleaned'
 
-    k = ck req
     if req._html
         rStr = req.hostname.replace('www.', '')
         req.c = app._community[rStr]
@@ -73,7 +65,8 @@ pre = (req, rsp, next)->
         rsp.sendfile(path)
         return
 
-    dao.get _mdb, 'cache', k: k, (res)->
+    opt.k = k
+    dao.get _mdb, 'cache', opt, (res)->
         if res and !app.env
             rsp.end res.str
         else
@@ -83,7 +76,7 @@ pre = (req, rsp, next)->
             next()
 
 checkPage = (req, rsp, next)->
-    log 'checkpage'
+    log 'check page'
     pm = req.params
     page = pm.page || pm.entity || 'index'
     if page in ['a', 'r']
