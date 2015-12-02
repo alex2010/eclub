@@ -238,6 +238,7 @@ module.exports =
                     cb null, res.sortBy('row', false)
 
     itemList: (ctx, req)->
+        log '111111'
         et = req.query.entity
 
         title = et.capitalize()
@@ -250,13 +251,12 @@ module.exports =
         ctx.title = "Most Famous #{title} In Beijing"
         ctx._entity = et
 
-
         head: (cb)->
             if req.query.cat
                 dao.get ctx.c.code, 'cat', code: req.query.cat, (item)->
                     if item.subTitle
                         ctx.title = item.subTitle
-                        cb(null,item)
+                    cb(null,item)
             else
                 filter =
 #                    row:
@@ -287,8 +287,10 @@ module.exports =
             if qu.cat
                 filter.cat =
                     $regex: ".*#{qu.cat}.*"
+            log et
             dao.find ctx.c.code, et, filter, {}, (res)->
                 dao.count ctx.c.code, et, filter, (count)->
+                    log res
                     for it in res
                         it.href = "/#{it._e}/#{it._id}"
                         if et isnt 'sight'
@@ -311,7 +313,6 @@ module.exports =
                         ctx.morePath = "/itemList?entity=#{filter.cat}&offset=#{offset}&max=#{qu.max}"
 
                     cb(null, res)
-
     tourList:(ctx,req)->
         shows:(cb)->
             dao.find ctx.c.code, 'show', {}, {}, (res)->

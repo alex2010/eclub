@@ -115,11 +115,9 @@ checkMob = (req,rsp) ->
 
 module.exports =
     page: (req, rsp) ->
-#        checkMob(req,rsp)
         render req, rsp, pre(req)
 
     entity: (req, rsp) ->
-#        checkMob(req,rsp)
         et = req.params.entity
         if req.params.id.length is 24
             ctx = pre(req)
