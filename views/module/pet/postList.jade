@@ -3,20 +3,16 @@ extends inc/main
 block content
     #post.container
         .row
-            .col-md-8
+            .col-md-8.main
                 include ../../inc/crumb
                 #postList.boxList
                     each it in items
                         include inc/boxItem
                     include ../../inc/nextPage
-            .col-md-4
-                +panel('文章主题').panel-danger
-                    .list-group
-                        a.list-group-item(href='/postList') 全部
-                        each it in cats
-                            != f.link(it, null, 'list-group-item')
-
-                //+panel('专栏').panel-danger
-                //    .list-group
-                //        a.list-group-item(href='/postList') 全部
-                //
+            .col-md-4.side
+                .row
+                    +panel('文章主题').panel-warning
+                        .list-group
+                            a.list-group-item(href='/postList') 全部
+                            each it in cats
+                                != f.link(it, null, 'list-group-item')

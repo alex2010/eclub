@@ -1,3 +1,8 @@
+mixin title(title,sub)
+    h2&attributes(attributes)=title
+        | &nbsp;
+        small!= sub
+
 mixin userPic(u,cls)
     != f.img(f.resPath(c, 'portrait/' + u._id + '.jpg'), cls)
 
@@ -73,7 +78,6 @@ mixin itemList(items, title)
             .list-group
                 +media(items,{})
 
-
 mixin media(posts,opt)
     if !opt
         -opt={}
@@ -110,7 +114,7 @@ mixin media(posts,opt)
                     if block
                         block
                     else
-                        h4.media-heading!=it.title || it.username
+                        p.media-heading!=it.title || it.username
                         .small
                             if it.author
                                 | #{it.author.username}

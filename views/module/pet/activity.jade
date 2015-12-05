@@ -2,25 +2,31 @@ extends inc/main
 
 block content
     #activity.container
-        .article
-            .col-md-8
-                include ../../inc/crumb
-                include ../../inc/mod/activity
-                hr
-                - cc = _cat[cat]
-                if cc
-                    blockquote
-                        h4= cc.title
-                        p!= cc.content
-            .col-md-4
-                +panel('活动主题').panel-default
-                    .list-group
-                        each it in cats
-                            != f.link(it, null, 'list-group-item')
+        .row
+            .article
+                .col-md-8.main
 
-                +panel('最新活动').panel-default
-                    .list-group
-                        +media(latest,{})
+                    include ../../inc/crumb
+                    include ../../inc/mod/activity
+                    hr
+                    - cc = _cat[cat]
+                    if cc
+                        h3= cc.title
+                        blockquote
+                            p!= cc.content
+                .col-md-4.side
+                    +panel('活动主题').panel-default
+                        .list-group
+                            each it in cats
+                                != f.link(it, null, 'list-group-item')
+
+                    +panel('最新活动').panel-default
+                        .list-group
+                            +media(latest,{})
     script.
         _ft = !{JSON.stringify(feeTable || '[]')};
         _pa = !{JSON.stringify(participant || '{}')};
+
+block st
+    :coffee(bare=true,minify=true)
+

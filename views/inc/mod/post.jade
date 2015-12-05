@@ -1,17 +1,16 @@
-h2.event-name= title
-if subTitle
-    br
-    small= subTitle
-hr
-.row.imgBox
++title(title, subTitle).hidden-xs
+.row
     != f.imgItem(locals, c, 'head')
++title(title, subTitle).hidden-sm.hidden-md.hidden-
 
 if author && author.username != c.code
     hr
-    - _user = author
-    - _user._e = 'user'
-    - _uClass = 'author'
-    include userInfo
+    +userInfo(author)
+    //hr
+    //- _user = author
+    //- _user._e = 'user'
+    //- _uClass = 'author'
+    //include userInfo
 
 p
 

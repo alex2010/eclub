@@ -46,7 +46,7 @@ block content
 
         #asl.collapse
             .row.text-center
-                each it in allSights
+                each it in allSights.reverse()
                     != f.link(it, null, 'col-md-3')
 
 

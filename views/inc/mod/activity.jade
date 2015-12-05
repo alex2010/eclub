@@ -1,13 +1,62 @@
-h2(title=title)=title
-    small= subTitle
-    //if _cat && _cat[cat]
-    //    span.cat.pull-right 【#{_cat[cat].title}】
+if venue
+    - v = _.isArray(venue)?venue[0]:venue
+
++title(title, subTitle).hidden-xs
+
+.row
+    != f.imgItem(locals, c, 'head')
+
++title(title, subTitle).hidden-sm.hidden-md.hidden-lg
+//if _cat && _cat[cat]
+//    span.cat.pull-right 【#{_cat[cat].title}】
 hr
-!= f.imgItem(locals, c, 'head', 'postPic')
+.venue.well-sm.well.clearfix
+    .col-xs-2
+        != f.icon('time')
+    .col-xs-10
+        if startedDate
+            = startedDate.pattern()
+            | &nbsp;[#{endDate.getHours() - startedDate.getHours()}小时]
+    if v
+        .col-xs-2
+            != f.icon('glass')
+        .col-xs-10
+            div.feeStrr= v.fee
+            if v.langsTable && v.langsTable.findBy('key', 'fee')
+                div= v.langsTable.findBy('key', 'fee').value
+
+    if v && v.phone
+        .col-xs-2
+            != f.icon('phone-alt')
+        .col-xs-10
+            div= v.phone
+    if v
+        .col-xs-2
+            != f.icon('home')
+        .col-xs-10
+            div= v.address
+            if v.langsTable && v.langsTable.findBy('key', 'address')
+                div= v.langsTable.findBy('key', 'address').value
+    if v && v.route
+        .col-xs-2
+            != f.icon('road')
+        .col-xs-10
+            div= v.route
+            if v.langsTable && v.langsTable.findBy('key', 'route')
+                div= v.langsTable.findBy('key', 'route').value
+
+
+
 h3 主题介绍
 
 != content.replaceAll('_cImg" src', '_cImg" bb-src')
 
+if itemTable
+    each it in itemTable
+        if it.title
+            h3= it.title
+        if it.content
+            != it.content
 
 if master && master.length
     h3 主持人介绍
@@ -24,80 +73,39 @@ if master && master.length
 //    .reg
 //h3 地图
 //
-if true || title && title.indexOf('秋趴') > -1
-    .regBtn.mt
-        a(href=f.navUrl('enroll')).btn.btn-lg.btn-info.btn-block&attributes(reg) 我要报名
-
-hr
 if participant
     h3 活动报名
-    .clearfix
+    if true || title && title.indexOf('秋趴') > -1
+        .regBtn.mt
+            a(href=f.navUrl('enroll')).btn.btn-lg.btn-info.btn-block&attributes(reg) 我要报名
+
+    hr
+    p
+    .ptps.clearfix
         each it,i in participant
             if i.length > 5
                 - it._id = i
             -href = '/user/' + it._id
             -imgPath = f.resPath(c, 'portrait/' + it._id + '.jpg')
-            a.col-xs-2.col-md-1.pl0(href= href,title= it.username)
+            a.col-xs-2.pl0(href= href,title= it.username)
                 != f.img(imgPath, 'square')
 
-if itemTable
-    each it in itemTable
-        if it.title
-            h3= it.title
-        if it.content
-            != it.content
 
 if partner
     h3 主办方介绍
     != f.imgItem(partner, c, 'logo')
     h4= partner.title
-        small= partner.slogon
+    small= partner.slogon
     div!= partner.introduction
     != f.imgItem(partner, c, 'qrcode')
 
-if venue
-    - v = _.isArray(venue)?venue[0]:venue
-    if v
-        h3 场地介绍
-        != f.imgItem(v, c)
-        h4= v.title
-        != v.content
-        != f.imgItem(v, c, 'qrcode')
-        dl.venue.dl-horizontal.well
-            dt
-                != f.icon('time')
-                | 时间/Time：
-            dd
-                if startedDate
-                    = startedDate.pattern()
-                    | &nbsp;[#{endDate.getHours() - startedDate.getHours()}小时]
-            dt
-                != f.icon('glass')
-                | 费用/Fee：
-            dd
-                div.feeStrr= v.fee
-                if v.langsTable && v.langsTable.findBy('key', 'fee')
-                    div= v.langsTable.findBy('key', 'fee').value
-            dt
-                != f.icon('phone-alt')
-                | 电话/Phone：
-            dd
-                div= v.phone
-            dt
-                != f.icon('home')
-                | 地址/Address：
-            dd
-                div= v.address
-                if v.langsTable && v.langsTable.findBy('key', 'address')
-                    div= v.langsTable.findBy('key', 'address').value
-            if v.route
-                dt
-                    != f.icon('road')
-                    | 路线/Route：
-                dd
-                    div= v.route
-                    if v.langsTable && v.langsTable.findBy('key', 'route')
-                        div= v.langsTable.findBy('key', 'route').value
+
+if v
+    h3 场地介绍
+    != f.imgItem(v, c)
+    h4= v.title
+    != v.content
+    != f.imgItem(v, c, 'qrcode')
 
 
 

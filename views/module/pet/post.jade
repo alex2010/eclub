@@ -1,15 +1,15 @@
 extends inc/main
 block content
-    .container
-        .article
-            .col-md-8
-                include ../../inc/crumb
-                if biContent
-                    include ./biPost
-                else
-                    include ../../inc/mod/post
-            .col-md-4
-                .row
+    #post.container
+        .row
+            .article
+                .col-md-8.main
+                    include ../../inc/crumb
+                    if biContent
+                        include ./biPost
+                    else
+                        include ../../inc/mod/post
+                .col-md-4.side
                     if postList
                         +panel('相关文章')
                             .list-group
