@@ -1,4 +1,5 @@
 extends ../../../main
+include ../../../inc/mixin
 
 mixin item (text,active,itemCls)
     -var cls=itemCls || ''
@@ -59,7 +60,7 @@ block ctn
                             -var cur=false
                             if i==0
                                 -cur=true
-                            +item(it.label,cur)(href='##{it.code}',data-toggle='pill')
+                            +item(it.title,cur)(href='##{it.code}',data-toggle='pill')
                     .tab-content
                         .tab-pane.fade.active.in#beauty
                             ul.list-inline.row

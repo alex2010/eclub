@@ -2,36 +2,40 @@ extends ./inc/main
 block style
     :less(minify=true)
 
-mixin slide(numof,imgSrc)
-    .carousel.slide#carousel-yukof(data-ride='carousel')
-        ol.carousel-indicators
-            -var n=0;
-            while n<numof
-                if n==0
-                    li.active(data-slide-to='#{n}',data-target='#carousel-yukof')
-                else
-                    li(data-slide-to='#{n}',data-target='#carousel-yukof')
-                -n++
-        .carousel-inner(role='listbox')
-            -var n=0;
-            while n<numof
-                -var bannerImg=imgSrc+(n+1)+'.jpg'
-                if n==0
-                    .item.active
-                        img(src="#{resPath}images/#{bannerImg}",alt="")
-                else
-                    .item
-                        img(src="#{resPath}images/#{bannerImg}",alt="")
-                -n++
-        a.left.carousel-control(href="#carousel-yukof",role="button",data-slide="prev")
-            span.glyphicon.glyphicon-chevron-left
-            span.sr-only 上一页
-        a.right.carousel-control(href="#carousel-yukof",role="button",data-slide="next")
-            span.glyphicon.glyphicon-chevron-right
-            span.sr-only 下一页
+//mixin slide(numof,imgSrc)
+//    .carousel.slide#carousel-yukof(data-ride='carousel')
+//        ol.carousel-indicators
+//            -var n=0;
+//            while n<numof
+//                if n==0
+//                    li.active(data-slide-to='#{n}',data-target='#carousel-yukof')
+//                else
+//                    li(data-slide-to='#{n}',data-target='#carousel-yukof')
+//                -n++
+//        .carousel-inner(role='listbox')
+//            -var n=0;
+//            while n<numof
+//                -var bannerImg=imgSrc+(n+1)+'.jpg'
+//                if n==0
+//                    .item.active
+//                        img(src="#{resPath}images/#{bannerImg}",alt="")
+//                else
+//                    .item
+//                        img(src="#{resPath}images/#{bannerImg}",alt="")
+//                -n++
+//        a.left.carousel-control(href="#carousel-yukof",role="button",data-slide="prev")
+//            span.glyphicon.glyphicon-chevron-left
+//            span.sr-only 上一页
+//        a.right.carousel-control(href="#carousel-yukof",role="button",data-slide="next")
+//            span.glyphicon.glyphicon-chevron-right
+//            span.sr-only 下一页
 
 block content
-    +slide(9,'banner')
+
+
+
+    //+slide(9,'banner')
+    +slide(c,'banner')
     .row
         .col-md-4
             .panel.panel-y-1
@@ -155,7 +159,7 @@ block content
                 .panel-body
                     .list-group
                         each it in qa
-                            a.list-group-item(href='')
+                            a.list-group-item
                                 p.list-group-item-heading= it.question
                                 p.list-group-item-text= it.answer
                     form.form-horizontal

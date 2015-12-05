@@ -1,17 +1,11 @@
 +title(title, subTitle).hidden-xs
 .row
     != f.imgItem(locals, c, 'head')
-+title(title, subTitle).hidden-sm.hidden-md.hidden-
++title(title, subTitle).hidden-sm.hidden-md.hidden-lg
 
 if author && author.username != c.code
     hr
     +userInfo(author)
-    //hr
-    //- _user = author
-    //- _user._e = 'user'
-    //- _uClass = 'author'
-    //include userInfo
-
 p
 
 .well.well-sm
