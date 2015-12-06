@@ -1,3 +1,8 @@
+mixin title(title,sub)
+    h2&attributes(attributes)=title
+        | &nbsp;
+        small!= sub
+
 mixin userPic(u,cls)
     != f.img(f.resPath(c, 'portrait/' + u._id + '.jpg'), cls)
 
@@ -15,7 +20,7 @@ mixin userInfo(user)
                         span &nbsp;-&nbsp;
                         if i18.iCat('industry')
                             span= i18.iCat('industry')[user.industry]
-            != user.introduction
+            != user.introduction || user.description
 
 mixin panel(title,cls,more)
     if !attributes.class
@@ -23,8 +28,8 @@ mixin panel(title,cls,more)
     .panel&attributes(attributes)
         .panel-heading
             h3.panel-title= title
-                if more
-                    a.pull-right(href=more) 查看更多>>
+            if more
+                a.pull-right(href=more style='margin-top: -12px;') 查看更多>>
         if block
             block
 
@@ -73,7 +78,6 @@ mixin itemList(items, title)
             .list-group
                 +media(items,{})
 
-
 mixin media(posts,opt)
     if !opt
         -opt={}
@@ -104,12 +108,13 @@ mixin media(posts,opt)
                     != f.imgItem(it, c, opt.func)
                 else
                     .col-xs-4.col-md-3.pr0
-                        != f.imgItem(it, c, opt.func)
+                        != f.imgItem(it, c, opt.func, opt.imgCls)
+
                 .col-xs-8.col-md-9
                     if block
                         block
                     else
-                        h4.media-heading!=it.title || it.username
+                        p.media-heading!=it.title || it.username
                         .small
                             if it.author
                                 | #{it.author.username}
@@ -123,6 +128,14 @@ mixin avatars(users)
             a(href= '/user/' + it._id title= it.username)&attributes(attributes)
                 +userPic(it)
 
+mixin ddItem(title,content,icon)
+    if !content
+        -content='--'
+    dt
+        if icon
+            !=f.icon(icon)
+        = title
+    dd= content
 
 mixin comments(id,entity,cs,cls)
     if !cls

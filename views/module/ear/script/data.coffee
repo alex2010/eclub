@@ -15,6 +15,9 @@ role = [
         key: 'shop'
         row: 130
     ,
+        key: 'school'
+        row: 135
+    ,
         key: 'consultant'
         row: 140
     ]
@@ -256,15 +259,15 @@ module.exports =
             'label': '免责声明'
             'href': '/content/pp'
         ]
-    data:
-        'role:title': role
+    data:{}
+#        'role:title': role
 #        'user:username': user
 #        'pubAccount:appId': pubAccount
 #        'brand:title': brand
 #        'product:title': product
-        'seckilling:title': seckilling
+#        'seckilling:title': seckilling
 #        'i18n:key': require('./zh')
-        'card:title':card
+#        'card:title':card
 
 #    member: [
 #        "#{code},admin"

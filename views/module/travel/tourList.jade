@@ -246,7 +246,7 @@ block content
                                         each lt in it.itinerary
                                             li
                                                 if lt._e
-                                                    a.hoverLink(title= lt.title,data-content= lt.brief)= lt.title
+                                                    a.hoverLink(href= "/sight/#{lt._id}" title= lt.title,data-content= lt.brief)= lt.title
                                                     a.popover(href= "/sight/#{lt._id}")
                                                         .arrow
                                                         h4.popover-title

@@ -61,9 +61,9 @@ block content
                     .tab-pane.active.fade.in(role='tabpanel',id='desc')
                         p= description
                     .tab-pane.fade(role='tabpanel',id='perfms')
-                        each it in performance.split(',')
-                            p.item-perfms= it
-                            span.glyphicon.glyphicon-ok
+                        dl.dl-horizontal
+                            each it in performance.split(',')
+                                +ddItem('',it,'ok')
         .col-md-4.article-aside
             +panel('相关助听器')
                 .list-group

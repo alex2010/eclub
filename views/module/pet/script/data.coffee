@@ -77,9 +77,9 @@ module.exports =
             href: '/content/ys'
         ]
 
-    data:
-        'role:title': r 'role'
-        'group:title': r 'group'
+    data:{}
+#        'role:title': r 'role'
+#        'group:title': r 'group'
 
 #        'user:username': user
 #        'i18n:key': require('./zh')

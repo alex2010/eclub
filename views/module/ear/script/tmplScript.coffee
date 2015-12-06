@@ -125,7 +125,6 @@ module.exports =
                         data.objB = res
                         dao.find ctx.c.code, 'post', {cat: matchArr[2].code}, opt, (res) ->
                             data.objC = res
-
                             data.titleA = matchArr[0].title
                             data.titleB = matchArr[1].title
                             data.titleC = matchArr[2].title

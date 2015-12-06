@@ -498,7 +498,7 @@ module.exports =
 #        url: if _env then 't.travel.com' else 'wikibeijing.com'
     data:
         'role:title': r 'role'
-        'i18n:key': require('./zh')
+#        'i18n:key': require('./zh')
 
 #        'role:title': role
 #        'car:title': car

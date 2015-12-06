@@ -3,10 +3,6 @@ extends inc/main
 
 block style
     :less(minify=true)
-        .imgSide {
-            height: 110px;
-        }
-
 block content
     section#activity.s.s1
         h3 活动
@@ -16,9 +12,6 @@ block content
                     each it,i in slides
                         .item.article(class= i == 0 ? 'active' : '' )
                             include inc/actInfo
-                - var _slides = slides
-                - var _sid = 'slide'
-                include ../../inc/slideBtn
 
     include inc/enrollHost
 
@@ -85,4 +78,11 @@ block content
 
 block st
     :coffee(bare=true,minify=true)
-        cf.loadJS "#{cf.modPath}router.js"
+        if cf.mob
+            new cf.view.slide
+                el: '#slide'
+                controller: false
+                indicator: 4
+                slideOpt:
+                    interval: 4000
+

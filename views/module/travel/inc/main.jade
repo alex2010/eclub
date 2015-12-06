@@ -1,5 +1,8 @@
 extends ../../../main
 include ../../../inc/mixin
+block append script
+    -main = 'main';
+
 
 block append js
     script(src='#{libPath}router.js')
@@ -8,17 +11,17 @@ block style
     :less(minify=true)
         #bit {
             overflow: visible;
-            .carousel-inner{
+            .carousel-inner {
                 overflow: visible;
             }
-            .carousel-control{
+            .carousel-control {
                 width: 10%;
                 height: 150px;
             }
-            .left{
+            .left {
                 margin-left: -100px;
             }
-            .right{
+            .right {
                 margin-right: -75px;
             }
         }
@@ -29,23 +32,23 @@ block ctn
                 a(href= '/')
                     img(src= f.resPath(c, 'images/logo_light.png') style='width: 105px;margin-top: -5px;')
             .col-md-3.p0
-                    .input-group.sbar(style= 'margin-top:45px')
-                        .input-group-btn
-                            button.btn.btn-sm.btn-default(style='width: 85px')
-                                span.et Sight
-                                |&nbsp;
-                                span.caret
-                            ul.dropdown-menu(style='margin:-3px 0 0 -1px;')
-                                li: a Sight
-                                li: a Show
-                                li: a Food
-                                li: a Handicraft
-                                li: a Culture
-                                li: a Car
-                                li: a Guide
-                                li: a Tour
-                        input#q.form-control.input-sm(name='q', type='text', placeholder='Search...')
-                        != f.icon('search', 'span', null, 'form-control-feedback')
+                .input-group.sbar(style= 'margin-top:45px')
+                    .input-group-btn
+                        button.btn.btn-sm.btn-default(style='width: 85px')
+                            span.et Sight
+                            | &nbsp;
+                            span.caret
+                        ul.dropdown-menu(style='margin:-3px 0 0 -1px;')
+                            li: a Sight
+                            li: a Show
+                            li: a Food
+                            li: a Handicraft
+                            li: a Culture
+                            li: a Car
+                            li: a Guide
+                            li: a Tour
+                    input#q.form-control.input-sm(name='q', type='text', placeholder='Search...')
+                    != f.icon('search', 'span', null, 'form-control-feedback')
     block slide
 
     .topLine
@@ -111,9 +114,16 @@ block ctn
                     p.row © 2015 WikiBeijing. All rights reserved. No part of this site may be reproduced without our written permission.
 block append stat
     script.
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q || []).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
         ga('create', 'UA-68364869-1', 'auto');
         ga('send', 'pageview');

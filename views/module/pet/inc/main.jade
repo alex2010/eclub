@@ -6,15 +6,10 @@ include ../../../inc/mixin
 //    meta(http-equiv="Pragma" content="no-cache")
 //    meta(http-equiv="Expires" content="0")
 
-//block prepend js
-//    if !mode
-//        script(src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js')
-
 block append js
-    if !mode
-        script(src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js')
-
-    script(src='#{libPath}router.js')
+    if mob
+    else
+        script(src='#{libPath}router.js')
 
 block ctn
     body(data-wid= wt.appId, data-wcode= wt.code)

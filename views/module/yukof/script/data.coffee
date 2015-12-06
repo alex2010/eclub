@@ -48,19 +48,19 @@ module.exports =
         ]
 
     data:
-        'i18n:key': require('./zh')
-        'content:title':r 'content'
-        'partner:title':r 'partner'
-        'cat:label':r 'cat'
-        'role:title': r 'role'
-        'user:username': r 'user'
-        'post:title': r 'post'
-        'course:title':r 'course'
-        'qa:question': r 'qa'
-        'service:title': r 'service'
-        'cat:code': r 'cat'
-        'course:title': r 'course'
-        'pubAccount:code': r 'pubAccount'
+#        'i18n:key': require('./zh')
+#        'content:title':r 'content'
+#        'partner:title':r 'partner'
+        'cat:code':r 'cat'
+#        'role:title': r 'role'
+#        'user:username': r 'user'
+#        'post:title': r 'post'
+#        'course:title':r 'course'
+#        'qa:question': r 'qa'
+#        'service:title': r 'service'
+#        'cat:code': r 'cat'
+#        'course:title': r 'course'
+#        'pubAccount:code': r 'pubAccount'
 
 #    member: [
 #        "#{code},admin"

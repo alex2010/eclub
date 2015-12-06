@@ -20,15 +20,16 @@ block style
         }
 block content
     include ../../inc/crumb
-    .article
-        .col-md-8
-            include ../../inc/mod/post
-        .col-md-4.m3
-            if postList
-                .row
-                    +panel('相关文章')
-                        .list-group
-                            +media(postList,{})
+    .row
+        .article
+            .col-md-8
+                include ../../inc/mod/post
+            .col-md-4
+                if postList
+                    .row.m3
+                        +panel('相关文章')
+                            .list-group
+                                +media(postList)
 
 
 block st

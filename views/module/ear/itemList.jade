@@ -1,22 +1,24 @@
 extends ./inc/main
 block content
-    .row.main
-        .col-md-12
-            .row
-                .col-md-7
-                    img.img-responsive(src='#{resPath}images/1.jpg', alt='')
-                //+panel('听力健康阅读榜')(class='col-md-5')
-                    //+media(shop)
-            .row
-                .col-md-4
-                    +panel(_item.titleA)
-                        .list-group
-                            +media(_item.objA,{ttLimits:10,func:'head'})
-                .col-md-4
-                    +panel(_item.titleB)
-                        .list-group
-                            +media(_item.objB,{ttLimits:10})
-                .col-md-4
-                    +panel(_item.titleC)
-                        .list-group
-                            +media(_item.objC,{ttLimits:10})
+    .main
+        .row
+            .col-md-8
+                img.img-responsive(src='#{resPath}images/1.jpg', alt='')
+            .col-md-4
+                //+panel('听力健康阅读榜')
+                //    .list-group
+                //        +media(_item.objA,{ttLimits: 10})
+        p
+        .row
+            .col-md-4
+                +panel(_item.titleA)
+                    .list-group
+                        +media(_item.objA,{ttLimits:10})
+            .col-md-4
+                +panel(_item.titleB)
+                    .list-group
+                        +media(_item.objB,{ttLimits:10})
+            .col-md-4
+                +panel(_item.titleC)
+                    .list-group
+                        +media(_item.objC,{ttLimits:10})

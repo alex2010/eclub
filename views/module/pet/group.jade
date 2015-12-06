@@ -2,58 +2,58 @@ extends inc/main
 
 block content
 
-    .container
+    #group.container
         .row
-            != f.imgItem(locals, c)
-        .article
-            .col-md-8
-                include ../../inc/crumb
+            .article
+                .col-md-8.main
+                    include ../../inc/crumb
+                    +title(title, subTitle).hidden-xs
+                    .row
+                        != f.imgItem(locals, c)
 
-                h2.event-name= title
+                    +title(title, subTitle).hidden-sm.hidden-md.hidden-lg
+                    if idea
+                        .well.well-sm= idea
 
-                if idea
-                    .well.well-sm= idea
+                    .article-content
+                        if content
+                            != content.replaceAll('_cImg" src', '_cImg" bb-src')
 
-                .article-content
-                    if content
-                        != content.replaceAll('_cImg" src', '_cImg" bb-src')
+                    if user
+                        hr
+                        h3 圈子组织者
+                        +userInfo(leader)
 
-                if user
+                    if members && members.length > 3
+                        h3 圈子成员
+                        +avatars(members).col-xs-2.col-md-1.p0
                     hr
-                    h3 圈子组织者
-                    +userInfo(leader)
+                    p
+                    p
+                        a.btn.btn-lg.btn-block.btn-primary.apply 进入圈子
 
-                if members && members.length > 3
-                    h3 圈子成员
-                    +avatars(members).col-xs-2.col-md-1.p0
-                hr
-                p
-                p
-                    a.btn.btn-block.btn-primary.apply 进入圈子
+                    //h3 微信群
+                    //.row.imgBox
+                    //    != f.imgItem(locals, c, 'qrcode')
 
-                //h3 微信群
-                //.row.imgBox
-                //    != f.imgItem(locals, c, 'qrcode')
+                    h3 评论
 
-                h3 评论
-
-            .col-md-4
-                .row
+                .col-md-4.side.m3
                     +itemList(groupList, '其他小组')
 
 block st
     :coffee(bare=true,minify=true)
+        user && user.offlineCheck()
         $('.apply').click ->
             if !user.isLogin()
                 cf.r 'login'
                 return
             id = location.pathname.split('/')[2]
             items = ['_id', 'username', 'phone', 'wid', 'industry', 'title', 'company', 'introduction']
-            app.dm.form null, 'user',
+            app.dm.form 'air', 'user',
                 title: '申请信息'
                 data: _.pick user.attributes, items
                 urlRoot: util.actUrl('push', 'group', '_id', id, 'application')
                 btns: ['save']
-                mode: 'modal'
                 items: items
 

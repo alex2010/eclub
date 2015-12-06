@@ -12,9 +12,15 @@ isOid = (k)->
 
 _wkt = (obj, fu)->
     for k, v of obj
-        if _.isObject(v) and !_.isArray(v) and !_.isFunction(v)
+        if _.isArray(v) and k is '$or'
+            for it in v
+                if _.isObject(it)
+                    for kk,vv of it
+                        if vv['$exists'] and vv['$exists'] is 'false'
+                            vv['$exists'] = false
+        else if _.isObject(v) and !_.isFunction(v)
             arguments.callee(v, fu)
-        else if v
+        else  #if v
             fu(v, k, obj)
 #    for k,v of q
 #        if k in ['status', 'row']
@@ -31,22 +37,23 @@ _wkt = (obj, fu)->
 #        else if k.toString().charAt(0) is '_'
 #            delete q[k]
 _cv = (v, k, obj)->
+    log k
+    log v
     if k.charAt(0) is '_' and k isnt '_id'
         delete obj[k]
     else
         obj[k] = if isOid(k)
             if v.$in
                 for it in v.$in
-                    log it
                     new oid(it)
             else
-                log k
-                log v
                 new oid(v)
         else if k in ['status', 'row']
             +v
         else if /^\d{4}-\d{1,2}-\d{1,2}/.test(v) and v.length < 22
             Date.parseLocal(v)
+        else if v is 'false'
+            false
         else
             v
 _afterEdit = (item, entity)->
@@ -101,12 +108,18 @@ dataController =
             sort: [
                 ['lastUpdated', 'desc']
             ]
+
         if qu.p
             _.extend op, qu.p
+
         if qu._attrs
             op.fields = attrs util.d qu, '_attrs'
 
         q = buildQuery qu.q
+
+        for k,v of q
+            log k
+            log v
 
         entity = req.params.entity
 
