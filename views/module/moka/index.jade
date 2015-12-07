@@ -1,6 +1,9 @@
 extends inc/main
 block style
     :less(minify=true)
+        .carousel {
+            margin-bottom:20px;
+        }
         .carousel-inner {
             .item {
                 height:400px;
@@ -34,17 +37,17 @@ block content
             li(data-target="#carousel-moka",data-slide-to="2")
         .carousel-inner(role="listbox")
             .item.active
-                img(src=f.resPath(c,'banner_05.jpg'),alt="")
+                img.img-responsive(src=f.resPath(c,'banner_05.jpg'),alt="")
                 .carousel-caption
                     h3 一切的发生都是最好的安排
                     h4 --摩卡
             .item
-                img(src="",alt="")
+                img.img-responsive(src=f.resPath(c,'banner_05.jpg'),alt="")
                 .carousel-caption
                     h3 一切的发生都是最好的安排
                     h4 --摩卡1
             .item
-                img(src="",alt="")
+                img.img-responsive(src=f.resPath(c,'banner_05.jpg'),alt="")
                 .carousel-caption
                     h3 一切的发生都是最好的安排
                     h4 --摩卡2

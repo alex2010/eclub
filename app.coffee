@@ -2,7 +2,7 @@ express = require('express')
 #session = require('express-session')
 #mongoStore = require('connect-mongo')(session);
 
-setting = require './setting'
+#setting = require './setting'
 
 path = require('path')
 favicon = require('serve-favicon')
