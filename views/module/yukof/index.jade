@@ -31,11 +31,7 @@ block style
 //            span.sr-only 下一页
 
 block content
-
-
-
-    //+slide(9,'banner')
-    +slide(c,'banner')
+    +slide(c,head.list,'top')
     .row
         .col-md-4
             .panel.panel-y-1
@@ -101,7 +97,7 @@ block content
         ul.nav.nav-tabs
             each it,i in content
                 -var cls=''
-                if i==0
+                if i == 0
                     -cls=''+' active'
                 li(class='#{it.code} #{cls}')
                     a(href='##{it.code}',data-toggle="tab")=it.title
@@ -191,3 +187,9 @@ block content
                                     p 培养把消费<br />变成投资的观点
 block st
     :coffee(bare=true,minify=true)
+        new cf.view.slide
+            el: '.carousel.slide'
+            controller: false
+            indicator: 4
+            slideOpt:
+                interval: 4000

@@ -229,29 +229,31 @@ block content
                 if it.refFile
                     -var slide=it.refFile.slide
                 -var content=it.content
+                -var info = it.info
                 if (i==0)
                     -cls+=' active in'
                 div(class="#{cls}",id="#{it.code}")
-                    .row.intro
-                        ul.col-md-4.list-unstyled
-                            if slide
-                                each item,x in slide
-                                    if (x>=6)
-                                        -break;
-                                    li!=f.imgItem(it,c,'slide','img-responsive',x)
-                        .col-md-8
-                            +tablePanel(it.studentPrivileges)
-                            +tablePanel(it.registration)
-                    .row.intro
-                        .col-md-4
-                            +tablePanel(it.recruitment)
-                        .col-md-4
-                            +tablePanel(it.favourableTerms)
-                        .col-md-4
-                            +tablePanel(it.charge)
-                    .mt20
-                        each item in content
-                            .panelbox-y-1
-                                +contentPanel(item.title,'',true)
-                                +contentPanel('课程',item.lesson)
-                                +contentPanel('作业练习',item.homework)
+                    if info
+                        .row.intro
+                            ul.col-md-4.list-unstyled
+                                if slide
+                                    each item,x in slide
+                                        if (x>=6)
+                                            -break;
+                                        li!=f.imgItem(it,c,'slide','img-responsive',x)
+                            .col-md-8
+                                +tablePanel(info[0])
+                                +tablePanel(info[1])
+                        .row.intro
+                            .col-md-4
+                                +tablePanel(info[2])
+                            .col-md-4
+                                +tablePanel(info[3])
+                            .col-md-4
+                                +tablePanel(info[4])
+                        .mt20
+                            each item in content
+                                .panelbox-y-1
+                                    +contentPanel(item.title,'',true)
+                                    +contentPanel('课程',item.lesson)
+                                    +contentPanel('作业练习',item.homework)

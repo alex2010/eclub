@@ -17,6 +17,10 @@ module.exports =
                 for it in res
                     opt[it.code] = it
                 cb(null, opt)
+        ctx._cd =
+            content:
+                func: 'head'
+                text: 'brief'
 
         wt: (cb)->
             dao.get ctx.c.code, 'pubAccount', {code: 'PostEnglishTime'}, (res)->

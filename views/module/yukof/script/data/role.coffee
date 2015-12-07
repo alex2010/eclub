@@ -16,6 +16,9 @@ module.exports = [
     ,
         key: 'qa'
         row: 140
+    ,
+        key: 'video'
+        row: 150
     ]
 ,
     title: 'trainer'

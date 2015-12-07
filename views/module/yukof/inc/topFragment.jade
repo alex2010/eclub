@@ -28,12 +28,12 @@ mixin staticPanel(title,en,src)
       .panel-body.img
          img.img-responsive(src="#{resPath}images/#{src}")
 
-mixin viadeoPanel(objSrc)
+mixin videoPanel(v)
    .panel.panel-y-6
       .panel-heading.darken 视频教育
          span.en Video Educational
-      .panel-body
-         viadeo(src="#{objSrc}")
+      .panel-body.embed-responsive.embed-responsive-16by9(style='height: 200px')
+         embed(src=v.url allowfullscreen="true" quality="high" width="100%" allowscriptaccess="always" type="application/x-shockwave-flash")
 
 -var opt={}
 -opt.codePanel={}
@@ -91,4 +91,5 @@ case index
    .col-md-8
       +staticPanel(opt.staticPanel.title,opt.staticPanel.en,opt.staticPanel.imgSrc)
    .col-md-4
-      +viadeoPanel(opt.videoSrc)
+      if video
+         +videoPanel(video)

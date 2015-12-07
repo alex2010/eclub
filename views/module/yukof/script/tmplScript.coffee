@@ -1,5 +1,8 @@
 module.exports =
     _init: (ctx, req, rsp)->
+        video:(cb)->
+            dao.get ctx.c.code, 'video', channel: ctx.index, (res)->
+                cb(null, res)
         partnerNav: (cb)->
             opt =
                 limit: 8
@@ -58,6 +61,7 @@ module.exports =
                 cb(null, res)
 
     serviceChannel: (ctx, req, rsp) ->
+
         privateImageMgm_pp: (cb) ->
             opt =
                 limit: 10

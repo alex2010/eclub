@@ -6,6 +6,17 @@ jade = require('jade')
 String::splitCap = (i, t)->
     (it.capitalize() for it in @split(i)).join(t)
 
+entityPageOpt = (ctx, req, et)->
+    opt =
+        skip: +req.query.skip || 0
+        limit: +req.query.limit || 10
+        sort:
+            lastUpdated: -1
+    ctx._skip = opt.skip
+    ctx._limit = opt.limit
+    ctx._e = et
+    opt
+
 pageOpt = (req)->
     c = req.c
     code = c.code
@@ -54,6 +65,27 @@ pickScript = (ctx, req)->
         console: (ctx)->
             ctx.app = 'admin'
             null
+        entityList: (ctx, req, res)->
+            et = req.query.entity.toString()
+            if req.query.cat
+                cat = req.query.cat.toString()
+                filter =
+                    cat:
+                        $regex: ".*#{cat}.*"
+            log 'eeeeee'
+            items: (cb)->
+                opt = entityPageOpt(ctx, req, et)
+                dao.find ctx.c.code, et, (filter || {}), opt, (res)->
+                    dao.count ctx.c.code, et, filter, (count)->
+                        ctx._max = count
+                        cb(null, res)
+            cats: (cb)->
+                dao.find ctx.c.code, 'cat', {type: et}, {}, (res)->
+                    if ctx.cat
+                        cat = _.where(res, {code: ctx.cat.code})
+                        ctx.cat = cat[0] if cat.length
+                    cb(null, res)
+
     sc = require("../views/module/#{ctx.c.code}/script/tmplScript")
 
     ctx.langs = {}

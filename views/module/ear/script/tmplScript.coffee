@@ -1,16 +1,3 @@
-pageOpt = (ctx, req, et)->
-    opt =
-        skip: +req.query.skip || 0
-        limit: +req.query.limit || 10
-        sort:
-            lastUpdated: -1
-    ctx._skip = opt.skip
-    ctx._limit = opt.limit
-    ctx._e = et
-    opt
-
-
-
 
 module.exports =
     _init: (ctx)->
@@ -71,28 +58,26 @@ module.exports =
             dao.find ctx.c.code, 'product', {}, opt, (res)->
                 cb null, res
 
-    entityList: (ctx, req, res)->
-        et = req.query.entity.toString()
-
-        if req.query.cat
-            cat = req.query.cat.toString()
-            filter =
-                cat:
-                    $regex: ".*#{cat}.*"
-        items: (cb)->
-            opt = pageOpt(ctx, req, et)
-            dao.find ctx.c.code, et, (filter || {}), opt, (res)->
-                dao.count ctx.c.code, et, filter, (count)->
-                    ctx._max = count
-                    cb(null, res)
-        cats: (cb)->
-            dao.find ctx.c.code, 'cat', {type: et}, {}, (res)->
-                if ctx.cat
-                    cat = _.where(res, {code: ctx.cat.code})
-                    ctx.cat = cat[0] if cat.length
-                cb(null, res)
-
-
+#    entityList: (ctx, req, res)->
+#        et = req.query.entity.toString()
+#
+#        if req.query.cat
+#            cat = req.query.cat.toString()
+#            filter =
+#                cat:
+#                    $regex: ".*#{cat}.*"
+#        items: (cb)->
+#            opt = pageOpt(ctx, req, et)
+#            dao.find ctx.c.code, et, (filter || {}), opt, (res)->
+#                dao.count ctx.c.code, et, filter, (count)->
+#                    ctx._max = count
+#                    cb(null, res)
+#        cats: (cb)->
+#            dao.find ctx.c.code, 'cat', {type: et}, {}, (res)->
+#                if ctx.cat
+#                    cat = _.where(res, {code: ctx.cat.code})
+#                    ctx.cat = cat[0] if cat.length
+#                cb(null, res)
 
     itemList: (ctx, req, res) ->
         opt =
