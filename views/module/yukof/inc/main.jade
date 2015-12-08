@@ -1,6 +1,11 @@
 extends ../../../main
 include ../../../inc/mixin
 
+block append js
+    if mob
+    else
+        script(src='#{libPath}router.js')
+
 mixin item (text,active,itemCls)
     -var cls=itemCls || ''
     if active
@@ -49,7 +54,10 @@ block ctn
                         ul.list-inline.navbar-right
                             each it in c.nav
                                 +navItem(index,it)(class="label "+it.labelCls,href="#{it.href}")
-            block content
+        .container
+            #content.row
+            #static.row(class=index)
+                block content
         footer
             .content
                 .container

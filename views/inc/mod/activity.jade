@@ -2,11 +2,10 @@ if venue
     - v = _.isArray(venue)?venue[0]:venue
 
 +title(title, subTitle).hidden-xs
-
 .row
-    != f.imgItem(locals, c, 'head')
-
+    != f.imgItem(locals, c)
 +title(title, subTitle).hidden-sm.hidden-md.hidden-lg
+
 //if _cat && _cat[cat]
 //    span.cat.pull-right 【#{_cat[cat].title}】
 hr
