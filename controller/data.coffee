@@ -18,7 +18,11 @@ _wkt = (obj, fu)->
                     for kk,vv of it
                         if vv['$exists'] and vv['$exists'] is 'false'
                             vv['$exists'] = false
-        else if _.isObject(v) and !_.isFunction(v)
+        else if isOid(k) and v.$in
+            v.$in =
+                for it in v.$in
+                    new oid(it)
+        else if _.isObject(v) and !_.isArray(v) and !_.isFunction(v)
             arguments.callee(v, fu)
         else  #if v
             fu(v, k, obj)
@@ -37,17 +41,11 @@ _wkt = (obj, fu)->
 #        else if k.toString().charAt(0) is '_'
 #            delete q[k]
 _cv = (v, k, obj)->
-    log k
-    log v
     if k.charAt(0) is '_' and k isnt '_id'
         delete obj[k]
     else
         obj[k] = if isOid(k)
-            if v.$in
-                for it in v.$in
-                    new oid(it)
-            else
-                new oid(v)
+            new oid(v)
         else if k in ['status', 'row']
             +v
         else if /^\d{4}-\d{1,2}-\d{1,2}/.test(v) and v.length < 22
@@ -117,12 +115,7 @@ dataController =
 
         q = buildQuery qu.q
 
-        for k,v of q
-            log k
-            log v
-
         entity = req.params.entity
-
         dao.find code, entity, q, op, (entities)->
             dao.count code, entity, q, (count)->
                 rsp.send util.r entities, count
@@ -130,11 +123,14 @@ dataController =
     get: (req, rsp) ->
         code = req.c.code
         entity = req.params.entity
-        qu = req.query || {q: {}}
-        op =
-            _id: req.params.id
-        if req.query._attrs
-            op.fields = attrs util.d qu, '_attrs'
+        op = req.query
+        op._id = req.params.id
+
+        if op._attrs
+            op.fields = attrs util.d op, '_attrs'
+
+        op = buildQuery op
+
         dao.get code, entity, op, (item)->
             rsp.send util.r item
 

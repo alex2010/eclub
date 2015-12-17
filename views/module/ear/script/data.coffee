@@ -43,6 +43,17 @@ role = [
     ]
     permission: ['wechat']
 ,
+    title: 'principal'
+    label: '校长'
+    type: 0
+    menu: [
+        "label": "康复学校"
+        "icon": "gift"
+        "href": "#!/home/school"
+        "row": 10
+    ]
+    permission: ['wechat']
+,
     title: 'member'
     label: '眼配师'
     type: 0
@@ -176,91 +187,91 @@ card = [
 ]
 
 module.exports =
-    community:
-        code: code
-        name: '掌上听力专家'
-        resPath: if _env then '/res' else 'http://s.postenglishtime.com'
-        url: if _env then 't.ear.com' else 'ear.postenglishtime.com'
-        nav: [
-            'label': '首页'
-            'href': '/'
-        ,
-            'label': '听力健康'
-            'href': '/itemList?entity=health'
-            'children': [
-                'label': '听力知识'
-                'href': '/itemList?entity=health'
-            ,
-                'label': '康复知识'
-                'href': '/itemList?entity=health'
-            ,
-                'label': '助听器'
-                'href': '/itemList?entity=health'
-            ]
-        ,
-            'label': '互动论坛'
-            'href': '/itemList?entity=forum'
-            'children': [
-                'label': '验配师论坛'
-                'href': '/itemList?entity=forum'
-            ,
-                'label': '消费者论坛'
-                'href': '/itemList?entity=forum'
-            ,
-                'label': '二手助听器论坛'
-                'href': '/itemList?entity=forum'
-            ]
-        ,
-            'label': '聆听秒杀'
-            'href': '/seckillingList'
-            'refClass': '0'
-            'tip': ''
-            'cls': ''
-            'icon': ''
-        ,
-            'label': '聆听卡券'
-            'href': '/cardList'
-            'refClass': '0'
-            'tip': ''
-            'cls': ''
-            'icon': ''
-        ,
-            'label': '听障问诊'
-            'href': '/inquiry'
-            'refClass': '0'
-            'tip': ''
-            'cls': ''
-            'icon': ''
-            'children': [
-                'href': '#!/apply/inquiry'
-                'label': '我要咨询'
-                'refClass': '0'
-                'tip': ''
-                'cls': ''
-                'icon': ''
-                'id': '1sh3y'
-            ,
-                'href': '#!/apply/order'
-                'label': '我要预约'
-                'refClass': '0'
-                'tip': ''
-                'cls': ''
-                'icon': ''
-                'id': '9lwjx'
-            ]
-        ]
-        'foot': [
-            'label': '广告服务'
-            'href': '/content/about'
-        ,
-            'label': '联系我们'
-            'href': '/content/contact'
-        ,
-            'label': '免责声明'
-            'href': '/content/pp'
-        ]
-    data:{}
-#        'role:title': role
+#    community:
+#        code: code
+#        name: '掌上听力专家'
+#        resPath: if _env then '/res' else 'http://s.postenglishtime.com'
+#        url: if _env then 't.ear.com' else 'ear.postenglishtime.com'
+#        nav: [
+#            'label': '首页'
+#            'href': '/'
+#        ,
+#            'label': '听力健康'
+#            'href': '/itemList?entity=health'
+#            'children': [
+#                'label': '听力知识'
+#                'href': '/itemList?entity=health'
+#            ,
+#                'label': '康复知识'
+#                'href': '/itemList?entity=health'
+#            ,
+#                'label': '助听器'
+#                'href': '/itemList?entity=health'
+#            ]
+#        ,
+#            'label': '互动论坛'
+#            'href': '/itemList?entity=forum'
+#            'children': [
+#                'label': '验配师论坛'
+#                'href': '/itemList?entity=forum'
+#            ,
+#                'label': '消费者论坛'
+#                'href': '/itemList?entity=forum'
+#            ,
+#                'label': '二手助听器论坛'
+#                'href': '/itemList?entity=forum'
+#            ]
+#        ,
+#            'label': '聆听秒杀'
+#            'href': '/seckillingList'
+#            'refClass': '0'
+#            'tip': ''
+#            'cls': ''
+#            'icon': ''
+#        ,
+#            'label': '聆听卡券'
+#            'href': '/cardList'
+#            'refClass': '0'
+#            'tip': ''
+#            'cls': ''
+#            'icon': ''
+#        ,
+#            'label': '听障问诊'
+#            'href': '/inquiry'
+#            'refClass': '0'
+#            'tip': ''
+#            'cls': ''
+#            'icon': ''
+#            'children': [
+#                'href': '#!/apply/inquiry'
+#                'label': '我要咨询'
+#                'refClass': '0'
+#                'tip': ''
+#                'cls': ''
+#                'icon': ''
+#                'id': '1sh3y'
+#            ,
+#                'href': '#!/apply/order'
+#                'label': '我要预约'
+#                'refClass': '0'
+#                'tip': ''
+#                'cls': ''
+#                'icon': ''
+#                'id': '9lwjx'
+#            ]
+#        ]
+#        'foot': [
+#            'label': '广告服务'
+#            'href': '/content/about'
+#        ,
+#            'label': '联系我们'
+#            'href': '/content/contact'
+#        ,
+#            'label': '免责声明'
+#            'href': '/content/pp'
+#        ]
+    data:
+        'role:title': role
 #        'user:username': user
 #        'pubAccount:appId': pubAccount
 #        'brand:title': brand

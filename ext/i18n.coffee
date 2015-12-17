@@ -34,5 +34,6 @@ module.exports =
         _i[p] || p.capAll()
 
     iin: (p) ->
+        log p
         if p
             return _i[p] || p.capAll()

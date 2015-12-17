@@ -33,7 +33,7 @@ block style
             .btn {
                margin-left:50px;
                padding:12px 20px;
-               background:#ff3333;
+               /*background:#ff3333;*/
                font-size:16px;
             }
          }
@@ -51,3 +51,4 @@ block content
             p= post.brief
          .panel-footer
             a(href="/post/#{post._id}").btn.btn-danger 阅读更多
+            a(href=f.navUrl('home/partner')).btn.btn-success 申请加入

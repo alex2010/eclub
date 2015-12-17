@@ -53,7 +53,7 @@ block content
                             =brand
                         else
                             each it,i in brand
-                                +thumbnail(it).col-xs-3
+                                +thumbnail(it,null,'a').col-xs-3(onclick='cf.showBrand(this)' title=it.title,bid=it._id)
 
         .col-md-4.m3
             +panel('基本信息')
@@ -80,3 +80,4 @@ block st
             el: '.carousel.slide'
             controller: true
             indicator: true
+

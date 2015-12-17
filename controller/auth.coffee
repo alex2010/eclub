@@ -14,14 +14,13 @@ checkType = (k)->
 
 extendRes = (u,r,name)->
     if r[name]
-        if u[name]
+        if u[name] and _.isArray u[name]
             for it in r[name]
-                if u[name].pushById
-                    u[name].pushById it, 'key'
+                k = if it.key then 'key' else 'href'
+                u[name].pushById it, k
         else
             u[name] = r[name]
         u[name].sortBy 'row', true
-
 afterAuth = (user, req, rsp)->
     code = req.c.code
     dao.find code, 'membership', uid: user._id, {}, (ms)->
@@ -33,11 +32,13 @@ afterAuth = (user, req, rsp)->
                 title: r.title
                 label: r.label
             for role in rs
+                log role.title
                 extendRes(user,role,'menu')
                 extendRes(user,role,'entities')
                 extendRes(user,role,'permission')
                 op =
                     uid: user._id
+
             dao.find code, 'orgRelation', op, {}, (os)->
                 user.orgs = for r in os
                     _id: r.oid

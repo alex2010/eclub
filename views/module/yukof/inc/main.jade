@@ -24,22 +24,21 @@ mixin navItem (cur,data)
 
 block ctn
     body
-        .test= require
-        nav.navbar.navbar-default.topline
+        nav.navbar.navbar-default.topline.xs-hidden
             .container
                 .navbar-header
                     span.navbar-brand 以打造明星的方式，打造最出色的你
                 .collapse.navbar-collapse
                     ul.nav.navbar-nav.navbar-right
                         +item("在线报名")
-                        +item("登录")
-                        +item("注册")
                         +item("关于我们")
                         +item("联系我们")
                         +item()(class="share")
                             img(alt="",src="#{resPath}images/icon-share_03.png")
                         +item()(class="share")
                             img(alt="",src="#{resPath}images/icon-share_05.png")
+                    ul#topBar.nav.navbar-nav.navbar-right
+
         .container
             nav.navbar.navbar-default.navigation
                 .container-fluid

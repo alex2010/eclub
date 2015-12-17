@@ -26,7 +26,7 @@ _path = __dirname;
 _mdb = 'main';
 dao = new require('./service/dao')();
 dao.pick(_mdb, 'community');
-util = require('./ext/util');
+util = _.extend(require('./ext/common'), require('./ext/util'));
 tu = require('./ext/tmpl');
 gs = function (fn) {
     return require(_path + '/service/' + fn)

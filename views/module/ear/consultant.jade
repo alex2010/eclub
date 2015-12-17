@@ -77,7 +77,9 @@ block content
                 .panel-body
                     .row
                         .col-md-5
-                            .thumbnail!= f.imgItem(locals, c, 'head')
+                            .thumbnail
+                                div(style='max-height: 280px;overflow:hidden')
+                                    != f.imgItem(locals, c, 'head')
                         .col-md-7
                             .caption
                                 h2#username.media-heading= username
@@ -110,7 +112,7 @@ block content
                     .panel-body
                         p
                         each it,i in brandArr
-                            +thumbnail(it).col-xs-3
+                            +thumbnail(it).col-xs-3(onclick='cf.showBrand(this)' title=it.title, bid=it._id)
             if comments
                 +panel('用户评价')
 

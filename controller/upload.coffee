@@ -89,10 +89,9 @@ thumb = (path, thumb)->
 module.exports =
     remove: (req, rsp)->
         bo = req.body
-        path = sPath(req.params.code) + '/' + bo.id
-        log sPath(req.params.code)
+        path = sPath(req.c.code) + '/' + bo.id
         fs.unlink path, ->
-            _fileStack[sPath(req.params.code)] = null
+            _fileStack[sPath(req.c.code)] = null
 
         if bo.thumb
             fs.unlink thumbPath(path, bo.thumb.split(':')[0]), ->
@@ -117,5 +116,4 @@ module.exports =
         qu = req.query
         code = req.c.code
         path = qu.path
-        log sPath(code, path)
         rsp.send walk sPath(code, path), qu.max, qu.offset

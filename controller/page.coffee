@@ -1,10 +1,11 @@
-u = util
 oid = require('mongodb').ObjectID
 async = require('async')
 jade = require('jade')
 
 String::splitCap = (i, t)->
     (it.capitalize() for it in @split(i)).join(t)
+
+f = require('../ext/tmpl')
 
 entityPageOpt = (ctx, req, et)->
     opt =
@@ -35,20 +36,10 @@ pageOpt = (req)->
     _ts: new Date().getTime()
     c: c
     main: (if req.mob then 'mob' else 'main')
-    f: require('../ext/tmpl')
+    f: f
     cstr: JSON.stringify(_.pick(c, 'code', 'name', 'url', '_id', 'resPath'))
     libPath: libPath
     resPath: resPath
-#    cssPath: (name = 'css')->
-#        if app.env
-#            if name is 'admin'
-#                "/lib/admin/style/#{name}.css"
-#            else
-#                "/module/#{c.code}/src/style/#{name}.css"
-#        else
-#            "#{libPath}#{name}.css?#{new Date().getTime()}"
-#    jsPath: (name = 'main')->
-#        "#{libPath}#{name}.js?#{new Date().getTime()}"
 
 
 pre = (req)->
@@ -72,7 +63,6 @@ pickScript = (ctx, req)->
                 filter =
                     cat:
                         $regex: ".*#{cat}.*"
-            log 'eeeeee'
             items: (cb)->
                 opt = entityPageOpt(ctx, req, et)
                 dao.find ctx.c.code, et, (filter || {}), opt, (res)->
@@ -106,7 +96,6 @@ pickScript = (ctx, req)->
     _.extend initOpt, opt
 
 render = (req, rsp, ctx)->
-#    if req.fp
     opt = pickScript(ctx, req)
     dao.pick(_mdb, 'cache').ensureIndex time: 1,
         expireAfterSeconds: 7200
@@ -120,30 +109,30 @@ render = (req, rsp, ctx)->
             dao.save _mdb, 'cache',
                 k: req.k
                 str: str
-                mob: req.mob
+                mob: if req.mob then true else false
                 time: new Date()
         rsp.end str
 
 
-checkMob = (req,rsp) ->
-    url = "#{req.protocol}://#{req.hostname}#{if app.env then ':3000' else ''}#{req.originalUrl}"
-    if /mobile/i.test(req.headers['user-agent'])
-        req.mob = true
-        if !req.query.mob
-            pp = url + "#{if _.isEmpty(req.query) then '?' else '&'}mob=1"
-            log 'mob redirect '+pp
-            rsp.redirect pp
-    else
-        req.mob = false
-        if req.query.mob
-            delete req.query.mob
-            url = if url.indexOf('&mob=1') > -1
-                url.replace('&mob=1','')
-            else if url.endsWith('?mob=1') > -1
-                url.replace('?mob=1','')
-            else if url.indexOf('?mob=1') > -1
-                url.replace('mob=1&','')
-            rsp.redirect url
+#checkMob = (req,rsp) ->
+#    url = "#{req.protocol}://#{req.hostname}#{if app.env then ':3000' else ''}#{req.originalUrl}"
+#    if /mobile/i.test(req.headers['user-agent'])
+#        req.mob = true
+#        if !req.query.mob
+#            pp = url + "#{if _.isEmpty(req.query) then '?' else '&'}mob=1"
+#            log 'mob redirect '+pp
+#            rsp.redirect pp
+#    else
+#        req.mob = false
+#        if req.query.mob
+#            delete req.query.mob
+#            url = if url.indexOf('&mob=1') > -1
+#                url.replace('&mob=1','')
+#            else if url.endsWith('?mob=1') > -1
+#                url.replace('?mob=1','')
+#            else if url.indexOf('?mob=1') > -1
+#                url.replace('mob=1&','')
+#            rsp.redirect url
 
 module.exports =
     page: (req, rsp) ->

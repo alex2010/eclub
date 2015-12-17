@@ -41,6 +41,7 @@ module.exports =
         opt =
             limit: 5
             sort:
+                lastUpdated: -1
                 row: -1
         #        _cat: (cb) ->
         #            dao.find ctx.c.code, 'cat', {}, {}, (res)->

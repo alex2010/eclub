@@ -1,3 +1,4 @@
+
 module.exports =
     randomInt: util.randomInt
     randomChar: util.randomChar
@@ -96,7 +97,9 @@ module.exports =
             p = "<img src='#{pp}'/>"
         "<a href='/user/#{user._id}' title='#{user.username}'>#{p}<div>#{user.username}</div></a>"
 
-#    navUrl: util.navUrl
+
+    adt: util.adjustText
+
     navUrl: (p)->
         return '#' unless p
         if arguments[0].charAt(0) is '#'
@@ -113,3 +116,4 @@ module.exports =
 
     actDate:(start,end)->
         "#{start.substr(0,16)}-#{end.substr(11,5)}"
+

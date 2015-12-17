@@ -17,6 +17,32 @@ opt =
 db.getCollection('user').update {}, opt, multi: true
 
 
+db.getCollection('brand').find({}).forEach (it)->
+    if it.refFile and it.refFile.logo
+        it.refFile.head = it.refFile.logo
+        delete it.refFile.logo
+        db.getCollection('brand').update {_id: it._id}, it
+
+
+db.getCollection('consultant').find({}).forEach (it)->
+    if it.goodAtBrand
+        for b in it.goodAtBrand
+            if b.refFile and b.refFile.logo
+                b.refFile.head = b.refFile.logo
+                delete b.refFile.logo
+        db.getCollection('consultant').update {_id: it._id}, it
+
+
+db.getCollection('shop').find({}).forEach (it)->
+    if it.brand
+        for b in it.brand
+            if b.refFile and b.refFile.logo
+                b.refFile.head = b.refFile.logo
+                delete b.refFile.logo
+        db.getCollection('shop').update {_id: it._id}, it
+
+
+
 db.getCollection('shop').find({}).forEach (it)->
     if it.consultant
         cons = it.consultant

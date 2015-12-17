@@ -9,7 +9,7 @@ block content
                     include inc/share
         #asl.collapse
             .row.text-center
-                each it in allCultures
+                each it in allCultures.reverse()
                     != f.link(it, null, 'col-md-3')
 
         if refFile

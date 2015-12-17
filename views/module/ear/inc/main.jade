@@ -8,11 +8,13 @@ block append js
         script(src='#{libPath}router.js')
 
 block ctn
-    mixin thumbnail(opt,name)
+    mixin thumbnail(opt,name, tag)
         if !name
-            -name='logo'
+            -name='head'
+        if !tag
+            -tag = 'div'
 
-        div&attributes(attributes)
+        #{tag}&attributes(attributes)
             .thumbnail: != f.imgItem(opt, c, name)
             if block
                 block
