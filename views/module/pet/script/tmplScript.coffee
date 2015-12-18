@@ -11,16 +11,18 @@ pageOpt = (ctx, req, et)->
 
 module.exports =
     _init: (ctx)->
+        ctx._cd =
+            content:
+                func: 'head'
+                text: 'brief'
+
         _cat: (cb)->
             dao.find ctx.c.code, 'cat', {}, {}, (res)->
                 opt = {}
                 for it in res
                     opt[it.code] = it
+                log opt
                 cb(null, opt)
-        ctx._cd =
-            content:
-                func: 'head'
-                text: 'brief'
 
         wt: (cb)->
             dao.get ctx.c.code, 'pubAccount', {code: 'PostEnglishTime'}, (res)->

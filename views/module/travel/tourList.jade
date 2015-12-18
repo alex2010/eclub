@@ -196,14 +196,14 @@ block content
                     ul.nav.nav-tabs.text-center
                         li.col-md-3.active
                             a(data-toggle='tab', href='#fact#{i}') Facts/Overview
-                        li.col-md-2
-                            a(data-toggle='tab', href='#itineray#{i}') Itinerary
-                        li.col-md-2
-                            a(data-toggle='tab', href='#price#{i}') Prices/Includes
-                        li.col-md-2
-                            a(data-toggle='tab', href='#photo#{i}') Photos
                         li.col-md-3
-                            a(data-toggle='tab', href='#review#{i}') Customer Reviews
+                            a(data-toggle='tab', href='#itineray#{i}') Itinerary
+                        li.col-md-3
+                            a(data-toggle='tab', href='#price#{i}') Prices/Includes
+                        li.col-md-3
+                            a(data-toggle='tab', href='#photo#{i}') Photos
+                        //li.col-md-3
+                        //    a(data-toggle='tab', href='#review#{i}') Customer Reviews
                     .tab-content.clearfix
                         div(id='fact#{i}').tab-pane.active
                             .col-md-4
@@ -245,12 +245,12 @@ block content
                                     ul.itinerary
                                         each lt in it.itinerary
                                             li
-                                                if lt._e
-                                                    a.hoverLink(href= "/sight/#{lt._id}" title= lt.title,data-content= lt.brief)= lt.title
-                                                    a.popover(href= "/sight/#{lt._id}")
-                                                        .arrow
-                                                        h4.popover-title
-                                                        .popover-content
+                                                if lt._id
+                                                    a.hoverLink(href= "/#{lt._e || 'sight'}/#{lt._id}" title= lt.title,data-content= lt.brief)= lt.title
+                                                    //a.popover(href= "/sight/#{lt._id}")
+                                                    //    .arrow
+                                                    //    h4.popover-title
+                                                    //    .popover-content
                                                 else
                                                     strong= lt.title
                                                 p!= lt.brief
@@ -294,7 +294,9 @@ block content
                                                 td
                                                     span= p
                                 p * Please select one option
-                                p NOTE:
+                                if it.note
+                                    p NOTE:
+                                        != it.note
 
                         div(id='photo#{i}').tab-pane
                             if it.refFile && it.refFile.slide
@@ -304,46 +306,46 @@ block content
                                 -var _sid = 'ss'+i
                                 include inc/slide
 
-                        div(id='review#{i}').tab-pane
-                            .col-md-4
-                                h4
-                                    span 100% REAL REVIEWS
-                                p.well.well-sm(style='font-size: 14px;line-height: 24px;') In order to guarantee the 100% Authenticity of the reviews on wikibeijing, only the feedbacks from customers who have booked a tour from wikibeijing would be shown here. There is no need to put fake ratings on our site. The reviews in a way are valuable suggestions from the customers. We could learn something from them to perfect the itinerary and to choose the right guide, thus to provide better service in the future. Also, we only put the paper feedbacks from the clients in the section of Private Guides, to guarantee the authenticity of them. They are also ranked by the positive reviews from the customers and according alteration would be made according to their performances.
-
-
-                            .col-md-8.pl0
-                                h4 Customer Reviews
-                                if it.rateOne
-                                    .ratingView
-                                        .well.well-sm.clearfix.mb
-                                            div Rated by &nbsp;
-                                                strong
-                                                    span.firstName=it.rateOne.firstName
-                                                    span.lastName=it.rateOne.lastName
-                                                .pull-right.lastUpdated #{it.rateOne.lastUpdated.toString().substr(0, 24)}
-                                            hr
-                                            .content= it.rateOne.content
-                                            hr
-                                            .col-xs-6.text-right(style='padding-top: 4px;font-size: 18px;') Value For Money
-                                            .col-xs-6.text-left.pl0
-                                                .avg
-                                            hr
-                                            .starReview.mb2.clearfix
-                                                .col-xs-6
-                                                    +rateAttr(it.rateOne,'tourArrangement')
-                                                    +rateAttr(it.rateOne,'guideAttitude')
-                                                    +rateAttr(it.rateOne,'guideService')
-                                                    +rateAttr(it.rateOne,'guideCompetence')
-                                                .col-xs-6
-                                                    +rateAttr(it.rateOne,'vehicleCondition')
-                                                    +rateAttr(it.rateOne,'drivingSkill')
-                                                    +rateAttr(it.rateOne,'foodQuality')
-                                                    +rateAttr(it.rateOne,'overallEvaluation')
-
-
-                                p.text-center
-                                    a(style='margin-right: 50px' onclick='cf.rate(this)' tid=it._id).btn.btn.btn-success Add Review
-                                    a.btn.btn.btn-info(onclick='cf.showRatingMore(this)' tid=it._id) View More
+                        //div(id='review#{i}').tab-pane
+                        //    .col-md-4
+                        //        h4
+                        //            span 100% REAL REVIEWS
+                        //        p.well.well-sm(style='font-size: 14px;line-height: 24px;') In order to guarantee the 100% Authenticity of the reviews on wikibeijing, only the feedbacks from customers who have booked a tour from wikibeijing would be shown here. There is no need to put fake ratings on our site. The reviews in a way are valuable suggestions from the customers. We could learn something from them to perfect the itinerary and to choose the right guide, thus to provide better service in the future. Also, we only put the paper feedbacks from the clients in the section of Private Guides, to guarantee the authenticity of them. They are also ranked by the positive reviews from the customers and according alteration would be made according to their performances.
+                        //
+                        //
+                        //    .col-md-8.pl0
+                        //        h4 Customer Reviews
+                        //        if it.rateOne
+                        //            .ratingView
+                        //                .well.well-sm.clearfix.mb
+                        //                    div Rated by &nbsp;
+                        //                        strong
+                        //                            span.firstName=it.rateOne.firstName
+                        //                            span.lastName=it.rateOne.lastName
+                        //                        .pull-right.lastUpdated #{it.rateOne.lastUpdated.toString().substr(0, 24)}
+                        //                    hr
+                        //                    .content= it.rateOne.content
+                        //                    hr
+                        //                    .col-xs-6.text-right(style='padding-top: 4px;font-size: 18px;') Value For Money
+                        //                    .col-xs-6.text-left.pl0
+                        //                        .avg
+                        //                    hr
+                        //                    .starReview.mb2.clearfix
+                        //                        .col-xs-6
+                        //                            +rateAttr(it.rateOne,'tourArrangement')
+                        //                            +rateAttr(it.rateOne,'guideAttitude')
+                        //                            +rateAttr(it.rateOne,'guideService')
+                        //                            +rateAttr(it.rateOne,'guideCompetence')
+                        //                        .col-xs-6
+                        //                            +rateAttr(it.rateOne,'vehicleCondition')
+                        //                            +rateAttr(it.rateOne,'drivingSkill')
+                        //                            +rateAttr(it.rateOne,'foodQuality')
+                        //                            +rateAttr(it.rateOne,'overallEvaluation')
+                        //
+                        //
+                        //        p.text-center
+                        //            a(style='margin-right: 50px' onclick='cf.rate(this)' tid=it._id).btn.btn.btn-success Add Review
+                        //            a.btn.btn.btn-info(onclick='cf.showRatingMore(this)' tid=it._id) View More
 
                     p.text-center.btns(style='padding-top:10px')
                         a(style='margin-right: 50px',onclick='cf.showEnquire(this)').btn.btn-warning.btn-xs Enquire

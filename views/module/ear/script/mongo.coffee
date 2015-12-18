@@ -16,6 +16,12 @@ opt =
 
 db.getCollection('user').update {}, opt, multi: true
 
+db.getCollection('product').find({}).forEach (it)->
+    if it.channel
+        it.channel += ''
+    if it.frequency
+        it.frequency += ''
+    db.getCollection('product').update {_id: it._id}, it
 
 db.getCollection('brand').find({}).forEach (it)->
     if it.refFile and it.refFile.logo

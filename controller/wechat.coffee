@@ -239,12 +239,7 @@ module.exports =
         if ctCtn[wCode]
             ctCtn[wCode].getAccessToken qy.code, (err, result)->
                 openid = result.data.openid
-#                req.session.woid = openid
                 rsp.cookie 'woid', openid, maxAge: 1000 * 3600 * 2
-#                exp = new Date()
-#                exp.setTime(exp.getTime + )
-#                rsp.setHeader 'Set-Cookie', "woid=#{openid};expire=#{exp.toGMTString()}"
-#                req.session.atk = result.data.access_token
                 ru = "#{req.c.url}/#{page}"
                 ru = 'http://' + ru if ru.indexOf('http') is -1
                 ru += "#!/#{func.replace('azbzc', '/')}" if func
@@ -269,8 +264,6 @@ module.exports =
                             if res.headimgurl and (!user.refFile or !user.refFile.portrait)
                                 fn = user._id.toString() + '.jpg'
                                 gs('fetchFile') res.headimgurl, "#{util.sPath(code)}/portrait/#{fn}", ->
-#                                user.refFile =
-#                                    portrait: [fn]
                             dao.save code, 'user:_id', user
                             rsp.redirect ru
                 else
@@ -278,9 +271,7 @@ module.exports =
         else
             dao.get code, 'pubAccount', code: wCode, (res)->
                 ctCtn[wCode] = new OAuth(res.appId, res.secret)
-                rsp.redirect "http://#{req.c.url}?rwt=true"
-        return
-
+                rsp.redirect "http://#{req.c.url}?#{req.originalUrl.split('?')[1]}&rwt=true"
 
     wxPay: (req, rsp)->
         rp = req.body
