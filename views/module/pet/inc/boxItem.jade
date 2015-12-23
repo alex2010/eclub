@@ -5,7 +5,7 @@
             .pre-cat
                 a(href='/')= _cat[it.cat].title
     .col-xs-12.col-md-8.textSide
-        h3.m0!= f.link(it)
+        h3!= f.link(it)
             if it.subTitle
                 small= it.subTitle
         .meta

@@ -8,7 +8,7 @@ attrs = (attr)->
     op
 
 isOid = (k)->
-    k.indexOf('_id') > -1 or k in ['rid', 'uid', 'oid']
+    k.indexOf('_id') > -1 or k in ['gid', 'rid', 'uid', 'oid']
 
 _wkt = (obj, fu)->
     for k, v of obj
@@ -123,16 +123,19 @@ dataController =
     get: (req, rsp) ->
         code = req.c.code
         entity = req.params.entity
-        op = req.query
-        op._id = req.params.id
+        op = req.query || {}
+        if req.params.id
+            op._id = req.params.id
+
 
         if op._attrs
             op.fields = attrs util.d op, '_attrs'
 
         op = buildQuery op
 
+        log op
         dao.get code, entity, op, (item)->
-            rsp.send util.r item
+            rsp.send util.r(item, null, entity)
 
     getByKey: (req, rsp) ->
         code = req.c.code
@@ -201,13 +204,6 @@ dataController =
 
         after = util.del 'afterSave', req.body
         before = util.del 'beforeSave', req.body
-
-
-        #        _attrs = bo._attrs || ''
-        #        _attrs = _attrs.split(',')
-        #        _attrs.push '_id'
-        #
-        #        cleanItem(bo, true)
 
         if before
             rt = []

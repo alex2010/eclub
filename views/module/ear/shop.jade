@@ -54,6 +54,8 @@ block content
                         else
                             each it,i in brand
                                 +thumbnail(it,null,'a').col-xs-3(onclick='cf.showBrand(this)' title=it.title,bid=it._id)
+            .comment
+
 
         .col-md-4.m3
             +panel('基本信息')
@@ -67,17 +69,16 @@ block content
                         +ddItem('营业面积:',space,'calendar')
                         +ddItem('联系电话:',phone,'phone')
                         +ddItem('地址:',address,'road')
-
             if shopList
-
                 +panel('热门验配中心')
                     - var v = _cd.shop
                     .list-gourp
                         +media(shopList,{func: v.func, text: v.text})
+
 block st
     :coffee(bare=true,minify=true)
         new cf.view.slide
             el: '.carousel.slide'
             controller: true
             indicator: true
-
+        cf._comment(null, 'shop', null, '留言与评价', null, '.comment')

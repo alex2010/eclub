@@ -36,10 +36,15 @@ role = [
         "href": "#!/home/consultant"
         "row": 20
     ,
+        "label": "问题管理"
+        "icon": "th-list"
+        "href": "#!/qa/inquiry"
+        "row": 30
+    ,
         "label": "预约管理"
         "icon": "calendar"
         "href": "#!/home/order"
-        "row": 30
+        "row": 40
     ]
     permission: ['wechat']
 ,
@@ -48,15 +53,35 @@ role = [
     type: 0
     menu: [
         "label": "康复学校"
-        "icon": "gift"
+        "icon": "education"
         "href": "#!/home/school"
         "row": 10
     ]
     permission: ['wechat']
 ,
+    title: 'user'
+    label: '用户'
+    menu: [
+        "label": "我的问题"
+        "icon": "th-list"
+        "href": "#!/my/inquiry"
+        "row": 1
+    ,
+        "label": "我的预约"
+        "icon": "calendar"
+        "href": "#!/my/order"
+        "row": 1
+    ]
+,
     title: 'member'
     label: '眼配师'
     type: 0
+    menu: [
+        "label": "问题处理"
+        "icon": "th-list"
+        "href": "#!/home/inquiry"
+        "row": 1
+    ]
     permission: ['wechat']
 ]
 

@@ -92,9 +92,9 @@ block content
                     if shop
                         h4 所属验配中心
                         if shop._id
-                            div: a#shop(href='/shop/#{shop._id}' sid=shop._id)= shop.title
+                            p: a#shop(href='/shop/#{shop._id}' sid=shop._id)= shop.title
                         else
-                            div= shop.title
+                            p= shop.title
                         p 地址：#[span#shop_addr= shop.address] 【#[span#shop_phone=shop.phone]】
 
                     if description
@@ -115,6 +115,7 @@ block content
                             +thumbnail(it).col-xs-3(onclick='cf.showBrand(this)' title=it.title, bid=it._id)
             if comments
                 +panel('用户评价')
+            .comment
 
         .col-md-4.m3
             if consultantList
@@ -123,3 +124,6 @@ block content
                         - var v = _cd.consultant
                         +media(consultantList,{func: v.func, text: v.text})
 
+block st
+    :coffee(bare=true,minify=true)
+        cf._comment(null, 'consultant', null, '留言与评价', null, '.comment')

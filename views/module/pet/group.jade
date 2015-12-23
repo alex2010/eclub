@@ -22,7 +22,7 @@ block content
                     if user
                         hr
                         h3 圈子组织者
-                        +userInfo(leader)
+                        +userInfo(locals)
 
                     if members && members.length > 3
                         h3 圈子成员
@@ -57,14 +57,18 @@ block st
                 entity: 'groupMember'
                 data: _.pick user.attributes, items
                 before: (d)->
-                    n =
-                        _id: _gd._id
-                        user: d
-                        group: _gd
+                    $.extend d,
+                        gid: _gd._id
+                        group: _gd.title
+                        idea: _gd.idea
                         status: '1'
                         role: 'newbie'
-                    n.user._id = user._id
-                    n
+                        uid: user.id
+                        gender: user.get 'gender'
+                    d.refFile?={}
+                    d.refFile.user = [user.id + '.jpg']
+
+                    d
                 btns: ['save']
                 items: items
 
