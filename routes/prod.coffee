@@ -109,8 +109,10 @@ router.post '/a/cleanCache', data.cleanCache
 
 router.get '/a/captcha', captcha.cap
 router.get '/a/smsVerify', sms.getCode
+router.get '/a/checkPhone', sms.checkPhone
 
 router.post '/a/auth/login', auth.login
+#router.post '/a/auth/register', auth.register
 router.post '/a/auth/loginByWoid', auth.loginByWoid
 router.post '/a/auth/logout', auth.logout
 router.post '/a/auth/logoutByWoid', auth.logoutByWoid
@@ -154,12 +156,10 @@ router.post '/a/:type/:entity/:q/:qv/:prop', data.saveSub
 
 router.delete '/a/:type/:entity/:q/:qv/:key', data.delSub
 
-
 #wechat request
 #wtr = require('wechat')
 
 #router.use express.query
-
 
 router.get '/:entity/:attr/:id', pre
 router.get '/:entity/:attr/:id', checkPage
@@ -178,8 +178,6 @@ router.get '/:entity/:id', page.entity
 router.get '/:entity/:attr/:id', page.entity
 
 router.use '/a/wt/notify/:code', wxpay::useWXCallback (msg, req, res)->
-    log req.c.code
-    log msg
     # do biz here
     res.success()
 

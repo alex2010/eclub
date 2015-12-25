@@ -53,10 +53,6 @@ block style
             }
         }
 
-        .tightening {
-            text-indent: 2em;
-        }
-
         .mb20 {
             margin-bottom: 20px;
         }
@@ -113,9 +109,10 @@ block content
                         p
                         each it,i in brandArr
                             +thumbnail(it).col-xs-3(onclick='cf.showBrand(this)' title=it.title, bid=it._id)
-            if comments
-                +panel('用户评价')
-            .comment
+            p
+
+            include inc/ugcBox
+
 
         .col-md-4.m3
             if consultantList

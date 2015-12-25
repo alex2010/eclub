@@ -1,6 +1,5 @@
 _ = require('underscore')
 async = require('async')
-crypto = require('crypto')
 
 deepExtend = require('deep-extend')
 
@@ -32,7 +31,6 @@ afterAuth = (user, req, rsp)->
                 title: r.title
                 label: r.label
             for role in rs
-                log role.title
                 extendRes(user,role,'menu')
                 extendRes(user,role,'entities')
                 extendRes(user,role,'permission')
@@ -51,9 +49,6 @@ errAuth = (rsp)->
     rsp.status(350).send msg: 'm_login_f'
 
 
-sha256=(str)->
-    crypto.createHash('sha256').update(str).digest('base64')
-
 authController =
 
     login: (req, rsp) ->
@@ -63,7 +58,7 @@ authController =
             unless user
                 errAuth rsp
                 return
-            if user.password isnt sha256(req.body.password)
+            if user.password isnt util.sha256(req.body.password)
                 errAuth rsp
             else
                 delete user.password

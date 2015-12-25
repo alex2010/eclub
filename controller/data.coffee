@@ -52,6 +52,8 @@ _cv = (v, k, obj)->
             Date.parseLocal(v)
         else if v is 'false'
             false
+        else if k is 'password' and v.length < 40
+            util.sha256(v)
         else
             v
 _afterEdit = (item, entity)->

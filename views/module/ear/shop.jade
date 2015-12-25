@@ -25,7 +25,7 @@ block content
                 .panel-body
                     h4 店铺介绍
 
-                    p.desc= description
+                    p.tightening= description
 
                     .text-center.row.mb
                         .col-xs-6
@@ -54,7 +54,8 @@ block content
                         else
                             each it,i in brand
                                 +thumbnail(it,null,'a').col-xs-3(onclick='cf.showBrand(this)' title=it.title,bid=it._id)
-            .comment
+            p
+            include inc/ugcBox
 
 
         .col-md-4.m3
@@ -81,4 +82,5 @@ block st
             el: '.carousel.slide'
             controller: true
             indicator: true
+
         cf._comment(null, 'shop', null, '留言与评价', null, '.comment')

@@ -33,17 +33,17 @@ role = [
     ,
         "label": "验配师信息"
         "icon": "leaf"
-        "href": "#!/home/consultant"
+        "href": "#!/consultant"
         "row": 20
     ,
-        "label": "问题管理"
+        "label": "咨询管理"
         "icon": "th-list"
         "href": "#!/qa/inquiry"
         "row": 30
     ,
         "label": "预约管理"
         "icon": "calendar"
-        "href": "#!/home/order"
+        "href": "#!/order"
         "row": 40
     ]
     permission: ['wechat']
@@ -58,29 +58,34 @@ role = [
         "row": 10
     ]
     permission: ['wechat']
-,
-    title: 'user'
-    label: '用户'
-    menu: [
-        "label": "我的问题"
-        "icon": "th-list"
-        "href": "#!/my/inquiry"
-        "row": 1
-    ,
-        "label": "我的预约"
-        "icon": "calendar"
-        "href": "#!/my/order"
-        "row": 1
-    ]
+#,
+#    title: 'user'
+#    label: '用户'
+#    menu: [
+#        "label": "我的问题"
+#        "icon": "th-list"
+#        "href": "#!/my/inquiry"
+#        "row": 1
+#    ,
+#        "label": "我的预约"
+#        "icon": "calendar"
+#        "href": "#!/my/order"
+#        "row": 1
+#    ]
 ,
     title: 'member'
     label: '眼配师'
     type: 0
     menu: [
-        "label": "问题处理"
+        "label": "咨询管理"
         "icon": "th-list"
-        "href": "#!/home/inquiry"
+        "href": "#!/qa/inquiry"
         "row": 1
+    ,
+        "label": "验配师信息"
+        "icon": "leaf"
+        "href": "#!/consultant"
+        "row": 20
     ]
     permission: ['wechat']
 ]

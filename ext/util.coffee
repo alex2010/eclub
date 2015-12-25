@@ -1,3 +1,5 @@
+crypto = require('crypto')
+
 module.exports =
     sPath: (code)->
         path = "/public/res/upload/#{code}"
@@ -5,6 +7,11 @@ module.exports =
             '.' + path
         else
             _path + path
+
+
+    sha256:(str)->
+        crypto.createHash('sha256').update(str).digest('base64')
+
 
     d: (it, p)->
         rs = it[p]

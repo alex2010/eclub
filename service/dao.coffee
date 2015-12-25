@@ -57,12 +57,9 @@ module.exports = ->
 
     @find = (db, entity, filter, op = {}, callback)->
         unless op.sort
-            op.sort = [
-                [
-                    'lastUpdated'
-                    'desc'
-                ]
-            ]
+            op.sort =
+                row: -1
+                lastUpdated: -1
         @pick(db, entity).find(filter, op).toArray (err, docs)->
             log err if err
             for it in docs

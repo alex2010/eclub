@@ -40,9 +40,8 @@ module.exports =
     index: (ctx, req, res) ->
         opt =
             limit: 5
-            sort:
-                lastUpdated: -1
-                row: -1
+#            sort:
+#                lastUpdated: -1
         #        _cat: (cb) ->
         #            dao.find ctx.c.code, 'cat', {}, {}, (res)->
         #                opt = {}
@@ -127,11 +126,14 @@ module.exports =
                 cb(null, res)
 
     shop: (ctx, req, rsp)->
+
+        answer:(cb)->
+            dao.find ctx.c.code, 'answer', {'shop._id': ctx._id}, {}, (res)->
+                log res
+                cb(null, res)
+
         consultant: (cb)->
-            opt =
-                sort:
-                    lastUpdated: -1
-            dao.find ctx.c.code, 'consultant', {'shop._id': ctx._id}, opt, (res)->
+            dao.find ctx.c.code, 'consultant', {'shop._id': ctx._id}, {}, (res)->
                 cb(null, res)
 
     cardList: (ctx, req, rsp)->

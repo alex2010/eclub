@@ -11,6 +11,20 @@ script.
         index: '#{index}'
     };
 block js
+    if main != 'mob'
+        <!--[if lt IE 9]>
+        script.
+            var ct = document.getElementById('content');
+            var sc = document.createElement("h1");
+            sc.innerHTML = "浏览器版本过低，请更换 <a href='http://www.google.cn/chrome/browser/desktop/index.html' target='_blank'><strong>新版浏览器</strong></a> 后访问。";
+            ct.style.textAlign = 'center';
+            sc.style.margin = '100px auto';
+            sc.style.fontWeight = 'bold';
+            ct.style.display = 'block';
+            document.getElementById('static').style.display = 'none';
+            ct.appendChild(sc);
+            document.execCommand("stop")
+        <![endif]-->
     script(src='#{libPath}lib.js?#{_ts}')
     script(src='#{libPath}/#{main}.js?#{_ts}')
 script
