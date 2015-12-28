@@ -5,6 +5,11 @@ db.getCollection('shop').update {}, {
             'title': '神州听力'
 }, multi: true
 
+db.getCollection('product').find({}).forEach (it)->
+    if it.price
+        it.price = +it.price
+        db.getCollection('product').update {_id: it._id}, it
+    null
 
 opt =
     $unset:
@@ -13,7 +18,6 @@ opt =
         menu: ''
         orgs: ''
         mgm: ''
-
 db.getCollection('user').update {}, opt, multi: true
 
 db.getCollection('product').find({}).forEach (it)->
@@ -46,7 +50,6 @@ db.getCollection('shop').find({}).forEach (it)->
                 b.refFile.head = b.refFile.logo
                 delete b.refFile.logo
         db.getCollection('shop').update {_id: it._id}, it
-
 
 
 db.getCollection('shop').find({}).forEach (it)->
@@ -133,7 +136,6 @@ db.getCollection('user').find({}).forEach (it)->
     db.getCollection('user').update {_id: it._id}, it
 
 
-
 db.getCollection('consultant').find({}).forEach (it)->
     if it.refFile
         if it.refFile.portrait
@@ -149,7 +151,7 @@ db.getCollection('shop').find({}).forEach (it)->
     if it.refFile and it.refFile.slide
         nt = []
         for p in it.refFile.slide
-            if p.indexOf('.jpg')>-1
+            if p.indexOf('.jpg') > -1
                 nt.push p
         it.refFile.slide = nt
         db.getCollection('shop').update {_id: it._id}, it

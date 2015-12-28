@@ -3,30 +3,30 @@ include ../../../inc/mixin
 
 block append js
     if mob
-
     else
         script(src='#{libPath}router.js')
 
 block ctn
-    mixin thumbnail(opt,name, tag)
-        if !name
-            -name='head'
-        if !tag
-            -tag = 'div'
-
-        #{tag}&attributes(attributes)
-            .thumbnail: != f.imgItem(opt, c, name)
-            if block
-                block
-    body(data-wid= wt.appId data-wcode= wt.code class=index+'_')
+    //mixin thumbnail(opt,name, tag)
+    //    if !name
+    //        -name='id'
+    //    if !tag
+    //        -tag = 'div'
+    //    #{tag}&attributes(attributes)
+    //        if block
+    //            block
+    //        else
+    //            .thumbnail!= f.imgItem(opt, c, name)
+    body(data-wid= wt.appId data-wcode= wt.code class=index + '_')
         .container.topLogo
             #header
                 .row
-                    .col-md-7.logo
+                    .col-md-8.logo
                         h1
                             a(href='/'): img.img-responsive(src='#{resPath}images/logo_03.png', alt='')
                         p 聆听在线-最好用的听力健康平台
-                    .col-md-5
+                            small &nbsp;400-0688-153
+                    .col-md-4
                         ul#topBar.list-inline.pull-right
                         .block-search-hder
                             input#q.form-control(name='q', type='text', placeholder='站内搜索')

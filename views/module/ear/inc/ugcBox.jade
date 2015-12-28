@@ -1,0 +1,38 @@
+.mod-tab
+    ul.nav.nav-tabs
+        li.active
+            a(href='#qa' data-toggle='tab') 用户咨询
+        li(role='presentation')
+            a(href='#comment' data-toggle='tab') 用户评论
+    .tab-content
+        .tab-pane.active.fade.in(id='qa')
+            if answer
+                .list-group
+                    each it in answer
+                        .list-group-item.clearfix
+                            .col-xs-2.text-center
+                                strong= it.user.username
+                            .col-xs-10
+                                .well-sm.well
+                                    = it.issue.content
+                                    br
+                                    small
+                                        =it.questioner.username
+                                        | &nbsp;
+                                        =it.issue.dateCreated.dStr()
+                                p= it.content
+
+        .tab-pane.fade(id='comment')
+            if comment
+                .list-group.m0
+                    each it in comment
+                        .list-group-item.clearfix
+                            .col-xs-2
+                                strong= it.username
+                            .col-xs-8
+                                p= it.content
+                                p.small= it.lastUpdated.pattern()
+                            .col-xs-2.text-right
+                                .label.label-primary(style='font-size: 1.2em') #{it.rating}星
+
+            .comment

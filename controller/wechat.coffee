@@ -234,7 +234,8 @@ module.exports =
     userInfoByCode: (req, rsp)->
         log 'userInfoByCode'
         qy = req.query
-        [wCode,page,func] = qy.state.split('::')
+        [wCode,page,func] = decodeURI(qy.state).split('::')
+        log decodeURI(qy.state)
         code = req.c.code
         if ctCtn[wCode]
             ctCtn[wCode].getAccessToken qy.code, (err, result)->

@@ -356,6 +356,7 @@ block content
 
 block st
     :coffee(bare=true minify=true)
+        $('.carousel.slide').find('h3>a').removeAttr 'href'
         util.lcss "#{cf.modPath}tour.css?c=1"
         cf.loadJS "#{cf.modPath}tour.js"
 //            $('#tourListCtn .panel-heading:first').trigger 'click'

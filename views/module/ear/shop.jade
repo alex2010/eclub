@@ -53,7 +53,9 @@ block content
                             =brand
                         else
                             each it,i in brand
-                                +thumbnail(it,null,'a').col-xs-3(onclick='cf.showBrand(this)' title=it.title,bid=it._id)
+                                a.col-xs-3(onclick='cf.showBrand(this)' title=it.title,bid=it._id)
+                                    .thumbnail!= f.img(f.resPath(c, it._id+'.jpg'))
+
             p
             include inc/ugcBox
 

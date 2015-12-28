@@ -58,6 +58,24 @@ role = [
         "row": 10
     ]
     permission: ['wechat']
+,
+    title: 'member'
+    label: '眼配师'
+    type: 0
+    menu: [
+        "label": "咨询管理"
+        "icon": "th-list"
+        "href": "#!/qa/inquiry"
+        "row": 100
+    ,
+        "label": "验配师信息"
+        "icon": "leaf"
+        "href": "#!/consultant/addInfo"
+        "row": 200
+    ]
+    permission: ['wechat']
+]
+
 #,
 #    title: 'user'
 #    label: '用户'
@@ -72,24 +90,6 @@ role = [
 #        "href": "#!/my/order"
 #        "row": 1
 #    ]
-,
-    title: 'member'
-    label: '眼配师'
-    type: 0
-    menu: [
-        "label": "咨询管理"
-        "icon": "th-list"
-        "href": "#!/qa/inquiry"
-        "row": 1
-    ,
-        "label": "验配师信息"
-        "icon": "leaf"
-        "href": "#!/consultant"
-        "row": 20
-    ]
-    permission: ['wechat']
-]
-
 user = [
     username: code
 ,

@@ -1,3 +1,9 @@
+#
+#btm_opt =
+#    limit: 20
+#    fields: '_e,title'.split(',')
+#    sort:
+#        row: -1
 
 module.exports =
     _init: (ctx)->
@@ -40,22 +46,17 @@ module.exports =
     index: (ctx, req, res) ->
         opt =
             limit: 5
-#            sort:
-#                lastUpdated: -1
-        #        _cat: (cb) ->
-        #            dao.find ctx.c.code, 'cat', {}, {}, (res)->
-        #                opt = {}
-        #                for it in res
-        #                    opt[it.code] = it.title
-        #                cb(null, res)
+        filter =
+            status:
+                $ne: 1
         shopList: (cb)->
-            dao.find ctx.c.code, 'shop', {}, opt, (res)->
+            dao.find ctx.c.code, 'shop', filter, opt, (res)->
                 cb(null, res)
         consultantList: (cb)->
-            dao.find ctx.c.code, 'consultant', {}, opt, (res)->
+            dao.find ctx.c.code, 'consultant', filter, opt, (res)->
                 cb(null, res)
         productList: (cb)->
-            dao.find ctx.c.code, 'product', {}, opt, (res)->
+            dao.find ctx.c.code, 'product', filter, opt, (res)->
                 cb null, res
 
 #    entityList: (ctx, req, res)->
@@ -125,11 +126,15 @@ module.exports =
             dao.find ctx.c.code, 'seckilling', filter, opt, (res)->
                 cb(null, res)
 
+    consultant: (ctx, req, rsp)->
+        answer:(cb)->
+            dao.find ctx.c.code, 'answer', {'user._id': ctx.uid}, {}, (res)->
+                cb(null, res)
+
     shop: (ctx, req, rsp)->
 
         answer:(cb)->
             dao.find ctx.c.code, 'answer', {'shop._id': ctx._id}, {}, (res)->
-                log res
                 cb(null, res)
 
         consultant: (cb)->

@@ -84,7 +84,7 @@ module.exports =
 #                cb(null, res)
 
         btm_tour: (cb)->
-            dao.find ctx.c.code, 'cat', {type: 'tour'}, btm_opt, (res)->
+            dao.find ctx.c.code, 'cat', {type: 'tour'}, {}, (res)->
                 for it in res
                     it.href = "/tourList?cat=#{it.code}"
                 ctx.siteMap.push
@@ -238,7 +238,6 @@ module.exports =
                     cb null, res.sortBy('row', false)
 
     itemList: (ctx, req)->
-        log '111111'
         et = req.query.entity
 
         title = et.capitalize()
@@ -287,10 +286,8 @@ module.exports =
             if qu.cat
                 filter.cat =
                     $regex: ".*#{qu.cat}.*"
-            log et
             dao.find ctx.c.code, et, filter, {}, (res)->
                 dao.count ctx.c.code, et, filter, (count)->
-                    log res
                     for it in res
                         it.href = "/#{it._e}/#{it._id}"
                         if et isnt 'sight'

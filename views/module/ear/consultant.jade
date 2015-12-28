@@ -96,8 +96,14 @@ block content
                     if description
                         h4 验配师简介
                         p.tightening= description
-                    p.text-center
-                        a(href=f.navUrl('apply/order')).btn.btn-primary.btn-lg 问诊预约
+                    if uid
+                        input#cuid(type='hidden' value='#{uid}')
+
+                    .text-center.row.mb
+                        .col-xs-6
+                            a(href=f.navUrl('apply/inquiry')).btn.btn-primary.btn-lg 我要咨询
+                        .col-xs-6
+                            a(href=f.navUrl('apply/order')).btn.btn-success.btn-lg 我要预约
             if strength
                 +panel('专业特长')
                     .panel-body
@@ -108,7 +114,8 @@ block content
                     .panel-body
                         p
                         each it,i in brandArr
-                            +thumbnail(it).col-xs-3(onclick='cf.showBrand(this)' title=it.title, bid=it._id)
+                            a.col-xs-3(onclick='cf.showBrand(this)' title=it.title,bid=it._id)
+                                .thumbnail!= f.img(f.resPath(c, it._id + '.jpg'))
             p
 
             include inc/ugcBox

@@ -22,6 +22,9 @@ _wkt = (obj, fu)->
             v.$in =
                 for it in v.$in
                     new oid(it)
+        else if k is 'price' and _.isObject v
+            for kk, vv of v
+                v[kk] = +vv
         else if _.isObject(v) and !_.isArray(v) and !_.isFunction(v)
             arguments.callee(v, fu)
         else  #if v
@@ -48,12 +51,12 @@ _cv = (v, k, obj)->
             new oid(v)
         else if k in ['status', 'row']
             +v
-        else if /^\d{4}-\d{1,2}-\d{1,2}/.test(v) and v.length < 22
-            Date.parseLocal(v)
-        else if v is 'false'
+        else if v is 'false' and k isnt 'gender'
             false
         else if k is 'password' and v.length < 40
             util.sha256(v)
+        else if /^\d{4}-\d{1,2}-\d{1,2}/.test(v) and v.length < 22
+            Date.parseLocal(v)
         else
             v
 _afterEdit = (item, entity)->
@@ -135,7 +138,6 @@ dataController =
 
         op = buildQuery op
 
-        log op
         dao.get code, entity, op, (item)->
             rsp.send util.r(item, null, entity)
 
