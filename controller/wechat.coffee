@@ -118,7 +118,6 @@ module.exports =
                         n.thumb_media_id = util.sPath(code + '/' + n.thumb_media_id)
                     log 'start to upload pic' + n.thumb_media_id
                     api.uploadMaterial n.thumb_media_id, 'thumb', (err, res)->
-                        log res
                         return unless res
                         n.thumb_media_id = res.media_id
                         resId.push res.media_id

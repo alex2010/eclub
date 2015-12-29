@@ -14,7 +14,6 @@ func =
             username: true
 
         dao.get code, 'user', filter, (res)->
-            log res
             if res
                 rsp.reply '绑定成功'
             else
@@ -28,7 +27,6 @@ handleOp = (item, req, rsp)->
         when 'page'
 #            unless item.imgUrl
 #                item.imgUrl = req.c.resPath + 'images/wechat_reply.png'
-            log item.imgUrl
             rsp.reply [
                 title: item.title
                 description: item.help
@@ -46,7 +44,6 @@ handleOp = (item, req, rsp)->
 
 
 agentOp = (code, req, rsp)->
-    log req.params.code
     cd = req.params.code
     dao.get cd, 'agentOp', code: code, (res)->
         if res
@@ -60,7 +57,6 @@ agentOp = (code, req, rsp)->
 
 event = (msg, req, rsp) ->
     evtKey = msg.EventKey
-    log evtKey
     if msg.Event is 'subscribe'
         if evtKey
             dao.save req.params.code, 'subscriber:uid,woid',
@@ -92,7 +88,6 @@ handler = (code, ctn)->
 #---------------------------------------------------------------------#
 
 app.get '/wechat/:code', (req, rsp)->
-    log 'wechat check'
     rsp.send req.query.echostr
 
 app.post '/wechat/:code', (req, rsp)->
