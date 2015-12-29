@@ -236,6 +236,7 @@ module.exports =
         [wCode,page,func] = decodeURI(qy.state).split('::')
         log decodeURI(qy.state)
         code = req.c.code
+        self = @
         if ctCtn[wCode]
             ctCtn[wCode].getAccessToken qy.code, (err, result)->
                 openid = result.data.openid
@@ -271,7 +272,7 @@ module.exports =
         else
             dao.get code, 'pubAccount', code: wCode, (res)->
                 ctCtn[wCode] = new OAuth(res.appId, res.secret)
-                rsp.redirect "http://#{req.c.url}?#{req.originalUrl.split('?')[1]}&rwt=true"
+                rsp.redirect "http://#{req.c.url}/a/wt/userInfoByCode?#{req.originalUrl.split('?')[1]}"
 
     wxPay: (req, rsp)->
         rp = req.body

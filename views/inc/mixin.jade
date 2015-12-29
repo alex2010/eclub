@@ -1,7 +1,7 @@
 mixin title(title,sub)
     h2&attributes(attributes)=title
-        | &nbsp;
-        small!= sub
+    | &nbsp;
+    small!= sub
 
 mixin userPic(u,cls)
     != f.img(f.resPath(c, 'portrait/' + u._id + '.jpg'), cls)
@@ -69,16 +69,14 @@ mixin mobBtn(id,icon)
 mixin nav(nav)
     ul&attributes(attributes)
         each it in nav
-            if it.children && it.children.length > 0
-                li
+            li
+                if it.children && it.children.length > 0
                     a(href=it.href)= it.label
                         span.caret
                         ul.dropdown-menu
-                            each item in it.children
-                                li
-                                    a(href='#{item.href}')= item.label
-            else
-                li
+                            each xx in it.children
+                                li: a(href=xx.href)= xx.label
+                else
                     a(href='#{it.href}')= it.label
 
 mixin itemList(items, title)
@@ -123,7 +121,7 @@ mixin media(posts,opt)
                     if block
                         block
                     else
-                        p.media-heading!= f.adt(it.title || it.username ,opt.ttLimits)
+                        p.media-heading!= f.adt(it.title || it.username, opt.ttLimits)
                         .small
                             if it.subTitle
                                 != it.subTitle
