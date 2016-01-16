@@ -3,12 +3,10 @@
 #node pData run i18n
 
 async = require('async')
-
+_psd = 'bk9ULZCWUd81eZ0vOIjLuqDvozllFEWBKM7QTiy85NI='
 args = null
 process.argv.forEach (val, index, array)->
     args = array
-
-
 
 `app = {};
 _ = require('underscore');
@@ -25,7 +23,7 @@ dao.pick('main', 'cache')
 dao.pick(code, 'post')
 
 addMember = (username, title)->
-    dao.get code, 'user', {username: username}, (u)->
+    dao.findAndUpdate code, 'user', {username: username}, {username: username, password: _psd}, (u)->
         if u
             dao.get code, 'role', {title: title}, (r)->
                 if r
@@ -193,59 +191,59 @@ _.delay ->
         data = require("./views/module/#{code}/script/data")
         if data.community
             dao.save _mdb, 'community:code', data.community
-
-        for k, v of data.data
-            if k is 'user:username'
-                for u in v
-                    u.password = 'bk9ULZCWUd81eZ0vOIjLuqDvozllFEWBKM7QTiy85NI='
-            if k is 'role:title'
-                ad = v.findBy('title', 'admin')
-                ad.menu = [
-                    key: 'site'
-                    icon: 'globe'
-                    row: 20
-                ,
-                    key: 'data'
-                    icon: 'hdd'
-                    row: 30
-                ,
-                    key: 'wechat'
-                    icon: 'comment'
-                    row: 40
-                ,
-                    key: 'file'
-                    icon: 'list-alt'
-                    row: 50
-                ,
-                    key: 'userRole'
-                    icon: 'sunglasses'
-                    row: 60
-                ]
-                ad.entities = ad.entities.concat [
-                    key: '_base'
-                    row: 1
-                ,
-                    key: 'content'
-                    row: 10
-                ,
-                    key: 'post'
-                    row: 20
-                ,
-                    key: 'cat'
-                    row: 30
-                ,
-                    key: 'head'
-                    row: 40
-                ,
-                    key: 'link'
-                    row: 50
-                ,
-                    key: 'guestBook'
-                    row: 60
-                ]
-                ad.entities.sortBy 'row', true
-                ad.permission = ['console']
-            dao.save code, k, v
+        if data.data
+            for k, v of data.data
+                if k is 'user:username'
+                    for u in v
+                        u.password = _psd
+                if k is 'role:title'
+                    ad = v.findBy('title', 'admin')
+                    ad.menu = [
+                        key: 'site'
+                        icon: 'globe'
+                        row: 20
+                    ,
+                        key: 'data'
+                        icon: 'hdd'
+                        row: 30
+                    ,
+                        key: 'wechat'
+                        icon: 'comment'
+                        row: 40
+                    ,
+                        key: 'file'
+                        icon: 'list-alt'
+                        row: 50
+                    ,
+                        key: 'userRole'
+                        icon: 'sunglasses'
+                        row: 60
+                    ]
+                    ad.entities = ad.entities.concat [
+                        key: '_base'
+                        row: 1
+                    ,
+                        key: 'content'
+                        row: 10
+                    ,
+                        key: 'post'
+                        row: 20
+                    ,
+                        key: 'cat'
+                        row: 30
+                    ,
+                        key: 'head'
+                        row: 40
+                    ,
+                        key: 'link'
+                        row: 50
+                    ,
+                        key: 'guestBook'
+                        row: 60
+                    ]
+                    ad.entities.sortBy 'row', true
+                    ad.permission = ['console']
+                dao.save code, k, v
 
         if data.member
             _.delay ->
@@ -255,8 +253,6 @@ _.delay ->
             , 3000
 , 500
 
-
-#        dao.save code, 'role:title', [data.r], ->
 
 _.delay ->
     dao.close()

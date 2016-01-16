@@ -23,7 +23,7 @@ pageOpt = (req)->
     code = c.code
 
     if req.originalUrl.indexOf('/console') > -1
-        libPath = "#{c.resPath}/upload/console/lib/"
+        libPath = "#{c.resPath}/upload/#{code}/lib/console/"
     else
         libPath = "#{c.resPath}/upload/#{code}/lib/"
 
@@ -37,7 +37,7 @@ pageOpt = (req)->
     c: c
     main: (if req.mob then 'mob' else 'main')
     f: f
-    cstr: JSON.stringify(_.pick(c, 'code', 'name', 'url', '_id', 'resPath'))
+    cstr: JSON.stringify(_.pick(c, 'code', 'name', 'url', '_id', 'resPath','description'))
     libPath: libPath
     resPath: resPath
 
@@ -77,8 +77,8 @@ pickScript = (ctx, req)->
                     cb(null, res)
 
     sc = require("../views/module/#{ctx.c.code}/script/tmplScript")
-
-    ctx.langs = {}
+    lang = req.query.lang || 'zh'
+    ctx.langs = require "../public/module/#{ctx.c.code}/i18n/#{lang}"
     initOpt = sc._init(ctx, req) || {}
 
     opt = if sc[ctx.index]
@@ -88,11 +88,10 @@ pickScript = (ctx, req)->
     else
         {}
     opt.i18 = (cb)->
-        dao.find ctx.c.code, "i18n", {lang: req.query.lang || 'zh'}, {}, (res)->
+        dao.find ctx.c.code, "i18n", {lang: lang}, {}, (res)->
             for it in res
                 ctx.langs[it.key] = it.val
             cb null, require('../service/lang')(ctx.langs)
-
     _.extend initOpt, opt
 
 render = (req, rsp, ctx)->

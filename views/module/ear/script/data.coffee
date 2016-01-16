@@ -20,6 +20,12 @@ role = [
     ,
         key: 'consultant'
         row: 140
+    ,
+        key: 'seckilling'
+        row: 145
+    ,
+        key: 'card'
+        row: 150
     ]
 ,
     title: 'manager'

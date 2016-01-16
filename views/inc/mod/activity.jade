@@ -1,5 +1,5 @@
 if venue
-    - v = _.isArray(venue)?venue[0]:venue
+    - v = venue
 
 +title(title, subTitle).hidden-xs
 .row
@@ -12,7 +12,7 @@ hr
 .venue.well-sm.well.clearfix
     .col-xs-2
         != f.icon('time')
-    .col-xs-10
+    .col-xs-10.startedDate(sd= startedDate.pattern())
         if startedDate
             = startedDate.pattern()
             | &nbsp;[#{endDate.getHours() - startedDate.getHours()}小时]
@@ -72,13 +72,13 @@ if master && master.length
 //    .reg
 //h3 地图
 //
-if participant
-    h3 活动报名
-    if true || title && title.indexOf('秋趴') > -1
-        .regBtn.mt
-            a(href=f.navUrl('enroll')).btn.btn-lg.btn-info.btn-block&attributes(reg) 我要报名
+h3 活动报名
+//if true || title && title.indexOf('秋趴') > -1
+.regBtn.mt
+    a(href=f.navUrl('enroll')).btn.btn-lg.btn-info.btn-block&attributes(reg) 我要报名
 
-    hr
+hr
+if participant
     p
     .ptps.clearfix
         each it,i in participant
@@ -96,7 +96,7 @@ if partner
     h4= partner.title
     small= partner.slogon
     div!= partner.introduction
-    != f.imgItem(partner, c, 'qrcode')
+    //!= f.imgItem(partner, c, 'qrcode')
 
 
 if v

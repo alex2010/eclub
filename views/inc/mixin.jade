@@ -1,7 +1,7 @@
 mixin title(title,sub)
     h2&attributes(attributes)=title
-    | &nbsp;
-    small!= sub
+        | &nbsp;
+        small!= sub
 
 mixin userPic(u,cls)
     != f.img(f.resPath(c, 'portrait/' + u._id + '.jpg'), cls)

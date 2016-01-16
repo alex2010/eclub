@@ -1,3 +1,9 @@
+db.getCollection('activity').find({}).forEach (it)->
+    if it.venue and toString.call(it.venue) is '[object Array]' and it.venue.length > 0
+        it.venue = it.venue[0]
+        db.getCollection('activity').update {_id: it._id}, it
+
+
 db.getCollection('shop').update {}, {
     $set:
         'org':
@@ -17,7 +23,6 @@ opt =
 db.getCollection('user').update {}, opt, multi: true
 
 
-
 db.getCollection('shop').find({}).forEach (it)->
     if it.consultant
         cons = it.consultant
@@ -27,7 +32,7 @@ db.getCollection('shop').find({}).forEach (it)->
                 title: it.title
             c._id = new ObjectId()
             db.getCollection('consultant').insert c
-            db.getCollection('shop').update {_id: it._id}, $unset:{'consultant':[]}
+            db.getCollection('shop').update {_id: it._id}, $unset: {'consultant': []}
             opt =
                 $push:
                     consultant:
@@ -35,25 +40,25 @@ db.getCollection('shop').find({}).forEach (it)->
                         username: c.username
             db.getCollection('shop').update {_id: it._id}, opt
 
-String::replaceAll= (s1, s2)->
+String::replaceAll = (s1, s2)->
     this.replace(new RegExp(s1, "gm"), s2);
 
 db.getCollection('post').find({}).forEach (it)->
-    it.content = it.content.replaceAll('/after/','/pet/').replaceAll('s.encorner.org','s.postenglishtime.com')
-    db.getCollection('post').update  {_id:it._id}, it
+    it.content = it.content.replaceAll('/after/', '/pet/').replaceAll('s.encorner.org', 's.postenglishtime.com')
+    db.getCollection('post').update {_id: it._id}, it
 
 db.getCollection('post').find({}).forEach (it)->
-    it.content = it.content.replaceAll('<div id=','<img id=').replaceAll('Loading...</div>','').replaceAll('class=\"markImg\" src=\"http://s.encorner.org','class=\"_imgBox\" bb-src=\"http://s.postenglishtime.com')
-    db.getCollection('post').update  {_id:it._id}, it
+    it.content = it.content.replaceAll('<div id=', '<img id=').replaceAll('Loading...</div>', '').replaceAll('class=\"markImg\" src=\"http://s.encorner.org', 'class=\"_imgBox\" bb-src=\"http://s.postenglishtime.com')
+    db.getCollection('post').update {_id: it._id}, it
 
 
-for en in ['sight','show','culture','food','handicraft','car','guide','map','post','content']
+for en in ['sight', 'show', 'culture', 'food', 'handicraft', 'car', 'guide', 'map', 'post', 'content']
     db.getCollection(en).find({}).forEach (it)->
         if it.row isnt null
             it.row = +it.row
-            db.getCollection(en).update  {_id:it._id}, it
+            db.getCollection(en).update {_id: it._id}, it
 
-String::capAll =  ->
+String::capAll = ->
     res = for it in [1..@length]
         c = @charAt(it)
         if 'A' <= c <= 'Z'
@@ -62,7 +67,7 @@ String::capAll =  ->
             c
     @charAt(0).toUpperCase() + res.join('')
 
-for en in ['sight','show']
+for en in ['sight', 'show']
     db.getCollection(en).find({}).forEach (it)->
         if it.info
             it.itemTable = []
@@ -70,12 +75,12 @@ for en in ['sight','show']
                 it.itemTable.push
                     title: k.capAll()
                     content: v
-            db.getCollection(en).update  {_id:it._id}, it
+            db.getCollection(en).update {_id: it._id}, it
 
 
 db.getCollection('user').find({}).forEach (it)->
     it.password = 'bk9ULZCWUd81eZ0vOIjLuqDvozllFEWBKM7QTiy85NI='
-    db.getCollection('user').update {_id:it._id}, it
+    db.getCollection('user').update {_id: it._id}, it
 
 
 db.getCollection('activity').find({}).forEach (it)->
@@ -85,7 +90,7 @@ db.getCollection('activity').find({}).forEach (it)->
             v._id = k
             nm.push v
         it.master = nm
-        db.getCollection('activity').update {_id:it._id}, it
+        db.getCollection('activity').update {_id: it._id}, it
 
 
 db.getCollection('activity').find({}).forEach (it)->
@@ -93,8 +98,8 @@ db.getCollection('activity').find({}).forEach (it)->
         for k,v of it.feedback
             for kk,vv of v
                 if kk isnt '_info'
-                    db.getCollection('user').find({_id:new ObjectId(kk)}).forEach(u) ->
+                    db.getCollection('user').find({_id: new ObjectId(kk)}).forEach(u) ->
                         vv.username = u.username
                         vv.lastUpdated = new Date()
         sleep(2000)
-        db.getCollection('activity').update {_id:it._id}, it
+        db.getCollection('activity').update {_id: it._id}, it

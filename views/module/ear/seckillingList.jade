@@ -2,25 +2,18 @@ extends ./inc/main
 block style
     :less(minify=true)
         .panel {
-            margin-top:15px;
-            margin-bottom:5px;
-            .panel-title {
-                font-size: 16px;
-            }
+            margin-top: 15px;
+            margin-bottom: 5px;
         }
+
         .list-group {
             .list-group-item {
-                border:1px solid #eee;
+                border: 1px solid #eee;
             }
-            .media {
-                .media-body {
-                    p {
-                        padding:0 0 5px 20px;
-                    }
-                    .label {
-                        margin-right:10px;
-                    }
-                }
+            .label {
+                margin-right: 10px;
+                padding: 5px 8px;
+                font-size: 1em;
             }
         }
 block content
@@ -31,20 +24,21 @@ block content
                     h3.panel-title 聆听秒杀
                 .list-group
                     each it in list
-                        -var n=0
-                        while n<5
-                            -n++
-                            a.list-group-item(href="/seckilling/#{it._id}")
-                                .media
-                                    .media-left
-                                        != f.imgItem(it, c)
-                                    .media-body
-                                        p= it.description
-                                        p <strong>产地：</strong>
-                                            = it.origin
-                                        p <strong>数量：</strong>
-                                            = it.surplus
-                                        p
-                                            span.label.label-danger #{it.discount}折
-                                            span.label.label-info ¥#{it.price}
+                        a.list-group-item(href=it.url)
+                            .media
+                                .col-xs-3
+                                    != f.imgItem(it, c)
+                                .col-xs-9
+                                    h4= it.title
+                                    p= it.description
+                                    div <strong>产地：</strong>
+                                        = it.origin
+                                    div <strong>数量：</strong>
+                                        = it.surplus
+                                    p <strong>销售地区：</strong>
+                                        = it.place
+                                    p
+                                        span.label.label-info 原价: ¥#{it.price}元
+                                        span.label.label-danger 折扣: #{it.discount*10}折
+                                        span.label.label-success 折后价: ¥#{it.price * it.discount}元
         .col-md-4

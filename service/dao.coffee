@@ -16,7 +16,6 @@ module.exports = ->
         if app.env
             s =
                 db_host: '127.0.0.1'
-#                db_host: '123.57.189.54'
                 db_port: 27017
         else
             s = require("../views/module/#{name}/script/setting")
@@ -57,7 +56,8 @@ module.exports = ->
 
     @find = (db, entity, filter, op = {}, callback)->
         unless op.sort
-            op.sort =
+            op.sort = {}
+        _.extend op.sort,
                 row: -1
                 lastUpdated: -1
         @pick(db, entity).find(filter, op).toArray (err, docs)->
@@ -79,10 +79,13 @@ module.exports = ->
             log err if err
             callback(count)
 
+    @qc = (db, entity, q, op)->
+        @pick(db, entity).findAndModify q, null, op, {upsert: true, new: true}, ->
+
     @findAndUpdate = (db, entity, filter, opt, callback)->
         filter = @cleanOpt(filter)
         delete opt._id
-        @pick(db, entity).findAndModify filter, null, opt, {upsert: true,new: true}, (err, doc)->
+        @pick(db, entity).findAndModify filter, null, opt, {upsert: true, new: true}, (err, doc)->
             log err if err
             item = doc.value
             callback?(item)
@@ -107,14 +110,12 @@ module.exports = ->
         log 'rm'
 
     @delItem = (db, entity, filter, opt = _opt, callback)->
-        filter = @cleanOpt(filter)
         if filter._id
             m = 'deleteOne'
         else
             m = 'deleteMany'
         @pick(db, entity)[m] filter, opt, (err, res)->
             log err if err
-            log 'del finish'
             callback?(res)
 
     @remove = (db, entity, filter, opt = _opt, callback)->

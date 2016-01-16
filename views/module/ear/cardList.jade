@@ -2,35 +2,38 @@ extends ./inc/main
 block style
     :less(minify=true)
         .panel {
-            margin-top:15px;
-            margin-bottom:5px;
-            .panel-title {
-                font-size: 16px;
-            }
+            margin-top: 15px;
+            margin-bottom: 5px;
         }
+
         .thumbnail {
-            padding-top:10px;
-            border:1px solid #e9e9e9;
-            .caption {
-                text-align:center;
-            }
+            border: 1px solid #e9e9e9;
+            /*.caption {*/
+                /*text-align: center;*/
+            /*}*/
         }
 block content
     .row
-        .col-md-8
+        .col-md-9
             .panel.panel-default
                 .panel-heading
                     h2.panel-title 卡券
                 .panel-body.row
                     each it in list
-                        -var n=0
-                        while n<6
-                            .col-md-4
-                                a(href="/card/#{it._id}").thumbnail
-                                    != f.imgItem(it, c)
-                                    .caption
-                                        h3= it.title
-                                        p 领取价格&nbsp;<strong class="text-danger">#{it.price}元</strong>
-                                        span.btn.btn-primary(href="") 领取
-                            -n++
-        .col-md-4
+                        .col-md-4
+                            a(href=it.url).thumbnail
+                                != f.imgItem(it, c)
+                                .caption.text-left
+                                    h4.text-center= it.title
+                                    p 开始时间:
+                                        span.label.label-info=it.startedDate.pattern()
+                                    p 结束时间:
+                                        span.label.label-info=it.endDate.pattern()
+                                    p 适用地区:
+                                        strong.text-danger= it.place
+                                    p 领取方法:
+                                        strong.text-danger= it.tip
+                                    .text-center
+                                        .btn.btn-primary(href="") 领取
+                        -n++
+        .col-md-3

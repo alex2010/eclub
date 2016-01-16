@@ -8,7 +8,8 @@ attrs = (attr)->
     op
 
 isOid = (k)->
-    k.indexOf('_id') > -1 or k in ['gid', 'rid', 'uid', 'oid']
+    k.endsWith('id')
+#    k.indexOf('_id') > -1 or k in ['gid', 'rid', 'uid', 'oid']
 
 _wkt = (obj, fu)->
     for k, v of obj
@@ -29,28 +30,17 @@ _wkt = (obj, fu)->
             arguments.callee(v, fu)
         else  #if v
             fu(v, k, obj)
-#    for k,v of q
-#        if k in ['status', 'row']
-#            q[k] = +v
-#        else if _.isObject(v)
-#            for kk,vv of v
-#                if isOid(kk)
-#                    v[kk] = new oid(vv)
-#        else if isOid(k)
-#            q[k] = new oid(v)
-#        else if k in ['startedDate', 'endDate', 'putTime']
-##        else if /^\d{4}-\d{1,2}-\d{1,2}/.text(k) and k.length < 22
-#            q[k] = Date.parseLocal(v)
-#        else if k.toString().charAt(0) is '_'
-#            delete q[k]
+
 _cv = (v, k, obj)->
     if k.charAt(0) is '_' and k isnt '_id'
         delete obj[k]
     else
-        obj[k] = if isOid(k)
+        obj[k] = if isOid(k) and v.length is 24
             new oid(v)
         else if k in ['status', 'row']
             +v
+        else if v is 'true'
+            true
         else if v is 'false' and k isnt 'gender'
             false
         else if k is 'password' and v.length < 40
@@ -125,19 +115,24 @@ dataController =
             dao.count code, entity, q, (count)->
                 rsp.send util.r entities, count
 
+    inc: (req, rsp)->
+        op =
+            _id: new oid(req.params.id)
+        d =
+            $inc: {}
+        d.$inc[req.params.prop] = 1
+        dao.qc req.c.code, req.params.entity, op, d
+        rsp.send {}
+
     get: (req, rsp) ->
         code = req.c.code
         entity = req.params.entity
         op = req.query || {}
         if req.params.id
             op._id = req.params.id
-
-
         if op._attrs
             op.fields = attrs util.d op, '_attrs'
-
         op = buildQuery op
-
         dao.get code, entity, op, (item)->
             rsp.send util.r(item, null, entity)
 
@@ -146,7 +141,6 @@ dataController =
         pa = req.params
         filter = {}
         filter[pa.key] = pa.val
-
         dao.get code, pa.entity, filter, (item)->
             rsp.send util.r item
 
@@ -244,7 +238,10 @@ dataController =
     del: (req, rsp) ->
         code = req.c.code
         entity = req.params.entity
-        dao.delItem code, entity, _id: req.params.id, ->
+
+        dao.delItem code, entity, _id: new oid(req.params.id), null, ->
+            if entity is 'user' #membership:uid:uid
+                dao.delItem code, 'membership', uid: new oid(req.params.id)
             rsp.send msg: 'del.ok'
 
     cleanCache: (req, rsp)->

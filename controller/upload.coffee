@@ -1,7 +1,7 @@
 multer = require('multer')
 fs = require('fs')
 gm = require('gm')
-
+getApi = require './wechat'
 `
     _fileStack = {};
 `
@@ -11,9 +11,9 @@ sPath = (code, exPath)->
     if exPath
         path += "/#{exPath}"
     pa = if app.env
-            '.' + path
-        else
-            _path + path
+        '.' + path
+    else
+        _path + path
     if !fs.existsSync pa
         fs.mkdirSync pa
     pa
@@ -39,13 +39,29 @@ walk = (path, max, offset) ->
         entities: list.slice(start, (if total > end then end else total))
         count: total
 
+subFolder = (req)->
+    if req.query.func is 'portrait'
+        "/portrait"
+    else if req.query.func in ['logo', 'banner']
+        "/images"
+    else if req.query.subFolder
+        '/' + req.query.subFolder
+    else
+        ''
+
+
 app.use multer
     dest: './public/res/img'
     rename: (fieldname, filename)->
         fieldname
 
     onFileUploadComplete: (file, req, rsp)->
-        rp = sPath("#{req.query.code}/#{file.fieldname}.#{file.extension}")
+        rp = sPath("#{req.query.code}#{subFolder(req)}/#{file.fieldname}.#{file.extension}")
+        if rp.endsWith '.jpeg'
+            srp = rp
+            rp = rp.replace('.jpeg', '.jpg')
+            fs.rename srp, rp, (err)->
+                log err if err
         qu = req.query
         if qu.maxWidth
             thumb(rp, ':' + qu.maxWidth)
@@ -58,13 +74,7 @@ app.use multer
         log 'oversize'
 
     changeDest: (dest, req)->
-        if req.query.func is 'portrait'
-            p = "#{req.query.code}/portrait"
-        else if req.query.func in ['logo','banner']
-            p = "#{req.query.code}/images"
-        else
-            p = req.query.code
-        sPath(p)
+        sPath(req.query.code + subFolder(req))
 
 thumbPath = (path, folder)->
     return path unless folder
@@ -99,18 +109,36 @@ module.exports =
             success: true
 
     upload: (req, rsp)->
-        file = _.values(req.files)[0]
         qu = req.query
-        if qu.thumb
-            file.path = thumbPath file.path, qu.thumb.split(':')[0]
+        fn = util.randomChar(8) + '.jpg'
+        if qu._wt
+            getApi code, qu.wcode, (api)->
+                api.getMedia qu.mid, (err, result, res)->
+                    path = "#{_path}/public/res/upload/#{code}/#{qu.uid}/#{fn}"
+                    fs.open path, 'w+', (err, fd)->
+                        fs.write fd, result, 0, result.length, null, ->
+                            fs.close fd, ->
+                                rsp.send
+                                    success: true
+                                    path: "#{qu.uid}/#{fn}"
+                                    msg: 'm_upload_ok'
+        else
+            file = _.values(req.files)[0]
+            qu = req.query
+            if qu.thumb
+                file.path = thumbPath file.path, qu.thumb.split(':')[0]
 
-        if req.query.func isnt 'portrait'
-            _fileStack[sPath(req.c.code)] = null
+            if req.query.func isnt 'portrait'
+                _fileStack[sPath(req.c.code)] = null
 
-        rsp.send
-            success: true
-            entity: file
-            msg: 'm_upload_ok'
+            if file.extension is 'jpeg'
+                file.path = file.path.replace '.jpeg', '.jpg'
+                file.name = file.name.replace '.jpeg', '.jpg'
+                file.extension = 'jpg'
+            rsp.send
+                success: true
+                entity: file
+                msg: 'm_upload_ok'
 
     fileList: (req, rsp)->
         qu = req.query

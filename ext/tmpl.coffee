@@ -1,4 +1,3 @@
-
 module.exports =
     randomInt: util.randomInt
     randomChar: util.randomChar
@@ -27,7 +26,7 @@ module.exports =
     icon: (icon, tag = 'i', str = '', cls = '', href)->
         if href
             href = "href='#{href}'"
-        "<#{tag} class='glyphicon glyphicon-#{icon} #{cls}' #{href||''}>#{str}</#{tag}>"
+        "<#{tag} class='glyphicon glyphicon-#{icon} #{cls}' #{href || ''}>#{str}</#{tag}>"
 
     copyRight: (c, name, id)->
         path = "http://#{c.url}/#{name}/#{id}"
@@ -45,10 +44,9 @@ module.exports =
             href: '/'
         ].concat items
 
-    img: (path, cls = 'avatar', pop = false,p)->
+    img: (path, cls = 'avatar', pop = false, p)->
         p ?=''
         p += if pop then " onclick='cf.showPic(this)'" else ''
-
         "<img id='#{String.randomChar(4)}' class='#{cls} _imgBox' bb-src='#{path}' #{p}/>"
 
     imgItem: (it, c, name = 'head', cls, index = 0, pop)->
@@ -59,29 +57,17 @@ module.exports =
                 return @img @resPath(c, path), cls, pop
         ''
 
+    userPic: (c, id, cls)->
+        @img(@resPath(c, 'portrait/' + id + '.jpg'), cls)
+
     resPath: (c, path)->
         c.resPath + '/upload/' + c.code + '/' + path
 
-    avatarImg: (c, user, cls='img-circle')->
+    avatarImg: (c, user, cls = 'img-circle')->
         p = @resPath c, "portrait/#{user._id}.jpg"
         @img p, cls
 
-    link: (it, prop = 'title', cls)->
-        text = if prop is '_str'
-            it
-        else if it
-            it[prop]
-        return '' unless text
-        href = it.href
-        unless href
-            href = if it._e is 'cat'
-                "/#{it.type.split('_')[0]}List?cat=#{it.code}"
-            else
-                "/#{it._e}/#{it._id}"
-
-        "<a href='#{href}' title='#{text}' class='#{cls || ''}'>#{text}</a>"
-
-    catLink: (cat, list=[])->
+    catLink: (cat, list = [])->
         res = []
         for it in cat.split(',')
             item = list.findBy('code', it)
@@ -114,6 +100,33 @@ module.exports =
     tmpl: (name, opt, lib)->
         cf.rtp name, opt, lib
 
-    actDate:(start,end)->
-        "#{start.substr(0,16)}-#{end.substr(11,5)}"
+    actDate: (start, end)->
+        "#{start.substr(0, 16)}-#{end.substr(11, 5)}"
+
+
+    label: (text, cls = 'success')->
+        "<span class='label label-#{cls}'>#{text}</span>"
+
+    btn: (text, act, style = 'default', size, block, etc)->
+        cls = cf.style.btn(style, size, block, etc)
+        "<button type='button' class='#{cls} #{act}'>#{text || ''}</button>"
+
+    a: (href, text, cls)->
+        str = if href then "href='#{href}' " else ''
+        str += if cls then "class='#{cls}' " else ''
+        "<a #{str} title='#{text}'>#{text}</a>"
+
+    link: (it, prop = 'title', cls)->
+        text = if prop is '_str'
+            it
+        else if it
+            it[prop]
+        return '' unless text
+        href = it.href
+        unless href
+            href = if it._e is 'cat'
+                "/#{it.type.split('_')[0]}List?cat=#{it.code}"
+            else
+                "/#{it._e}/#{it._id}"
+        @a(href, text, cls)
 

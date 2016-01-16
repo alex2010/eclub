@@ -24,8 +24,10 @@ block content
                         .list-group
                             +media(latest,{})
     script.
-        _ft = !{JSON.stringify(feeTable || '[]')};
-        _pa = !{JSON.stringify(participant || '{}')};
+        _ft = !{JSON.stringify(feeTable || [])};
+        _rf = !{JSON.stringify(refFile || {})};
+        _pa = !{JSON.stringify(participant || [])};
+        _acti = !{JSON.stringify(actInput || {})};
 
 block st
     :coffee(bare=true,minify=true)

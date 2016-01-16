@@ -21,7 +21,6 @@ module.exports =
                 opt = {}
                 for it in res
                     opt[it.code] = it
-                log opt
                 cb(null, opt)
 
         wt: (cb)->

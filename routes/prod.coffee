@@ -154,6 +154,8 @@ router.delete '/r/:entity/:id', data.del
 router.post '/r/:type/:entity/:q/:qv/:prop', data.saveSub
 router.post '/a/:type/:entity/:q/:qv/:prop', data.saveSub
 
+router.post '/a/inc/:entity/:id/:prop', data.inc
+
 router.delete '/a/:type/:entity/:q/:qv/:key', data.delSub
 
 #wechat request

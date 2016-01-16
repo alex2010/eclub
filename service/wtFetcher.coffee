@@ -11,7 +11,10 @@ module.exports = (req, item)->
             for it,i in v
                 if it.startsWith '_wt'
                     [m,type,mid,pubCode] = it.split('::')
-                    fn = util.randomChar(8) + '.jpg'
+                    fn = if type is 'img'
+                        util.randomChar(8) + '.jpg'
+                    else if type is 'audio'
+                        util.randomChar(8) + '.amr'
                     getApi code, pubCode, (api)->
                         api.getMedia mid, (err, result, res)->
                             path = "#{_path}/public/res/upload/#{code}/#{fn}"
@@ -25,7 +28,6 @@ module.exports = (req, item)->
         so =
             $set:
                 refFile: item.refFile
-
         log item.refFile
         dao.findAndUpdate code, entity, _id: item._id, so, ->
 

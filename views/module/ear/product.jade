@@ -31,8 +31,8 @@ block content
         if !attributes.class || attributes.class == ''
             -attributes.class='label-default'
         .div(style='font-size: 14px;height: 28px')
-                strong= title + '：'
-                span(class='label ' + '#{attributes.class}')= content
+            strong= title + '：'
+            span(class='label ' + '#{attributes.class}')= content
 
     .row.mt
         .col-md-8.article-main
@@ -46,7 +46,7 @@ block content
                     .col-md-8
                         h2.title= title
                         +label('价格',price)(class='label-danger')
-                        +label('品牌',brand.title)
+                        +label('品牌',brand.title + ' 【' + brand.origin + "】")
                         +label('上市时间',pubTime.pattern('yyyy-MM-dd'))
                         +label('外型',outline)
                         +label('通道',channel)

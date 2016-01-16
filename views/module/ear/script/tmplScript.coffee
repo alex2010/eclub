@@ -13,6 +13,9 @@ module.exports =
             product: '助听器'
 
         ctx._cd =
+            post:
+                func: 'head'
+                text: 'title'
             shop:
                 func: 'slide'
                 text: 'address'
@@ -47,8 +50,8 @@ module.exports =
         opt =
             limit: 5
         filter =
-            status:
-                $ne: 1
+            status: 2
+#                $ne: 1
         shopList: (cb)->
             dao.find ctx.c.code, 'shop', filter, opt, (res)->
                 cb(null, res)
