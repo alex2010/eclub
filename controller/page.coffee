@@ -19,9 +19,9 @@ entityPageOpt = (ctx, req, et)->
     opt
 
 pageOpt = (req)->
+
     c = req.c
     code = c.code
-
     if req.originalUrl.indexOf('/console') > -1
         libPath = "#{c.resPath}/upload/#{code}/lib/console/"
     else
@@ -29,15 +29,15 @@ pageOpt = (req)->
 
     resPath = "#{c.resPath}/upload/#{code}/"
     tRender: jade.renderFile
-    mob: req.mob
+    mob: req.query.mob || req.mob
     lang: req.query.lang || 'zh'
     title: c.title
     mode: app.env
+    st: require '../ext/style/bs'
     _ts: new Date().getTime()
     c: c
-    main: (if req.mob then 'mob' else 'main')
     f: f
-    cstr: JSON.stringify(_.pick(c, 'code', 'name', 'url', '_id', 'resPath','description'))
+    cstr: JSON.stringify(_.pick(c, 'code', 'name', 'url', '_id', 'resPath', 'description','refFile'))
     libPath: libPath
     resPath: resPath
 
@@ -56,16 +56,17 @@ pickScript = (ctx, req)->
         console: (ctx)->
             ctx.app = 'admin'
             null
-        entityList: (ctx, req, res)->
+        entityList: (ctx, req)->
             et = req.query.entity.toString()
+            filter =
+                status: 2
             if req.query.cat
                 cat = req.query.cat.toString()
-                filter =
-                    cat:
-                        $regex: ".*#{cat}.*"
+                filter.cat =
+                    $regex: ".*#{cat}.*"
             items: (cb)->
                 opt = entityPageOpt(ctx, req, et)
-                dao.find ctx.c.code, et, (filter || {}), opt, (res)->
+                dao.find ctx.c.code, et, filter, opt, (res)->
                     dao.count ctx.c.code, et, filter, (count)->
                         ctx._max = count
                         cb(null, res)
@@ -76,9 +77,17 @@ pickScript = (ctx, req)->
                         ctx.cat = cat[0] if cat.length
                     cb(null, res)
 
-    sc = require("../views/module/#{ctx.c.code}/script/tmplScript")
+    sc = require if fs.existsSync("#{_path}/views/module/#{ctx.c.code}/script/tmplScript.js")
+        "../views/module/#{ctx.c.code}/script/tmplScript"
+    else
+        "../views/module/_tmpl/script/tmplScript"
+
     lang = req.query.lang || 'zh'
-    ctx.langs = require "../public/module/#{ctx.c.code}/i18n/#{lang}"
+
+    ctx.langs = if fs.existsSync(fpp = "#{_path}/views/module/#{ctx.c.code}/i18n/#{lang}.js")
+        require "../views/module/#{ctx.c.code}/i18n/#{lang}"
+    else
+        {}
     initOpt = sc._init(ctx, req) || {}
 
     opt = if sc[ctx.index]

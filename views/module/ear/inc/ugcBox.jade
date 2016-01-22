@@ -1,11 +1,11 @@
-.mod-tab
+.mod-tab.ugc
     ul.nav.nav-tabs
         li.active
-            a(href='#qa' data-toggle='tab') 用户咨询
-        li(role='presentation')
             a(href='#comment' data-toggle='tab') 用户评论
+        li
+            a(href='#qa' data-toggle='tab') 用户咨询
     .tab-content
-        .tab-pane.active.fade.in(id='qa')
+        .tab-pane.fade(id='qa')
             if answer
                 .list-group
                     each it in answer
@@ -22,7 +22,7 @@
                                         =it.issue.dateCreated.dStr()
                                 p= it.content
 
-        .tab-pane.fade(id='comment')
+        .tab-pane.fade.in.active(id='comment')
             if comment
                 .list-group.m0
                     each it in comment
@@ -31,7 +31,8 @@
                                 strong= it.username
                             .col-xs-8
                                 p= it.content
-                                p.small= it.lastUpdated.pattern()
+                                if it.lastUpdated
+                                    p.small= _.isString(it.lastUpdated)?it.lastUpdated.dStr():it.lastUpdated.pattern()
                             .col-xs-2.text-right
                                 .label.label-primary(style='font-size: 1.2em') #{it.rating}星
 

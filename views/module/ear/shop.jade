@@ -77,7 +77,8 @@ block content
                     - var v = _cd.shop
                     .list-gourp
                         +media(shopList,{func: v.func, text: v.text})
-
+    script.
+        _shop = !{JSON.stringify(_.pick(locals,'_id','title','address','phone'))};
 block st
     :coffee(bare=true,minify=true)
         new cf.view.slide

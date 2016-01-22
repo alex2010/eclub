@@ -18,26 +18,30 @@ module.exports = ->
                 db_host: '127.0.0.1'
                 db_port: 27017
         else
-            s = require("../views/module/#{name}/script/setting")
+            s = (if name == 'main'
+                require("../setting")
+            else
+                require("../views/module/#{name}/script/setting"))
         db = new Db(name, new Server(s.db_host, s.db_port)) #, safe: true
+        _db[name] = db
         db.open ->
             callback?()
         db
 
     @pick = (name, cName)->
-        if cName is 'community'
+        if cName in ['community', 'cache']
             name = _mdb
 
-        if @name isnt name
-            @db = _db[name]
-            unless @db
-                @db = _db[name] = @newDb(name)
+        if @name is name and @cName is cName
+            @collection
+        else
+            db = _db[name]
+            unless db
+                db = @newDb name, ->
+            @collection = db.collection cName
             @name = name
-
-        if @cName isnt cName or !@collection
             @cName = cName
-            @collection = @db.collection cName
-        @collection
+            @collection
 
     @index = (db, entity, index, opt)->
         @pick(db, entity).createIndex index, opt
@@ -55,13 +59,15 @@ module.exports = ->
             callback?(doc)
 
     @find = (db, entity, filter, op = {}, callback)->
-        unless op.sort
-            op.sort = {}
-        _.extend op.sort,
+        if op.sort
+            for k,v of op.sort
+                op.sort[k] = +(v)
+        else
+            op.sort =
                 row: -1
                 lastUpdated: -1
+
         @pick(db, entity).find(filter, op).toArray (err, docs)->
-            log err if err
             for it in docs
                 it._e = entity
             callback?(docs)
@@ -121,7 +127,9 @@ module.exports = ->
     @remove = (db, entity, filter, opt = _opt, callback)->
         @pick(db, entity).remove(filter, opt, callback)
 
-    @close = ->
-        log 'closed'
-        @db.close()
+    @close = (name)->
+        log 'closed ' + name
+        _db[name]?.close()
+
+
     @

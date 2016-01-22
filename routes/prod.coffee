@@ -5,7 +5,7 @@ auth = require '../controller/auth'
 data = require '../controller/data'
 page = require '../controller/page'
 up = require '../controller/upload'
-captcha = require '../controller/captcha'
+#captcha = require '../controller/captcha'
 sms = require '../controller/sms'
 
 wxpay = require('weixin-pay')
@@ -70,8 +70,13 @@ pre = (req, rsp, next)->
         if res and !app.env
             rsp.end res.str
         else
-            rStr = req.hostname.replace('www.', '')
-            req.c = app._community[rStr]
+            if qc = req.cookies._code
+                for k,v of app._community
+                    if v.code is qc
+                        req.c = v
+            else
+                rStr = req.hostname.replace('www.', '')
+                req.c = app._community[rStr]
             req.k = k
             next()
 
@@ -107,7 +112,7 @@ router.post '/a/upload/remove', up.remove
 
 router.post '/a/cleanCache', data.cleanCache
 
-router.get '/a/captcha', captcha.cap
+#router.get '/a/captcha', captcha.cap
 router.get '/a/smsVerify', sms.getCode
 router.get '/a/checkPhone', sms.checkPhone
 

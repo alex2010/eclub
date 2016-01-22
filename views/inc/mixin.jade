@@ -1,5 +1,5 @@
 mixin title(title,sub)
-    h2&attributes(attributes)=title
+    h2&attributes(attributes)!=title
         | &nbsp;
         small!= sub
 
@@ -106,30 +106,30 @@ mixin media(posts,opt)
 
     if !attributes.target
         -attributes.target = '_blank'
-
-    each it in posts
-        -attributes.href = '/'+it._e+'/'+it._id
-        a&attributes(attributes)
-            .row
-                if opt.oneCol
-                    != f.imgItem(it, c, opt.func)
-                else
-                    .col-xs-4.col-md-3.pr0
-                        != f.imgItem(it, c, opt.func, opt.imgCls)
-
-                .col-xs-8.col-md-9
-                    if block
-                        block
+    if posts
+        each it in posts
+            -attributes.href = '/'+it._e+'/'+it._id
+            a&attributes(attributes)
+                .row
+                    if opt.oneCol
+                        != f.imgItem(it, c, opt.func)
                     else
-                        p.media-heading!= f.adt(it.title || it.username, opt.ttLimits)
-                        .small
-                            if it.subTitle
-                                != it.subTitle
-                            //if it.author
-                            //    | #{it.author.username}
-                            //if it.pubTime
-                            //    | 发表于 #{it.pubTime.pattern()}
-                        != f.adt(it[opt.text], opt.ctLimit)
+                        .col-xs-4.col-md-3.pr0
+                            != f.imgItem(it, c, opt.func, opt.imgCls)
+
+                    .col-xs-8.col-md-9
+                        if block
+                            block
+                        else
+                            p.media-heading!= f.adt(it.title || it.username, opt.ttLimits)
+                            .small
+                                if it.subTitle
+                                    != it.subTitle
+                                //if it.author
+                                //    | #{it.author.username}
+                                //if it.pubTime
+                                //    | 发表于 #{it.pubTime.pattern()}
+                            != f.adt(it[opt.text], opt.ctLimit)
 
 mixin avatars(users)
     .avatars

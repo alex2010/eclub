@@ -4,18 +4,14 @@
 #    fields: '_e,title'.split(',')
 #    sort:
 #        row: -1
+async = require('async')
 
 module.exports =
     _init: (ctx)->
-        _.extend ctx.langs,
-            shop:'验配中心'
-            consultant: '验配师'
-            product: '助听器'
-
         ctx._cd =
             post:
                 func: 'head'
-                text: 'title'
+                text: 'brief'
             shop:
                 func: 'slide'
                 text: 'address'
@@ -29,7 +25,6 @@ module.exports =
         wt: (cb)->
             dao.get ctx.c.code, 'pubAccount', {}, (res)->
                 cb(null, res)
-
 
         _guest: (cb) ->
             filter =
@@ -51,7 +46,7 @@ module.exports =
             limit: 5
         filter =
             status: 2
-#                $ne: 1
+        #                $ne: 1
         shopList: (cb)->
             dao.find ctx.c.code, 'shop', filter, opt, (res)->
                 cb(null, res)
@@ -62,62 +57,33 @@ module.exports =
             dao.find ctx.c.code, 'product', filter, opt, (res)->
                 cb null, res
 
-#    entityList: (ctx, req, res)->
-#        et = req.query.entity.toString()
-#
-#        if req.query.cat
-#            cat = req.query.cat.toString()
-#            filter =
-#                cat:
-#                    $regex: ".*#{cat}.*"
-#        items: (cb)->
-#            opt = pageOpt(ctx, req, et)
-#            dao.find ctx.c.code, et, (filter || {}), opt, (res)->
-#                dao.count ctx.c.code, et, filter, (count)->
-#                    ctx._max = count
-#                    cb(null, res)
-#        cats: (cb)->
-#            dao.find ctx.c.code, 'cat', {type: et}, {}, (res)->
-#                if ctx.cat
-#                    cat = _.where(res, {code: ctx.cat.code})
-#                    ctx.cat = cat[0] if cat.length
-#                cb(null, res)
-
     itemList: (ctx, req, res) ->
         opt =
             limit: 5
             sort:
                 row: -1
-        et = req.query.entity.toString()
+        et = req.query.entity
         filter =
             type: "post"
             code:
                 $regex: "#{et}_.*"
-        matchArr = []
-        data = {}
 
         _item: (cb) ->
+            data = {}
             dao.find ctx.c.code, 'cat', filter, {}, (res)->
-                for it in res
-                    matchArr.push it
-                matchArr.sort (a, b)->
-                    if a.row > b.row
-                        return -1
-                    else if a.row < b.row
-                        return 1
-                    else
-                        return 0
-
-                dao.find ctx.c.code, 'post', {cat: matchArr[0].code}, opt, (res) ->
-                    data.objA = res
-                    dao.find ctx.c.code, 'post', {cat: matchArr[1].code}, opt, (res) ->
-                        data.objB = res
-                        dao.find ctx.c.code, 'post', {cat: matchArr[2].code}, opt, (res) ->
-                            data.objC = res
-                            data.titleA = matchArr[0].title
-                            data.titleB = matchArr[1].title
-                            data.titleC = matchArr[2].title
-                            cb(null, data)
+                cbs = (for it in res
+                    code = it.code
+                    data[code] =
+                        title: it.title
+                        code: code
+                    do(code)->
+                        (ccb) ->
+                            dao.find ctx.c.code, 'post', {cat: code}, opt, (r) ->
+                                data[code].items = r
+                                ccb(null,r)
+                )
+                async.parallel cbs, (err, rr)->
+                    cb(null, _.values data)
 
     seckillingList: (ctx, req, rsp) ->
         opt =
@@ -130,14 +96,19 @@ module.exports =
                 cb(null, res)
 
     consultant: (ctx, req, rsp)->
-        answer:(cb)->
-            dao.find ctx.c.code, 'answer', {'user._id': ctx.uid}, {}, (res)->
+        answer: (cb)->
+            filter =
+                'user._id': ctx.uid
+                status: 2
+            dao.find ctx.c.code, 'answer', filter, {}, (res)->
                 cb(null, res)
 
     shop: (ctx, req, rsp)->
-
-        answer:(cb)->
-            dao.find ctx.c.code, 'answer', {'shop._id': ctx._id}, {}, (res)->
+        answer: (cb)->
+            filter =
+                'shop._id': ctx._id
+                status: 2
+            dao.find ctx.c.code, 'answer', filter, {}, (res)->
                 cb(null, res)
 
         consultant: (cb)->

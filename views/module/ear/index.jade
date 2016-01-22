@@ -39,7 +39,8 @@ block content
 
     .m3.row.xrow
         each v,k in _cd
-            .col-md-4
-                +panel(i18.ii(k),'panel-success','/entityList?entity=' + k)
-                    .list-group
-                        +media(locals[k + 'List'],{func: v.func, text: v.text})
+            if k != 'post'
+                .col-md-4
+                    +panel(i18.ii(k),'panel-success','/entityList?entity=' + k)
+                        .list-group
+                            +media(locals[k + 'List'],{func: v.func, text: v.text})

@@ -8,19 +8,19 @@ args = null
 process.argv.forEach (val, index, array)->
     args = array
 
-`app = {};
-_ = require('underscore');
-_mdb = 'main';
-log = console.log;
-oid = require('mongodb').ObjectID;
-code = args[2];
-_env = true;
+`
+    app = {env: true};
+    _ = require('underscore');
+    _mdb = 'main';
+    log = console.log;
+    oid = require('mongodb').ObjectID;
+    code = args[2];
 `
 
 require('./ext/string')
 dao = new require('./service/dao')()
-dao.pick('main', 'cache')
-dao.pick(code, 'post')
+#dao.pick('main', 'cache')
+#dao.pick(code, 'post')
 
 addMember = (username, title)->
     dao.findAndUpdate code, 'user', {username: username}, {username: username, password: _psd}, (u)->
@@ -34,16 +34,12 @@ addMember = (username, title)->
                         role: title
                     dao.save code, "membership:uid,rid", mOpt, ->
 
-
-_.delay ->
+dao.newDb code, ->
     if args.length > 3
         if args[3] is '-p'
-            `
-                _env = false;
-            `
+            app.env = false
         else
             entity = args[3]
-
     if entity
         filter = if entity in ['user', 'role']
             x: 'x'
@@ -189,8 +185,14 @@ _.delay ->
 
     else
         data = require("./views/module/#{code}/script/data")
+        log _mdb
         if data.community
-            dao.save _mdb, 'community:code', data.community
+            dao.newDb _mdb, ->
+                dao.get _mdb, 'community', {}, ->
+                    dao.save _mdb, 'community:name', data.community, ->
+            _.delay ->
+                dao.close _mdb
+            , 1000
         if data.data
             for k, v of data.data
                 if k is 'user:username'
@@ -246,15 +248,11 @@ _.delay ->
                 dao.save code, k, v
 
         if data.member
-            _.delay ->
-                for it in data.member
-                    [u,r] = it.split(',')
-                    addMember(u, r)
-            , 3000
-, 500
-
+            for it in data.member
+                [u,r] = it.split(',')
+                addMember(u, r)
 
 _.delay ->
-    dao.close()
+    dao.close(code)
 , 4000
 

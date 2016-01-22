@@ -10,18 +10,26 @@ block content
                 //        +media(_item.objA,{ttLimits: 10})
         p
         .row.m3
-            if _item.objA.length
+            each it in _item
                 .col-md-4
-                    +panel(_item.titleA,'panel-success','/entityList?entity=post&cat='+_item.objA[0].cat)
+                    +panel(it.title,'panel-success','/entityList?entity=post&cat='+it.code)
                         .list-group
-                            +media(_item.objA,{ttLimits:10})
-            if _item.objB.length
-                .col-md-4
-                    +panel(_item.titleB,'panel-success','/entityList?entity=post&cat='+_item.objB.cat)
-                        .list-group
-                            +media(_item.objB,{ttLimits:10})
-            if _item.objC.length
-                .col-md-4
-                    +panel(_item.titleC,'panel-success','/entityList?entity=post&cat='+_item.objC.cat)
-                        .list-group
-                            +media(_item.objC,{ttLimits:10})
+                            +media(it.items,{ttLimits:10})
+
+
+
+            //if _item.objA.length
+            //    .col-md-4
+            //        +panel(_item.titleA,'panel-success','/entityList?entity=post&cat='+_item.objA[0].cat)
+            //            .list-group
+            //                +media(_item.objA,{ttLimits:10})
+            //if _item.objB.length
+            //    .col-md-4
+            //        +panel(_item.titleB,'panel-success','/entityList?entity=post&cat='+_item.objB.cat)
+            //            .list-group
+            //                +media(_item.objB,{ttLimits:10})
+            //if _item.objC.length
+            //    .col-md-4
+            //        +panel(_item.titleC,'panel-success','/entityList?entity=post&cat='+_item.objC.cat)
+            //            .list-group
+            //                +media(_item.objC,{ttLimits:10})

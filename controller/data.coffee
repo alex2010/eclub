@@ -7,9 +7,9 @@ attrs = (attr)->
         op[it] = 1
     op
 
-isOid = (k)->
-    k.endsWith('id')
-#    k.indexOf('_id') > -1 or k in ['gid', 'rid', 'uid', 'oid']
+isOid = (v)->
+    _.isString(v) and v.length is 24 and /^(\d|[a-z]){24}$/.test(v)
+#    k.indexOf('_id')>-1 or (k.endsWith('id') and k.length is 3 and k isnt 'wid')
 
 _wkt = (obj, fu)->
     for k, v of obj
@@ -19,23 +19,23 @@ _wkt = (obj, fu)->
                     for kk,vv of it
                         if vv['$exists'] and vv['$exists'] is 'false'
                             vv['$exists'] = false
-        else if isOid(k) and v.$in
+        else if v.$in
             v.$in =
                 for it in v.$in
-                    new oid(it)
+                    if isOid(v) then new oid(it) else it
         else if k is 'price' and _.isObject v
             for kk, vv of v
                 v[kk] = +vv
         else if _.isObject(v) and !_.isArray(v) and !_.isFunction(v)
             arguments.callee(v, fu)
-        else  #if v
+        else
             fu(v, k, obj)
 
 _cv = (v, k, obj)->
     if k.charAt(0) is '_' and k isnt '_id'
         delete obj[k]
     else
-        obj[k] = if isOid(k) and v.length is 24
+        obj[k] = if isOid(v)
             new oid(v)
         else if k in ['status', 'row']
             +v
@@ -45,10 +45,11 @@ _cv = (v, k, obj)->
             false
         else if k is 'password' and v.length < 40
             util.sha256(v)
-        else if /^\d{4}-\d{1,2}-\d{1,2}/.test(v) and v.length < 22
+        else if /^\d{4}-\d{1,2}-\d{1,2}/.test(v) and v.length < 25
             Date.parseLocal(v)
         else
             v
+
 _afterEdit = (item, entity)->
     if entity is 'community'
         app._community[item.url] = item
@@ -98,9 +99,9 @@ dataController =
         op =
             skip: util.d(qu, 'offset') || 0
             limit: util.d(qu, 'max') || 10
-            sort: [
-                ['lastUpdated', 'desc']
-            ]
+#            sort: [
+#                ['lastUpdated', 'desc']
+#            ]
 
         if qu.p
             _.extend op, qu.p
@@ -209,13 +210,13 @@ dataController =
                 res = gs(it)(req, bo)
                 if res.error
                     rt.push res.msg
-
             if rt.length
                 rsp.status 405
                 rsp.send errors: rt
                 return
 
         _rsMsg = bo._rsMsg
+
         _attrs = if bo._attrs
             bo._attrs.split(',')
         else
@@ -226,6 +227,7 @@ dataController =
         dao.save code, entity, bo, (item)->
             for s in item
                 _afterEdit(s, entity)
+
                 gs(it)(req, s) for it in after.split(',') if after
 
             if item.length is 1

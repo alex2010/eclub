@@ -101,7 +101,8 @@ if partner
 
 if v
     h3 场地介绍
-    != f.imgItem(v, c)
+    figure.text-center
+        != f.imgItem(v, c)
     h4= v.title
     != v.content
     != f.imgItem(v, c, 'qrcode')

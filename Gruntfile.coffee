@@ -82,7 +82,7 @@ module.exports = (grunt)->
         setting = require "#{__dirname}/views/module/#{code}/script/setting.js"
 
         bStr = if mode
-            "views/module/#{code},views/module/#{code}/script,views/module/#{code}/script/data,views/module/#{code}/data"
+            "views/module/#{code},views/module/#{code}/script,views/module/#{code}/script/data,views/module/#{code}/data,views/module/#{code}/i18n"
         else
             "./,views,routes,ext,controller,bin,service"
         _remote = setting.upload_path

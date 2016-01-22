@@ -1,12 +1,13 @@
 module.exports =
-    ftp: '123.57.189.54'
+    ftp: '123.56.176.206'
+
     url: 'ear.postenglishtime.com'
+    res_path: "http://s.postenglishtime.com/"
 
     upload_path: '/opt/node/'
-    res_path: "http://s.postenglishtime.com/"
-    local_path: "http://t.ear.com:3000/res/"
     log_path: '/opt/node/public/log/'
 
-#    db_host: '123.57.189.54'
+    local_path: "http://t.ear.com:3000/res/"
+
     db_host: '127.0.0.1'
     db_port: 37097

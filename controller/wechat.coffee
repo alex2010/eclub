@@ -234,7 +234,6 @@ module.exports =
         log 'userInfoByCode'
         qy = req.query
         [wCode,page,func] = decodeURI(qy.state).split('::')
-        log decodeURI(qy.state)
         code = req.c.code
         self = @
         if ctCtn[wCode]

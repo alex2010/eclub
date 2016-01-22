@@ -114,6 +114,7 @@ module.exports =
     a: (href, text, cls)->
         str = if href then "href='#{href}' " else ''
         str += if cls then "class='#{cls}' " else ''
+        str += "target='_blank' " unless href.startsWith('#')
         "<a #{str} title='#{text}'>#{text}</a>"
 
     link: (it, prop = 'title', cls)->

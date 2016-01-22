@@ -11,6 +11,7 @@ pageOpt = (ctx, req, et)->
 
 module.exports =
     _init: (ctx)->
+        log '//iint'
         ctx._cd =
             content:
                 func: 'head'

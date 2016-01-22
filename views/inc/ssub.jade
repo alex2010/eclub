@@ -26,6 +26,7 @@ block js
             document.execCommand("stop")
         <![endif]-->
     script(src='#{libPath}lib.js?#{_ts}')
+    script(src='#{libPath}#{lang}.js?#{_ts}')
     script(src='#{libPath}/#{main}.js?#{_ts}')
 script
     block commonjs
