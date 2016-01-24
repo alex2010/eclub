@@ -50,12 +50,16 @@ module.exports =
         "<img id='#{String.randomChar(4)}' class='#{cls} _imgBox' bb-src='#{path}' #{p}/>"
 
     imgItem: (it, c, name = 'head', cls, index = 0, pop)->
-        return '' unless it
-        if it.refFile and it.refFile[name]
-            path = it.refFile[name][index]
-            if path and path.length
-                return @img @resPath(c, path), cls, pop
-        ''
+        path = if it and name in ['id','portrait']
+            "portrait/#{it._id}.jpg"
+        else if it and it.refFile and it.refFile[name]
+            it.refFile[name][index]
+        else
+            null
+        if path
+            @img @resPath(c, path), cls, pop
+        else
+            ''
 
     userPic: (c, id, cls)->
         @img(@resPath(c, 'portrait/' + id + '.jpg'), cls)

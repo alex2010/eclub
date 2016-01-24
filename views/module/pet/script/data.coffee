@@ -1,9 +1,3 @@
-user = [
-    username: code
-,
-    username: 'u' + code
-]
-
 r = (file)->
     require "./data/#{file}"
 
@@ -11,8 +5,8 @@ module.exports =
     community:
         code: code
         name: 'PET后英语时代'
-        resPath: if _env then '/res' else 'http://s.postenglishtime.com'
-        url: if _env then 't.postenglishtime.com' else 'postenglishtime.com'
+        resPath: if app.env then '/res' else 'http://s.postenglishtime.com'
+        url: if app.env then 't.postenglishtime.com' else 'postenglishtime.com'
         nav: [
             label: '活动'
             href: '/activityList'
@@ -77,8 +71,8 @@ module.exports =
             href: '/content/ys'
         ]
 
-    data:{}
-#        'role:title': r 'role'
+    data:
+        'role:title': r 'role'
 #        'group:title': r 'group'
 
 #        'user:username': user
