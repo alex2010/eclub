@@ -19,21 +19,22 @@
                                     small
                                         =it.questioner.username
                                         | &nbsp;
-                                        =it.issue.dateCreated.dStr()
+                                        =it.issue.lastUpdated.dStr()
                                 p= it.content
 
         .tab-pane.fade.in.active(id='comment')
             if comment
                 .list-group.m0
                     each it in comment
-                        .list-group-item.clearfix
-                            .col-xs-2
-                                strong= it.username
-                            .col-xs-8
-                                p= it.content
-                                if it.lastUpdated
-                                    p.small= _.isString(it.lastUpdated)?it.lastUpdated.dStr():it.lastUpdated.pattern()
-                            .col-xs-2.text-right
-                                .label.label-primary(style='font-size: 1.2em') #{it.rating}星
+                        if it.status == 2
+                            .list-group-item.clearfix
+                                .col-xs-2
+                                    strong= it.username
+                                .col-xs-8
+                                    p= it.content
+                                    if it.lastUpdated
+                                        p.small= _.isString(it.lastUpdated)?it.lastUpdated.dStr():it.lastUpdated.pattern()
+                                .col-xs-2.text-right
+                                    .label.label-primary(style='font-size: 1.2em') #{it.rating}星
 
             .comment

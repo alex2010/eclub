@@ -1,6 +1,6 @@
 meta(charset='UTF-8')
 title= title || i18.ii('title') || c.title
-meta(content= i18.ii('description'), name='description')
+meta(content= description || i18.ii('description'), name='description')
 meta(content= i18.ii('keyword'), name='keywords')
 meta(context='86400', http-equiv='expires')
 meta(property='og:title', content='#{title}')

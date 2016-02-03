@@ -156,4 +156,11 @@ db.getCollection('shop').find({}).forEach (it)->
         it.refFile.slide = nt
         db.getCollection('shop').update {_id: it._id}, it
 
+db.getCollection('shop').find({}).forEach (it)->
+    if it.commonEmail
+        unless it.description
+            it.description = it.commonEmail
 
+        delete it.commonEmail
+
+        db.getCollection('shop').update {_id: it._id}, it

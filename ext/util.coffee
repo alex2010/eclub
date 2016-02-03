@@ -20,9 +20,14 @@ module.exports =
 
     r: (it, extra, e)->
         if _.isArray it
+            if e is 'user'
+                for u in it
+                    delete u.password
             entities: it
             count: extra || it.length
         else if it
+            if e is 'user'
+                delete it.password
             entity: it
             msg: extra
             _e: e

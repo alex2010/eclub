@@ -19,7 +19,7 @@ _wkt = (obj, fu)->
                     for kk,vv of it
                         if vv['$exists'] and vv['$exists'] is 'false'
                             vv['$exists'] = false
-        else if v.$in
+        else if v and v.$in
             v.$in =
                 for it in v.$in
                     if isOid(v) then new oid(it) else it
@@ -99,9 +99,6 @@ dataController =
         op =
             skip: util.d(qu, 'offset') || 0
             limit: util.d(qu, 'max') || 10
-#            sort: [
-#                ['lastUpdated', 'desc']
-#            ]
 
         if qu.p
             _.extend op, qu.p

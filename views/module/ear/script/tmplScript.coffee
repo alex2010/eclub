@@ -39,7 +39,7 @@ module.exports =
                 limit: 10
                 sort:
                     lastUpdated: -1
-            dao.find ctx.c.code, 'post', {}, opt, (res)->
+            dao.find ctx.c.code, 'post', status:2, opt, (res)->
                 cb(null, res)
     index: (ctx, req, res) ->
         opt =

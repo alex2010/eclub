@@ -13,8 +13,8 @@ module.exports =
         code: code
         name: '优寇坊'
         title: '优寇坊'
-        resPath: if _env then '/res' else 'http://s.postenglishtime.com'
-        url: if _env then 't.yukof.com' else 'yukof.postenglishtime.com'
+        resPath: if app.env then '/res' else 'http://s.postenglishtime.com'
+        url: if app.env then 't.yukof.com' else 'yukof.postenglishtime.com'
         nav: [
             label: "首页"
             href: "/"
@@ -47,17 +47,17 @@ module.exports =
             labelCls: "label-danger"
         ]
 
-    data:
+#    data:
 #        'i18n:key': require('./zh')
 #        'content:title':r 'content'
 #        'partner:title':r 'partner'
 #        'cat:code':r 'cat'
-        'video:title':r 'video'
-        'head:type':r 'head'
+#        'video:title':r 'video'
+#        'head:type':r 'head'
 #        'role:title': r 'role'
 #        'user:username': r 'user'
 #        'post:title': r 'post'
-        'course:title':r 'course'
+#        'course:title':r 'course'
 #        'qa:question': r 'qa'
 #        'service:title': r 'service'
 #        'cat:code': r 'cat'

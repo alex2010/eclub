@@ -84,7 +84,7 @@ pickScript = (ctx, req)->
 
     lang = req.query.lang || 'zh'
 
-    ctx.langs = if fs.existsSync(fpp = "#{_path}/views/module/#{ctx.c.code}/i18n/#{lang}.js")
+    ctx.langs = if fs.existsSync("#{_path}/views/module/#{ctx.c.code}/i18n/#{lang}.js")
         require "../views/module/#{ctx.c.code}/i18n/#{lang}"
     else
         {}
@@ -158,17 +158,15 @@ module.exports =
             dao.get ctx.c.code, et, filter, (item)->
                 unless item
                     rsp.end('no item')
-
                 filter =
                     skip: 0
                     limit: 10
                     sort:
                         lastUpdated: -1
-
                 ctx = _.extend ctx, item
                 opt =
                     status: 2
-                dao.find ctx.c.code, et, {}, filter, (res)->
+                dao.find ctx.c.code, et, opt, filter, (res)->
                     if res.length
                         ctx["#{et}List"] = res
 
