@@ -24,7 +24,12 @@ module.exports =
 
     iim: (k, m...) ->
         if m
-            pm = iin(it) for it in m
+            pm = []
+            for it in m
+                pm.push if util.isChinese(it)
+                    it
+                else
+                    ii(it)
         ii(k, pm)
 
     iie: (k, p) ->

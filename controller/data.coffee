@@ -1,5 +1,19 @@
 async = require('async')
 
+
+
+#ee.on 'entity_save', (entity, bo)->
+#    log entity
+#    log bo
+#
+#ee.on 'entity_delete', (entity, bo)->
+#    log entity
+#    log bo
+#
+#ee.on 'entity_query', (entity, bo)->
+#    log entity
+#    log bo
+
 attrs = (attr)->
     op = {}
     for it in attr.split(',')
@@ -182,7 +196,6 @@ dataController =
         else
             _.keys(bo)
         cleanItem(bo)
-
 
         bo =
             $set: bo

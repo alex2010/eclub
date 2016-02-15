@@ -10,6 +10,7 @@ bodyParser = require('body-parser')
 cache = require("node-smple-cache/Cache")
 _cc = new require('./service/cc')
 
+EventEmitter = require('events').EventEmitter
 
 `
     _ = require('underscore');
@@ -28,6 +29,7 @@ _cc = new require('./service/cc')
     gs = function (fn) {
         return require(_path + '/service/' + fn)
     };
+    ee = new EventEmitter();
     _cache = cache.createCache('LRU', 100 * 100)
     wtCtn = {};
     ctCtn = {};
@@ -38,7 +40,8 @@ _cc = new require('./service/cc')
 require('./ext/string')
 # view engine setup
 app.set 'view engine', 'jade'
-app.set 'views', path.join(_path, "views")
+#app.set 'views', path.join(_path, "views")
+app.set 'views', path.join(_path, "public/module")
 # uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/public/favicon.ico'));
 

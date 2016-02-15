@@ -6,8 +6,8 @@ getApi = require './wechat'
     _fileStack = {};
 `
 
-sPath = (code, exPath)->
-    path = "/public/res/upload/#{code}"
+mPath = (code, exPath)->
+    path = "/public/module/#{code}"
     if exPath
         path += "/#{exPath}"
     pa = if app.env
@@ -18,13 +18,26 @@ sPath = (code, exPath)->
         fs.mkdirSync pa
     pa
 
-walk = (path, max, offset) ->
+sPath = (code, exPath)->
+    path = "/public/res/upload/#{code}"
+    if exPath
+        path += "/#{exPath}"
+
+    pa = if app.env
+        '.' + path
+    else
+        _path + path
+    if !fs.existsSync pa
+        fs.mkdirSync pa
+    pa
+
+walk = (path, max, offset, ext) ->
     list = _fileStack[path]
     unless list
         list = _fileStack[path] = fs.readdirSync(path)
         for item in list
             if item
-                if item.startsWith('.') or fs.statSync("#{path}/#{item}").isDirectory()
+                if item.startsWith('.') or fs.statSync("#{path}/#{item}").isDirectory() or (ext and !item.endsWith(ext))
                     list.remove item
         list.sort (a, b)->
             fs.statSync(path + '/' + b).mtime.getTime() - fs.statSync(path + '/' + a).mtime.getTime()
@@ -142,6 +155,8 @@ module.exports =
 
     fileList: (req, rsp)->
         qu = req.query
-        code = req.c.code
-        path = qu.path
-        rsp.send walk sPath(code, path), qu.max, qu.offset
+        path = if qu.mod
+            mPath(req.c.code, qu.path)
+        else
+            sPath(req.c.code, qu.path)
+        rsp.send walk path, qu.max, qu.offset, qu.ext

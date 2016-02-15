@@ -1,9 +1,0 @@
-if crumb
-    #crumb.hidden-xs
-        ul.breadcrumb
-            each it in crumb
-                if it.href
-                    li
-                        a(href='#{it.href}') #{it.label}
-                else
-                    li #{it.label}

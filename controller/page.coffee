@@ -6,6 +6,7 @@ String::splitCap = (i, t)->
     (it.capitalize() for it in @split(i)).join(t)
 
 f = require('../ext/tmpl')
+coffee = require 'coffee-script'
 
 entityPageOpt = (ctx, req, et)->
     opt =
@@ -19,7 +20,6 @@ entityPageOpt = (ctx, req, et)->
     opt
 
 pageOpt = (req)->
-
     c = req.c
     code = c.code
     if req.originalUrl.indexOf('/console') > -1
@@ -37,7 +37,7 @@ pageOpt = (req)->
     _ts: new Date().getTime()
     c: c
     f: f
-    cstr: JSON.stringify(_.pick(c, 'code', 'name', 'url', '_id', 'resPath', 'description','refFile'))
+    cstr: JSON.stringify(_.pick(c, 'code', 'name', 'url', '_id', 'resPath', 'description', 'refFile'))
     libPath: libPath
     resPath: resPath
 
@@ -77,15 +77,15 @@ pickScript = (ctx, req)->
                         ctx.cat = cat[0] if cat.length
                     cb(null, res)
 
-    sc = require if fs.existsSync("#{_path}/views/module/#{ctx.c.code}/script/tmplScript.js")
-        "../views/module/#{ctx.c.code}/script/tmplScript"
+    sc = require if fs.existsSync("#{_path}/public/module/#{ctx.c.code}/script/tmplScript.js")
+        "../public/module/#{ctx.c.code}/script/tmplScript"
     else
-        "../views/module/_tmpl/script/tmplScript"
+        "../public/module/_tmpl/script/tmplScript"
 
     lang = req.query.lang || 'zh'
 
-    ctx.langs = if fs.existsSync("#{_path}/views/module/#{ctx.c.code}/i18n/#{lang}.js")
-        require "../views/module/#{ctx.c.code}/i18n/#{lang}"
+    ctx.langs = if fs.existsSync("#{_path}/public/module/#{ctx.c.code}/i18n/server_#{lang}.js")
+        require "../public/module/#{ctx.c.code}/i18n/server_#{lang}"
     else
         {}
     initOpt = sc._init(ctx, req) || {}
@@ -101,20 +101,29 @@ pickScript = (ctx, req)->
             for it in res
                 ctx.langs[it.key] = it.val
             cb null, require('../service/lang')(ctx.langs)
+    opt.script = (cb)->
+        dao.find ctx.c.code, 'script', {}, {}, (res)->
+            rt = {}
+            for it in res
+                code = it.code
+                if it.type is 'coffeescript'
+                    code = ''
+                    for l in coffee.compile(it.code, bare: true).split '\n'
+                        code += l.trim()
+                rt[it.title] = code
+            cb null, rt
     _.extend initOpt, opt
 
 render = (req, rsp, ctx)->
     opt = pickScript(ctx, req)
-    dao.pick(_mdb, 'cache').ensureIndex time: 1,
+    dao.pick(req.c.code, 'cache').ensureIndex time: 1,
         expireAfterSeconds: 7200
         background: true
-
     async.parallel opt, (err, res)->
         _.extend ctx, res
         str = jade.renderFile("#{req.fp}/#{ctx.index}.jade", ctx)
-
         unless app.env
-            dao.save _mdb, 'cache',
+            dao.save req.c.code, 'cache',
                 k: req.k
                 str: str
                 mob: if req.mob then true else false

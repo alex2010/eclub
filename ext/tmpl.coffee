@@ -23,10 +23,6 @@ module.exports =
             str.replace(/-/g, "/").replace(/[TZ]/g, " ").substr(0, len)
         else
             ''
-    icon: (icon, tag = 'i', str = '', cls = '', href)->
-        if href
-            href = "href='#{href}'"
-        "<#{tag} class='glyphicon glyphicon-#{icon} #{cls}' #{href || ''}>#{str}</#{tag}>"
 
     copyRight: (c, name, id)->
         path = "http://#{c.url}/#{name}/#{id}"
@@ -135,3 +131,59 @@ module.exports =
                 "/#{it._e}/#{it._id}"
         @a(href, text, cls)
 
+
+    iBtn: (cls, key, href)->
+        key = cls unless key
+        cls: cf.style.btn null, 'sm', false, util.iClass(cls) + ' ' + key
+        id: true
+        title: iic key
+        href: href
+        onclick: 'cf.showPic(this)'
+
+    tBtn: (label, href, icon, cls, title, id)->
+        unless util.isChinese label
+            label = ii label
+        label: label
+        href: href
+        icon: icon and util.icon icon
+        cls: cls #+' '+label
+        title: title and iic title
+        id: id
+
+    genBtn: (cfg, it)->
+        return unless cfg
+        if cfg.btn
+            tag = $('<button type="button"/>')
+        else
+            tag = $("<a/>")
+        tag.addClass cfg.key
+        if cfg.href
+            tag.attr 'href', cfg.href
+            if cfg.href.startsWith 'http'
+                tag.attr 'target', '_blank'
+        cfg.id and tag.attr 'id', util.randomChar(4) + '-' + it?.id
+        cfg.label and tag.text cfg.label
+        cfg.title and tag.attr 'title', cfg.title
+        if cfg.attr
+            for k,v of cfg.attr
+                tag.attr k, v
+        cfg.cls and tag.addClass cfg.cls
+        if cfg.icon
+            if cfg.icon.startsWith '<'
+                icon = cfg.icon
+            else
+                icon = util.icon(cfg.icon)
+            tag[cfg.iconPlace || 'prepend'] icon
+        cfg.callback?(tag)
+        if cfg.action # event for larger tag
+            tag.on(cfg.action.type || 'click', cfg.action.fun)
+        tag
+
+    iClass: (val, cls)->
+#        "#{cf.style.iconStr} #{cf.style.iconStr}-#{val} #{cls || ''}"
+        "glyphicon glyphicon-#{val} #{cls || ''}"
+
+    icon: (icon, tag = 'i', str = '', cls = '', href)->
+        if href
+            href = "href='#{href}'"
+        "<#{tag} class='#{@iClass(icon, cls)}' #{href || ''}>#{str}</#{tag}>"
