@@ -1,7 +1,4 @@
 express = require('express')
-#session = require('express-session')
-#mongoStore = require('connect-mongo')(session);
-#setting = require './setting'
 path = require('path')
 favicon = require('serve-favicon')
 logger = require('morgan')
@@ -50,12 +47,6 @@ app.use bodyParser.json()
 app.use bodyParser.urlencoded(extended: false)
 app.use cookieParser()
 
-#app.use session
-#    secret: 'secretkey'
-#    store: new mongoStore
-#        db: 'session'
-#        host: setting.host
-#        port: setting.port
 
 app.use express.static(path.join(__dirname, 'public'))
 #app.use express.static(path.join(__dirname, 'public'))
@@ -82,21 +73,6 @@ require('./routes/wechat')
 
 app.use '/', require('./routes/prod')
 
-app.use (req, res, next) ->
-    err = new Error('Not Found')
-    err.status = 404
-    next err
-    return
-# error handlers
-# development error handler
-# will print stacktrace
-#if app.env
-#    app.use (err, req, res, next) ->
-#        res.status err.status or 500
-#        res.render 'error',
-#            message: err.message
-#            error: err
-#        return
 
 # production error handler
 # no stacktraces leaked to user
@@ -110,3 +86,28 @@ app.use (err, req, res, next) ->
 
 module.exports = app
 
+
+
+#app.use (req, res, next) ->
+#    err = new Error('Not Found')
+#    err.status = 404
+#    next err
+#    return
+# error handlers
+# development error handler
+# will print stacktrace
+#if app.env
+#    app.use (err, req, res, next) ->
+#        res.status err.status or 500
+#        res.render 'error',
+#            message: err.message
+#            error: err
+#        return
+
+
+#app.use session
+#    secret: 'secretkey'
+#    store: new mongoStore
+#        db: 'session'
+#        host: setting.host
+#        port: setting.port

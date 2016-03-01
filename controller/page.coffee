@@ -152,10 +152,16 @@ render = (req, rsp, ctx)->
 #            rsp.redirect url
 
 module.exports =
-    page: (req, rsp) ->
+    page: (req, rsp, next) ->
+        if req.params.page is 'socket.io'
+            next()
+            return
         render req, rsp, pre(req)
 
     entity: (req, rsp) ->
+        if req.params.page is 'socket.io'
+            next()
+            return
         et = req.params.entity
         if req.params.id.length is 24
             ctx = pre(req)

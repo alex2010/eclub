@@ -24,7 +24,6 @@ wxpay = require('weixin-pay')
 #router.param 'page', checkPagePattern
 
 ee.on 'user_track', (req)->
-    log 'user_track'
     opt =
         url: req.headers.origin  + req.url
         pathname: req._parsedUrl.pathname
@@ -52,13 +51,11 @@ prepare = (req)->
 
 
 actPre = (req, rsp, next)->
-    log 'actPre'
     prepare req
     true && ee.emit 'user_track', req
     next()
 
 resPre = (req, rsp, next)->
-    log 'resPre'
     prepare req
 #    req.c.userTrack && ee.emit 'user_track', req
     true && ee.emit 'user_track', req
@@ -72,7 +69,6 @@ resPre = (req, rsp, next)->
         next()
 
 pre = (req, rsp, next)->
-    log 'pre'
     prepare req
     k = ck req
 
@@ -129,6 +125,11 @@ pickSite = (req)->
 
 checkPage = (req, rsp, next)->
     log 'check page'
+    log req.params
+    if req.params.page is 'socket.io'
+        log 'next'
+        next()
+        return
     pm = req.params
     page = pm.page || pm.entity || 'index'
     if /^\w+$/.test(page)
@@ -188,7 +189,6 @@ router.get '/r/:entity/:id', data.get
 router.get '/r/:entity/:q/:qv/:prop', data.getSub
 router.get '/r/:entity/:key/:val', data.getByKey
 
-
 router.put '/r/:entity/:id', data.edit
 router.post '/r/:entity', data.save
 router.delete '/r/:entity/:id', data.del
@@ -228,6 +228,5 @@ router.get '/:entity/:id', page.entity
 router.get '/:entity/:attr/:id', pre
 router.get '/:entity/:attr/:id', checkPage
 router.get '/:entity/:attr/:id', page.entity
-
 
 module.exports = router

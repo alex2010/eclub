@@ -7,16 +7,22 @@ _psd = 'bk9ULZCWUd81eZ0vOIjLuqDvozllFEWBKM7QTiy85NI='
 args = null
 process.argv.forEach (val, index, array)->
     args = array
-
 `
+    cf = {};
     app = {env: true};
     _ = require('underscore');
+    $ = {
+        extend: require('node.extend')
+    };
     _mdb = 'main';
     log = console.log;
     oid = require('mongodb').ObjectID;
     code = args[2];
+    i18n = require('./service/lang')(require("./public/module/console/i18n/zh"));
+    ii = i18n.ii;
+    meta = require('./public/lib/meta/common');
+    _ep = meta.exp;
 `
-
 require('./ext/string')
 dao = new require('./service/dao')()
 #dao.pick('main', 'cache')
@@ -48,7 +54,7 @@ dao.newDb code, ->
 
         dao.remove code, entity, filter, {}, ->
             list = []
-            for it in require("./views/module/#{code}/data/#{entity}")
+            for it in require("./public/module/#{code}/data/#{entity}")
                 ob = {}
                 for k, v of it
                     if v isnt null and !(k in ['cid', 'version'])
@@ -184,8 +190,7 @@ dao.newDb code, ->
                                             dao.findAndUpdate code, 'user', id: +kk, opt
 
     else
-        data = require("./views/module/#{code}/script/data")
-        log _mdb
+        data = require("./public/module/#{code}/script/data")
         if data.community
             dao.newDb _mdb, ->
                 dao.get _mdb, 'community', {}, ->
