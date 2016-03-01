@@ -1,5 +1,5 @@
 module.exports = [
-    username:'用户一（团队人员）'
+    username:'用户一0（团队人员）'
     hometown:'china'
     cat: 'team'
     code:'team_xxgw'
@@ -17,8 +17,8 @@ module.exports = [
         _id:''
     ],
     refFile:[
-        head:['']
-        work:['','','','','','']
+        head:['teamImg_03.jpg']
+        work:['teamWorkerImg_22.jpg','teamWorkerImg_24.jpg','teamWorkerImg_28.jpg','teamWorkerImg_29.jpg','teamWorkerImg_32.jpg','teamWorkerImg_33.jpg']
     ]
 ,
     username:'用户二（团队人员）'
@@ -37,6 +37,10 @@ module.exports = [
     ,
         title: ''
         _id:''
+    ],
+    refFile:[
+        head:['teamImg_05.jpg']
+        work:['teamWorkerImg_22.jpg','teamWorkerImg_24.jpg','teamWorkerImg_28.jpg','teamWorkerImg_29.jpg','teamWorkerImg_32.jpg','teamWorkerImg_33.jpg']
     ]
 ,
     username:'用户三（团队人员）'
@@ -55,6 +59,10 @@ module.exports = [
     ,
         title: ''
         _id:''
+    ],
+    refFile:[
+        head:['teamImg_07.jpg']
+        work:['teamWorkerImg_22.jpg','teamWorkerImg_24.jpg','teamWorkerImg_28.jpg','teamWorkerImg_29.jpg','teamWorkerImg_32.jpg','teamWorkerImg_33.jpg']
     ]
 ,
     username:'用户四（团队人员）'
@@ -73,6 +81,10 @@ module.exports = [
     ,
         title: ''
         _id:''
+    ],
+    refFile:[
+        head:['teamImg_09.jpg']
+        work:['teamWorkerImg_22.jpg','teamWorkerImg_24.jpg','teamWorkerImg_28.jpg','teamWorkerImg_29.jpg','teamWorkerImg_32.jpg','teamWorkerImg_33.jpg']
     ]
 ,
     username:'用户五（团队人员）'
@@ -91,6 +103,10 @@ module.exports = [
     ,
         title: ''
         _id:''
+    ],
+    refFile:[
+        head:['teamImg_11.jpg']
+        work:['teamWorkerImg_22.jpg','teamWorkerImg_24.jpg','teamWorkerImg_28.jpg','teamWorkerImg_29.jpg','teamWorkerImg_32.jpg','teamWorkerImg_33.jpg']
     ]
 ,
     username:'用户六（团队人员）'
@@ -109,6 +125,10 @@ module.exports = [
     ,
         title: ''
         _id:''
+    ],
+    refFile:[
+        head:['teamImg_13.jpg']
+        work:['teamWorkerImg_22.jpg','teamWorkerImg_24.jpg','teamWorkerImg_28.jpg','teamWorkerImg_29.jpg','teamWorkerImg_32.jpg','teamWorkerImg_33.jpg']
     ]
 ,
     username:'用户七（注册学员，白金会员）'

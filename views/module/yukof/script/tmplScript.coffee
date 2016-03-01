@@ -1,3 +1,13 @@
+## events 消除回调金字塔
+events=require('events');
+eventsEmitter = new events.EventEmitter();
+
+ringBell = ->
+    console.log 'Ring';
+
+eventsEmitter.on 'openDoor', ringBell
+
+
 module.exports =
     _init: (ctx, req, rsp)->
         video:(cb)->
@@ -78,9 +88,9 @@ module.exports =
                 limit: 10
                 sort:
                     row: -1
-            filter = {
+            filter =
                 code: 'privateImageMgm_sp'
-            }
+
             dao.find ctx.c.code, 'service', filter, opt, (res)->
                 cb(null, res)
 
@@ -89,10 +99,10 @@ module.exports =
                 limit: 1
                 sort:
                     row: -1
-            filter = {
+            filter =
                 cat: 'entrepreneurImagePositioning'
-            }
-            dao.find ctx.c.code, 'service', filter, {}, (res)->
+
+            dao.find ctx.c.code, 'service', filter, opt, (res)->
                 res = res[0]
                 cb(null, res)
         actorSolidPackaging: (cb) ->
@@ -100,10 +110,10 @@ module.exports =
                 limit: 1
                 sort:
                     row: -1
-            filter = {
+            filter =
                 cat: 'actorSolidPackaging'
-            }
-            dao.find ctx.c.code, 'service', filter, {}, (res)->
+
+            dao.find ctx.c.code, 'service', filter, opt, (res)->
                 res = res[0]
                 cb(null, res)
         designOfTheBrideImage: (cb) ->
@@ -111,16 +121,16 @@ module.exports =
                 limit: 1
                 sort:
                     row: -1
-            filter = {
+            filter =
                 cat: 'designOfTheBrideImage'
-            }
-            dao.find ctx.c.code, 'service', filter, {}, (res)->
+
+            dao.find ctx.c.code, 'service', filter, opt, (res)->
                 res = res[0]
                 cb(null, res)
         intro: (cb) ->
-            filter = {
+            filter =
                 cat: 'intro'
-            }
+
             dao.find ctx.c.code, 'service', filter, {}, (res)->
                 cb(null, res[0])
 
@@ -133,8 +143,68 @@ module.exports =
 
     partnerChannel: (ctx, req, rsp)->
         post: (cb)->
-            filter = {
+            filter =
                 cat: 'partner'
-            }
+
             dao.find ctx.c.code, 'post', filter, {}, (res)->
                 cb(null, res[0])
+    teamChannel:(ctx, req, rsp)->
+        opt =
+            limit:6
+            sort:
+                row:-1
+        teamNav: (cb)->
+            filter =
+                type: 'user'
+                code:
+                    $regex:'team_*'
+
+            dao.find ctx.c.code, 'cat', filter, {}, (res)->
+                eventsEmitter.emit 'openDoor'
+
+                i=0
+                len=res.length
+                while i<len
+                    filt=
+                        type:'team'
+                        code:res[i].code
+
+                    dao.find ctx.c.code, filt, opt, (data)->
+                        res[i].dataArr=data
+                        if i==len
+                            eventsEmitter.on 'openDoor', ->
+                                #aaa
+                    i++
+                #console.log res
+
+                cb(null, res)
+        xxgw:(cb)->
+            filter =
+                code:'team_xxgw'
+            dao.find ctx.c.code, 'user', filter, opt, (res)->
+                cb(null,res)
+        pgs:(cb)->
+            filter =
+                code:'team_pgs'
+            dao.find ctx.c.code, 'user', filter, opt, (res)->
+                cb(null,res)
+        yczls:(cb)->
+            filter =
+                code:'team_yczls'
+            dao.find ctx.c.code, 'user', filter, opt, (res)->
+                cb(null,res)
+        hzs:(cb)->
+            filter =
+                code:'team_hzs'
+            dao.find ctx.c.code, 'user', filter, opt, (res)->
+                cb(null,res)
+        fxs:(cb)->
+            filter =
+                code:'team_fxs'
+            dao.find ctx.c.code, 'user', filter, opt, (res)->
+                cb(null,res)
+        fzsjs:(cb)->
+            filter =
+                code:'team_fzsjs'
+            dao.find ctx.c.code, 'user', filter, opt, (res)->
+                cb(null,res)

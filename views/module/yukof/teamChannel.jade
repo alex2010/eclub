@@ -2,6 +2,12 @@ extends ./inc/main
 
 block style
    :less(minify=true)
+      //.tab-y-4 : course
+      .tab-y-5 {
+         .nav-tabs {
+
+         }
+      }
 
 block content
    include ./inc/topFragment
@@ -11,3 +17,20 @@ block content
             span.en Elite Team
       .panel-body
          p 这是一个真正专业、高品质、高素质的专业团队<br />优寇坊是我们的家、也是我们的舞台<br />在这个舞台上，可以充分展示我们的才能、智慧与耀眼的光芒
+      .panel-footer
+         a.btn-more(href="")
+            span.ctn 点击更多
+   .tab-y-5
+      ul.nav.nav-tabs
+         each it,i in teamNav
+            -var cls=''
+            if i==0
+               -cls+='active'
+            li(class=cls)
+               a(href="##{it.code}",data-toggle="tab")= it.title
+      .tab-content
+         each it,i in teamNav
+            -var cls='tab-pane fade'
+            if i==0
+               -cls+=' active in'
+            div(class=cls,id='#{it.code}')= it.title
