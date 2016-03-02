@@ -5,14 +5,11 @@ logger = require('morgan')
 cookieParser = require('cookie-parser')
 bodyParser = require('body-parser')
 cache = require("node-smple-cache/Cache")
-<<<<<<< HEAD
 
 #events 消除回调金字塔
 #events = require('events');
 
 
-=======
->>>>>>> d3d41bb0bfc93ef0bf022b68562230e26af3c606
 _cc = new require('./service/cc')
 
 EventEmitter = require('events').EventEmitter
