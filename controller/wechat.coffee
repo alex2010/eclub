@@ -102,13 +102,6 @@ module.exports =
         resId = []
         titles = []
 
-#        dao.get code, 'activity', _id: '5618e3717f1ef776b521f4a2',(res)->
-#            log matchPic res.content
-#            rsp.send
-#                success: true
-#                msg: '测试通过'
-
-
         dao.get code, 'codeMap', type: 'wtStyle', (resStyle)->
             styles = resStyle.value if resStyle
             getApi code, wCode, (api)->
@@ -140,7 +133,7 @@ module.exports =
                                             catObj:ct
                                             redirect: n.content_source_url
                                         _.extend ctx, et
-                                        path = "#{_path}/views/module/#{code}/wechat/#{tmpl}.jade"
+                                        path = "#{_path}/public/module/#{code}/wechat/#{tmpl}.jade"
                                         ccc = jade.renderFile path, ctx
                                         if styles
                                             for k,v of styles
@@ -172,23 +165,25 @@ module.exports =
                         if err
                             log err
                         else
-                            k = "w_#{wCode}"
-                            for it in req.body.testUser
-                                if it[k]
-                                    api.previewNews it[k], res.media_id, ->
-
                             bo =
                                 title: titles
                                 resId:resId
                                 mediaId: res.media_id
                                 account: wCode
                                 type: 'news'
+                                lastUpdated: new Date()
 
-                            dao.save code, 'wtUploaded', bo, (item)->
-                                rsp.send
-                                    success: true
-                                    meidaId: res.media_id
-                                    msg: '测试通过'
+                            rsp.send
+                                success: true
+                                entity: bo
+                                msg: '同步成功,请登录微信后台编辑或者推送'
+
+#
+#                            dao.save code, 'wtUploaded', bo, (item)->
+#                                rsp.send
+#                                    success: true
+#                                    meidaId: res.media_id
+#                                    msg: '测试通过'
 
     sendTest:(req, rsp)->
         code = req.c.code
@@ -197,10 +192,11 @@ module.exports =
             k = "w_#{wCode}"
             for it in req.body.testUser
                 if it[k]
-                    api.previewNews it[k],req.body.mediaId,->
-            rsp.send
-                success: true
-                msg: '测试已发送'
+                    api.previewNews it[k],req.body.mediaId, (res)->
+                        log res
+                        rsp.send
+                            success: true
+                            msg: '测试已发送'
 
 
 #    massSend: (req, rsp)->
