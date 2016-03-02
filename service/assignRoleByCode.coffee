@@ -5,7 +5,11 @@ module.exports = (req, user)->
     dao.get db, 'roleMap', code: code, (rc)->
         return unless rc
         for it in rc.role.split(',')
-            dao.get db, 'role', title: it, (role)->
+            filter=
+                title:
+                    $regex: "^#{it}$"
+                    $options: 'i'
+            dao.get db, 'role', filter, (role)->
                 mb =
                     username: user.username
                     role: role.title

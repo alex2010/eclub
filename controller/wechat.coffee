@@ -118,7 +118,6 @@ module.exports =
                         n.thumb_media_id = util.sPath(code + '/' + n.thumb_media_id)
                     log 'start to upload pic' + n.thumb_media_id
                     api.uploadMaterial n.thumb_media_id, 'thumb', (err, res)->
-                        log res
                         return unless res
                         n.thumb_media_id = res.media_id
                         resId.push res.media_id
@@ -234,8 +233,9 @@ module.exports =
     userInfoByCode: (req, rsp)->
         log 'userInfoByCode'
         qy = req.query
-        [wCode,page,func] = qy.state.split('::')
+        [wCode,page,func] = decodeURI(qy.state).split('::')
         code = req.c.code
+        self = @
         if ctCtn[wCode]
             ctCtn[wCode].getAccessToken qy.code, (err, result)->
                 openid = result.data.openid
@@ -271,7 +271,7 @@ module.exports =
         else
             dao.get code, 'pubAccount', code: wCode, (res)->
                 ctCtn[wCode] = new OAuth(res.appId, res.secret)
-                rsp.redirect "http://#{req.c.url}?#{req.originalUrl.split('?')[1]}&rwt=true"
+                rsp.redirect "http://#{req.c.url}/a/wt/userInfoByCode?#{req.originalUrl.split('?')[1]}"
 
     wxPay: (req, rsp)->
         rp = req.body

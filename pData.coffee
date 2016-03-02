@@ -3,29 +3,33 @@
 #node pData run i18n
 
 async = require('async')
-
+_psd = 'bk9ULZCWUd81eZ0vOIjLuqDvozllFEWBKM7QTiy85NI='
 args = null
 process.argv.forEach (val, index, array)->
     args = array
-
-
-
-`app = {};
-_ = require('underscore');
-_mdb = 'main';
-log = console.log;
-oid = require('mongodb').ObjectID;
-code = args[2];
-_env = true;
 `
-
+    cf = {};
+    app = {env: true};
+    _ = require('underscore');
+    $ = {
+        extend: require('node.extend')
+    };
+    _mdb = 'main';
+    log = console.log;
+    oid = require('mongodb').ObjectID;
+    code = args[2];
+    i18n = require('./service/lang')(require("./public/module/console/i18n/zh"));
+    ii = i18n.ii;
+    meta = require('./public/lib/meta/common');
+    _ep = meta.exp;
+`
 require('./ext/string')
 dao = new require('./service/dao')()
-dao.pick('main', 'cache')
-dao.pick(code, 'post')
+#dao.pick('main', 'cache')
+#dao.pick(code, 'post')
 
 addMember = (username, title)->
-    dao.get code, 'user', {username: username}, (u)->
+    dao.findAndUpdate code, 'user', {username: username}, {username: username, password: _psd}, (u)->
         if u
             dao.get code, 'role', {title: title}, (r)->
                 if r
@@ -36,16 +40,12 @@ addMember = (username, title)->
                         role: title
                     dao.save code, "membership:uid,rid", mOpt, ->
 
-
-_.delay ->
+dao.newDb code, ->
     if args.length > 3
         if args[3] is '-p'
-            `
-                _env = false;
-            `
+            app.env = false
         else
             entity = args[3]
-
     if entity
         filter = if entity in ['user', 'role']
             x: 'x'
@@ -54,7 +54,7 @@ _.delay ->
 
         dao.remove code, entity, filter, {}, ->
             list = []
-            for it in require("./views/module/#{code}/data/#{entity}")
+            for it in require("./public/module/#{code}/data/#{entity}")
                 ob = {}
                 for k, v of it
                     if v isnt null and !(k in ['cid', 'version'])
@@ -190,75 +190,74 @@ _.delay ->
                                             dao.findAndUpdate code, 'user', id: +kk, opt
 
     else
-        data = require("./views/module/#{code}/script/data")
+        data = require("./public/module/#{code}/script/data")
         if data.community
-            dao.save _mdb, 'community:code', data.community
-
-        for k, v of data.data
-            if k is 'user:username'
-                for u in v
-                    u.password = 'bk9ULZCWUd81eZ0vOIjLuqDvozllFEWBKM7QTiy85NI='
-            if k is 'role:title'
-                ad = v.findBy('title', 'admin')
-                ad.menu = [
-                    key: 'site'
-                    icon: 'globe'
-                    row: 20
-                ,
-                    key: 'data'
-                    icon: 'hdd'
-                    row: 30
-                ,
-                    key: 'wechat'
-                    icon: 'comment'
-                    row: 40
-                ,
-                    key: 'file'
-                    icon: 'list-alt'
-                    row: 50
-                ,
-                    key: 'userRole'
-                    icon: 'sunglasses'
-                    row: 60
-                ]
-                ad.entities = ad.entities.concat [
-                    key: '_base'
-                    row: 1
-                ,
-                    key: 'content'
-                    row: 10
-                ,
-                    key: 'post'
-                    row: 20
-                ,
-                    key: 'cat'
-                    row: 30
-                ,
-                    key: 'head'
-                    row: 40
-                ,
-                    key: 'link'
-                    row: 50
-                ,
-                    key: 'guestBook'
-                    row: 60
-                ]
-                ad.entities.sortBy 'row', true
-                ad.permission = ['console']
-            dao.save code, k, v
+            dao.newDb _mdb, ->
+                dao.get _mdb, 'community', {}, ->
+                    dao.save _mdb, 'community:name', data.community, ->
+            _.delay ->
+                dao.close _mdb
+            , 1000
+        if data.data
+            for k, v of data.data
+                if k is 'user:username'
+                    for u in v
+                        u.password = _psd
+                if k is 'role:title'
+                    ad = v.findBy('title', 'admin')
+                    ad.menu = [
+                        key: 'site'
+                        icon: 'globe'
+                        row: 20
+                    ,
+                        key: 'data'
+                        icon: 'hdd'
+                        row: 30
+                    ,
+                        key: 'wechat'
+                        icon: 'comment'
+                        row: 40
+                    ,
+                        key: 'file'
+                        icon: 'list-alt'
+                        row: 50
+                    ,
+                        key: 'userRole'
+                        icon: 'sunglasses'
+                        row: 60
+                    ]
+                    ad.entities = ad.entities.concat [
+                        key: '_base'
+                        row: 1
+                    ,
+                        key: 'content'
+                        row: 10
+                    ,
+                        key: 'post'
+                        row: 20
+                    ,
+                        key: 'cat'
+                        row: 30
+                    ,
+                        key: 'head'
+                        row: 40
+                    ,
+                        key: 'link'
+                        row: 50
+                    ,
+                        key: 'guestBook'
+                        row: 60
+                    ]
+                    ad.entities.sortBy 'row', true
+                    ad.permission = ['console']
+                dao.save code, k, v
 
         if data.member
-            _.delay ->
-                for it in data.member
-                    [u,r] = it.split(',')
-                    addMember(u, r)
-            , 3000
-, 500
-
-
-#        dao.save code, 'role:title', [data.r], ->
+            for it in data.member
+                [u,r] = it.split(',')
+                addMember(u, r)
 
 _.delay ->
-    dao.close()
+    dao.close(code)
 , 4000
 

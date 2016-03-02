@@ -1,5 +1,5 @@
 app = require('../app')
-debug = require('debug')('eclub_n:server')
+debug = require('debug')('node:server')
 http = require('http')
 
 
@@ -36,9 +36,13 @@ onListening = ->
     bind = if typeof addr == 'string' then 'pipe ' + addr else 'port ' + addr.port
     debug 'Listening on ' + bind
     return
+`
+server = http.createServer(app);
+`
 
-server = http.createServer(app)
+require '../controller/io'
 
 server.listen port
 server.on 'error', onError
 server.on 'listening', onListening
+

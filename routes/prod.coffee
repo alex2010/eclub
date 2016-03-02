@@ -5,38 +5,80 @@ auth = require '../controller/auth'
 data = require '../controller/data'
 page = require '../controller/page'
 up = require '../controller/upload'
-captcha = require '../controller/captcha'
+#captcha = require '../controller/captcha'
 sms = require '../controller/sms'
 
 wxpay = require('weixin-pay')
 
-checkPagePattern = (req, rsp, next, page)->
-    log 'checkPagePattern...'
-    if /^\w+$/.test(page)
-        next()
-    else if /^\w+\.html$/.test(page)
-        req._html = page
-        next()
-    else
-        rsp.end('name error')
+#checkPagePattern = (req, rsp, next, page)->
+#    log 'checkPagePattern...'
+#    if /^\w+$/.test(page)
+#        next()
+#    else if /^\w+\.html$/.test(page)
+#        req._html = page
+#        next()
+#    else
+#        rsp.end('name error')
 
-router.param 'entity', checkPagePattern
-router.param 'page', checkPagePattern
+#router.param 'entity', checkPagePattern
+#router.param 'page', checkPagePattern
 
+ee.on 'user_track', (req)->
+    opt =
+        url: req.headers.origin  + req.url
+        pathname: req._parsedUrl.pathname
+        method: req.method
+        dateCreated: new Date()
+
+    if !_.isEmpty(req.query)
+        opt.query = req.query
+
+    if u = req.cookies.__ux
+        [opt.uid,opt.username] = u.split(':')
+
+    if req.method != 'GET' and !_.isEmpty req.body
+        opt.body = req.body
+
+    dao.pick(req.c.code, 'userTrack').insert opt, {}, (err, docs)->
 
 ck = (req)->
     req.hostname + req.url
 
-pre = (req, rsp, next)->
+prepare = (req)->
     unless app.env
         req.hostname = req.get('Host')
+    req.c = pickSite req
+
+
+actPre = (req, rsp, next)->
+    prepare req
+    true && ee.emit 'user_track', req
+    next()
+
+resPre = (req, rsp, next)->
+    prepare req
+#    req.c.userTrack && ee.emit 'user_track', req
+    true && ee.emit 'user_track', req
+    if req.method is 'GET'
+        dao.get req.c.code, 'cache', k: ck(req), (res)->
+            if res and !app.env
+                rsp.end res.str
+            else
+                next()
+    else
+        next()
+
+pre = (req, rsp, next)->
+    prepare req
     k = ck req
+
     opt = {}
     if /mobile/i.test(req.headers['user-agent'])
         req.mob = true
         opt.mob = true
     else
         opt.mob = false
+
     cc = req.query._c
     if cc
         if cc is '0' and req.query._e
@@ -70,19 +112,33 @@ pre = (req, rsp, next)->
         if res and !app.env
             rsp.end res.str
         else
-            rStr = req.hostname.replace('www.', '')
-            req.c = app._community[rStr]
             req.k = k
             next()
 
+pickSite = (req)->
+    if qc = req.cookies._code
+        for k,v of app._community
+            if v.code is qc
+                return v
+    else
+        app._community[req.hostname.replace('www.', '')]
+
 checkPage = (req, rsp, next)->
     log 'check page'
-    pm = req.params
-    page = pm.page || pm.entity || 'index'
-    if page in ['a', 'r']
+    log req.params
+    if req.params.page is 'socket.io'
+        log 'next'
         next()
         return
-    req.fp = path.join(_path, "views/module/#{req.c.code}")
+    pm = req.params
+    page = pm.page || pm.entity || 'index'
+    if /^\w+$/.test(page)
+    else if /^\w+\.html$/.test(page)
+        req._html = page
+    else
+        rsp.end('name error')
+
+    req.fp = path.join(_path, "public/module/#{req.c.code}")
 
     if page in ['res', 'images']
         rsp.end 'no page'
@@ -90,54 +146,41 @@ checkPage = (req, rsp, next)->
     if fs.existsSync("#{req.fp}/#{page}.jade")
         next()
     else
-        req.fp = path.join(_path, "views")
+        req.fp = path.join(_path, "public/module")
         log "default find the: #{req.fp}/#{page}.jade"
         if fs.existsSync("#{req.fp}/#{page}.jade")
             next()
         else
             rsp.end 'no page'
 
-router.get '/', pre
-router.all '/a/*', pre
-router.all '/r/*', pre
+router.all '/a/*', actPre
+router.all '/r/*', resPre
 
 router.post '/a/upload', up.upload
 router.post '/a/upload/remove', up.remove
-
-
 router.post '/a/cleanCache', data.cleanCache
-
-router.get '/a/captcha', captcha.cap
+#router.get '/a/captcha', captcha.cap
 router.get '/a/smsVerify', sms.getCode
 router.get '/a/checkPhone', sms.checkPhone
 
 router.post '/a/auth/login', auth.login
-#router.post '/a/auth/register', auth.register
 router.post '/a/auth/loginByWoid', auth.loginByWoid
 router.post '/a/auth/logout', auth.logout
 router.post '/a/auth/logoutByWoid', auth.logoutByWoid
-#wechat call
 
 wt = require '../controller/wechat'
-
-
-#router.post '/a/wechat/:cid', wt.createMenu
-
+router.get '/a/wt/userInfoByCode', wt.userInfoByCode
 router.post '/a/wt/uploadNews', wt.uploadNews
 router.post '/a/wt/sendMessNews', wt.sendMessNews
 router.post '/a/wt/removeRes', wt.removeRes
 router.post '/a/wt/sendTest', wt.sendTest
-
 router.post '/a/wt/createMenu', wt.createMenu
 router.post '/a/wt/createLimitQRCode', wt.createLimitQRCode
 router.post '/a/wt/showQRCodeURL', wt.showQRCodeURL
-router.get '/a/wt/userInfoByCode', wt.userInfoByCode
 router.post '/a/wt/jsSign', wt.jsSign
 router.post '/a/wt/wxPay', wt.wxPay
 
-
 router.get '/r/wt/login', wt.login
-
 router.get '/r/c/mg/file/list', up.fileList
 
 router.get '/r/comp', data.comp
@@ -146,42 +189,44 @@ router.get '/r/:entity/:id', data.get
 router.get '/r/:entity/:q/:qv/:prop', data.getSub
 router.get '/r/:entity/:key/:val', data.getByKey
 
-
 router.put '/r/:entity/:id', data.edit
 router.post '/r/:entity', data.save
 router.delete '/r/:entity/:id', data.del
-
 router.post '/r/:type/:entity/:q/:qv/:prop', data.saveSub
 router.post '/a/:type/:entity/:q/:qv/:prop', data.saveSub
-
+router.post '/a/inc/:entity/:id/:prop', data.inc
 router.delete '/a/:type/:entity/:q/:qv/:key', data.delSub
 
-#wechat request
-#wtr = require('wechat')
+router.use '/a/paypal/notify', require '../controller/paypal'
+router.use '/a/wt/notify/:code', wxpay::useWXCallback (msg, req, res)->
+# do biz here
+    res.success()
 
-#router.use express.query
+router.post '/userTrack', (req, rsp)->
+    opt = req.body
+    code = util.del 'code', opt
+    _.extend opt,
+        dateCreated: new Date()
+    if u = req.cookies.__ux
+        [opt.uid,opt.username] = u.split(':')
+    dao.pick(code, 'userTrack').insert opt, {}, (err, docs)->
+    rsp.end 'done'
 
-router.get '/:entity/:attr/:id', pre
-router.get '/:entity/:attr/:id', checkPage
 
-router.get '/:entity/:id', pre
-router.get '/:entity/:id', checkPage
+router.get '/', pre
+router.get '/', checkPage
+router.get '/', page.page
 
 router.get '/:page', pre
 router.get '/:page', checkPage
-
-router.get '/', checkPage
-
-router.get '/', page.page
 router.get '/:page', page.page
+
+router.get '/:entity/:id', pre
+router.get '/:entity/:id', checkPage
 router.get '/:entity/:id', page.entity
+
+router.get '/:entity/:attr/:id', pre
+router.get '/:entity/:attr/:id', checkPage
 router.get '/:entity/:attr/:id', page.entity
-
-router.use '/a/wt/notify/:code', wxpay::useWXCallback (msg, req, res)->
-    # do biz here
-    res.success()
-
-
-router.use '/a/paypal/notify', require '../controller/paypal'
 
 module.exports = router

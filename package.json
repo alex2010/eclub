@@ -19,6 +19,7 @@
     "express-session": "^1.12.1",
     "gm": "~1",
     "jade": "~1",
+    "jquery": "~2",
     "less": "~1",
     "markdown": "^0.5.0",
     "moment": "~2",
@@ -26,6 +27,7 @@
     "morgan": "~1",
     "multer": "~0.1",
     "node-smple-cache": "0.0.0",
+    "node.extend": "^1.1.5",
     "nodemailer": "~1",
     "nodemailer-smtp-transport": "^1.0.3",
     "paypal-ipn": "^3.0.0",
@@ -35,7 +37,9 @@
     "wechat": "~2",
     "wechat-api": "~1",
     "wechat-oauth": "~1",
-    "weixin-pay": "^1.1.6"
+    "weixin-pay": "^1",
+    "socket.io": "~1",
+    "grpc": "^0.13.0"
   },
   "devDependencies": {
     "grunt-contrib-clean": "~0.5.0",

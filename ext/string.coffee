@@ -152,14 +152,6 @@ _.extend Array::,
                 return @[i]
             i++
         null
-#    del: (id) ->
-#        i = 0
-#        while i < @length
-#            if @[i].id == id
-#                @splice i, 1
-#                return @[i]
-#            i++
-#        null
     remove: (val,fz) ->
         i = 0
         while i < @length

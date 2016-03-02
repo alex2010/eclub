@@ -1,8 +1,0 @@
-a.left.carousel-control(href='##{_sid}', role='button', data-slide='prev')
-    span.glyphicon.glyphicon-chevron-left
-a.right.carousel-control(href='##{_sid}', role='button', data-slide='next')
-    span.glyphicon.glyphicon-chevron-right
-
-ol.carousel-indicators
-    each it,i in _slides
-        li(data-target='##{_sid}', data-slide-to= i, class= i == 0 ? 'active' : '')
