@@ -1,10 +1,13 @@
-PROTO_PATH = __dirname + '/../../protos/route_guide.proto'
+PROTO_PATH = __dirname + '/bin/grpc/center.proto'
+log PROTO_PATH
 fs = require('fs')
 parseArgs = require('minimist')
 path = require('path')
 _ = require('lodash')
 grpc = require('grpc')
-routeguide = grpc.load(PROTO_PATH).routeguide
+routeguide = grpc.load(PROTO_PATH).center
+center = grpc.load(PROTO_PATH).center
+
 COORD_FACTOR = 1e7
 
 ###*
@@ -202,11 +205,9 @@ routeChat = (call) ->
 
 getServer = ->
     server = new (grpc.Server)
-    server.addProtoService routeguide.RouteGuide.service,
-        getFeature: getFeature
-        listFeatures: listFeatures
-        recordRoute: recordRoute
-        routeChat: routeChat
+    server.addProtoService routeguide.Center.service,
+        action: action
+        notify: notify
     server
 
 if require.main == module

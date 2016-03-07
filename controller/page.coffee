@@ -88,6 +88,7 @@ pickScript = (ctx, req)->
         require "../public/module/#{ctx.c.code}/i18n/server_#{lang}"
     else
         {}
+
     initOpt = sc._init(ctx, req) || {}
 
     opt = if sc[ctx.index]
@@ -96,6 +97,7 @@ pickScript = (ctx, req)->
         ts[ctx.index](ctx, req) || {}
     else
         {}
+
     opt.i18 = (cb)->
         dao.find ctx.c.code, "i18n", {lang: lang}, {}, (res)->
             for it in res

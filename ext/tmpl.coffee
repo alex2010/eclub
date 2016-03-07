@@ -46,7 +46,7 @@ module.exports =
         "<img id='#{String.randomChar(4)}' class='#{cls} _imgBox' bb-src='#{path}' #{p}/>"
 
     imgItem: (it, c, name = 'head', cls, index = 0, pop)->
-        path = if it and name in ['id','portrait']
+        path = if it and name in ['id', 'portrait']
             "portrait/#{it._id}.jpg"
         else if it and it.refFile and it.refFile[name]
             it.refFile[name][index]
@@ -110,6 +110,10 @@ module.exports =
     btn: (text, act, style = 'default', size, block, etc)->
         cls = cf.style.btn(style, size, block, etc)
         "<button type='button' class='#{cls} #{act}'>#{text || ''}</button>"
+
+    jsp: (k)->
+        args = util.slice.call(arguments)
+        "#{k} = #{JSON.stringify(_.pick.apply(@, args.slice(1)))};"
 
     a: (href, text, cls)->
         str = if href then "href='#{href}' " else ''

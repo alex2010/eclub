@@ -195,9 +195,9 @@ dao.newDb code, ->
             dao.newDb _mdb, ->
                 dao.get _mdb, 'community', {}, ->
                     dao.save _mdb, 'community:name', data.community, ->
-            _.delay ->
-                dao.close _mdb
-            , 1000
+        _.delay ->
+            dao.close _mdb
+        , 1000
         if data.data
             for k, v of data.data
                 if k is 'user:username'
@@ -250,7 +250,9 @@ dao.newDb code, ->
                     ]
                     ad.entities.sortBy 'row', true
                     ad.permission = ['console']
-                dao.save code, k, v
+
+                dao.save code, k, v, ->
+                    log 'saved'
 
         if data.member
             for it in data.member
