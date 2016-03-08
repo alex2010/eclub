@@ -125,7 +125,6 @@ pickSite = (req)->
 
 checkPage = (req, rsp, next)->
     log 'check page'
-    log req.params
     if req.params.page is 'socket.io'
         log 'next'
         next()

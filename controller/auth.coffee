@@ -20,22 +20,26 @@ extendRes = (u, r, name)->
         else
             u[name] = r[name]
         u[name].sortBy 'row', true
+
 afterAuth = (user, req, rsp)->
     code = req.c.code
     dao.find code, 'membership', uid: user._id, {}, (ms)->
         opt =
             _id:
                 $in: (it.rid for it in ms)
+
         dao.find code, 'role', opt, {}, (rs)->
             user.roles = for r in rs
                 title: r.title
                 label: r.label
+
             for role in rs
                 extendRes(user, role, 'menu')
                 extendRes(user, role, 'entities')
                 extendRes(user, role, 'permission')
-                op =
-                    uid: user._id
+
+            op =
+                uid: user._id
 
             dao.find code, 'orgRelation', op, {}, (os)->
                 user.orgs = for r in os
@@ -85,6 +89,8 @@ authController =
 
 
         opt = checkType req.body.username
+        if req.body.fields
+            opt.fields = req.body.fields
         dao.get code, 'user', opt, (user)->
             unless user
                 errAuth rsp
@@ -93,6 +99,7 @@ authController =
                 errAuth rsp
             else
                 delete user.password
+                log user
                 afterAuth user, req, rsp
 #                dao.find code, 'membership', uid: user._id, {}, (ms)->
 #                    opt =

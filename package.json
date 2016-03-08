@@ -18,10 +18,12 @@
     "express": "~4.12.2",
     "express-session": "^1.12.1",
     "gm": "~1",
+    "grpc": "^0.13.0",
     "jade": "~1",
     "jquery": "~2",
     "less": "~1",
     "markdown": "^0.5.0",
+    "minimist": "^1.2.0",
     "moment": "~2",
     "mongodb": "~2",
     "morgan": "~1",
@@ -33,13 +35,12 @@
     "paypal-ipn": "^3.0.0",
     "request": "^2.57.0",
     "serve-favicon": "~2.2.0",
+    "socket.io": "~1",
     "underscore": "~1",
     "wechat": "~2",
     "wechat-api": "~1",
     "wechat-oauth": "~1",
-    "weixin-pay": "^1",
-    "socket.io": "~1",
-    "grpc": "^0.13.0"
+    "weixin-pay": "^1"
   },
   "devDependencies": {
     "grunt-contrib-clean": "~0.5.0",

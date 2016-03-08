@@ -130,6 +130,4 @@ module.exports = ->
     @close = (name)->
         log 'closed ' + name
         _db[name]?.close()
-
-
     @
