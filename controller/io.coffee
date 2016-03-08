@@ -10,23 +10,23 @@ io.on 'connection', (st) ->
     st.on 'r:update', (d)->
 
     st.on 'r:read', (d, c)->
-        rg.action 'RoomListRequest', d, (res)->
-            rt =
-                entities: [
-                    _e: 'post'
-                    title: 'zzz'
-                    username: 'zz'
-                ,
-                    _e: 'post'
-                    title: 'zbbbb'
-                    username: 'zz'
-                ,
-                    _e: 'post'
-                    title: 'zzzb'
-                    username: 'zz'
-                ]
-                count: 3
-            c null, rt
+        op =
+            uid: 1
+            cid: '2'
+        rg.action 'LineOn', op, (e, res)->
+            c null, entities: [
+                _e: 'post'
+                title: 'zzz'
+                username: 'zz'
+            ,
+                _e: 'post'
+                title: 'zbbbb'
+                username: 'zz'
+            ,
+                _e: 'post'
+                title: 'zzzb'
+                username: 'zz'
+            ]
     #            rg.find d._e, d.p, d.q, (rt, cb)->
     #                log cb
     #                st.emit 'r:read:rt',

@@ -44,8 +44,10 @@ dao.newDb code, ->
     if args.length > 3
         if args[3] is '-p'
             app.env = false
+            entity = ''
         else
             entity = args[3]
+
     if entity
         filter = if entity in ['user', 'role']
             x: 'x'

@@ -1,30 +1,30 @@
-PROTO_PATH = __dirname + '/bin/grpc/center.proto'
-async = require('async')
-fs = require('fs')
-parseArgs = require('minimist')
-path = require('path')
-_ = require('underscore')
+#PROTO_PATH = __dirname + '/center.proto'
+PROTO_PATH = '/Users/alex/Pictures/grpc/center/center.proto'
 grpc = require('grpc')
-#routeguide = grpc.load(PROTO_PATH).routeguide
 center = grpc.load(PROTO_PATH).center
-client = new (center.Center)('localhost:50051', grpc.credentials.createInsecure())
+client = new (center.Center)('10.60.82.117:12201', grpc.credentials.createInsecure())
 
+#log client.action 'LineOn', {uid:1,cid:2}, ->
+#    log 'zzzzz'
 ###*
 # Run the getFeature demo. Calls getFeature with a point known to have a
 # feature and a point known not to have a feature.
 # @param {function} callback Called when this demo is complete
 ###
 module.exports =
-    action: (ent, p, opt)->
-        client.action ent, p, opt, ->
-            log 'call back from grpc'
+    action: (name, opt, cb)->
+        opt =
+            command: name
+            params: JSON.stringify opt
+        client.action opt, cb
+
+#        name, opt, ->
+#            log 'call back from grpc'
 
     notify: ()->
         client.notify ent, p, opt, ->
             log 'call back from grpc'
-#
-#
-#
+
 #runGetFeature = (callback) ->
 #    next = _.after(2, callback)
 #    point1 =
