@@ -79,12 +79,12 @@ module.exports = (grunt)->
     #        #public
 
     grunt.registerTask 'bk', (code, mode, type = 'ftp') ->
-        setting = require "#{__dirname}/views/module/#{code}/script/setting.js"
+        setting = require "#{__dirname}/public/module/#{code}/script/setting.js"
 
         bStr = if mode
-            "views/module/#{code},views/module/#{code}/script,views/module/#{code}/script/data,views/module/#{code}/data,views/module/#{code}/i18n"
+            "public/module/#{code},public/module/#{code}/script,public/module/#{code}/inc,public/module/#{code}/script/data,public/module/#{code}/data,public/module/#{code}/i18n"
         else
-            "./,views,routes,ext,controller,bin,service"
+            "./,public,public/_inc,public/_inc/mod,routes,ext,controller,bin,service"
         _remote = setting.upload_path
         _remoteRes = "#{_remote}res/"
         if type is 'ftp'
