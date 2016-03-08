@@ -1,0 +1,26 @@
+syntax = "proto2";
+
+//import "pvp/grpc/common/common.proto";
+
+package center;
+
+service Center {
+  rpc Action(ActionRequest) returns(ActionReply) {}
+  rpc Notify(Request) returns (stream Reply) {}
+}
+message Request {
+}
+
+message Reply{
+    required int32 ret = 1;
+}
+
+message ActionRequest {
+	required string command = 1;
+    required string params = 2;
+}
+
+message ActionReply {
+    required int32 ret = 1;
+    optional string data = 2;
+}
