@@ -32,7 +32,6 @@
     "node.extend": "^1.1.5",
     "nodemailer": "~1",
     "nodemailer-smtp-transport": "^1.0.3",
-    "ns": "^1.0.2",
     "paypal-ipn": "^3.0.0",
     "request": "^2.57.0",
     "serve-favicon": "~2.2.0",
