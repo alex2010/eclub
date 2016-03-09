@@ -183,6 +183,14 @@ module.exports =
             tag.on(cfg.action.type || 'click', cfg.action.fun)
         tag
 
+    lt: (obj, sc, ets, fun, tag='span')->
+        log obj
+        id = util.randomChar(4)
+        st = "<#{tag} id='#{id}'></#{tag}>"
+        obj.listenTo sc, ets, ->
+            $('##{id}').html fun.apply(obj, arguments)
+        st
+
     iClass: (val, cls)->
 #        "#{cf.style.iconStr} #{cf.style.iconStr}-#{val} #{cls || ''}"
         "glyphicon glyphicon-#{val} #{cls || ''}"
