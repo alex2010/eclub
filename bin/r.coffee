@@ -40,7 +40,7 @@ onListening = ->
 server = http.createServer(app);
 `
 
-require '../controller/io'
+#require '../controller/io'
 
 server.listen port
 server.on 'error', onError
