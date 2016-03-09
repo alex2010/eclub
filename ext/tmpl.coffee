@@ -184,11 +184,15 @@ module.exports =
         tag
 
     lt: (obj, sc, ets, fun, tag='span')->
-        log obj
+        log 'bingding'
         id = util.randomChar(4)
         st = "<#{tag} id='#{id}'></#{tag}>"
         obj.listenTo sc, ets, ->
-            $('##{id}').html fun.apply(obj, arguments)
+            log obj
+            log 'zzz'
+            log arguments
+            log fun.apply(obj, arguments)
+            $("##{id}").html fun.apply(obj, arguments)
         st
 
     iClass: (val, cls)->
