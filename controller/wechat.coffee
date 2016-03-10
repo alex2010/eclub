@@ -31,7 +31,6 @@ module.exports =
 
     createMenu: (req, rsp)->
         getApi req.body.code, req.body.pubCode, (api)->
-            log api
             api.createMenu req.body.menu, (err, res) ->
                 log err if err
                 rsp.send res
@@ -227,7 +226,6 @@ module.exports =
             rsp.redirect "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{appId}&redirect_uri=#{encodeURIComponent("http://#{req.c.url}/a/wt/userInfoByCode")}&response_type=code&scope=#{scope}&state=#{state}#wechat_redirect"
 
     userInfoByCode: (req, rsp)->
-        log 'userInfoByCode'
         qy = req.query
         [wCode,page,func] = decodeURI(qy.state).split('::')
         code = req.c.code

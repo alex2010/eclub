@@ -4,8 +4,6 @@ grpc = require('grpc')
 center = grpc.load(PROTO_PATH).center
 client = new (center.Center)('10.60.82.117:12201', grpc.credentials.createInsecure())
 
-#log client.action 'LineOn', {uid:1,cid:2}, ->
-#    log 'zzzzz'
 ###*
 # Run the getFeature demo. Calls getFeature with a point known to have a
 # feature and a point known not to have a feature.

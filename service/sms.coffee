@@ -22,10 +22,8 @@ send = (phone, msg, key)->
     req = https.request options, (res) ->
         res.setEncoding 'utf8'
         res.on 'data', (chunk) ->
-            console.log JSON.parse(chunk)
             return
         res.on 'end', ->
-            console.log 'over'
             return
         return
 

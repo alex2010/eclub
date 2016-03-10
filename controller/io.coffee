@@ -38,7 +38,6 @@ io.on 'connection', (st) ->
     #                    max: 20
 
     st.on 'r:delete', (d)->
-        log d
         st.emit 'news', hell: 'o'
 
 
