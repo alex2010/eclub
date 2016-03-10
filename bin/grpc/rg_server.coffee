@@ -1,5 +1,4 @@
 PROTO_PATH = __dirname + '/bin/grpc/center.proto'
-log PROTO_PATH
 fs = require('fs')
 parseArgs = require('minimist')
 path = require('path')

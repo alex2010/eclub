@@ -5,7 +5,6 @@ module.exports = (req, item)->
     code = req.c.code
     entity = req.params.entity
     mark = false
-    log item.refFile
     for k, v of item.refFile
         if _.isArray v
             for it,i in v
@@ -28,7 +27,6 @@ module.exports = (req, item)->
         so =
             $set:
                 refFile: item.refFile
-        log item.refFile
         dao.findAndUpdate code, entity, _id: item._id, so, ->
 
 

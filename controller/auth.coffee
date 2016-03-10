@@ -99,7 +99,6 @@ authController =
                 errAuth rsp
             else
                 delete user.password
-                log user
                 afterAuth user, req, rsp
 #                dao.find code, 'membership', uid: user._id, {}, (ms)->
 #                    opt =
