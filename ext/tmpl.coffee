@@ -103,7 +103,6 @@ module.exports =
     actDate: (start, end)->
         "#{start.substr(0, 16)}-#{end.substr(11, 5)}"
 
-
     label: (text, cls = 'success')->
         "<span class='label label-#{cls}'>#{text}</span>"
 
