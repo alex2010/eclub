@@ -9,7 +9,6 @@ cache = require("node-smple-cache/Cache")
 #events 消除回调金字塔
 #events = require('events');
 
-
 _cc = new require('./service/cc')
 
 EventEmitter = require('events').EventEmitter

@@ -64,8 +64,8 @@ module.exports = ->
                 op.sort[k] = +(v)
         else
             op.sort =
-                row: -1
                 lastUpdated: -1
+                row: -1
 
         @pick(db, entity).find(filter, op).toArray (err, docs)->
             for it in docs

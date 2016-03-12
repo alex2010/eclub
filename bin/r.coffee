@@ -39,8 +39,19 @@ onListening = ->
 `
 server = http.createServer(app);
 `
+args = null
+process.argv.forEach (val, index, array)->
+    args = array
 
-#require '../controller/io'
+#_code:pvp
+
+for it in args
+    if it.startsWith '_code'
+        cc = it.split(':')[1]
+        break
+
+if cc is 'pvp'
+    require '../public/module/pvp/server/io'
 
 server.listen port
 server.on 'error', onError
