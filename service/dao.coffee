@@ -8,8 +8,10 @@ oid = require('mongodb').ObjectID
 Db = Mongodb.Db
 Connection = Mongodb.Connection
 Server = Mongodb.Server
-
-#log = console.log
+opt =
+    socketOptions:
+        keepAlive: 1
+        connectTimeoutMS: 30000
 _opt = {w: 1}
 module.exports = ->
     @newDb = (name, callback)->
@@ -21,8 +23,8 @@ module.exports = ->
             s = (if name == 'main'
                 require("../setting")
             else
-                require("../views/module/#{name}/script/setting"))
-        db = new Db(name, new Server(s.db_host, s.db_port)) #, safe: true
+                require("../public/module/#{name}/script/setting"))
+        db = new Db(name, new Server(s.db_host, s.db_port, opt)) #, safe: true
         _db[name] = db
         db.open ->
             callback?()
@@ -38,6 +40,7 @@ module.exports = ->
             db = _db[name]
             unless db
                 db = @newDb name, ->
+                    log 'open ' + name
             @collection = db.collection cName
             @name = name
             @cName = cName
@@ -54,7 +57,7 @@ module.exports = ->
         filter = @cleanOpt(filter)
 
         @pick(db, entity).findOne filter, opt, (err, doc)->
-            log err if err
+            throw err if err
             doc._e = entity if doc
             callback?(doc)
 
@@ -82,7 +85,7 @@ module.exports = ->
 
     @count = (db, entity, opt, callback)->
         @pick(db, entity).count opt, (err, count)->
-            log err if err
+            throw err if err
             callback(count)
 
     @qc = (db, entity, q, op)->
@@ -92,7 +95,7 @@ module.exports = ->
         filter = @cleanOpt(filter)
         delete opt._id
         @pick(db, entity).findAndModify filter, null, opt, {upsert: true, new: true}, (err, doc)->
-            log err if err
+            throw err if err
             item = doc.value
             callback?(item)
 
@@ -104,12 +107,12 @@ module.exports = ->
             keys = keys.split(',')
             for it in items
                 filter = _.pick(it, keys)
-                @pick(db, entity).update filter, it, upsert: true, (err, docs)->
+                @pick(db, entity).update filter, it, {upsert: true}, (err, docs)->
                     throw err if err
                     callback?(docs.ops)
         else
             @pick(db, entity).insert items, {safe: true}, (err, docs)->
-                log err if err
+                throw err if err
                 callback?(docs.ops)
 
     @del = ()->
@@ -121,7 +124,7 @@ module.exports = ->
         else
             m = 'deleteMany'
         @pick(db, entity)[m] filter, opt, (err, res)->
-            log err if err
+            throw err if err
             callback?(res)
 
     @remove = (db, entity, filter, opt = _opt, callback)->
@@ -130,4 +133,5 @@ module.exports = ->
     @close = (name)->
         log 'closed ' + name
         _db[name]?.close()
+        _db[name] = null
     @

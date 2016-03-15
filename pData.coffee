@@ -25,8 +25,6 @@ process.argv.forEach (val, index, array)->
 `
 require('./ext/string')
 dao = new require('./service/dao')()
-#dao.pick('main', 'cache')
-#dao.pick(code, 'post')
 
 addMember = (username, title)->
     dao.findAndUpdate code, 'user', {username: username}, {username: username, password: _psd}, (u)->
@@ -40,24 +38,19 @@ addMember = (username, title)->
                         role: title
                     dao.save code, "membership:uid,rid", mOpt, ->
 
-dao.newDb code, ->
-    if args.length > 3
-        if args[3] is '-p'
-            app.env = false
-            entity = null
-        else
-            entity = args[3]
+log 'db started'
 
-    if entity
-        log 'with entity'
+if args.length > 3
+    if args[3] is '-p'
+        app.env = false
+        entity = null
     else
-        data = require("./public/module/#{code}/script/data")
-        if data.community
-            dao.newDb _mdb, ->
-                dao.get _mdb, 'community', {}, ->
-                    dao.save _mdb, 'community:name', data.community, ->
-                        dao.close _mdb
+        entity = args[3]
+        return
 
+data = require("./public/module/#{code}/script/data")
+dao.newDb _mdb, ->
+    dao.newDb code, ->
         if data.data
             for k, v of data.data
                 if k is 'user:username'
@@ -112,7 +105,7 @@ dao.newDb code, ->
                     ad.permission = ['console']
 
                 dao.save code, k, v, ->
-                    log 'saved'
+                    log 'saved ' + k
 
         if data.member
             for it in data.member
@@ -121,5 +114,6 @@ dao.newDb code, ->
 
 _.delay ->
     dao.close(code)
-, 4000
+    dao.close(_mdb)
+, 5000
 
