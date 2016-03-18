@@ -40,12 +40,16 @@ module.exports =
             href: '/'
         ].concat items
 
-    img: (path, cls = 'avatar', pop = false, p)->
+    img: (path, cls = 'avatar', pop = false, p, isbb = true)->
         p ?=''
         p += if pop then " onclick='cf.showPic(this)'" else ''
-        "<img id='#{String.randomChar(4)}' class='#{cls} _imgBox' bb-src='#{path}' #{p}/>"
+        src = if isbb
+            'bb-src'
+        else
+            'src'
+        "<img id='#{String.randomChar(4)}' class='#{cls} _imgBox' #{src}='#{path}' #{p}/>"
 
-    imgItem: (it, c, name = 'head', cls, index = 0, pop)->
+    imgItem: (it, c, name = 'head', cls, index = 0, pop, isbb)->
         path = if it and name in ['id', 'portrait']
             "portrait/#{it._id}.jpg"
         else if it and it.refFile and it.refFile[name]
@@ -53,7 +57,7 @@ module.exports =
         else
             null
         if path
-            @img @resPath(c, path), cls, pop
+            @img @resPath(c, path), cls, pop, null, isbb
         else
             ''
 

@@ -75,13 +75,14 @@ module.exports =
         code = req.c.code
         wCode = req.body.account
         getApi code, wCode, (api)->
-            async.each req.body.res.split('::'), (n, cb)->
+            ret = ->
+                rsp.send
+                    success: true
+                    msg: '删除成功'
+            proc = (n, cb)->
                 api.removeMaterial n, ->
-                        cb()
-                ,->
-                    rsp.send
-                        success: true
-                        msg: '删除成功'
+                    cb()
+            async.each req.body.res.split('::'), proc, ret
 
     sendMessNews:(req,rsp)->
         code = req.c.code
