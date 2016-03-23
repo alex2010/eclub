@@ -30,6 +30,7 @@
     "morgan": "~1",
     "multer": "~0.1",
     "node-int64": "^0.4.0",
+    "node-schedule": "^1.1.0",
     "node-smple-cache": "0.0.0",
     "node.extend": "^1.1.5",
     "nodemailer": "~1",
