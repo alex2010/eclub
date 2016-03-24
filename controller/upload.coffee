@@ -1,5 +1,4 @@
 multer = require('multer')
-fs = require('fs')
 gm = require('gm')
 getApi = require './wechat'
 `

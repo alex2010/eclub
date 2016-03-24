@@ -1,5 +1,4 @@
 express = require('express')
-path = require('path')
 favicon = require('serve-favicon')
 logger = require('morgan')
 cookieParser = require('cookie-parser')
@@ -17,6 +16,7 @@ EventEmitter = require('events').EventEmitter
     _ = require('underscore');
     async = require('async');
     fs = require('fs');
+    path = require('path');
     app = express();
     app.env = app.get('env') == 'development';
     //app.setting = require('./setting');

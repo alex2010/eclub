@@ -5,6 +5,7 @@ auth = require '../controller/auth'
 data = require '../controller/data'
 page = require '../controller/page'
 up = require '../controller/upload'
+mgm = require '../controller/mgm'
 #captcha = require '../controller/captcha'
 sms = require '../controller/sms'
 
@@ -179,6 +180,8 @@ router.post '/a/wt/showQRCodeURL', wt.showQRCodeURL
 router.post '/a/wt/jsSign', wt.jsSign
 router.post '/a/wt/wxPay', wt.wxPay
 
+router.post '/a/site/gen/:id', mgm.genSite
+
 router.get '/r/wt/login', wt.login
 router.get '/r/c/mg/file/list', up.fileList
 
@@ -197,6 +200,7 @@ router.post '/a/inc/:entity/:id/:prop', data.inc
 router.delete '/a/:type/:entity/:q/:qv/:key', data.delSub
 
 router.use '/a/paypal/notify', require '../controller/paypal'
+
 router.use '/a/wt/notify/:code', wxpay::useWXCallback (msg, req, res)->
 # do biz here
     res.success()
