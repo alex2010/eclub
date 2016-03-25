@@ -8,6 +8,7 @@ up = require '../controller/upload'
 mgm = require '../controller/mgm'
 #captcha = require '../controller/captcha'
 sms = require '../controller/sms'
+batch = require '../controller/batch'
 
 wxpay = require('weixin-pay')
 
@@ -117,7 +118,11 @@ pre = (req, rsp, next)->
             next()
 
 pickSite = (req)->
-    if qc = req.cookies._code
+#    if qc = req.cookies._code
+#        for k,v of app._community
+#            if v.code is qc
+#                return v
+    if qc = req.query._code
         for k,v of app._community
             if v.code is qc
                 return v
@@ -179,6 +184,8 @@ router.post '/a/wt/createLimitQRCode', wt.createLimitQRCode
 router.post '/a/wt/showQRCodeURL', wt.showQRCodeURL
 router.post '/a/wt/jsSign', wt.jsSign
 router.post '/a/wt/wxPay', wt.wxPay
+
+router.post '/a/batch/add/:entity', batch.add
 
 router.post '/a/site/gen/:id', mgm.genSite
 

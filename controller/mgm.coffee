@@ -9,9 +9,8 @@ copyRecursiveSync = (src, dest, cb) ->
         fs.readdirSync(src).forEach (childItemName) ->
             copyRecursiveSync path.join(src, childItemName), path.join(dest, childItemName), cb
     else
-        fs.linkSync src, dest
-        cb?(dest)
-
+        fs.link src, dest,->
+            cb?(dest)
 
 module.exports =
     genSite: (req, rsp)->
@@ -24,12 +23,13 @@ module.exports =
                 msg: '目录已经存在'
         else
             copyRecursiveSync "#{pp}_tmpl", dest, (str)->
-                log str
-                fs.readFile str, 'utf-8', (err, data)->
-                    throw err if err
-                    log data
-                    fs.writeFile dest, str.replaceAll('${code}', code), (err)->
-                        throw err
+                if fs.statSync(str).isFile()
+                    fs.readFile str, 'utf-8', (err, data)->
+                        throw err if err
+                        if data.indexOf("#code") > -1
+                            log data.replaceAll('#code', code)
+                            fs.writeFile str, data.replaceAll('#code', code), (err)->
+                                throw err if err
             rsp.send
                 success: true
                 msg: '生产成功'

@@ -135,10 +135,12 @@ module.exports =
                                         _.extend ctx, et
                                         path = "#{_path}/public/module/#{code}/wechat/#{tmpl}.jade"
                                         ccc = jade.renderFile path, ctx
+
                                         if styles
                                             for k,v of styles
                                                 ccc = ccc.replaceAll("<#{k}>", "<#{k} style='#{v}'>")
                                         ccc = ccc.replaceAll "bb-src", 'src'
+                                        ccc = ccc.replace(/[\r\n]/g, "")
                                         n.content = ccc
 
                                         # pick img
