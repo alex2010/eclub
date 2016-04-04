@@ -118,6 +118,9 @@ module.exports =
         args = util.slice.call(arguments)
         "#{k} = #{JSON.stringify(_.pick.apply(@, args.slice(1)))};"
 
+    pCenter: (ct,cls='mt')->
+        "<p class='text-center #{cls||''}'>#{ct}</p>"
+
     a: (href, text, cls)->
         str = if href then "href='#{href}' " else ''
         str += if cls then "class='#{cls}' " else ''

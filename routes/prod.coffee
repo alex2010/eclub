@@ -6,7 +6,7 @@ data = require '../controller/data'
 page = require '../controller/page'
 up = require '../controller/upload'
 mgm = require '../controller/mgm'
-#captcha = require '../controller/captcha'
+captcha = require '../controller/captcha'
 sms = require '../controller/sms'
 batch = require '../controller/batch'
 
@@ -164,7 +164,7 @@ router.all '/r/*', resPre
 router.post '/a/upload', up.upload
 router.post '/a/upload/remove', up.remove
 router.post '/a/cleanCache', data.cleanCache
-#router.get '/a/captcha', captcha.cap
+router.get '/a/captcha', captcha.cap
 router.get '/a/smsVerify', sms.getCode
 router.get '/a/checkPhone', sms.checkPhone
 
@@ -186,6 +186,7 @@ router.post '/a/wt/jsSign', wt.jsSign
 router.post '/a/wt/wxPay', wt.wxPay
 
 router.post '/a/batch/add/:entity', batch.add
+router.post '/a/batch/del/:entity', batch.del
 
 router.post '/a/site/gen/:id', mgm.genSite
 

@@ -1,18 +1,5 @@
 async = require('async')
-
-
-
-#ee.on 'entity_save', (entity, bo)->
-#    log entity
-#    log bo
-#
-#ee.on 'entity_delete', (entity, bo)->
-#    log entity
-#    log bo
-#
-#ee.on 'entity_query', (entity, bo)->
-#    log entity
-#    log bo
+queryUtil = require './queryUtil'
 
 attrs = (attr)->
     op = {}
@@ -21,63 +8,9 @@ attrs = (attr)->
         op[it] = 1
     op
 
-isOid = (v)->
-    _.isString(v) and v.length is 24 and /^(\d|[a-z]){24}$/.test(v)
-#    k.indexOf('_id')>-1 or (k.endsWith('id') and k.length is 3 and k isnt 'wid')
-
-_wkt = (obj, fu)->
-    for k, v of obj
-        if _.isArray(v) and k is '$or'
-            for it in v
-                if _.isObject(it)
-                    for kk,vv of it
-                        if vv['$exists'] and vv['$exists'] is 'false'
-                            vv['$exists'] = false
-        else if v and v.$in
-            v.$in =
-                for it in v.$in
-                    if isOid(v) then new oid(it) else it
-        else if k is 'price' and _.isObject v
-            for kk, vv of v
-                v[kk] = +vv
-        else if _.isObject(v) and !_.isArray(v) and !_.isFunction(v)
-            arguments.callee(v, fu)
-        else
-            fu(v, k, obj)
-
-_cv = (v, k, obj)->
-    if k.charAt(0) is '_' and k isnt '_id'
-        delete obj[k]
-    else
-        obj[k] = if isOid(v)
-            new oid(v)
-        else if k in ['status', 'row']
-            +v
-        else if v is 'true'
-            true
-        else if v is 'false' and k isnt 'gender'
-            false
-        else if k is 'password' and v.length < 40
-            util.sha256(v)
-        else if /^\d{4}-\d{1,2}-\d{1,2}/.test(v) and v.length < 25
-            Date.parseLocal(v)
-        else
-            v
-
 _afterEdit = (item, entity)->
     if entity is 'community'
         app._community[item.url] = item
-
-buildQuery = (q)->
-    _wkt q, _cv
-    q
-
-cleanItem = (q, isNew)->
-    if isNew
-        q.dateCreated = new Date()
-    q.lastUpdated = new Date()
-    _wkt q, _cv
-    q
 
 dataController =
     comp: (req, rsp) ->
@@ -120,7 +53,7 @@ dataController =
         if qu._attrs
             op.fields = attrs util.d qu, '_attrs'
 
-        q = buildQuery qu.q
+        q = queryUtil.buildQuery qu.q
 
         entity = req.params.entity
         dao.find code, entity, q, op, (entities)->
@@ -144,7 +77,7 @@ dataController =
             op._id = req.params.id
         if op._attrs
             op.fields = attrs util.d op, '_attrs'
-        op = buildQuery op
+        op = queryUtil.buildQuery op
         dao.get code, entity, op, (item)->
             rsp.send util.r(item, null, entity)
 
@@ -195,7 +128,8 @@ dataController =
             bo._attrs.split(',')
         else
             _.keys(bo)
-        cleanItem(bo)
+
+        queryUtil.cleanItem(bo)
 
         bo =
             $set: bo
@@ -232,7 +166,7 @@ dataController =
         else
             _.keys(bo)
 
-        cleanItem(bo, true)
+        queryUtil.cleanItem(bo, true)
 
         dao.save code, entity, bo, (item)->
             for s in item
@@ -294,7 +228,7 @@ dataController =
             $.extend qs, bo._q
             delete bo._q
         _rsMsg = bo._rsMsg
-        bo = cleanItem bo
+        bo = queryUtil.cleanItem bo
 
         op = {}
         rt = bo._root
@@ -305,6 +239,5 @@ dataController =
         op["$#{req.params.type}"][req.params.prop] = bo
         dao.findAndUpdate code, entity, qs, op, (doc)->
             rsp.send util.r(doc, _rsMsg || 'm_create_ok')
-
 
 module.exports = dataController

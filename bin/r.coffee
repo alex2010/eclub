@@ -45,15 +45,26 @@ process.argv.forEach (val, index, array)->
 
 #_code:pvp
 
-for it in args
-    if it.startsWith '_code'
-        cc = it.split(':')[1]
-        break
-
-if cc is 'pvp'
-    require '../public/module/pvp/server/io'
+pp = _path+'/public/module/'
+log pp
+fs.readdirSync(pp).forEach (it)->
+    if fs.statSync(pp + it).isDirectory() and !it.startsWith('_')
+        ppp = "#{pp+it}/server/extend.js"
+        fs.stat ppp, (err, stat)->
+            unless err
+                require ppp
+#log 'zzz1'
+#for it in args
+#    log it
+#    if it.startsWith '_code'
+#        cc = it.split(':')[1]
+#        break
+#if cc
+#    log cc
+#    require "../public/module/#{cc}/server/extend"
 
 server.listen port
 server.on 'error', onError
 server.on 'listening', onListening
+
 

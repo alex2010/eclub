@@ -4,8 +4,7 @@ wechat = require 'wechat'
     _wtHandler = {};
 `
 
-func =
-    doMatch: (k, rsp)->
+_wtFunc.doMatch =  (k, rsp)->
         filter = if k.indexOf '@' > -1
             email: k
         else if +k
@@ -20,38 +19,43 @@ func =
                 rsp.reply '用户为找到'
 
 
-handleOp = (item, req, rsp)->
+handleOp = (item, req, rsp, msg = {})->
+    code = req.params.code
     switch item.type
         when 'text'
             rsp.reply item.content
         when 'page'
 #            unless item.imgUrl
 #                item.imgUrl = req.c.resPath + 'images/wechat_reply.png'
+            sp = if item.content.indexOf('?') > -1
+                '&'
+            else
+                '?'
             rsp.reply [
                 title: item.title
                 description: item.help
                 picurl: item.imgUrl
-                url: item.content
+                url: item.content+"#{sp}wuCode=#{msg.FromUserName}"
             ]
         when 'func'
-            [key,params] = item.Content.split(' ')
-            if func[key]
-                func[key](params, rsp)
+            [key,params] = item.content.split(' ')
+            if _wtFunc[code] and _wtFunc[code][key]
+                _wtFunc[code][key](params, rsp, msg)
         when 'script'
             log item.content
         else
             rsp.reply 'no match'
 
 
-agentOp = (code, req, rsp)->
+agentOp = (code, req, rsp, msg)->
     cd = req.params.code
     dao.get cd, 'agentOp', code: code, (res)->
         if res
-            handleOp res, req, rsp
+            handleOp res, req, rsp, msg
         else
             dao.get cd, 'agentOp', code: 'subscribe',(res)->
                 if res
-                    handleOp res, req, rsp
+                    handleOp res, req, rsp, msg
                 else
                     rsp.reply 'no found'
 
@@ -63,7 +67,7 @@ event = (msg, req, rsp) ->
                 uid: evtKey.split('_')[1]
                 woid: msg.FromUserName
                 status: 1
-        agentOp msg.Event, req, rsp
+        agentOp msg.Event, req, rsp, msg
 
     else if msg.Event is 'unsubscribe'
         filter =
@@ -71,11 +75,11 @@ event = (msg, req, rsp) ->
         dao.findAndUpdate req.params.code, 'subscriber', filter, status: 0, (res)->
 
     else if msg.Event is 'CLICK'
-        agentOp evtKey, req, rsp
+        agentOp evtKey, req, rsp, msg
 
 
 text = (msg, req, rsp) ->
-    agentOp msg.Content, req, rsp
+    agentOp msg.Content, req, rsp, msg
 
 handler = (code, ctn)->
     dao.get code, 'pubAccount', {}, (item)->
@@ -83,6 +87,7 @@ handler = (code, ctn)->
             token: "#{code}z2013h"
             appid: item.appId
             encodingAESKey: item.aes
+
         ctn[code] = wechat(opt).text(text).event(event)
 
 #---------------------------------------------------------------------#
@@ -96,8 +101,8 @@ app.post '/wechat/:code', (req, rsp)->
         _wtHandler[code].middlewarify()(req, rsp)
     else
         handler code, _wtHandler
-        rsp.send 'System init, please send again.'
 
+#        rsp.send 'System init, please send again.'
 #wtreg[code] = require("../views/module/#{code}/script/wt")(code)
 #opt = wechat cfg
 #    .text (msg, req, res, next) ->

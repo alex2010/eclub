@@ -209,6 +209,7 @@ module.exports =
 #                    rsp.send res
 
     login: (req, rsp)->
+        log 'wechat login'
         code = req.c.code
 
         qy = req.query
@@ -229,6 +230,7 @@ module.exports =
             rsp.redirect "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{appId}&redirect_uri=#{encodeURIComponent("http://#{req.c.url}/a/wt/userInfoByCode")}&response_type=code&scope=#{scope}&state=#{state}#wechat_redirect"
 
     userInfoByCode: (req, rsp)->
+        log 'userInfoByCode'
         qy = req.query
         [wCode,page,func] = decodeURI(qy.state).split('::')
         code = req.c.code

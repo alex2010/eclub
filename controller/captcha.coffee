@@ -9,5 +9,3 @@ module.exports =
             expires: new Date(Date.now() + s)
             path: req.query.p
         rsp.end(buf)
-
-

@@ -5,9 +5,6 @@ cookieParser = require('cookie-parser')
 bodyParser = require('body-parser')
 cache = require("node-smple-cache/Cache")
 
-#events 消除回调金字塔
-#events = require('events');
-
 _cc = new require('./service/cc')
 
 EventEmitter = require('events').EventEmitter
@@ -35,6 +32,7 @@ EventEmitter = require('events').EventEmitter
     wtCtn = {};
     ctCtn = {};
     _wtcCtn = {};
+    _wtFunc = {};
     _ePool = {};
     cc = new _cc();
 `
@@ -53,7 +51,6 @@ app.use cookieParser()
 
 
 app.use express.static(path.join(__dirname, 'public'))
-#app.use express.static(path.join(__dirname, 'public'))
 #app.use express.static(path.join(__dirname, 'public/res'))
 if app.env
     app.use '/res/*', (req, res, next)->

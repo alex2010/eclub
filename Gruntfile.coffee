@@ -2,7 +2,6 @@
 #
 #log setting
 
-
 String::replaceAll = (s1, s2)->
     this.replace(new RegExp(s1, "gm"), s2);
 
@@ -35,14 +34,25 @@ module.exports = (grunt)->
         grunt.initConfig {}
 
     #------------------------------------------backend-------------------------------------------------
-    backFiles = (nstr)->
+    backFiles = (nstr, dest = _remote)->
+
+        fds = if typeof nstr == "string"
+            nstr.split(',')
+        else
+            nstr
         res = []
-        for it in nstr.split(',')
-            res.push
-                expand: true
-                cwd: it
-                src: ['*.js', '*.json', '*.jade', 'inc/*.jade']
-                dest: _remote + "#{if it is './' then '' else it}"
+
+        for it in fds
+            if it.indexOf('.js') > -1
+                res.push
+                    src: it
+                    dest: dest + "#{if it is './' then '' else it}"
+            else
+                res.push
+                    expand: true
+                    cwd: it
+                    src: ['*.js', '*.css', '*.json', '*.ico', '*.jade', '.bowerrc','*.woff2','*.svg','*.ttf','*.eot']
+                    dest: dest + "#{if it is './' then '' else it}"
         res
 
     grunt.registerTask 'pack', () ->
@@ -77,6 +87,39 @@ module.exports = (grunt)->
     ##       controller,ext,bin,./ .js
     #        #views .jade
     #        #public
+
+    grunt.registerTask 'ex', (code, dCode = code) ->
+        grunt.log.write code
+        str = "./,routes,ext,controller,bin,service,public,public/module,public/module/#{code},public/module/#{code}/inc,public/module/#{code}/script,public/module/#{code}/script/data,public/module/#{code}/i18n"
+        str = [
+            './'
+            'routes'
+            'ext'
+            'controller'
+            'bin'
+            'service'
+            'public'
+            'public/module'
+            'public/module/_inc'
+            "public/module/#{code}"
+            "public/module/#{code}/inc"
+            "public/module/#{code}/script"
+            "public/module/#{code}/script/data"
+            "public/module/#{code}/i18n"
+            "public/module/#{code}/server"
+            "public/module/console/i18n/zh.js"
+            "public/lib/meta/common.js"
+            "public/res/upload/#{code}/lib"
+            "public/res/upload/#{code}/lib/console"
+        ]
+
+        grunt.config.init
+            copy:
+                mod:
+                    files: backFiles(str, "#{_remote}dist/#{dCode}/")
+
+
+        grunt.task.run "copy:mod"
 
     grunt.registerTask 'bk', (code, mode, type = 'ftp') ->
         setting = require "#{__dirname}/public/module/#{code}/script/setting.js"

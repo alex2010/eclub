@@ -4,5 +4,5 @@ module.exports = (req, user)->
         delete req.body.captcha
         return true
 
-    msg: 'cap is wrong'
+    fmMsg: '验证码错误!'
     error: true
