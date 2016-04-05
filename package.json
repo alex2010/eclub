@@ -22,6 +22,8 @@
     "ip": "^1.1.2",
     "jade": "~1",
     "jquery": "~2",
+    "jstransformer-coffee-script": "^1.0.0",
+    "jstransformer-less": "^2.1.0",
     "less": "~1",
     "line-reader": "^0.4.0",
     "markdown": "^0.5.0",
