@@ -19,3 +19,9 @@ heroku:
 ## prepare data
 
 node public/module/:name/data
+
+
+
+webpack-dev-server --:pet
+NODE_ENV=production webpack -p --:console:8089:pet
+sudo NODE_ENV=production pm2 restart /opt/node/bin/r.js
