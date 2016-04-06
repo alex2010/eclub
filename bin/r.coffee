@@ -46,10 +46,9 @@ process.argv.forEach (val, index, array)->
 #_code:pvp
 
 pp = _path+'/public/module/'
-log pp
 fs.readdirSync(pp).forEach (it)->
     if fs.statSync(pp + it).isDirectory() and !it.startsWith('_')
-        ppp = "#{pp+it}/server/extend.js"
+        ppp = "#{pp+it}/script/server.js"
         fs.stat ppp, (err, stat)->
             unless err
                 require ppp
