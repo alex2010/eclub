@@ -204,7 +204,7 @@ module.exports =
         "<i class='icon-#{icon} iconx' style='height:#{h}px;width:#{w}px}'></i>"
 
     iconxx: (icon, h, w)->
-        @iconx(arguments) + @iconx(icon + '-hover nextIcon`', h, w)
+        @iconx(icon, h, w) + @iconx(icon + '-hover nextIcon`', h, w)
 
     icon: (icon, tag = 'i', str = '', cls = '', href)->
         if href
