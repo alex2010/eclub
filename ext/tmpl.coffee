@@ -199,12 +199,11 @@ module.exports =
     iClass: (val, cls)->
         "glyphicon glyphicon-#{val} #{cls || ''}"
 
+    iconx: (icon,str)->
+        "<i class='icon-#{icon} iconx'>#{str||''}</i>"
 
-    iconx: (icon, h, w)->
-        "<i class='icon-#{icon} iconx' style='height:#{h}px;width:#{w}px}'></i>"
-
-    iconxx: (icon, h, w)->
-        @iconx(icon, h, w) + @iconx(icon + '-hover nextIcon`', h, w)
+    iconxx: (icon)->
+        @iconx(icon) + @iconx(icon + 'Hover hover')
 
     icon: (icon, tag = 'i', str = '', cls = '', href)->
         if href
