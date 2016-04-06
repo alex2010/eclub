@@ -118,8 +118,8 @@ module.exports =
         args = util.slice.call(arguments)
         "#{k} = #{JSON.stringify(_.pick.apply(@, args.slice(1)))};"
 
-    pCenter: (ct,cls='mt')->
-        "<p class='text-center #{cls||''}'>#{ct}</p>"
+    pCenter: (ct, cls = 'mt')->
+        "<p class='text-center #{cls || ''}'>#{ct}</p>"
 
     a: (href, text, cls)->
         str = if href then "href='#{href}' " else ''
@@ -189,7 +189,7 @@ module.exports =
             tag.on(cfg.action.type || 'click', cfg.action.fun)
         tag
 
-    lt: (obj, sc, ets, fun, tag='span')->
+    lt: (obj, sc, ets, fun, tag = 'span')->
         id = util.randomChar(4)
         st = "<#{tag} id='#{id}'></#{tag}>"
         obj.listenTo sc, ets, ->
@@ -197,8 +197,14 @@ module.exports =
         st
 
     iClass: (val, cls)->
-#        "#{cf.style.iconStr} #{cf.style.iconStr}-#{val} #{cls || ''}"
         "glyphicon glyphicon-#{val} #{cls || ''}"
+
+
+    iconx: (icon, h, w)->
+        "<i class='icon-#{icon} iconx' style='height:#{h}px;width:#{w}px}'></i>"
+
+    iconxx: (icon, h, w)->
+        @iconx(arguments) + @iconx(icon + '-hover nextIcon`', h, w)
 
     icon: (icon, tag = 'i', str = '', cls = '', href)->
         if href
