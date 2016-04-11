@@ -12,7 +12,7 @@ opt =
     socketOptions:
         keepAlive: 1
         connectTimeoutMS: 30000
-        
+
 _opt = {w: 1}
 
 module.exports = ->
@@ -73,6 +73,7 @@ module.exports = ->
                 row: -1
                 
         @pick(db, entity).find(filter, op).toArray (err, docs)->
+            log arguments
             for it in docs
                 it._e = entity
             callback?(docs)

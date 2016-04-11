@@ -44,8 +44,8 @@ dataController =
         code = req.c.code
         qu = req.query || {q: {}}
         op =
-            skip: util.d(qu, 'offset') || 0
-            limit: util.d(qu, 'max') || 10
+            skip: +util.d(qu, 'offset') || 0
+            limit: +util.d(qu, 'max') || 10
 
         if qu.p
             _.extend op, qu.p

@@ -51,7 +51,7 @@ module.exports = (grunt)->
                 res.push
                     expand: true
                     cwd: it
-                    src: ['*.js', '*.css', '*.json', '*.ico', '*.jade', '.bowerrc','*.woff2','*.svg','*.ttf','*.eot']
+                    src: ['*.js', '*.css', '*.json', '*.ico', '*.jade', '.bowerrc','*.woff2','*.svg','*.ttf','*.eot','*.png','*.gif']
                     dest: dest + "#{if it is './' then '' else it}"
         res
 
@@ -101,6 +101,7 @@ module.exports = (grunt)->
             'public'
             'public/module'
             'public/module/_inc'
+            'public/module/_inc/mod'
             "public/module/#{code}"
             "public/module/#{code}/inc"
             "public/module/#{code}/script"
@@ -109,10 +110,11 @@ module.exports = (grunt)->
             "public/module/#{code}/server"
             "public/module/console/i18n/zh.js"
             "public/lib/meta/common.js"
+            "public/res/js"
+            "public/res/img"
             "public/res/upload/#{code}/lib"
             "public/res/upload/#{code}/lib/console"
         ]
-
         grunt.config.init
             copy:
                 mod:
