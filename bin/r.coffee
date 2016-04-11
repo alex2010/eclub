@@ -45,13 +45,14 @@ process.argv.forEach (val, index, array)->
 
 #_code:pvp
 
-pp = _path+'/public/module/'
-fs.readdirSync(pp).forEach (it)->
-    if fs.statSync(pp + it).isDirectory() and !it.startsWith('_')
-        ppp = "#{pp+it}/script/server.js"
-        fs.stat ppp, (err, stat)->
-            unless err
-                require ppp
+ee.on '_loaded',->
+    pp = _path+'/public/module/'
+    fs.readdirSync(pp).forEach (it)->
+        if fs.statSync(pp + it).isDirectory() and !it.startsWith('_')
+            ppp = "#{pp+it}/script/server.js"
+            fs.stat ppp, (err, stat)->
+                unless err
+                    require ppp
 #log 'zzz1'
 #for it in args
 #    log it

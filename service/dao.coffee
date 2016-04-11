@@ -6,13 +6,15 @@ oid = require('mongodb').ObjectID
     _db = {};
 `
 Db = Mongodb.Db
-Connection = Mongodb.Connection
+#Connection = Mongodb.Connection
 Server = Mongodb.Server
 opt =
     socketOptions:
         keepAlive: 1
         connectTimeoutMS: 30000
+        
 _opt = {w: 1}
+
 module.exports = ->
     @newDb = (name, callback)->
         if app.env
@@ -69,7 +71,7 @@ module.exports = ->
             op.sort =
                 lastUpdated: -1
                 row: -1
-
+                
         @pick(db, entity).find(filter, op).toArray (err, docs)->
             for it in docs
                 it._e = entity

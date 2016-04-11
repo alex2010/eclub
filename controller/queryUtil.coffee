@@ -1,6 +1,20 @@
 isOid = (v)->
     _.isString(v) and v.length is 24 and /^(\d|[a-z]){24}$/.test(v)
 #    k.indexOf('_id')>-1 or (k.endsWith('id') and k.length is 3 and k isnt 'wid')
+_type = (type,v)->
+    switch type
+        when 'i'
+            +v
+        when 'b'
+            if v is 'true'
+                true
+            else
+                false
+        when 'd'
+            new Date(v)
+        else
+            v
+
 
 _wkt = (obj, fu)->
     for k, v of obj
@@ -10,6 +24,10 @@ _wkt = (obj, fu)->
                     for kk,vv of it
                         if vv['$exists'] and vv['$exists'] is 'false'
                             vv['$exists'] = false
+        else if k.indexOf('__') > -1
+            [rk,type] = k.split('__')
+            obj[rk] = _type(type,v)
+            util.del k, obj
         else if v and v.$in
             v.$in =
                 for it in v.$in
@@ -44,7 +62,9 @@ _cv = (v, k, obj)->
 module.exports =
 
     buildQuery: (q)->
+        log q
         _wkt q, _cv
+        log q
         q
 
     cleanItem: (q, isNew)->

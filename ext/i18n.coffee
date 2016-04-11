@@ -20,6 +20,7 @@ module.exports =
 #                k = k.split('.')[1]
             if k.indexOf('::') > -1
                 k = k.split('::')[1]
+            log k
             return k.capAll()
 
     iim: (k, m...) ->

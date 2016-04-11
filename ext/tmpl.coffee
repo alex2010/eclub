@@ -107,12 +107,16 @@ module.exports =
     actDate: (start, end)->
         "#{start.substr(0, 16)}-#{end.substr(11, 5)}"
 
-    label: (text, cls = 'success')->
-        "<span class='label label-#{cls}'>#{text}</span>"
+    label: (text, type = 'success', cls)->
+        "<span class='label label-#{type} #{cls}'>#{text}</span>"
 
     btn: (text, act, style = 'default', size, block, etc)->
         cls = cf.style.btn(style, size, block, etc)
         "<button type='button' class='#{cls} #{act}'>#{text || ''}</button>"
+
+    aBtn: (text, href, style = 'default', size, block, etc)->
+        cls = cf.style.btn(style, size, block, etc)
+        "<a href='#{href}' class='#{cls}'>#{text || ''}</a>"
 
     jsp: (k)->
         args = util.slice.call(arguments)
