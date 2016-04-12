@@ -64,14 +64,15 @@ authController =
                     _id: 1
                     _e: 'user'
                     username: 'root'
+                    _root: true
                     menu: [
                         key: 'site'
                         icon: 'globe'
                         row: 1
-                    ,
-                        key: 'data'
-                        icon: 'hdd'
-                        row: 2
+#                    ,
+#                        key: 'data'
+#                        icon: 'hdd'
+#                        row: 2
                     ,
                         key: 'userRole'
                         icon: 'user'
@@ -79,7 +80,6 @@ authController =
                     ]
                     roles: [
                         title: 'admin'
-                        root: true
                     ]
                     permission: [
                         'console'
