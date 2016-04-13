@@ -2,6 +2,7 @@ oid = require('mongodb').ObjectID
 async = require('async')
 jade = require('jade')
 
+
 String::splitCap = (i, t)->
     (it.capitalize() for it in @split(i)).join(t)
 

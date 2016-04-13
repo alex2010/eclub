@@ -61,7 +61,7 @@ module.exports =
         else
             ''
 
-    userPic: (c, id, cls)->
+    userPic: (c, id, cls='img-circle img-fluid')->
         @img(@resPath(c, 'portrait/' + id + '.jpg'), cls)
 
     resPath: (c, path)->
@@ -102,7 +102,11 @@ module.exports =
         k
 
     tmpl: (name, opt, lib)->
-        cf.rtp name, opt, lib
+        if _jadeRender
+            _jadeRender(name,opt)
+        else
+            cf.rtp name, opt, lib
+#            jade.renderFile("#{req.fp}/#{ctx.index}.jade", opt)
 
     actDate: (start, end)->
         "#{start.substr(0, 16)}-#{end.substr(11, 5)}"

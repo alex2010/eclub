@@ -15,7 +15,7 @@ copyRecursiveSync = (src, dest, cb) ->
 module.exports =
     genSite: (req, rsp)->
         code = req.body.code
-        pp = "#{ _path}/public/module/"
+        pp = "#{_path}/public/module/"
         dest = pp + code
         if fs.existsSync(dest)
             rsp.send
@@ -27,9 +27,11 @@ module.exports =
                     fs.readFile str, 'utf-8', (err, data)->
                         throw err if err
                         if data.indexOf("#code") > -1
-                            log data.replaceAll('#code', code)
                             fs.writeFile str, data.replaceAll('#code', code), (err)->
                                 throw err if err
+            rPath = "#{_path}/public/res/upload/#{code}"
+            fs.mkdirSync rPath
+            fs.mkdirSync rPath + '/images'
             rsp.send
                 success: true
                 msg: '生产成功'
