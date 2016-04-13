@@ -201,7 +201,7 @@ module.exports =
         st
 
     iClass: (val, cls)->
-        "glyphicon glyphicon-#{val} #{cls || ''}"
+        "#{cf.style.iconStr} #{cf.style.iconStr}-#{val} #{cls || ''}"
 
     iconx: (icon,str)->
         "<i class='icon-#{icon} iconx'>#{str||''}</i>"
