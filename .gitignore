@@ -8,10 +8,11 @@ npm-debug.log
 #*.coffee
 #*.less
 
+
 #github
 
 *.js
-
+*.map
 # *.css
 
 node_modules
