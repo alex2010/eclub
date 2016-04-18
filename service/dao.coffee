@@ -20,7 +20,7 @@ module.exports = ->
         if app.env
             s =
                 db_host: '127.0.0.1'
-                db_port: 27017
+                db_port: 37097
         else
             s = (if name == 'main'
                 require("../setting")
@@ -73,7 +73,6 @@ module.exports = ->
                 row: -1
                 
         @pick(db, entity).find(filter, op).toArray (err, docs)->
-            log arguments
             for it in docs
                 it._e = entity
             callback?(docs)

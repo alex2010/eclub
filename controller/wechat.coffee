@@ -209,11 +209,8 @@ module.exports =
 #                    rsp.send res
 
     login: (req, rsp)->
-        log 'wechat login'
         code = req.c.code
-
         qy = req.query
-
         page = qy.page || 'wechat'
         func = qy.func
 
@@ -226,13 +223,19 @@ module.exports =
             appId = qy.appId
             scope = qy.scope || 'snsapi_userinfo'
             wCode = qy.wCode
-            state = encodeURIComponent(qy.state || "#{wCode}::#{page}::#{func}")
+            unless qy.state
+                qyy = [wCode,page]
+                if func
+                    qyy.push func
+                qy.state = qyy.join('::')
+            state = encodeURIComponent qy.state
             rsp.redirect "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{appId}&redirect_uri=#{encodeURIComponent("http://#{req.c.url}/a/wt/userInfoByCode")}&response_type=code&scope=#{scope}&state=#{state}#wechat_redirect"
 
     userInfoByCode: (req, rsp)->
         log 'userInfoByCode'
         qy = req.query
         [wCode,page,func] = decodeURI(qy.state).split('::')
+
         code = req.c.code
         self = @
         if ctCtn[wCode]
@@ -256,6 +259,7 @@ module.exports =
                                     gender: if res.sex is 1 then true else false
                                     country: res.country
                                     woid: res.openid
+                                    status: 1
                                     wunid: res.unionid
                                     info:
                                         address: "#{res.province} #{res.city}"

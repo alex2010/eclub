@@ -95,6 +95,7 @@ module.exports = (grunt)->
             './'
             'routes'
             'ext'
+            'ext/style'
             'controller'
             'bin'
             'service'

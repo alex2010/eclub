@@ -10,6 +10,11 @@ _cc = new require('./service/cc')
 EventEmitter = require('events').EventEmitter
 
 `
+    cf = {
+        style: {
+            iconStr: 'glyphicon'
+        }
+    };
     _ = require('underscore');
     async = require('async');
     fs = require('fs');
@@ -68,6 +73,7 @@ dao.newDb _mdb, ->
                 if it.exDomain
                     app._community[tt] = it for tt in it.exDomain
                 dao.pick(it.code, 'user')
+                
                 ee.emit '_loaded'
 #dao.pick(_mdb, 'cache').createIndex 'page cache', time: 1, expireAfterSeconds: 2
 

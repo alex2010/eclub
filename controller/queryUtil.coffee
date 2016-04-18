@@ -32,9 +32,9 @@ _wkt = (obj, fu)->
             v.$in =
                 for it in v.$in
                     if isOid(v) then new oid(it) else it
-        else if k is 'price' and _.isObject v
-            for kk, vv of v
-                v[kk] = +vv
+#        else if k is 'price' and _.isObject v
+#            for kk, vv of v
+#                v[kk] = +vv
         else if _.isObject(v) and !_.isArray(v) and !_.isFunction(v)
             arguments.callee(v, fu)
         else
@@ -62,9 +62,7 @@ _cv = (v, k, obj)->
 module.exports =
 
     buildQuery: (q)->
-        log q
         _wkt q, _cv
-        log q
         q
 
     cleanItem: (q, isNew)->

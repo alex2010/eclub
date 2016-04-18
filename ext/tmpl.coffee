@@ -102,10 +102,10 @@ module.exports =
         k
 
     tmpl: (name, opt, lib)->
-        if _jadeRender
-            _jadeRender(name,opt)
-        else
-            cf.rtp name, opt, lib
+#        if _jadeRender
+#            _jadeRender(name,opt)
+#        else
+        cf.rtp name, opt, lib
 #            jade.renderFile("#{req.fp}/#{ctx.index}.jade", opt)
 
     actDate: (start, end)->
