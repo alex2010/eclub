@@ -242,12 +242,16 @@ _.extend Array::,
                 break
         @push item unless find
 
-    concatBy: (next, key, func)->
+    concatBy: (next, key, func = $.extend)->
         for it in next
-            d = @findBy(key, it[key])
-            if d
-                func(d, it) if func
-            else @push it
+            if key
+                d = @findBy(key, it[key])
+                if d
+                    func(d, it)
+                else
+                    @push it
+            else
+                @push it
         @
     recSet: (sub = 'children', fun)->
         for it in @

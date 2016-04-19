@@ -29,8 +29,12 @@ EventEmitter = require('events').EventEmitter
     dao = new require('./service/dao')();
     util = _.extend(require('./ext/common'), require('./ext/util'));
     tu = require('./ext/tmpl');
+    gStub = {};
     gs = function (fn) {
-        return require(_path + '/service/' + fn)
+        if(gStub[fn])
+            return gStub[fn];
+        else
+            return require(_path + '/service/' + fn);
     };
     ee = new EventEmitter();
     _cache = cache.createCache('LRU', 100 * 100)
