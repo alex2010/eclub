@@ -9,6 +9,7 @@ mgm = require '../controller/mgm'
 captcha = require '../controller/captcha'
 sms = require '../controller/sms'
 batch = require '../controller/batch'
+qrImg = require '../controller/qrImg'
 
 wxpay = require('weixin-pay')
 
@@ -189,6 +190,7 @@ router.post '/a/batch/add/:entity', batch.add
 router.post '/a/batch/del/:entity', batch.del
 
 router.post '/a/site/gen/:id', mgm.genSite
+router.get '/a/qrImg', qrImg.linkImg
 
 router.get '/r/wt/login', wt.login
 router.get '/r/c/mg/file/list', up.fileList

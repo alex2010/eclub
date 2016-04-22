@@ -245,6 +245,8 @@ module.exports =
                 ru = "#{req.c.url}/#{page}"
                 ru = 'http://' + ru if ru.indexOf('http') is -1
                 ru += "#!/#{func.replace('azbzc', '/')}" if func
+                log 'fd'
+                log ru
                 if result.data.scope is 'snsapi_userinfo'
                     ctCtn[wCode].getUser openid, (err, res)->
                         return unless res
@@ -272,9 +274,15 @@ module.exports =
                 else
                     rsp.redirect ru
         else
+            log wCode
             dao.get code, 'pubAccount', code: wCode, (res)->
-                ctCtn[wCode] = new OAuth(res.appId, res.secret)
-                rsp.redirect "http://#{req.c.url}/a/wt/userInfoByCode?#{req.originalUrl.split('?')[1]}"
+                log 'nfd'
+                log res
+                if res
+                    ctCtn[wCode] = new OAuth(res.appId, res.secret)
+                    rsp.redirect "http://#{req.c.url}/a/wt/userInfoByCode?#{req.originalUrl.split('?')[1]}"
+                else
+                    rsp.redirect "http://#{req.c.url}"
 
     wxPay: (req, rsp)->
         rp = req.body

@@ -242,7 +242,7 @@ _.extend Array::,
                 break
         @push item unless find
 
-    concatBy: (next, key, func = $.extend)->
+    concatBy: (next, key, func = _.extend)->
         for it in next
             if key
                 d = @findBy(key, it[key])

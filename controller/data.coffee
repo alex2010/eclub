@@ -85,6 +85,8 @@ dataController =
         code = req.c.code
         pa = req.params
         filter = {}
+        if /^(\d|[a-z]){24}$/.test(pa.val)
+            pa.val = oid(pa.val)
         filter[pa.key] = pa.val
         dao.get code, pa.entity, filter, (item)->
             rsp.send util.r item

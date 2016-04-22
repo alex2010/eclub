@@ -61,7 +61,7 @@ module.exports =
         else
             ''
 
-    userPic: (c, id, cls='img-circle img-fluid')->
+    userPic: (c, id, cls = 'img-circle img-fluid')->
         @img(@resPath(c, 'portrait/' + id + '.jpg'), cls)
 
     resPath: (c, path)->
@@ -122,6 +122,14 @@ module.exports =
         cls = cf.style.btn(style, size, block, etc)
         "<a href='#{href}' class='#{cls}'>#{text || ''}</a>"
 
+    jsa: (k, ar)->
+        args = util.slice.call(arguments)
+        res = (for it in ar
+            rr = args.slice(2)
+            rr.unshift it
+            _.pick.apply @, rr
+        )
+        "#{k} = #{JSON.stringify(res)};"
     jsp: (k)->
         args = util.slice.call(arguments)
         "#{k} = #{JSON.stringify(_.pick.apply(@, args.slice(1)))};"
@@ -204,16 +212,19 @@ module.exports =
             $("##{id}").html fun.apply(obj, arguments)
         st
 
+    qrImg: (link, cls)->
+        "<img src='/a/qrImg?link=#{link}' class='#{cls}'/>"
+
     iClass: (val, cls)->
         "#{cf.style.iconStr} #{cf.style.iconStr}-#{val} #{cls || ''}"
 
-    iconx: (icon,str)->
-        "<i class='icon-#{icon} iconx'>#{str||''}</i>"
+    iconx: (icon, str)->
+        "<i class='icon-#{icon} iconx'>#{str || ''}</i>"
 
     iconxx: (icon)->
         @iconx(icon) + @iconx(icon + 'Hover hover')
 
     icon: (icon, tag = 'i', str = '', cls = '', href)->
-        if href
-            href = "href='#{href}'"
+#        if href
+#            href = "href='#{href}'"
         "<#{tag} class='#{@iClass(icon, cls)}' #{href || ''}>#{str}</#{tag}>"

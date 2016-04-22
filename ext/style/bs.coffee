@@ -4,7 +4,7 @@ opt =
     inputBox: 'form-group'
     iconStr: 'glyphicon'
     active: 'active'
-    tbStyle: 'table table-striped table-bordered table-responsive'
+    tbStyle: 'table table-striped table-bordered'
     panel: (type = 'default')->
         "panel panel-#{type}"
 

@@ -38,6 +38,7 @@
     "nodemailer": "~1",
     "nodemailer-smtp-transport": "^1.0.3",
     "paypal-ipn": "^3.0.0",
+    "qr-image": "^3.1.0",
     "request": "^2.57.0",
     "serve-favicon": "~2.2.0",
     "socket.io": "~1",
