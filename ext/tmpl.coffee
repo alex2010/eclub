@@ -112,7 +112,7 @@ module.exports =
         "#{start.substr(0, 16)}-#{end.substr(11, 5)}"
 
     label: (text, type = 'success', cls)->
-        "<span class='label label-#{type} #{cls}'>#{text}</span>"
+        "<span class='label label-#{type} #{cls||''}'>#{text}</span>"
 
     btn: (text, act, style = 'default', size, block, etc)->
         cls = cf.style.btn(style, size, block, etc)

@@ -1,8 +1,6 @@
 _ = require('underscore')
 async = require('async')
 
-deepExtend = require('deep-extend')
-
 checkType = (k)->
     if /\S+@\S+\.\S+/.test k
         email: k
@@ -38,16 +36,16 @@ afterAuth = (user, req, rsp)->
                 extendRes(user, role, 'entities')
                 extendRes(user, role, 'permission')
 
-            op =
-                uid: user._id
-
-            dao.find code, 'orgRelation', op, {}, (os)->
-                user.orgs = for r in os
-                    _id: r.oid
-                    title: r.org
-                rsp.send
-                    user: user
-                    msg: 'm_login_s'
+            if gStub.afterAuth
+                gStub.afterAuth(user, req, rsp)
+            else
+                dao.find code, 'orgRelation', uid: user._id, {}, (os)->
+                    user.orgs = for r in os
+                        _id: r.oid
+                        title: r.org
+                    rsp.send
+                        user: user
+                        msg: 'm_login_s'
 
 errAuth = (rsp)->
     rsp.status(350).send msg: 'm_login_f'

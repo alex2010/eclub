@@ -190,6 +190,7 @@ router.post '/a/batch/add/:entity', batch.add
 router.post '/a/batch/del/:entity', batch.del
 
 router.post '/a/site/gen/:id', mgm.genSite
+router.post '/a/site/bdPush', mgm.bdPush
 router.get '/a/qrImg', qrImg.linkImg
 
 router.get '/r/wt/login', wt.login
@@ -202,6 +203,7 @@ router.get '/r/:entity/:q/:qv/:prop', data.getSub
 router.get '/r/:entity/:key/:val', data.getByKey
 
 router.put '/r/:entity/:id', data.edit
+router.patch '/r/:entity/:id', data.edit
 router.post '/r/:entity', data.save
 router.delete '/r/:entity/:id', data.del
 router.post '/r/:type/:entity/:q/:qv/:prop', data.saveSub

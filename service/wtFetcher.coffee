@@ -20,7 +20,6 @@ module.exports = (req, item)->
                             fs.open path, 'w+', (err, fd)->
                                 fs.write fd, result, 0, result.length, null, ->
                                     fs.close fd, ->
-                    log fn
                     v[i] = fn
                     mark = true
     if mark

@@ -38,13 +38,13 @@ onListening = ->
     return
 `
 server = http.createServer(app);
+io = require('socket.io').listen(server)
 `
 args = null
 process.argv.forEach (val, index, array)->
     args = array
 
 #_code:pvp
-
 ee.on '_loaded',->
     pp = _path+'/public/module/'
     fs.readdirSync(pp).forEach (it)->

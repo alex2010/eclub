@@ -71,7 +71,7 @@ module.exports = ->
             op.sort =
                 lastUpdated: -1
                 row: -1
-                
+
         @pick(db, entity).find(filter, op).toArray (err, docs)->
             for it in docs
                 it._e = entity

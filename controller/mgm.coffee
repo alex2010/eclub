@@ -1,5 +1,5 @@
-
-
+async = require('async')
+request = require('request')
 copyRecursiveSync = (src, dest, cb) ->
     exists = fs.existsSync(src)
     stats = exists and fs.statSync(src)
@@ -13,6 +13,46 @@ copyRecursiveSync = (src, dest, cb) ->
             cb?(dest)
 
 module.exports =
+    bdPush: (req, rsp)->
+        c = req.c
+        unless c.bdPushUrl
+            rsp.status = 320
+            rsp.send msg: '您还没有配置百度SEO参数'
+            return
+        code = c.code
+        op =
+            skip: 0
+            limit: (if req.body.type is '1' then 10 else 500)
+        filter =
+            status: 2
+        rt = []
+        opt={}
+        for et in req.body.entities.split(',')
+            do(et)->
+                opt[et] = (cb)->
+                    dao.find code, et, filter, op, (res)->
+                        for it in res
+                            rt.push "http://#{c.url}/#{et}/#{it._id}"
+                        cb()
+        async.parallel opt, ->
+            request
+                url: c.bdPushUrl
+                method: 'POST'
+                body: rt.join('\n')
+            , (w,m,res)->
+                    rm = JSON.parse res
+                    if rm.success
+                        rsp.send
+                            success: true
+                            msg: "已成功推送#{rm.success}条,还可以推送#{rm.remain}"
+                    else
+                        rsp.status 320
+                        rsp.send
+                            msg: '推送失败'
+
+#            request.post "http://data.zz.baidu.com/urls?site=www.postenglishtime.com&token=j7skUqSQuqPZKEF8", rt.join('\n')
+#            log
+
     genSite: (req, rsp)->
         code = req.body.code
         pp = "#{_path}/public/module/"

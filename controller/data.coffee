@@ -8,9 +8,6 @@ attrs = (attr)->
         op[it] = 1
     op
 
-_afterEdit = (item, entity)->
-    if entity is 'community'
-        app._community[item.url] = item
 
 dataController =
     comp: (req, rsp) ->
@@ -136,7 +133,7 @@ dataController =
         bo =
             $set: bo
         dao.findAndUpdate code, entity, _id: req.params.id, bo, (item)->
-            _afterEdit(item, entity)
+            queryUtil.afterPersist(item, entity)
 
             gs(it)(req, item) for it in after.split(',') if after
             _attrs.push('_id')
@@ -147,8 +144,8 @@ dataController =
         entity = req.params.entity
         bo = req.body
 
-        after = util.del 'afterSave', req.body
-        before = util.del 'beforeSave', req.body
+        after = util.del 'afterSave', bo
+        before = util.del 'beforeSave', bo
 
         if before
             rt = []
@@ -172,7 +169,7 @@ dataController =
 
         dao.save code, entity, bo, (item)->
             for s in item
-                _afterEdit(s, entity)
+                queryUtil.afterPersist(s, entity)
 
                 gs(it)(req, s) for it in after.split(',') if after
 

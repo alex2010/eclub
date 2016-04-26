@@ -61,6 +61,11 @@ _cv = (v, k, obj)->
 
 module.exports =
 
+
+    afterPersist: (item, entity)->
+        if entity is 'community'
+            app._community[item.url] = item
+        
     buildQuery: (q)->
         _wkt q, _cv
         q

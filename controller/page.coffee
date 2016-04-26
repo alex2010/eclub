@@ -104,6 +104,7 @@ pickScript = (ctx, req)->
             for it in res
                 ctx.langs[it.key] = it.val
             cb null, require('../service/lang')(ctx.langs)
+            
     opt.script = (cb)->
         dao.find ctx.c.code, 'script', {}, {}, (res)->
             rt = {}
