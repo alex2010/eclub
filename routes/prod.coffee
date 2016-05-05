@@ -167,7 +167,8 @@ router.post '/a/upload/remove', up.remove
 router.post '/a/cleanCache', data.cleanCache
 router.get '/a/captcha', captcha.cap
 router.get '/a/smsVerify', sms.getCode
-router.get '/a/checkPhone', sms.checkPhone
+router.get '/a/smsFindPsd', sms.findPsd
+#router.get '/a/checkPhone', sms.checkPhone
 
 router.post '/a/auth/login', auth.login
 router.post '/a/auth/loginByWoid', auth.loginByWoid

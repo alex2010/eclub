@@ -36,8 +36,8 @@ afterAuth = (user, req, rsp)->
                 extendRes(user, role, 'entities')
                 extendRes(user, role, 'permission')
 
-            if gStub.afterAuth
-                gStub.afterAuth(user, req, rsp)
+            if gStub[code] and gStub[code].afterAuth
+                gStub[code].afterAuth(user, req, rsp)
             else
                 dao.find code, 'orgRelation', uid: user._id, {}, (os)->
                     user.orgs = for r in os

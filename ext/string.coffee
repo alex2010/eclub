@@ -171,24 +171,10 @@ _.extend Array::,
             i++
         null
 
-    detectBy: (prop, val) ->
-        i = 0
-        while i < @length
-            if (if prop.indexOf('.') > 0 then seqProp(@[i], prop) else @[i][prop]) == val
-                return @[i]
-            i++
-        null
     find: (id) ->
         i = 0
         while i < @length
             if @[i].id and @[i].id.toString() == id
-                return @[i]
-            i++
-        null
-    findBy: (prop, val) ->
-        i = 0
-        while i < @length
-            if (if prop.indexOf('.') > 0 then seqProp(@[i], prop) else @[i][prop]) == val
                 return @[i]
             i++
         null
@@ -228,7 +214,7 @@ _.extend Array::,
             i++
         null
     pushById: (obj,k='id')->
-        if @detectBy(k, obj[k])
+        if @findBy(k, obj[k])
             return
         else
             @push(obj)

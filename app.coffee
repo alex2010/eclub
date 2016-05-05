@@ -30,9 +30,9 @@ EventEmitter = require('events').EventEmitter
     util = _.extend(require('./ext/common'), require('./ext/util'));
     tu = require('./ext/tmpl');
     gStub = {};
-    gs = function (fn) {
-        if(gStub[fn])
-            return gStub[fn];
+    gs = function (code,fn) {
+        if(gStub[code] && gStub[code][fn])
+            return gStub[code][fn];
         else
             return require(_path + '/service/' + fn);
     };
@@ -45,6 +45,7 @@ EventEmitter = require('events').EventEmitter
     _ePool = {};
     cc = new _cc();
 `
+
 require('./ext/string')
 # view engine setup
 app.set 'view engine', 'jade'

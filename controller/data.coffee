@@ -1,15 +1,40 @@
 async = require('async')
-queryUtil = require './queryUtil'
+queryUtil = require '../service/dao/queryUtil'
 
-attrs = (attr)->
-    op = {}
-    for it in attr.split(',')
-        continue if it.charAt(0) is '_'
-        op[it] = 1
-    op
-
+save = require '../service/dao/save'
+find = require '../service/dao/find'
+edit = require '../service/dao/edit'
+del = require '../service/dao/del'
 
 dataController =
+
+    get: (req, rsp) ->
+        req.id = req.params.id
+        find req.c.code, req.params.entity, req, (res)->
+            rsp.send res
+
+    list: (req, rsp) ->
+        find req.c.code, req.params.entity, req, (res)->
+            rsp.send res
+
+    del: (req, rsp) ->
+        req.id = req.params.id
+        del req.c.code, req.params.entity, req, (res)->
+            rsp.send res
+
+    edit: (req, rsp) ->
+        req.id = req.params.id
+        edit req.c.code, req.params.entity, req, (res, msg)->
+            if res.err
+                rsp.status 405
+            rsp.send util.r res, msg
+
+    save: (req, rsp) ->
+        save req.c.code, req.params.entity, req, (res, msg)->
+            if res.err
+                rsp.status 405
+            rsp.send util.r res, msg
+    
     comp: (req, rsp) ->
         opt = {}
         code = req.c.code
@@ -37,26 +62,6 @@ dataController =
         async.parallel opt, (err, res)->
             rsp.send res
 
-    list: (req, rsp) ->
-        code = req.c.code
-        qu = req.query || {q: {}}
-        op =
-            skip: +util.d(qu, 'offset') || 0
-            limit: +util.d(qu, 'max') || 10
-
-        if qu.p
-            _.extend op, qu.p
-
-        if qu._attrs
-            op.fields = attrs util.d qu, '_attrs'
-
-        q = queryUtil.buildQuery qu.q
-
-        entity = req.params.entity
-        dao.find code, entity, q, op, (entities)->
-            dao.count code, entity, q, (count)->
-                rsp.send util.r entities, count
-
     inc: (req, rsp)->
         op =
             _id: new oid(req.params.id)
@@ -65,18 +70,6 @@ dataController =
         d.$inc[req.params.prop] = 1
         dao.qc req.c.code, req.params.entity, op, d
         rsp.send {}
-
-    get: (req, rsp) ->
-        code = req.c.code
-        entity = req.params.entity
-        op = req.query || {}
-        if req.params.id
-            op._id = req.params.id
-        if op._attrs
-            op.fields = attrs util.d op, '_attrs'
-        op = queryUtil.buildQuery op
-        dao.get code, entity, op, (item)->
-            rsp.send util.r(item, null, entity)
 
     getByKey: (req, rsp) ->
         code = req.c.code
@@ -101,93 +94,6 @@ dataController =
                 entity: obj
 
         dao.findAndUpdate code, pEntity, filter, opt, (item)->
-
-
-    edit: (req, rsp) ->
-        code = req.c.code
-        entity = req.params.entity
-        bo = req.body
-
-        after = util.del 'afterSave', req.body
-        before = util.del 'beforeSave', req.body
-
-        if before
-            rt = []
-            for it in before.split(',')
-                res = gs(it)(req, bo)
-                if res.error
-                    rt.push res.msg
-            if rt.size()
-                rsp.status 405
-                rsp.send errors: rt
-                return
-
-        _rsMsg = bo._rsMsg
-        _attrs = if bo._attrs
-            bo._attrs.split(',')
-        else
-            _.keys(bo)
-
-        queryUtil.cleanItem(bo)
-
-        bo =
-            $set: bo
-        dao.findAndUpdate code, entity, _id: req.params.id, bo, (item)->
-            queryUtil.afterPersist(item, entity)
-
-            gs(it)(req, item) for it in after.split(',') if after
-            _attrs.push('_id')
-            rsp.send util.r(_.pick(item, _attrs), _rsMsg || 'm_update_ok', entity)
-
-    save: (req, rsp) ->
-        code = req.c.code
-        entity = req.params.entity
-        bo = req.body
-
-        after = util.del 'afterSave', bo
-        before = util.del 'beforeSave', bo
-
-        if before
-            rt = []
-            for it in before.split(',')
-                res = gs(it)(req, bo)
-                if res.error
-                    rt.push res.msg
-            if rt.length
-                rsp.status 405
-                rsp.send errors: rt
-                return
-
-        _rsMsg = bo._rsMsg
-
-        _attrs = if bo._attrs
-            bo._attrs.split(',')
-        else
-            _.keys(bo)
-
-        queryUtil.cleanItem(bo, true)
-
-        dao.save code, entity, bo, (item)->
-            for s in item
-                queryUtil.afterPersist(s, entity)
-
-                gs(it)(req, s) for it in after.split(',') if after
-
-            if item.length is 1
-                _attrs.push('_id')
-                ri = _.pick(item[0], _attrs)
-            else
-                ri = item
-            rsp.send util.r(ri, _rsMsg || 'm_create_ok', entity)
-
-    del: (req, rsp) ->
-        code = req.c.code
-        entity = req.params.entity
-
-        dao.delItem code, entity, _id: new oid(req.params.id), null, ->
-            if entity is 'user' #membership:uid:uid
-                dao.delItem code, 'membership', uid: new oid(req.params.id)
-            rsp.send msg: 'del.ok'
 
     cleanCache: (req, rsp)->
         opt =
@@ -226,6 +132,7 @@ dataController =
         if bo._q
             $.extend qs, bo._q
             delete bo._q
+
         _rsMsg = bo._rsMsg
         bo = queryUtil.cleanItem bo
 
@@ -240,3 +147,113 @@ dataController =
             rsp.send util.r(doc, _rsMsg || 'm_create_ok')
 
 module.exports = dataController
+
+
+#        code = req.c.code
+#        qu = req.query || {q: {}}
+#        op =
+#            skip: +util.d(qu, 'offset') || 0
+#            limit: +util.d(qu, 'max') || 10
+#
+#        if qu.p
+#            _.extend op, qu.p
+#
+#        if qu._attrs
+#            op.fields = attrs util.d qu, '_attrs'
+#
+#        q = queryUtil.buildQuery qu.q
+#        entity = req.params.entity
+#        dao.find code, entity, q, op, (entities)->
+#            dao.count code, entity, q, (count)->
+#                rsp.send util.r entities, count
+#        code = req.c.code
+#        entity = req.params.entity
+#        op = req.query || {}
+#        if req.params.id
+#            op._id = req.params.id
+#        if op._attrs
+#            op.fields = attrs util.d op, '_attrs'
+#        op = queryUtil.buildQuery op
+#        dao.get code, entity, op, (item)->
+#            rsp.send util.r(item, null, entity)
+
+
+#        code = req.c.code
+#        entity = req.params.entity
+#        bo = req.body
+#
+#        after = util.del 'afterSave', req.body
+#        before = util.del 'beforeSave', req.body
+#
+#        if before
+#            rt = []
+#            for it in before.split(',')
+#                res = gs(code, it)(req, bo)
+#                if res.error
+#                    rt.push res.msg
+#            if rt.size()
+#                rsp.status 405
+#                rsp.send errors: rt
+#                return
+#
+#        _rsMsg = bo._rsMsg
+#        _attrs = if bo._attrs
+#            bo._attrs.split(',')
+#        else
+#            _.keys(bo)
+#
+#        queryUtil.cleanItem(bo)
+#
+#        bo =
+#            $set: bo
+#        dao.findAndUpdate code, entity, _id: req.params.id, bo, (item)->
+#            queryUtil.afterPersist(item, entity)
+#
+#            gs(code, it)(req, item) for it in after.split(',') if after
+#            _attrs.push('_id')
+#            rsp.send util.r(_.pick(item, _attrs), _rsMsg || 'm_update_ok', entity)
+
+#        code = req.c.code
+#        entity = req.params.entity
+#        bo = req.body
+#
+#        after = util.del 'afterSave', bo
+#        before = util.del 'beforeSave', bo
+#        if before
+#            rt = []
+#            for it in before.split(',')
+#                res = gs(code, it)(req, bo)
+#                if res.error
+#                    rt.push res.msg
+#            if rt.length
+#                rsp.status 405
+#                rsp.send errors: rt
+#                return
+#
+#        _rsMsg = bo._rsMsg
+#
+#        _attrs = if bo._attrs
+#            bo._attrs.split(',')
+#        else
+#            _.keys(bo)
+#
+#        queryUtil.cleanItem(bo, true)
+#
+#        dao.save code, entity, bo, (item)->
+#            for s in item
+#                queryUtil.afterPersist(s, entity)
+#
+#                gs(code, it)(req, s) for it in after.split(',') if after
+#
+#            if item.length is 1
+#                _attrs.push('_id')
+#                ri = _.pick(item[0], _attrs)
+#            else
+#                ri = item
+#            rsp.send util.r(ri, _rsMsg || 'm_create_ok', entity)
+#        code = req.c.code
+#        entity = req.params.entity
+#        dao.delItem code, entity, _id: new oid(req.params.id), null, ->
+#            if entity is 'user' #membership:uid:uid
+#                dao.delItem code, 'membership', uid: new oid(req.params.id)
+#            rsp.send msg: 'del.ok'
