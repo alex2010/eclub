@@ -91,8 +91,11 @@ module.exports = ->
             callback(count)
 
     @qc = (db, entity, q, op)->
-        op = $inc:op
         @pick(db, entity).findAndModify q, null, op, {upsert: true, new: true}, ->
+
+    @inc = (db, entity, q, op)->
+        op = $inc:op
+        @qc db, entity, q, op
 
     @findAndUpdate = (db, entity, filter, opt, callback)->
         filter = @cleanOpt(filter)

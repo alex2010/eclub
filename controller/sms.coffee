@@ -1,6 +1,7 @@
 sender = require '../service/sms'
 
-sendCode = (code, rsp, scope = 10000, len = 3)->
+sendCode = (req, rsp, scope = 10000, len = 3)->
+    code = req.c.code
     cCode = util.randomChar(16)
     vCode = _.random(scope, scope * 10)
 
@@ -25,28 +26,31 @@ sendCode = (code, rsp, scope = 10000, len = 3)->
 module.exports =
 
     findPsd: (req, rsp)->
-        code = req.c.code
+        n = req.body._period || 3
         if _cache.get(req.cookies._vCode)
-            rsp.send msg: '验证码已经发送，请过3分钟后再申请'
+            rsp.send
+                _exsit: true
+                msg: "验证码已经发送，请过#{n}分钟后再申请"
         else
-            dao.get code, 'user', phone: req.query.phone, (res)->
+            dao.get req.c.code, 'user', phone: req.query.phone, (res)->
                 if res
-                    sendCode(code, rsp)
+                    sendCode(req, rsp)
                 else
                     rsp.status 300
                     rsp.send
                         msg: '手机号码输入有误,请检查!'
 
     getCode: (req, rsp)->
-        code = req.c.code
+        n = req.body._period || 3
         if _cache.get(req.cookies._vCode)
-            rsp.send msg: '验证码已经发送，请过3分钟后再申请'
+            rsp.send
+                _exsit: true
+                msg: "验证码已经发送，请过#{n}分钟后再申请"
         else
-            dao.get code, 'user', phone: req.query.phone, (res)->
+            dao.get req.c.code, 'user', phone: req.query.phone, (res)->
                 if res
                     rsp.status 300
                     rsp.send
                         msg: '本手机已注册,请更换手机号'
                 else
-                    sendCode(code, rsp)
-                    
+                    sendCode(req, rsp)

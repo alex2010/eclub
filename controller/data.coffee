@@ -120,6 +120,7 @@ dataController =
     delSub: (req, rsp)->
 
     saveSub: (req, rsp)->
+        log 'save sb'
         code = req.c.code
         entity = req.params.entity
         qs = {}

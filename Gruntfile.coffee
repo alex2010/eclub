@@ -99,6 +99,8 @@ module.exports = (grunt)->
             'controller'
             'bin'
             'service'
+            'service/dao'
+            'service/io'
             'public'
             'public/module'
             'public/module/_inc'
@@ -106,8 +108,8 @@ module.exports = (grunt)->
             "public/module/#{code}"
             "public/module/#{code}/inc"
             "public/module/#{code}/script"
-            "public/module/#{code}/app/status"
             "public/module/#{code}/script/data"
+            "public/module/#{code}/app/status"
             "public/module/#{code}/i18n"
             "public/module/#{code}/server"
             "public/module/console/i18n/zh.js"

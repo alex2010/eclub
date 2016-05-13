@@ -174,6 +174,8 @@ router.post '/a/auth/login', auth.login
 router.post '/a/auth/loginByWoid', auth.loginByWoid
 router.post '/a/auth/logout', auth.logout
 router.post '/a/auth/logoutByWoid', auth.logoutByWoid
+router.post '/a/auth/resetPsd', auth.resetPsd
+router.post '/a/auth/checkPsd', auth.checkPsd
 
 wt = require '../controller/wechat'
 router.get '/a/wt/userInfoByCode', wt.userInfoByCode
@@ -195,6 +197,7 @@ router.post '/a/site/bdPush', mgm.bdPush
 router.get '/a/qrImg', qrImg.linkImg
 
 router.get '/r/wt/login', wt.login
+router.get '/a/wt/login', wt.login
 router.get '/r/c/mg/file/list', up.fileList
 
 router.get '/r/comp', data.comp
@@ -205,6 +208,7 @@ router.get '/r/:entity/:key/:val', data.getByKey
 
 router.put '/r/:entity/:id', data.edit
 router.patch '/r/:entity/:id', data.edit
+
 router.post '/r/:entity', data.save
 router.delete '/r/:entity/:id', data.del
 router.post '/r/:type/:entity/:q/:qv/:prop', data.saveSub

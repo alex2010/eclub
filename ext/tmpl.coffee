@@ -61,15 +61,19 @@ module.exports =
         else
             ''
 
-    userPic: (c, id, cls = 'img-circle img-fluid')->
+    userPic: (c, u, cls = 'img-circle img-fluid')->
+        id = if _.isString u
+            u
+        else
+            u.id || u._id
         @img(@resPath(c, 'portrait/' + id + '.jpg'), cls)
-
+    
     resPath: (c, path)->
         c.resPath + '/upload/' + c.code + '/' + path
 
-    avatarImg: (c, user, cls = 'img-circle')->
-        p = @resPath c, "portrait/#{user._id}.jpg"
-        @img p, cls
+#    avatarImg: (c, user, cls = 'img-circle')->
+#        p = @resPath c, "portrait/#{user._id}.jpg"
+#        @img p, cls
 
     catLink: (cat, list = [])->
         res = []
@@ -112,7 +116,7 @@ module.exports =
         "#{start.substr(0, 16)}-#{end.substr(11, 5)}"
 
     label: (text, type = 'success', cls)->
-        "<span class='label label-#{type} #{cls||''}'>#{text}</span>"
+        "<span class='label label-#{type} #{cls || ''}'>#{text}</span>"
 
     btn: (text, act, style = 'default', size, block, etc)->
         cls = cf.style.btn(style, size, block, etc)
@@ -140,8 +144,11 @@ module.exports =
     a: (href, text, cls)->
         str = if href then "href='#{href}' " else ''
         str += if cls then "class='#{cls}' " else ''
-        str += "target='_blank' " unless href.startsWith('#')
+        str += "target='_blank' " if href and !href.startsWith('#')
         "<a #{str} title='#{text}'>#{text}</a>"
+
+    status: (e, t)->
+        cf.st.text e, t
 
     link: (it, prop = 'title', cls)->
         text = if prop is '_str'
@@ -205,12 +212,18 @@ module.exports =
             tag.on(cfg.action.type || 'click', cfg.action.fun)
         tag
 
-    lt: (obj, sc, ets, fun, tag = 'span')->
+    lt: (obj, sc, ets, fun, val, tag = 'span')->
         id = util.randomChar(4)
-        st = "<#{tag} id='#{id}'></#{tag}>"
-        obj.listenTo sc, ets, ->
-            $("##{id}").html fun.apply(obj, arguments)
+        st = "<#{tag} id='#{id}'>#{val || ''}</#{tag}>"
+        obj.listenTo sc, ets, (r, v)->
+            $("##{id}").html(if fun then fun.apply(obj, arguments) else v)
         st
+        
+    flt: (lc, code, val, fun)->
+        if !fun and lc.showText
+            fun = (m, v)->
+                lc.showText(v)
+        @lt(lc.ctx, lc.ctx.model, "change:#{code}", fun, val)
 
     qrImg: (link, cls)->
         "<img src='/a/qrImg?link=#{link}' class='#{cls}'/>"

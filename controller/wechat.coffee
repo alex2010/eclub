@@ -9,9 +9,9 @@ getApi = require '../service/wechat'
 
 WXPay = require('weixin-pay')
 
-
-_spStr = 'azbzc'
-
+`
+_spWtStr = 'azbzc'
+`
 matchPic = (str)->
     imgs = {}
     for it in str.match /http:\/\/s.postenglishtime.com\/upload\/\S+.(jpg|jpeg|png|JPG|PNG|JPEG)/g
@@ -240,11 +240,12 @@ module.exports =
         self = @
         if ctCtn[wCode]
             ctCtn[wCode].getAccessToken qy.code, (err, result)->
+                log arguments
                 openid = result.data.openid
                 rsp.cookie 'woid', openid, maxAge: 1000 * 3600 * 2
                 ru = "#{req.c.url}/#{page}"
                 ru = 'http://' + ru if ru.indexOf('http') is -1
-                ru += "#!/#{func.replace('azbzc', '/')}" if func
+                ru += "#!/#{func.replace(_spWtStr, '/')}" if func
                 log 'fd'
                 log ru
                 if result.data.scope is 'snsapi_userinfo'
@@ -268,7 +269,7 @@ module.exports =
                             user["w_#{wCode}"] = res.openid
                             if res.headimgurl and (!user.refFile or !user.refFile.portrait)
                                 fn = user._id.toString() + '.jpg'
-                                gs('fetchFile') res.headimgurl, "#{util.sPath(code)}/portrait/#{fn}", ->
+                                gs(null,'fetchFile') res.headimgurl, "#{util.sPath(code)}/portrait/#{fn}", ->
                             dao.save code, 'user:_id', user
                             rsp.redirect ru
                 else

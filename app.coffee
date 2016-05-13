@@ -30,8 +30,8 @@ EventEmitter = require('events').EventEmitter
     util = _.extend(require('./ext/common'), require('./ext/util'));
     tu = require('./ext/tmpl');
     gStub = {};
-    gs = function (code,fn) {
-        if(gStub[code] && gStub[code][fn])
+    gs = function (code, fn) {
+        if (gStub[code] && gStub[code][fn])
             return gStub[code][fn];
         else
             return require(_path + '/service/' + fn);
@@ -45,6 +45,13 @@ EventEmitter = require('events').EventEmitter
     _ePool = {};
     cc = new _cc();
 `
+cf.st =
+    add: (et, opt)->
+        map = {}
+        for k,v of opt
+            map[k] = v.v
+        map
+
 
 require('./ext/string')
 # view engine setup
@@ -63,8 +70,11 @@ app.use cookieParser()
 app.use express.static(path.join(__dirname, 'public'))
 #app.use express.static(path.join(__dirname, 'public/res'))
 if app.env
-    app.use '/res/*', (req, res, next)->
+    app.use '/*', (req, res, next)->
         res.header 'Access-Control-Allow-Origin', '*'
+        res.header 'Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH'
+        res.header 'Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept'
+        res.header 'Access-Control-Allow-Credentials', true
         next()
 
 app._community = {}
@@ -78,7 +88,7 @@ dao.newDb _mdb, ->
                 if it.exDomain
                     app._community[tt] = it for tt in it.exDomain
                 dao.pick(it.code, 'user')
-                
+
                 ee.emit '_loaded'
 #dao.pick(_mdb, 'cache').createIndex 'page cache', time: 1, expireAfterSeconds: 2
 
@@ -98,7 +108,6 @@ app.use (err, req, res, next) ->
     return
 
 module.exports = app
-
 
 
 #app.use (req, res, next) ->

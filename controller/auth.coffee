@@ -112,6 +112,42 @@ authController =
 #                            msg: 'm_login_s'
 
 
+    resetPsd: (req, rsp) ->
+        bo = req.body
+        code = req.c.code
+
+        res = gs(null, 'verifyCode')(req, bo)
+        if res.error
+            rsp.status 390
+            rsp.send msg: '验证码错误'
+            return
+
+        bo = req.body
+        fo = if bo.phone
+            phone: bo.phone
+        else
+            email: bo.email
+
+        dao.findAndUpdate code, 'user', fo, password: util.sha256(bo.password), (res)->
+            if res
+                rsp.send msg: '修改成功'
+            else
+                rsp.status 390
+                rsp.send msg: '用户不存在'
+
+    checkPsd: (req, rsp) ->
+        bo = req.body
+        opt = 
+            _id: bo._id
+            
+        dao.get req.c.code, 'user', opt, (user)->
+            if !user or user.password isnt util.sha256(bo.password)
+                rsp.status 390
+                rsp.send msg: '密码错误'
+            else
+                rsp.send 
+                    msg: '验证成功'
+                
     logout: (req, rsp) ->
 #del user session
         rsp.send msg: 'm_logout_s'
@@ -125,7 +161,6 @@ authController =
                 afterAuth user, req, rsp
             else
                 errAuth rsp
-
 
     logoutByWoid: (req, rsp)->
         rsp.send msg: 'm_logout_s'
