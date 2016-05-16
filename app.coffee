@@ -29,6 +29,7 @@ EventEmitter = require('events').EventEmitter
     dao = new require('./service/dao')();
     util = _.extend(require('./ext/common'), require('./ext/util'));
     tu = require('./ext/tmpl');
+    jade = require('jade');
     gStub = {};
     gs = function (code, fn) {
         if (gStub[code] && gStub[code][fn])

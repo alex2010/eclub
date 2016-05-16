@@ -131,7 +131,7 @@ dataController =
         bo = req.body
 
         if bo._q
-            $.extend qs, bo._q
+            _.extend qs, bo._q
             delete bo._q
 
         _rsMsg = bo._rsMsg

@@ -1,12 +1,7 @@
-oid = require('mongodb').ObjectID
-async = require('async')
-jade = require('jade')
-
-
 String::splitCap = (i, t)->
     (it.capitalize() for it in @split(i)).join(t)
 
-f = require('../ext/tmpl')
+f = require('../service/tmpl')
 coffee = require 'coffee-script'
 
 entityPageOpt = (ctx, req, et)->

@@ -2,27 +2,11 @@ module.exports =
     randomInt: util.randomInt
     randomChar: util.randomChar
 
-    viewItem: (entity, k, v)->
-        opt = meta[entity][k] || meta.common[k]
-        if opt.showText
-            opt.showText(v)
-        else if opt.type is 'text' or !opt.type
-            v
-        else if opt.type in ['select', 'radio']
-            if opt.data and +v
-                _.result(opt, 'data')[+v]
-            else
-                v
-        else if opt.type is 'status'
-            cf.st.text(entity + '_status', v)
-        else
-            v
-
-    dStr: (str, len = 19)->
-        if str
-            str.replace(/-/g, "/").replace(/[TZ]/g, " ").substr(0, len)
-        else
-            ''
+#    dStr: (str, len = 19)->
+#        if str
+#            str.replace(/-/g, "/").replace(/[TZ]/g, " ").substr(0, len)
+#        else
+#            ''
 
     copyRight: (c, name, id)->
         path = "http://#{c.url}/#{name}/#{id}"
@@ -31,6 +15,7 @@ module.exports =
             <p>除非特别声明，本站文章均为原创文章，转载请注明原文链接</p>
         </div></div>
         """
+        
     navPage: (page, it)->
         "/#{page}/#{it._id}"
 
@@ -71,10 +56,6 @@ module.exports =
     resPath: (c, path)->
         c.resPath + '/upload/' + c.code + '/' + path
 
-#    avatarImg: (c, user, cls = 'img-circle')->
-#        p = @resPath c, "portrait/#{user._id}.jpg"
-#        @img p, cls
-
     catLink: (cat, list = [])->
         res = []
         for it in cat.split(',')
@@ -91,7 +72,6 @@ module.exports =
             p = "<img src='#{pp}'/>"
         "<a href='/user/#{user._id}' title='#{user.username}'>#{p}<div>#{user.username}</div></a>"
 
-
     adt: util.adjustText
 
     navUrl: (p)->
@@ -104,13 +84,6 @@ module.exports =
                 if _.isString(it) or _.isNumber(it)
                     k += '/' + it
         k
-
-    tmpl: (name, opt, lib)->
-#        if _jadeRender
-#            _jadeRender(name,opt)
-#        else
-        cf.rtp name, opt, lib
-#            jade.renderFile("#{req.fp}/#{ctx.index}.jade", opt)
 
     actDate: (start, end)->
         "#{start.substr(0, 16)}-#{end.substr(11, 5)}"
@@ -126,29 +99,14 @@ module.exports =
         cls = cf.style.btn(style, size, block, etc)
         "<a href='#{href}' class='#{cls}'>#{text || ''}</a>"
 
-    jsa: (k, ar)->
-        args = util.slice.call(arguments)
-        res = (for it in ar
-            rr = args.slice(2)
-            rr.unshift it
-            _.pick.apply @, rr
-        )
-        "#{k} = #{JSON.stringify(res)};"
-    jsp: (k)->
-        args = util.slice.call(arguments)
-        "#{k} = #{JSON.stringify(_.pick.apply(@, args.slice(1)))};"
-
-    pCenter: (ct, cls = 'mt')->
-        "<p class='text-center #{cls || ''}'>#{ct}</p>"
+#    pCenter: (ct, cls = 'mt')->
+#        "<p class='text-center #{cls || ''}'>#{ct}</p>"
 
     a: (href, text, cls)->
         str = if href then "href='#{href}' " else ''
         str += if cls then "class='#{cls}' " else ''
         str += "target='_blank' " if href and !href.startsWith('#')
         "<a #{str} title='#{text}'>#{text}</a>"
-
-    status: (e, t)->
-        cf.st.text e, t
 
     link: (it, prop = 'title', cls)->
         text = if prop is '_str'
@@ -212,19 +170,6 @@ module.exports =
             tag.on(cfg.action.type || 'click', cfg.action.fun)
         tag
 
-    lt: (obj, sc, ets, fun, val, tag = 'span')->
-        id = util.randomChar(4)
-        st = "<#{tag} id='#{id}'>#{val || ''}</#{tag}>"
-        obj.listenTo sc, ets, (r, v)->
-            $("##{id}").html(if fun then fun.apply(obj, arguments) else v)
-        st
-        
-    flt: (lc, code, val, fun)->
-        if !fun and lc.showText
-            fun = (m, v)->
-                lc.showText(v)
-        @lt(lc.ctx, lc.ctx.model, "change:#{code}", fun, val)
-
     qrImg: (link, cls)->
         "<img src='/a/qrImg?link=#{link}' class='#{cls}'/>"
 
@@ -238,6 +183,4 @@ module.exports =
         @iconx(icon) + @iconx(icon + 'Hover hover')
 
     icon: (icon, tag = 'i', str = '', cls = '', href)->
-#        if href
-#            href = "href='#{href}'"
         "<#{tag} class='#{@iClass(icon, cls)}' #{href || ''}>#{str}</#{tag}>"
