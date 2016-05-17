@@ -147,13 +147,17 @@ module.exports =
             tag = $('<button type="button"/>')
         else
             tag = $("<a/>")
+            
         tag.addClass cfg.key
+        
         if cfg.href
             tag.attr 'href', cfg.href
             if cfg.href.startsWith 'http'
                 tag.attr 'target', '_blank'
+                
         cfg.id and tag.attr 'id', util.randomChar(4) + '-' + it?.id
-        cfg.label and tag.text cfg.label
+        
+        cfg.label and tag.html "<span>#{cfg.label}</span>"
         cfg.title and tag.attr 'title', cfg.title
         if cfg.attr
             for k,v of cfg.attr
