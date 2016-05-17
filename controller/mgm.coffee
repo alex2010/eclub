@@ -34,7 +34,10 @@ module.exports =
                         for it in res
                             rt.push "http://#{c.url}/#{et}/#{it._id}"
                         cb()
+
         async.parallel opt, ->
+#            log rt.join('\n')
+            rt.push "http://#{c.url}"
             request
                 url: c.bdPushUrl
                 method: 'POST'

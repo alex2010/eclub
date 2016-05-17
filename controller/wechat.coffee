@@ -211,14 +211,13 @@ module.exports =
     login: (req, rsp)->
         code = req.c.code
         qy = req.query
-        page = qy.page || 'wechat'
+        page = qy.page || ''
         func = qy.func
         if req.cookies.woid
             url = "http://#{req.c.url}/#{page}"
             if func
                 url += "#!/#{func}"
             log 'with cookie'
-            log urlxi
             rsp.redirect url
         else
             appId = qy.appId

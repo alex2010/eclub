@@ -9,6 +9,7 @@ module.exports = (req, user)->
                 title:
                     $regex: "^#{it}$"
                     $options: 'i'
+                    
             dao.get db, 'role', filter, (role)->
                 mb =
                     username: user.username
