@@ -1,6 +1,5 @@
 async = require('async')
 
-tmplUtil = require '../ext/tmpl'
 jade = require('jade')
 
 OAuth = require('wechat-oauth')
@@ -127,7 +126,7 @@ module.exports =
                                             langs[it.key] = it.val
                                         ctx =
                                             code: code
-                                            f: tmplUtil
+                                            f: tu
                                             c: req.c
                                             i18: require('../service/lang')(langs)
                                             catObj:ct

@@ -27,8 +27,8 @@ EventEmitter = require('events').EventEmitter
     _path = __dirname;
     _mdb = 'main';
     dao = new require('./service/dao')();
-    util = _.extend(require('./ext/common'), require('./ext/util'));
-    tu = require('./ext/tmpl');
+    util = _.extend(require('./public/ext/common'), require('./public/ext/util'));
+    tu = require('./public/ext/tmpl');
     jade = require('jade');
     gStub = {};
     gs = function (code, fn) {
@@ -54,7 +54,7 @@ cf.st =
         map
 
 
-require('./ext/string')
+require('./public/ext/string')
 # view engine setup
 app.set 'view engine', 'jade'
 #app.set 'views', path.join(_path, "views")

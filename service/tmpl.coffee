@@ -1,4 +1,4 @@
-module.exports = _.extend require('../ext/tmpl'),
+module.exports = _.extend require('../public/ext/tmpl'),
     setOpt:()->
         @tmplOpt = {}
         
