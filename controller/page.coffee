@@ -29,7 +29,7 @@ pageOpt = (req)->
     lang: req.query.lang || 'zh'
     title: c.title
     mode: app.env
-    st: require '../ext/style/bs'
+    st: require '../public/ext/style/bs'
     _ts: new Date().getTime()
     c: c
     f: f

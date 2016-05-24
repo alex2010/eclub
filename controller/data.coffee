@@ -15,6 +15,9 @@ dataController =
 
     list: (req, rsp) ->
         find req.c.code, req.params.entity, req, (res)->
+#            setTimeout ->
+#                rsp.send res
+#            ,20000
             rsp.send res
 
     del: (req, rsp) ->
