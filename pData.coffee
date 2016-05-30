@@ -23,7 +23,7 @@ process.argv.forEach (val, index, array)->
     meta = require('./public/lib/meta/common');
     _ep = meta.exp;
 `
-require('./ext/string')
+require('./public/ext/string')
 dao = new require('./service/dao')()
 
 addMember = (username, title)->

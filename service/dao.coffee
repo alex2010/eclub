@@ -99,8 +99,14 @@ module.exports = ->
 
     @findAndUpdate = (db, entity, filter, opt, callback)->
         filter = @cleanOpt(filter)
+        
+        op2 =
+            upsert: true
+            new: true
+        
         delete opt._id
-        @pick(db, entity).findAndModify filter, null, opt, {upsert: true, new: true}, (err, doc)->
+        
+        @pick(db, entity).findAndModify filter, null, opt, op2, (err, doc)->
             throw err if err
             item = doc.value
             callback?(item)

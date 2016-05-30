@@ -294,12 +294,13 @@ module.exports =
                 appid: pa.appId
                 mch_id: pa.mid
                 partner_key: pa.tradeSecret
+                
             opt =
                 openid: rp.woid
                 body: rp.body
                 detail: '公众号支付测试',
                 out_trade_no: rp.tid || da.getFullYear()+da.getMonth()+da.getDay()+Math.random().toString().substr(2, 10)
-                total_fee: 1
+                total_fee: 1 #rp.fee
                 spbill_create_ip: req.ip
                 notify_url: pa.notify
 
