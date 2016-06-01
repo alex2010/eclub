@@ -67,15 +67,17 @@ app.use bodyParser.json()
 app.use bodyParser.urlencoded(extended: false)
 app.use cookieParser()
 
+app.addCross = (res, url = '*', method = 'GET,PUT,POST,DELETE,PATCH', head = 'Origin, X-Requested-With, Content-Type, Accept', cred = true)->
+    res.header 'Access-Control-Allow-Origin', url
+    res.header 'Access-Control-Allow-Methods', method
+    res.header 'Access-Control-Allow-Headers', head
+    res.header 'Access-Control-Allow-Credentials', cred
 
 app.use express.static(path.join(__dirname, 'public'))
 #app.use express.static(path.join(__dirname, 'public/res'))
 if app.env
     app.use '/*', (req, res, next)->
-        res.header 'Access-Control-Allow-Origin', '*'
-        res.header 'Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH'
-        res.header 'Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept'
-        res.header 'Access-Control-Allow-Credentials', true
+        app.addCross(res)
         next()
 
 app._community = {}

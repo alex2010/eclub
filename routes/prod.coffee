@@ -55,6 +55,8 @@ prepare = (req)->
 
 actPre = (req, rsp, next)->
     prepare req
+    if req.baseUrl and req.baseUrl.startsWith('/a/batch/add')
+        app.addCross(rsp)
     true && ee.emit 'user_track', req
     next()
 
@@ -158,6 +160,9 @@ checkPage = (req, rsp, next)->
             next()
         else
             rsp.end 'no page'
+
+
+
 
 router.all '/a/*', actPre
 router.all '/r/*', resPre

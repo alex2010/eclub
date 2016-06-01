@@ -79,3 +79,4 @@ module.exports =
                 success: true
                 msg: '生产成功'
 
+#    transData: (req, rsp)->

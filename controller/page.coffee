@@ -124,7 +124,6 @@ render = (req, rsp, ctx)->
             str = jade.renderFile("#{req.fp}/#{ctx.index}.jade", ctx)
         else
             cstr = fs.readFileSync "#{req.fp}/#{ctx.index}.jade", { encoding: 'utf8' }
-            log cstr.toString()
             ctx.basedir = req.fp + '/' + req.c.code
             str = jade.render(cstr, ctx)
         unless app.env
