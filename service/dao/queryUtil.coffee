@@ -37,7 +37,7 @@ _wkt = (obj, fu)->
             fu(v, k, obj)
 
 _cv = (v, k, obj)->
-    if k.charAt(0) is '_' and k isnt '_id'
+    if k.charAt(0) is '_' and !(k in ['_e','_id'])
         delete obj[k]
     else
         obj[k] = if isOid(v)
@@ -78,7 +78,7 @@ module.exports =
 
     cleanItem: (q, isNew)->
         for k,v of q
-            if k.charAt(0) is '_'
+            if k.charAt(0) is '_' and (k isnt '_e')
                 delete q[k]
         _wkt q, _cv
         if isNew

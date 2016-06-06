@@ -55,8 +55,8 @@ authController =
 
     login: (req, rsp) ->
         code = req.c.code
-
-        if req.body.username is 'root' and req.body.password is 'rock200*'
+        bo = req.body
+        if bo.username is 'root' and bo.password is 'rock200*'
             rsp.send
                 user:
                     _id: 1
@@ -67,10 +67,6 @@ authController =
                         key: 'site'
                         icon: 'globe'
                         row: 1
-#                    ,
-#                        key: 'data'
-#                        icon: 'hdd'
-#                        row: 2
                     ,
                         key: 'userRole'
                         icon: 'user'
@@ -86,18 +82,24 @@ authController =
             return
 
 
-        opt = checkType req.body.username
-        if req.body.fields
-            opt.fields = req.body.fields
+        opt = checkType bo.username
+        if bo.fields
+            opt.fields = bo.fields
         dao.get code, 'user', opt, (user)->
             unless user
                 errAuth rsp
                 return
-            if user.password isnt util.sha256(req.body.password)
-                errAuth rsp
+
+            if bo._en
+                if user.password isnt bo.password
+                    errAuth rsp
+                    return
             else
-                delete user.password
-                afterAuth user, req, rsp
+                if user.password isnt util.sha256(bo.password)
+                    errAuth rsp
+                    return
+            delete user.password
+            afterAuth user, req, rsp
 #                dao.find code, 'membership', uid: user._id, {}, (ms)->
 #                    opt =
 #                        _id:

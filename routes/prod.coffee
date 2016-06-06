@@ -52,18 +52,30 @@ prepare = (req)->
         req.hostname = req.get('Host')
     req.c = pickSite req
 
+checkRes = ()->
+    true
 
 actPre = (req, rsp, next)->
     prepare req
-    if req.baseUrl and req.baseUrl.startsWith('/a/batch/add')
+    #    true && ee.emit 'user_track', req
+    log req.get('username')
+    if false #req.get('username')
+        dao.find code, 'user', username: req.get('username'), (r)->
+            if r.password is util.sha256(req.get('password'))
+                if checkRes()
+                    app.addCross(rsp)
+                    next()
+                    return
+        rsp.end
+            msg: '>_<'
+    else
         app.addCross(rsp)
-    true && ee.emit 'user_track', req
-    next()
+        next()
 
 resPre = (req, rsp, next)->
     prepare req
+    #    true && ee.emit 'user_track', req
 #    req.c.userTrack && ee.emit 'user_track', req
-    true && ee.emit 'user_track', req
     if req.method is 'GET'
         dao.get req.c.code, 'cache', k: ck(req), (res)->
             if res and !app.env

@@ -24,15 +24,7 @@ module.exports =
 
     add: (req, rsp)->
         code = req.c.code
-        if false
-            dao.find code, 'user', username: req.header.username, (r)->
-                if r.password is req.header.password
-                    batchSave(req, rsp)
-                    return
-            rsp.send
-                msg: '>_<'
-        else
-            batchSave(req, rsp)
+        batchSave(req, rsp)
 
 
 
