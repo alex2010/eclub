@@ -45,6 +45,7 @@ EventEmitter = require('events').EventEmitter
     _wtFunc = {};
     _ePool = {};
     cc = new _cc();
+    _wtPay = {};
 `
 cf.st =
     add: (et, opt)->

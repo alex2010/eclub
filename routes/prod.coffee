@@ -206,6 +206,17 @@ router.post '/a/wt/showQRCodeURL', wt.showQRCodeURL
 router.post '/a/wt/jsSign', wt.jsSign
 router.post '/a/wt/wxPay', wt.wxPay
 
+router.use '/a/wt/notify', (req, res)->
+    log 'call me back'
+    wxpay = _wtPay[req.c.code]
+    if wxpay
+        rt = (msg, req, res)->
+            log msg
+            log 'wpay succss'
+            res.success()
+        wxpay.useWXCallback(rt)(req,res)
+
+
 router.post '/a/batch/add/:entity', batch.add
 router.post '/a/batch/del/:entity', batch.del
 
@@ -235,9 +246,7 @@ router.delete '/a/:type/:entity/:q/:qv/:key', data.delSub
 
 router.use '/a/paypal/notify', require '../controller/paypal'
 
-router.use '/a/wt/notify/:code', wxpay::useWXCallback (msg, req, res)->
-# do biz here
-    res.success()
+
 
 router.post '/userTrack', (req, rsp)->
     opt = req.body
