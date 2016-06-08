@@ -139,9 +139,9 @@ authController =
 
     checkPsd: (req, rsp) ->
         bo = req.body
-        opt = 
+        opt =
             _id: bo._id
-            
+
         dao.get req.c.code, 'user', opt, (user)->
             if user and !user.password and bo.password is 'psd'
                 rsp.send
@@ -150,9 +150,9 @@ authController =
                 rsp.status 390
                 rsp.send msg: '密码错误'
             else
-                rsp.send 
+                rsp.send
                     msg: '验证成功'
-                
+
     logout: (req, rsp) ->
 #del user session
         rsp.send msg: 'm_logout_s'
@@ -170,6 +170,23 @@ authController =
     logoutByWoid: (req, rsp)->
         rsp.send msg: 'm_logout_s'
 
+    merge: (req, rsp)->
+        code = req.c.code
+        bo = req.body
+        filter =
+            phone: bo.phone
+        dao.get code, 'user', filter, (user)->
+            wid = bo.wid
+            phone = bo.phone
+            po = {wid, phone}
+            po["w_#{bo.wCode}"] = bo.woid
+            if user
+                dao.findAndUpdate code, 'user', filter, $set: po, (ru)->
+                    dao.delItem code, 'user', _id: bo.user._id
+                    afterAuth ru, req, rsp
+            else
+                dao.findAndUpdate code, 'user', _id: bo.uid, $set: po, (ru)->
+                    afterAuth ru, req, rsp
 
 module.exports = authController
 

@@ -23,7 +23,6 @@ module.exports = (code, entity, d, fn)->
     if bo._attrs
         _attrs = bo._attrs.split(',')
 
-    log bo
     if bo._unset
         unset = bo._unset
 

@@ -193,6 +193,7 @@ router.post '/a/auth/logout', auth.logout
 router.post '/a/auth/logoutByWoid', auth.logoutByWoid
 router.post '/a/auth/resetPsd', auth.resetPsd
 router.post '/a/auth/checkPsd', auth.checkPsd
+router.post '/a/auth/merge', auth.merge
 
 wt = require '../controller/wechat'
 router.get '/a/wt/userInfoByCode', wt.userInfoByCode
@@ -224,8 +225,9 @@ router.post '/a/site/gen/:id', mgm.genSite
 router.post '/a/site/bdPush', mgm.bdPush
 router.get '/a/qrImg', qrImg.linkImg
 
-router.get '/r/wt/login', wt.login
+#router.get '/r/wt/login', wt.login
 router.get '/a/wt/login', wt.login
+
 router.get '/r/c/mg/file/list', up.fileList
 
 router.get '/r/comp', data.comp

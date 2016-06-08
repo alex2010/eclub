@@ -46,6 +46,8 @@ EventEmitter = require('events').EventEmitter
     _ePool = {};
     cc = new _cc();
     _wtPay = {};
+    _st = require('./public/ext/style/bs');
+
 `
 cf.st =
     add: (et, opt)->
