@@ -294,16 +294,12 @@ module.exports =
                 mch_id: pa.mid
                 partner_key: pa.tradeSecret
                 pfx: fs.readFileSync("#{_path}/public/res/upload/#{code}/lib/cert.p12")
-#            log req.ips
-#            log req.connection.remoteAddress
-#            log req.header('x-forwarded-for')
-#            log req.headers['x-real-ip']
             opt =
                 openid: rp.woid
                 body: rp.body
                 detail: rp.detail
                 out_trade_no: rp.tid || da.getFullYear()+da.getMonth()+da.getDay()+Math.random().toString().substr(2, 10)
-                total_fee: +rp.fee #rp.fee
+                total_fee: rp.fee*100 #rp.fee
                 spbill_create_ip: '127.0.0.1'
                 notify_url: "http://#{req.c.url}/a/wt/notify"
             wxpay.getBrandWCPayRequestParams opt, (err,res)->

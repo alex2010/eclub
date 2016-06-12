@@ -210,12 +210,11 @@ router.post '/a/wt/jsSign', wt.jsSign
 router.post '/a/wt/wxPay', wt.wxPay
 
 router.use '/a/wt/notify', (req, res)->
-    log 'call me back'
     wxpay = _wtPay[req.c.code]
     if wxpay
         rt = (msg, req, res)->
             log msg
-            log 'wpay succss'
+            dao.save req.c.code, 'payRecord', msg, ->
             res.success()
         wxpay.useWXCallback(rt)(req,res)
 
@@ -243,7 +242,7 @@ router.patch '/r/:entity/:id', data.edit
 
 router.post '/r/:entity', data.save
 router.delete '/r/:entity/:id', data.del
-router.post '/r/:type/:entity/:q/:qv/:prop', data.saveSub
+#router.post '/r/:type/:entity/:q/:qv/:prop', data.saveSub
 router.post '/a/:type/:entity/:q/:qv/:prop', data.saveSub
 router.post '/a/inc/:entity/:id/:prop', data.inc
 router.delete '/a/:type/:entity/:q/:qv/:key', data.delSub

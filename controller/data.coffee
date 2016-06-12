@@ -127,6 +127,7 @@ dataController =
         log 'save sb'
         code = req.c.code
         entity = req.params.entity
+
         qs = {}
         qs[req.params.q] = req.params.qv
         if qs._id
@@ -134,20 +135,24 @@ dataController =
 
         bo = req.body
 
-        if bo._q
-            _.extend qs, bo._q
-            delete bo._q
-
         _rsMsg = bo._rsMsg
-        bo = queryUtil.cleanItem bo
 
+        if bo._str
+            bo = bo._str
+        else
+            if bo._q
+                _.extend qs, bo._q
+                delete bo._q
+
+            bo = queryUtil.cleanItem bo
+            if rt = bo._root
+                delete bo._root
+                op["$set"] = rt
+        log bo
         op = {}
-        rt = bo._root
-        delete bo._root
-        if rt
-            op["$set"] = rt
         op["$#{req.params.type}"] = {}
         op["$#{req.params.type}"][req.params.prop] = bo
+        
         dao.findAndUpdate code, entity, qs, op, (doc)->
             rsp.send util.r(doc, _rsMsg || 'm_create_ok')
 
