@@ -108,10 +108,12 @@ pre = (req, rsp, next)->
             else
                 k.replace('?_c=1', '')
             opt.k = k
-            kill = true
 
+            delOpt =
+                k: k
+            kill = true
         if kill
-            dao.delItem _mdb, 'cache', opt, (res)->
+            dao.delItem _mdb, 'cache', delOpt, (res)->
                 log 'del...'
 
         if req.query._r

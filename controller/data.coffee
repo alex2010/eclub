@@ -27,6 +27,7 @@ dataController =
 
     edit: (req, rsp) ->
         req.id = req.params.id
+        log req.body
         edit req.c.code, req.params.entity, req, (res, msg)->
             if res.err
                 rsp.status 405

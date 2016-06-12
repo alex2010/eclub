@@ -23,7 +23,6 @@ module.exports = (code, entity, d, fn)->
 
         q = queryUtil.queryClean(qu.q)
 
-        log q
         dao.find code, entity, q, op, (entities)->
             dao.count code, entity, q, (count)->
                 fn util.r(entities, count)

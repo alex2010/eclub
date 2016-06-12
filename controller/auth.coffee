@@ -159,8 +159,10 @@ authController =
 
     loginByWoid: (req, rsp)->
         code = req.c.code
-        filter =
-            woid: req.body.woid
+        bo = req.body
+        filter = {}
+
+        filter["w_#{bo.wCode}"] = bo.woid
         dao.get code, 'user', filter, (user)->
             if user
                 afterAuth user, req, rsp
@@ -168,24 +170,30 @@ authController =
                 errAuth rsp
 
     logoutByWoid: (req, rsp)->
+        #track user behavior
         rsp.send msg: 'm_logout_s'
 
     merge: (req, rsp)->
+        log 'merge'
         code = req.c.code
         bo = req.body
         filter =
             phone: bo.phone
+        log bo
         dao.get code, 'user', filter, (user)->
             wid = bo.wid
             phone = bo.phone
             po = {wid, phone}
-            po["w_#{bo.wCode}"] = bo.woid
+            if bo.wCode
+                po["w_#{bo.wCode}"] = bo.woid
+            log po
             if user
-                dao.findAndUpdate code, 'user', filter, $set: po, (ru)->
-                    dao.delItem code, 'user', _id: bo.user._id
+                log user
+                dao.findAndUpdate code, 'user', filter, $set:po, (ru)->
+                    dao.delItem code, 'user', _id: new oid(bo.uid)
                     afterAuth ru, req, rsp
             else
-                dao.findAndUpdate code, 'user', _id: bo.uid, $set: po, (ru)->
+                dao.findAndUpdate code, 'user', {_id: new oid(bo.uid)}, $set:po, (ru)->
                     afterAuth ru, req, rsp
 
 module.exports = authController

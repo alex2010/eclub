@@ -40,4 +40,6 @@ module.exports = (code, entity, d, fn)->
         else
             ri = item
 
+        ri._e = entity unless ri._e
+
         fn ri, _rsMsg || 'm_create_ok'

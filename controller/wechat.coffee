@@ -237,21 +237,21 @@ module.exports =
         [wCode,page,func] = decodeURI(qy.state).split('::')
 
         code = req.c.code
-        self = @
         if ctCtn[wCode]
             ctCtn[wCode].getAccessToken qy.code, (err, result)->
+                log 'userInfoByCode:'
                 log arguments
                 openid = result.data.openid
                 rsp.cookie 'woid', openid, maxAge: 1000 * 3600 * 2
+                rsp.cookie 'wCode', wCode, maxAge: 1000 * 3600 * 2
                 ru = "#{req.c.url}/#{page}"
                 ru = 'http://' + ru if ru.indexOf('http') is -1
                 ru += "#!/#{func.replace(_spWtStr, '/')}" if func
-                log 'fd'
                 log ru
                 if result.data.scope is 'snsapi_userinfo'
                     ctCtn[wCode].getUser openid, (err, res)->
                         return unless res
-                        dao.get code, 'user', woid: openid, (user)->
+                        dao.get code, 'user', "w_#{wCode}": openid, (user)->
                             if user
                                 user.wunid = res.unionid
                             else
@@ -261,11 +261,9 @@ module.exports =
                                     username: res.nickname
                                     gender: if res.sex is 1 then true else false
                                     country: res.country
-                                    woid: res.openid
                                     status: 1
                                     wunid: res.unionid
-                                    info:
-                                        address: "#{res.province} #{res.city}"
+                                    address: "#{res.province} #{res.city}"
                             user["w_#{wCode}"] = res.openid
                             if res.headimgurl and (!user.refFile or !user.refFile.portrait)
                                 fn = user._id.toString() + '.jpg'
@@ -275,7 +273,6 @@ module.exports =
                 else
                     rsp.redirect ru
         else
-            log wCode
             dao.get code, 'pubAccount', code: wCode, (res)->
                 log 'pubAccount'
                 log res
@@ -287,6 +284,8 @@ module.exports =
 
     wxPay: (req, rsp)->
         rp = req.body
+        log 'wxPay:'
+        log rp
         da = new Date()
         code = req.c.code
         dao.get code, 'pubAccount', code: rp.wCode, (pa)->
@@ -302,12 +301,13 @@ module.exports =
             opt =
                 openid: rp.woid
                 body: rp.body
-                detail: '公众号支付测试',
+                detail: rp.detail
                 out_trade_no: rp.tid || da.getFullYear()+da.getMonth()+da.getDay()+Math.random().toString().substr(2, 10)
-                total_fee: 1 #rp.fee
+                total_fee: +rp.fee #rp.fee
                 spbill_create_ip: '127.0.0.1'
                 notify_url: "http://#{req.c.url}/a/wt/notify"
             wxpay.getBrandWCPayRequestParams opt, (err,res)->
+                log 'after getBrandWCPayRequestParams:'
                 log res
                 rsp.send res
 
