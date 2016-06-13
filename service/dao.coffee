@@ -94,18 +94,19 @@ module.exports = ->
         @pick(db, entity).findAndModify q, null, op, {upsert: true, new: true}, ->
 
     @inc = (db, entity, q, op)->
-        op = $inc:op
+        op =
+            $inc: op
         @qc db, entity, q, op
 
     @findAndUpdate = (db, entity, filter, opt, callback)->
         filter = @cleanOpt(filter)
-        
+
         op2 =
             upsert: true
             new: true
-        
+
         delete opt._id
-        
+
         @pick(db, entity).findAndModify filter, null, opt, op2, (err, doc)->
             throw err if err
             item = doc.value
@@ -139,8 +140,10 @@ module.exports = ->
             throw err if err
             callback?(res)
 
-    @remove = (db, entity, filter, opt = _opt, callback)->
-        @pick(db, entity).remove(filter, opt, callback)
+    @remove = (db, entity, filter, callback)->
+        log entity
+        log filter
+        @pick(db, entity).remove(filter, justOne:1, callback)
 
     @close = (name)->
         log 'closed ' + name

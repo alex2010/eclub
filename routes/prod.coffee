@@ -183,6 +183,9 @@ router.all '/r/*', resPre
 
 router.post '/a/upload', up.upload
 router.post '/a/upload/remove', up.remove
+router.post '/a/upload/thumb', up.thumb
+
+
 router.post '/a/cleanCache', data.cleanCache
 router.get '/a/captcha', captcha.cap
 router.get '/a/smsVerify', sms.getCode
@@ -242,10 +245,15 @@ router.patch '/r/:entity/:id', data.edit
 
 router.post '/r/:entity', data.save
 router.delete '/r/:entity/:id', data.del
-#router.post '/r/:type/:entity/:q/:qv/:prop', data.saveSub
+
+router.post '/r/:type/:entity/:q/:qv/:prop', data.saveSub
 router.post '/a/:type/:entity/:q/:qv/:prop', data.saveSub
+
 router.post '/a/inc/:entity/:id/:prop', data.inc
 router.delete '/a/:type/:entity/:q/:qv/:key', data.delSub
+
+router.delete '/r/match/:entity/del', data.matchDel
+
 
 router.use '/a/paypal/notify', require '../controller/paypal'
 

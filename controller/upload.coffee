@@ -106,9 +106,15 @@ thumb = (path, thumb)->
     [folder,w] = thumb.split(':')
     tp = thumbPath path, folder.trim()
     gm(path).resize(w, null).write(tp, ->)
-#    gm(path).thumb(w, null, 'test.jpg', 50, ->)
 
 module.exports =
+    thumb:(req,rsp)->
+        bo = req.body
+        path = sPath(req.c.code) + '/' + bo.path
+        gm(path).resize(bo.width, bo.height).write(path, ->)
+        rsp.send
+            success: true
+
     remove: (req, rsp)->
         bo = req.body
         path = sPath(req.c.code) + '/' + bo.id

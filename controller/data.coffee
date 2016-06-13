@@ -20,6 +20,12 @@ dataController =
 #            ,20000
             rsp.send res
 
+    matchDel: (req, rsp) ->
+        bo = queryUtil.cleanItem(req.body)
+        dao.remove req.c.code, bo.ent, bo.q, (res)->
+            rsp.send res
+        
+        
     del: (req, rsp) ->
         req.id = req.params.id
         del req.c.code, req.params.entity, req, (res)->
@@ -27,7 +33,6 @@ dataController =
 
     edit: (req, rsp) ->
         req.id = req.params.id
-        log req.body
         edit req.c.code, req.params.entity, req, (res, msg)->
             if res.err
                 rsp.status 405
@@ -125,6 +130,7 @@ dataController =
 
     saveSub: (req, rsp)->
         log 'save sb'
+        log 'fuck u'
         code = req.c.code
         entity = req.params.entity
 
