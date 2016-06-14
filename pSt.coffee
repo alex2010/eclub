@@ -1,7 +1,6 @@
 #node pSt pet mvPic
 async = require('async')
 
-
 args = null
 process.argv.forEach (val, index, array)->
     args = array
