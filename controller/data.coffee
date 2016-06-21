@@ -22,9 +22,8 @@ dataController =
 
     matchDel: (req, rsp) ->
         bo = queryUtil.cleanItem(req.body)
-        dao.remove req.c.code, bo.ent, bo.q, (res)->
-            rsp.send res
-        
+        dao.remove req.c.code, bo.ent, bo.q, (res, msg)->
+            rsp.send msg: 'm_del_ok'
         
     del: (req, rsp) ->
         req.id = req.params.id

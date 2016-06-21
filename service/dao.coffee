@@ -141,8 +141,6 @@ module.exports = ->
             callback?(res)
 
     @remove = (db, entity, filter, callback)->
-        log entity
-        log filter
         @pick(db, entity).remove(filter, justOne:1, callback)
 
     @close = (name)->
