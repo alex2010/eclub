@@ -98,6 +98,13 @@ module.exports = ->
             $inc: op
         @qc db, entity, q, op
 
+    @update = (db, entity, filter, opt, callback)->
+        filter = @cleanOpt(filter)
+        log 'zxvxcvzxcvzxcv'
+        @pick(db, entity).update filter, opt, {upset: true}, (err, doc)->
+            callback?(doc.ops)
+
+
     @findAndUpdate = (db, entity, filter, opt, callback)->
         filter = @cleanOpt(filter)
 
@@ -141,7 +148,7 @@ module.exports = ->
             callback?(res)
 
     @remove = (db, entity, filter, callback)->
-        @pick(db, entity).remove(filter, justOne:1, callback)
+        @pick(db, entity).remove(filter, justOne: 1, callback)
 
     @close = (name)->
         log 'closed ' + name
