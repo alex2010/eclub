@@ -40,11 +40,11 @@ pageOpt = (req)->
 
 pre = (req)->
     ctx = pageOpt(req)
-
-    if req.query.dev
-        ctx.dev = true
     ps = req.params
-    ctx.index = ps.page || ps.entity || 'index'
+    qu = req.query
+    if qu.dev
+        ctx.dev = true
+    ctx.index = qu.tmpl || ps.page || ps.entity || 'index'
     ctx
 
 pickScript = (ctx, req)->

@@ -153,7 +153,7 @@ checkPage = (req, rsp, next)->
         next()
         return
     pm = req.params
-    page = pm.page || pm.entity || 'index'
+    page = req.query.tmpl || pm.page || pm.entity || 'index'
     if /^\w+$/.test(page)
     else if /^\w+\.html$/.test(page)
         req._html = page

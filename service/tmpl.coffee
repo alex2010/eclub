@@ -2,10 +2,10 @@ module.exports = _.extend require('../public/ext/tmpl'),
     setOpt:()->
         @tmplOpt = {}
         
-    tmpl: (ctx, name, opt)->
+    tmpl: (ctx, name, opt={}, prefix='tmpl/')->
         opt.f = ctx.f
         opt.c = ctx.c
-        jade.renderFile("#{_path}/public/module/#{ctx.c.code}/app/tmpl/#{name}.jade", opt)
+        jade.renderFile("#{_path}/public/module/#{ctx.c.code}/app/#{prefix}#{name}.jade", opt)
 
     jsa: (k, ar)->
         args = util.slice.call(arguments)
