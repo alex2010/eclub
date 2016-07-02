@@ -3,9 +3,7 @@ module.exports = _.extend require('../public/ext/tmpl'),
         @tmplOpt = {}
         
     tmpl: (ctx, name, opt={}, prefix='tmpl/')->
-        opt.f = ctx.f
-        opt.c = ctx.c
-        jade.renderFile("#{_path}/public/module/#{ctx.c.code}/app/#{prefix}#{name}.jade", opt)
+        jade.renderFile("#{_path}/public/module/#{ctx.c.code}/app/#{prefix}#{name}.jade", ctx)
 
     jsa: (k, ar)->
         args = util.slice.call(arguments)

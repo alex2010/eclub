@@ -179,21 +179,18 @@ authController =
         bo = req.body
         filter =
             phone: bo.phone
-        log bo
         dao.get code, 'user', filter, (user)->
             wid = bo.wid
             phone = bo.phone
             po = {wid, phone}
             if bo.wCode
                 po["w_#{bo.wCode}"] = bo.woid
-            log po
             if user
-                log user
                 dao.findAndUpdate code, 'user', filter, $set:po, (ru)->
-                    dao.delItem code, 'user', _id: new oid(bo.uid)
+                    dao.delItem code, 'user', _id: oid(bo.uid)
                     afterAuth ru, req, rsp
             else
-                dao.findAndUpdate code, 'user', {_id: new oid(bo.uid)}, $set:po, (ru)->
+                dao.findAndUpdate code, 'user', {_id: oid(bo.uid)}, $set:po, (ru)->
                     afterAuth ru, req, rsp
 
 module.exports = authController

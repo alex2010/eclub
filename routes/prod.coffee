@@ -27,6 +27,7 @@ wxpay = require('weixin-pay')
 #router.param 'page', checkPagePattern
 
 ee.on 'user_track', (req)->
+    log 'track......'
     opt =
         url: req.headers.origin  + req.url
         pathname: req._parsedUrl.pathname
@@ -285,5 +286,6 @@ router.get '/:entity/:id', page.entity
 router.get '/:entity/:attr/:id', pre
 router.get '/:entity/:attr/:id', checkPage
 router.get '/:entity/:attr/:id', page.entity
+
 
 module.exports = router

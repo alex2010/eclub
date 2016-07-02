@@ -17,6 +17,7 @@ port = normalizePort(process.env.PORT or '3000')
 app.set 'port', port
 
 onError = (error) ->
+    log 'err....'
     if error.syscall != 'listen'
         throw error
     bind = if typeof port == 'string' then 'Pipe ' + port else 'Port ' + port
@@ -36,6 +37,8 @@ onListening = ->
     bind = if typeof addr == 'string' then 'pipe ' + addr else 'port ' + addr.port
     debug 'Listening on ' + bind
     return
+
+
 `
 server = http.createServer(app);
 io = require('socket.io').listen(server)

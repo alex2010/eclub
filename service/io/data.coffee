@@ -91,7 +91,7 @@ module.exports = (code, d, fn)->
 
 #
 #        entity = d.ent
-#                dao.delItem code, entity, _id: new oid(d.id), null, ->
+#                dao.delItem code, entity, _id: oid(d.id), null, ->
 #                    if entity is 'user'
-#                        dao.delItem code, 'membership', uid: new oid(d.id)
+#                        dao.delItem code, 'membership', uid: oid(d.id)
 #                    fn msg: 'del.ok'

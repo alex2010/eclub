@@ -22,7 +22,7 @@ EventEmitter = require('events').EventEmitter
     app = express();
     app.env = app.get('env') == 'development';
     //app.setting = require('./setting');
-    oid = require('mongodb').ObjectID;
+    oid = function(v){return (v instanceof require('mongodb').ObjectID) ? v : (_.isString(v) && v.length == 24)? new require('mongodb').ObjectID(v):v};
     log = console.log;
     _path = __dirname;
     _mdb = 'main';

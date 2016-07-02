@@ -30,7 +30,7 @@ _wkt = (obj, fu)->
         else if v and v.$in
             v.$in =
                 for it in v.$in
-                    if isOid(v) then new oid(it) else it
+                    if isOid(v) then oid(it) else it
         else if _.isObject(v) and !_.isArray(v) and !_.isFunction(v)
             arguments.callee(v, fu)
         else
@@ -41,7 +41,7 @@ _cv = (v, k, obj)->
         delete obj[k]
     else
         obj[k] = if isOid(v)
-            new oid(v)
+            oid(v)
         else if k in ['status', 'row']
             +v
         else if v is 'true'
@@ -51,7 +51,8 @@ _cv = (v, k, obj)->
         else if k is 'password' and v.length < 40
             util.sha256(v)
         else if /^\d{4}-\d{1,2}-\d{1,2}/.test(v) and v.length < 25
-            Date.parseLocal(v)
+            log v
+            new Date(v)
         else
             v
 

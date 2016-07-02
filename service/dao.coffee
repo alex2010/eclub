@@ -1,7 +1,7 @@
 Mongodb = require('mongodb')
 _ = require('underscore')
 
-oid = require('mongodb').ObjectID
+
 `
     _db = {};
 `
@@ -57,7 +57,6 @@ module.exports = ->
             opt =
                 fields: util.d filter, 'fields'
         filter = @cleanOpt(filter)
-
         @pick(db, entity).findOne filter, opt, (err, doc)->
             throw err if err
             doc._e = entity if doc
@@ -80,9 +79,9 @@ module.exports = ->
     @cleanOpt = (opt) ->
         if opt._id
             if _.isArray opt._id
-                opt._id = (new oid(it) for it in opt._id)
+                opt._id = (oid(it) for it in opt._id)
             else
-                opt._id = new oid(opt._id)
+                opt._id = oid(opt._id)
         opt
 
     @count = (db, entity, opt, callback)->

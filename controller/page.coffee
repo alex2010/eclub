@@ -118,21 +118,31 @@ render = (req, rsp, ctx)->
     dao.pick(req.c.code, 'cache').ensureIndex time: 1,
         expireAfterSeconds: 7200
         background: true
-    async.parallel opt, (err, res)->
-        _.extend ctx, res
-        if req.fp.endsWith(req.c.code)
-            str = jade.renderFile("#{req.fp}/#{ctx.index}.jade", ctx)
-        else
-            cstr = fs.readFileSync "#{req.fp}/#{ctx.index}.jade", { encoding: 'utf8' }
-            ctx.basedir = req.fp + '/' + req.c.code
-            str = jade.render(cstr, ctx)
-        unless app.env
-            dao.save req.c.code, 'cache',
-                k: req.k
-                str: str
-                mob: if req.mob then true else false
-                time: new Date()
-        rsp.end str
+    try
+        async.parallel opt, (err, res)->
+            for k,v of res
+                if v is -1
+                    rsp.end '请求出现错误!'
+                    return
+            _.extend ctx, res
+
+            if req.fp.endsWith(req.c.code)
+                str = jade.renderFile("#{req.fp}/#{ctx.index}.jade", ctx)
+            else
+                cstr = fs.readFileSync "#{req.fp}/#{ctx.index}.jade", { encoding: 'utf8' }
+                ctx.basedir = req.fp + '/' + req.c.code
+                str = jade.render(cstr, ctx)
+
+            unless app.env
+                dao.save req.c.code, 'cache',
+                    k: req.k
+                    str: str
+                    mob: if req.mob then true else false
+                    time: new Date()
+            rsp.end str
+    catch e
+
+        
 
 
 #checkMob = (req,rsp) ->

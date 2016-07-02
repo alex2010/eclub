@@ -72,7 +72,7 @@ dataController =
 
     inc: (req, rsp)->
         op =
-            _id: new oid(req.params.id)
+            _id: oid(req.params.id)
         d =
             $inc: {}
         d.$inc[req.params.prop] = 1
@@ -136,7 +136,7 @@ dataController =
         qs = {}
         qs[req.params.q] = req.params.qv
         if qs._id
-            qs._id = new oid(qs._id)
+            qs._id = oid(qs._id)
 
         bo = req.body
 
@@ -153,7 +153,6 @@ dataController =
             if rt = bo._root
                 delete bo._root
                 op["$set"] = rt
-        log bo
         op = {}
         op["$#{req.params.type}"] = {}
         op["$#{req.params.type}"][req.params.prop] = bo
@@ -268,7 +267,7 @@ module.exports = dataController
 #            rsp.send util.r(ri, _rsMsg || 'm_create_ok', entity)
 #        code = req.c.code
 #        entity = req.params.entity
-#        dao.delItem code, entity, _id: new oid(req.params.id), null, ->
+#        dao.delItem code, entity, _id: oid(req.params.id), null, ->
 #            if entity is 'user' #membership:uid:uid
-#                dao.delItem code, 'membership', uid: new oid(req.params.id)
+#                dao.delItem code, 'membership', uid: oid(req.params.id)
 #            rsp.send msg: 'del.ok'

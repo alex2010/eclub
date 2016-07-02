@@ -52,14 +52,14 @@ module.exports =
                     opt =
                         pubCode: req.body.pubCode
                         ticket: res.ticket
-                        uid: new oid(req.body.uid)
+                        uid: oid(req.body.uid)
                         row: row
                     dao.save code, 'ticketTable', opt, ->
                         rsp.send url: api.showQRCodeURL(res.ticket)
 
     showQRCodeURL: (req, rsp)->
         filter =
-            uid: new oid(req.body.uid)
+            uid: oid(req.body.uid)
             pubCode: req.body.pubCode
         code = req.body.code
         dao.get code, 'ticketTable', filter, (res)->
@@ -211,11 +211,14 @@ module.exports =
         code = req.c.code
         qy = req.query
         page = qy.page || ''
+        log page
         func = qy.func
+
+        url = "http://#{req.c.url}/#{page}"
+        if func
+            url += "#!/#{func}"
+
         if req.cookies.woid
-            url = "http://#{req.c.url}/#{page}"
-            if func
-                url += "#!/#{func}"
             log 'with cookie'
             rsp.redirect url
         else
@@ -227,9 +230,10 @@ module.exports =
                 if func
                     qyy.push func
                 qy.state = qyy.join('::')
-            state = encodeURIComponent qy.state
-            log "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{appId}&redirect_uri=#{encodeURIComponent("http://#{req.c.url}/a/wt/userInfoByCode")}&response_type=code&scope=#{scope}&state=#{state}#wechat_redirect"
-            rsp.redirect "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{appId}&redirect_uri=#{encodeURIComponent("http://#{req.c.url}/a/wt/userInfoByCode")}&response_type=code&scope=#{scope}&state=#{state}#wechat_redirect"
+                state = encodeURIComponent qy.state
+            rdu = encodeURIComponent("http://#{req.c.url}/a/wt/userInfoByCode")
+            log "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{appId}&redirect_uri=#{rdu}&response_type=code&scope=#{scope}&state=#{state}#wechat_redirect"
+            rsp.redirect "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{appId}&redirect_uri=#{rdu}&response_type=code&scope=#{scope}&state=#{state}#wechat_redirect"
 
     userInfoByCode: (req, rsp)->
         log 'userInfoByCode'
@@ -255,7 +259,7 @@ module.exports =
                             if user
                                 user.wunid = res.unionid
                             else
-                                _id = new oid()
+                                _id = oid()
                                 user =
                                     _id: _id
                                     username: res.nickname
@@ -271,6 +275,7 @@ module.exports =
                             dao.save code, 'user:_id', user
                             rsp.redirect ru
                 else
+                    rsp.cookie 'wtbase', true, maxAge: 1000 * 3600 * 2
                     rsp.redirect ru
         else
             dao.get code, 'pubAccount', code: wCode, (res)->

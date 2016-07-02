@@ -31,7 +31,7 @@ _wkt = (obj, fu)->
         else if v and v.$in
             v.$in =
                 for it in v.$in
-                    if isOid(v) then new oid(it) else it
+                    if isOid(v) then oid(it) else it
 #        else if k is 'price' and _.isObject v
 #            for kk, vv of v
 #                v[kk] = +vv
@@ -45,7 +45,7 @@ _cv = (v, k, obj)->
         delete obj[k]
     else
         obj[k] = if isOid(v)
-            new oid(v)
+            oid(v)
         else if k in ['status', 'row']
             +v
         else if v is 'true'
