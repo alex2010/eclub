@@ -1,5 +1,5 @@
 #async = require('async')
-queryUtil = require './queryUtil'
+queryUtil = require '../service/dao/queryUtil'
 
 
 batchSave = (req, rsp)->

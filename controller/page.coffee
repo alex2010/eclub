@@ -54,6 +54,9 @@ pickScript = (ctx, req)->
             null
         entityList: (ctx, req)->
             et = req.query.entity.toString()
+            ctx.crumb = ctx.f.crumbItem [
+                key: et
+            ]
             filter =
                 status: 2
             if req.query.cat

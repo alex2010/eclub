@@ -78,10 +78,10 @@ app.addCross = (res, url = '*', method = 'GET,PUT,POST,DELETE,PATCH', head = 'Or
 
 app.use express.static(path.join(__dirname, 'public'))
 #app.use express.static(path.join(__dirname, 'public/res'))
-if app.env
-    app.use '/*', (req, res, next)->
-        app.addCross(res)
-        next()
+#if app.env
+#    app.use '/*', (req, res, next)->
+#        app.addCross(res)
+#        next()
 
 app._community = {}
 log 'init app'

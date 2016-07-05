@@ -51,7 +51,6 @@ _cv = (v, k, obj)->
         else if k is 'password' and v.length < 40
             util.sha256(v)
         else if /^\d{4}-\d{1,2}-\d{1,2}/.test(v) and v.length < 25
-            log v
             new Date(v)
         else
             v

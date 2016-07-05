@@ -59,18 +59,19 @@ checkRes = ()->
 actPre = (req, rsp, next)->
     prepare req
     #    true && ee.emit 'user_track', req
-    log req.get('username')
-    if false #req.get('username')
-        dao.find code, 'user', username: req.get('username'), (r)->
-            if r.password is util.sha256(req.get('password'))
+    qu = req.query
+    code = req.c.code
+    if qu.u and qu.u is code
+        dao.get code, 'user', username: qu.u, (r)->
+            log 'cxvc'
+            if r and r.password is util.sha256(qu.p)
+                log 'pas'
                 if checkRes()
                     app.addCross(rsp)
                     next()
                     return
-        rsp.end
-            msg: '>_<'
+        rsp.end '>_<'
     else
-        app.addCross(rsp)
         next()
 
 resPre = (req, rsp, next)->
