@@ -1,3 +1,14 @@
+#Date.parseLocal = (time) ->
+#    [h,t] = time.split(' ')
+#    [y,m,d] = h.split('-')
+#    dd = new Date(y,m-1,d)
+#    if t
+#        [hh,mm,ss] = t.split(':')
+#        dd.setHours hh
+#        dd.setMinutes mm
+#        dd.setSeconds 0
+#    dd
+
 isOid = (v)->
     _.isString(v) and v.length is 24 and /^(\d|[a-z]){24}$/.test(v)
 
@@ -51,7 +62,8 @@ _cv = (v, k, obj)->
         else if k is 'password' and v.length < 40
             util.sha256(v)
         else if /^\d{4}-\d{1,2}-\d{1,2}/.test(v) and v.length < 25
-            new Date(v)
+            log v
+            Date.parseLocal v
         else
             v
 
