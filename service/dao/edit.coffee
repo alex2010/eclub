@@ -39,7 +39,12 @@ module.exports = (code, entity, d, fn)->
     else
         _id: d.id
 
+    log bo
+
     dao.findAndUpdate code, entity, filter, bo, (item)->
+#        if unset
+#            dao.findAndUpdate code, entity, filter, $unset: unset, ->
+
         queryUtil.afterPersist(item, entity)
 
         gs(code, it)(d, item) for it in after.split(',') if after
