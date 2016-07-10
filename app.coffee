@@ -71,6 +71,7 @@ app.use bodyParser.urlencoded(extended: false)
 app.use cookieParser()
 
 app.addCross = (res, url = '*', method = 'GET,PUT,POST,DELETE,PATCH', head = 'Origin, X-Requested-With, Content-Type, Accept', cred = true)->
+    
     res.header 'Access-Control-Allow-Origin', url
     res.header 'Access-Control-Allow-Methods', method
     res.header 'Access-Control-Allow-Headers', head
@@ -78,10 +79,10 @@ app.addCross = (res, url = '*', method = 'GET,PUT,POST,DELETE,PATCH', head = 'Or
 
 app.use express.static(path.join(__dirname, 'public'))
 #app.use express.static(path.join(__dirname, 'public/res'))
-#if app.env
-#    app.use '/*', (req, res, next)->
-#        app.addCross(res)
-#        next()
+if app.env
+    app.use '/*', (req, res, next)->
+        app.addCross(res)
+        next()
 
 app._community = {}
 log 'init app'

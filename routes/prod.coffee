@@ -187,7 +187,6 @@ router.post '/a/upload', up.upload
 router.post '/a/upload/remove', up.remove
 router.post '/a/upload/thumb', up.thumb
 
-
 router.post '/a/cleanCache', data.cleanCache
 router.get '/a/captcha', captcha.cap
 router.get '/a/smsVerify', sms.getCode
@@ -213,6 +212,7 @@ router.post '/a/wt/createLimitQRCode', wt.createLimitQRCode
 router.post '/a/wt/showQRCodeURL', wt.showQRCodeURL
 router.post '/a/wt/jsSign', wt.jsSign
 router.post '/a/wt/wxPay', wt.wxPay
+router.get '/a/wt/login', wt.login
 
 router.use '/a/wt/notify', (req, res)->
     wxpay = _wtPay[req.c.code]
@@ -230,9 +230,6 @@ router.post '/a/batch/del/:entity', batch.del
 router.post '/a/site/gen/:id', mgm.genSite
 router.post '/a/site/bdPush', mgm.bdPush
 router.get '/a/qrImg', qrImg.linkImg
-
-#router.get '/r/wt/login', wt.login
-router.get '/a/wt/login', wt.login
 
 router.get '/r/c/mg/file/list', up.fileList
 
@@ -256,10 +253,7 @@ router.delete '/a/:type/:entity/:q/:qv/:key', data.delSub
 
 router.delete '/r/match/:entity/del', data.matchDel
 
-
 router.use '/a/paypal/notify', require '../controller/paypal'
-
-
 
 router.post '/userTrack', (req, rsp)->
     opt = req.body
@@ -287,6 +281,5 @@ router.get '/:entity/:id', page.entity
 router.get '/:entity/:attr/:id', pre
 router.get '/:entity/:attr/:id', checkPage
 router.get '/:entity/:attr/:id', page.entity
-
 
 module.exports = router
