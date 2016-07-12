@@ -49,8 +49,8 @@ module.exports =
         else
             dao.get req.c.code, 'user', phone: req.query.phone, (res)->
                 if res
-                    rsp.status 300
+#                    rsp.status 300
                     rsp.send
-                        msg: '本手机已注册,请更换手机号'
+                        _exsit: true
                 else
                     sendCode(req, rsp)
