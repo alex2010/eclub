@@ -9,6 +9,8 @@ _cc = new require('./service/cc')
 
 EventEmitter = require('events').EventEmitter
 
+require './public/ext/toMd'
+
 `
     cf = {
         style: {
