@@ -211,13 +211,10 @@ module.exports =
         code = req.c.code
         qy = req.query
         page = qy.page || ''
-        log page
         func = qy.func
-
         url = "http://#{req.c.url}/#{page}"
         if func
             url += "#!/#{func}"
-
         if req.cookies.woid
             log 'with cookie'
             rsp.redirect url
@@ -232,7 +229,7 @@ module.exports =
                 qy.state = qyy.join('::')
                 state = encodeURIComponent qy.state
             rdu = encodeURIComponent("http://#{req.c.url}/a/wt/userInfoByCode")
-            log "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{appId}&redirect_uri=#{rdu}&response_type=code&scope=#{scope}&state=#{state}#wechat_redirect"
+#            log "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{appId}&redirect_uri=#{rdu}&response_type=code&scope=#{scope}&state=#{state}#wechat_redirect"
             rsp.redirect "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{appId}&redirect_uri=#{rdu}&response_type=code&scope=#{scope}&state=#{state}#wechat_redirect"
 
     userInfoByCode: (req, rsp)->
