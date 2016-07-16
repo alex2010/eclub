@@ -13,13 +13,9 @@ module.exports = (code, entity, d, fn)->
             if res and res.error
                 rt.push res.msg
         if rt.length
-            fn
-                error: true
-                msg: rt
+            fn error: true ,rt.join('\n')
             return
             
-    _rsMsg = bo._rsMsg
-
     if bo._attrs
         _attrs = bo._attrs.split(',')
 
@@ -42,4 +38,4 @@ module.exports = (code, entity, d, fn)->
 
         ri._e = entity unless ri._e
 
-        fn ri, _rsMsg || 'm_create_ok'
+        fn ri, 'm_create_ok'

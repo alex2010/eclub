@@ -33,13 +33,13 @@ dataController =
     edit: (req, rsp) ->
         req.id = req.params.id
         edit req.c.code, req.params.entity, req, (res, msg)->
-            if res.err
+            if res.error
                 rsp.status 405
             rsp.send util.r res, msg
 
     save: (req, rsp) ->
         save req.c.code, req.params.entity, req, (res, msg)->
-            if res.err
+            if res.error
                 rsp.status 405
             rsp.send util.r res, msg
     
@@ -140,8 +140,6 @@ dataController =
 
         bo = req.body
 
-        _rsMsg = bo._rsMsg
-
         if bo._str
             bo = bo._str
         else
@@ -158,7 +156,7 @@ dataController =
         op["$#{req.params.type}"][req.params.prop] = bo
         
         dao.findAndUpdate code, entity, qs, op, (doc)->
-            rsp.send util.r(doc, _rsMsg || 'm_create_ok')
+            rsp.send util.r(doc, 'm_create_ok')
 
 module.exports = dataController
 

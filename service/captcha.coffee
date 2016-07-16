@@ -1,8 +1,6 @@
-module.exports = (req, user)->
-    if _cache.get(req.body._cap) is req.body.captcha
-        delete req.body._cap
-        delete req.body.captcha
-        return true
+module.exports = (req, bo)->
+    if _cache.get(bo._cap).substr(0,4) is bo._captcha
+        return null
 
-    fmMsg: '验证码错误!'
+    msg: '验证码错误!'
     error: true

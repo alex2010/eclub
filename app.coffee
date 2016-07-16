@@ -9,7 +9,6 @@ _cc = new require('./service/cc')
 
 EventEmitter = require('events').EventEmitter
 
-require './public/ext/toMd'
 
 `
     cf = {
@@ -60,6 +59,8 @@ cf.st =
 
 
 require('./public/ext/string')
+require './public/ext/toMd'
+
 # view engine setup
 app.set 'view engine', 'jade'
 #app.set 'views', path.join(_path, "views")

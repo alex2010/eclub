@@ -59,8 +59,8 @@ pickScript = (ctx, req)->
             ]
             filter =
                 status: 2
-            if req.query.cat
-                cat = req.query.cat.toString()
+            if cat = req.query.cat
+                ctx.cat = cat
                 filter.cat =
                     $regex: ".*#{cat}.*"
             items: (cb)->

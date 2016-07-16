@@ -18,8 +18,6 @@ module.exports = (code, entity, d, fn)->
                 errors: rt
             return
 
-    _rsMsg = bo._rsMsg
-
     if bo._attrs
         _attrs = bo._attrs.split(',')
 
@@ -51,4 +49,4 @@ module.exports = (code, entity, d, fn)->
         else
             item
 
-        fn ri, _rsMsg || 'm_update_ok'
+        fn ri, 'm_update_ok'

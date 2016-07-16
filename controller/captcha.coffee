@@ -1,4 +1,4 @@
-ccap = require('ccap')()
+ccap = require('ccap')(160)
 module.exports =
     cap: (req, rsp)->
         [code,buf] = ccap.get()
