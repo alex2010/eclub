@@ -34,13 +34,12 @@ walk = (path, max, offset, ext) ->
     list = _fileStack[path]
     unless list
         list = _fileStack[path] = fs.readdirSync(path)
+        list.sort (a, b)->
+            fs.statSync(path + '/' + b).mtime.getTime() - fs.statSync(path + '/' + a).mtime.getTime()
         for item in list
             if item
                 if item.startsWith('.') or fs.statSync("#{path}/#{item}").isDirectory() or (ext and !item.endsWith(ext))
                     list.remove item
-        list.sort (a, b)->
-            fs.statSync(path + '/' + b).mtime.getTime() - fs.statSync(path + '/' + a).mtime.getTime()
-
     total = list.length
     start = +offset
     end = start + +max
@@ -60,7 +59,6 @@ subFolder = (req)->
         '/' + req.query.subFolder
     else
         ''
-
 
 app.use multer
     dest: './public/res/img'
