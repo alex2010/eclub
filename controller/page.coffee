@@ -26,7 +26,7 @@ pageOpt = (req)->
     resPath = "#{c.resPath}/upload/#{code}/"
     tRender: jade.renderFile
     mob: req.query.mob || req.mob
-    lang: req.query.lang || 'zh'
+    lang: req.cookies.lang || req.query.lang || 'zh'
     title: c.title
     mode: app.env
     _st: _st

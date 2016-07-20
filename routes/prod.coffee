@@ -70,7 +70,8 @@ actPre = (req, rsp, next)->
                     app.addCross(rsp)
                     next()
                     return
-        rsp.end '>_<'
+            else
+                rsp.end '>_<'
     else
         next()
 

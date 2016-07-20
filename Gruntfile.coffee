@@ -105,6 +105,9 @@ module.exports = (grunt)->
             'public/module'
             'public/module/_inc'
             'public/module/_inc/mod'
+            'public/module/_mod/group'
+            'public/module/_mod/group/script'
+            'public/module/_mod/group/script/data'
             "public/module/#{code}"
             "public/module/#{code}/inc"
             "public/module/#{code}/script"
