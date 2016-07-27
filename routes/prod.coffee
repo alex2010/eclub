@@ -63,9 +63,7 @@ actPre = (req, rsp, next)->
     code = req.c.code
     if qu.u and qu.u is code
         dao.get code, 'user', username: qu.u, (r)->
-            log 'cxvc'
             if r and r.password is util.sha256(qu.p)
-                log 'pas'
                 if checkRes()
                     app.addCross(rsp)
                     next()

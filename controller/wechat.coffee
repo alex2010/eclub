@@ -132,7 +132,7 @@ module.exports =
                                             catObj:ct
                                             redirect: n.content_source_url
                                         _.extend ctx, et
-                                        path = "#{_path}/public/module/#{code}/wechat/#{tmpl}.jade"
+                                        path = "#{_path}/public/module/#{code}/inc/wechat/#{tmpl}.jade"
                                         ccc = jade.renderFile path, ctx
 
                                         if styles
@@ -145,7 +145,7 @@ module.exports =
                                         # pick img
                                         imgs = matchPic n.content
                                         async.each _.keys(imgs), (n, icb)->
-                                            path = n.replace('http://s.postenglishtime.com/upload/pet', util.sPath(code))
+                                            path = n.replace('http://s.postenglishtime.com/upload/'+code, util.sPath(code))
                                             api.uploadLogo path, (err, ires)->
                                                 if err
                                                     log err
