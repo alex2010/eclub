@@ -13,11 +13,11 @@ npm-debug.log
 
 *.js
 *.map
-# *.css
+*.css
 
 node_modules
 public
 doc
-back
 memo.txt
-public/module/travel/app/main.coffee
+
+.trash

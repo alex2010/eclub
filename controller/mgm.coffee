@@ -13,6 +13,29 @@ copyRecursiveSync = (src, dest, cb) ->
             cb?(dest)
 
 module.exports =
+    setTop:　(req,rsp)->
+        val = if req.params.top is 'true'
+            true
+        else
+            false
+        bo　=　req.body
+        dao.update code, bo.ent, _id:oid(bo.id), $set:{top: val}, ->
+            rsp.send msg: 'm_update_ok'
+
+    pubLock:　(req,rsp)->
+        if req.params.status is 'enable'
+            old = 3
+            now = 2
+        else
+            old = 2
+            now = 3
+        bo　=　req.body
+        dao.update code, bo.ent, _id:oid(bo.id), $set:{status: now}, ->
+            if　bo.ents and bo.ent is 'user'
+                for it in bo.ents.split(',')
+                    dao.update code, it, {status:old,'user_id':oid(bo.uid)}, $set:{status:now}
+                rsp.send msg: 'm_update_ok'
+
     bdPush: (req, rsp)->
         c = req.c
         unless c.bdPushUrl

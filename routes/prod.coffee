@@ -228,6 +228,10 @@ router.post '/a/batch/del/:entity', batch.del
 
 router.post '/a/site/gen/:id', mgm.genSite
 router.post '/a/site/bdPush', mgm.bdPush
+router.post '/a/mgm/pubLock/:status', mgm.pubLock
+router.post '/a/mgm/setTop/:top', mgm.setTop
+#router.post '/a/userActive/:status', auth.disable
+
 router.get '/a/qrImg', qrImg.linkImg
 
 router.get '/r/c/mg/file/list', up.fileList

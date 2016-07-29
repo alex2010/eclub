@@ -102,7 +102,6 @@ module.exports = ->
         @pick(db, entity).update filter, opt, {upset: true}, (err, doc)->
             callback?(doc.ops)
 
-
     @findAndUpdate = (db, entity, filter, opt, callback)->
         filter = @cleanOpt(filter)
 

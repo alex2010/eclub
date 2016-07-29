@@ -173,8 +173,26 @@ authController =
         #track user behavior
         rsp.send msg: 'm_logout_s'
 
+
+#    enable:(req,rsp)->
+#        code = req.c.code
+#        bo　=　req.body
+#        dao.update code, 'user', _id:oid(bo.uid),$set:{status: 2}, ->
+#            if　bo.ents
+#                for it in bo.ents.split(',')
+#                    dao.update code, it, {status:3,'user_id':oid(bo.uid)}, $set:{status:2}
+#            rsp.send msg: 'm_update_ok'
+#
+#    disable: (req,rsp)->
+#        code = req.c.code
+#        bo　=　req.body
+#        dao.update code, 'user', _id:oid(bo.uid),$set:{status: 3}, ->
+#            if　bo.ents
+#                for it in bo.ents.split(',')
+#                    dao.update code, it, {status:2,'user_id':oid(bo.uid)}, $set:{status:3}
+#            rsp.send msg: 'm_update_ok'
+
     merge: (req, rsp)->
-        log 'merge'
         code = req.c.code
         bo = req.body
         filter =
