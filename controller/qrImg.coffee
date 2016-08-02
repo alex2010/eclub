@@ -3,7 +3,6 @@ qr = require('qr-image')
 module.exports =
     linkImg: (req, rsp)->
         link = req.query.link
-        log link.replaceAll ':::', '&'
         try
             img = qr.image link.replaceAll(':::', '&'), size: 10
             rsp.writeHead 200, 'Content-Type': 'image/png'

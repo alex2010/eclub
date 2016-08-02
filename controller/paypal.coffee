@@ -15,3 +15,4 @@ module.exports = (req, rsp)->
                             subject: 'The Service You Booked From Wikibeijing'
                             html: jade.renderFile("#{_path}/views/module/#{code}/email/tour.jade", it)
     rsp.send(200)
+    

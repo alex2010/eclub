@@ -1,5 +1,4 @@
 wechat = require 'wechat'
-
 `
     _wtHandler = {};
 `

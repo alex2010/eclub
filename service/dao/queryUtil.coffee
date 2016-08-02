@@ -41,11 +41,18 @@ _wkt = (obj, fu)->
         else if v and v.$in
             v.$in =
                 for it in v.$in
-                    if isOid(v) then oid(it) else it
+                    if isOid(it) then oid(it) else it
+        else if v and v.$all
+            v.$all =
+                for it in v.$all
+                    if isOid(it) then oid(it) else it
+        else if v and v.$elemMatch
+            continue
         else if _.isObject(v) and !_.isArray(v) and !_.isFunction(v)
             arguments.callee(v, fu)
         else
             fu(v, k, obj)
+    log obj
 
 _cv = (v, k, obj)->
     if k.charAt(0) is '_' and !(k in ['_e','_id'])
@@ -62,7 +69,6 @@ _cv = (v, k, obj)->
         else if k is 'password' and v.length < 40
             util.sha256(v)
         else if /^\d{4}-\d{1,2}-\d{1,2}/.test(v) and v.length < 25
-            log v
             Date.parseLocal v
         else
             v
